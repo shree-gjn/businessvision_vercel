@@ -1,65 +1,57 @@
-// Import necessary dependencies
 import React, { useState } from 'react';
-import { Stepper, Step, StepLabel, Button, Typography, Container } from '@mui/material';
-
-// Import your form components
+import { Stepper, Step, StepLabel, Button, Container } from '@mui/material';
 import BasicInfo from './registration/basicinfo';
 import CurrentInfo from './registration/currentinfo';
 import DesiredCondition from './registration/desiredcondition';
-import Completion from './registration/completion';
-
-const steps = ['Step 1', 'Step 2', 'Step 3', 'Step 4'];
+import Completion from './registration/completion'; // Add import statement for Completion
 
 const RegistrationStepper = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    currentAddress: '',
+    phoneNumber: '',
+    desiredField1: '',
+    desiredField2: '',
+  });
+  const [isCompleted, setCompleted] = useState(false); // New state for completion step
 
-  // State to hold form data for each step
-  const [formDataStep1, setFormDataStep1] = useState({});
-  const [formDataStep2, setFormDataStep2] = useState({});
-  const [formDataStep3, setFormDataStep3] = useState({});
-  const [formDataStep4, setFormDataStep4] = useState({});
-
-  // Validation function for each step
-  const validateStep = (step) => {
-    // Add your validation logic here
-    switch (step) {
-      case 0:
-        // Validate Step 1
-        // If validation passes, return true; otherwise, return false
-        return true;
-      case 1:
-        // Validate Step 2
-        return true;
-      case 2:
-        // Validate Step 3
-        return true;
-      case 3:
-        // Validate Step 4
-        return true;
-      default:
-        return false;
-    }
-  };
+  const steps = ['Step 1', 'Step 2', 'Step 3', 'Completion']; // Include the new completion step
 
   const handleNext = () => {
-    const isValid = validateStep(activeStep);
-
-    if (isValid) {
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if (activeStep === steps.length - 1) {
+      setCompleted(true);
     } else {
-      // Handle validation error, show an alert, error message, or any other UI indication
-      alert('Please fill in all required fields or correct validation errors.');
+      const isValid = validateStep(activeStep);
+      if (isValid) {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      } else {
+        alert('Please fill in all required fields or correct validation errors.');
+      }
     }
-
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const validateStep = (step) => {
+    switch (step) {
+      case 0:
+        return formData.name !== '' && formData.email !== '';
+      case 1:
+        return formData.currentAddress !== '' && formData.phoneNumber !== '';
+      case 2:
+        return formData.desiredField1 !== '' && formData.desiredField2 !== '';
+      default:
+        return false;
+    }
+  };
+
   return (
     <Container>
-      <Stepper activeStep={activeStep} alternativeLabel>
+      <Stepper activeStep={activeStep} alternativeLabel sx={{ marginTop: '10px' }}>
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
@@ -68,17 +60,18 @@ const RegistrationStepper = () => {
       </Stepper>
       <div>
         {activeStep === 0 && (
-          <BasicInfo formData={formDataStep1} setFormData={setFormDataStep1} />
+          <BasicInfo formData={formData} setFormData={setFormData} handleNext={handleNext} />
         )}
         {activeStep === 1 && (
-          <CurrentInfo formData={formDataStep2} setFormData={setFormDataStep2} />
+          <CurrentInfo formData={formData} setFormData={setFormData} handleNext={handleNext} />
         )}
         {activeStep === 2 && (
-          <DesiredCondition formData={formDataStep3} setFormData={setFormDataStep3} />
+          <DesiredCondition formData={formData} setFormData={setFormData} handleNext={handleNext} />
         )}
-        {activeStep === 3 && (
-          <Completion formData={formDataStep4} setFormData={setFormDataStep4} />
+        {activeStep === 3 && isCompleted && (
+          <Completion handleNext={() => setCompleted(false)} />
         )}
+
         <div>
           <Button disabled={activeStep === 0} onClick={handleBack}>
             Back

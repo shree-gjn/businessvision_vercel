@@ -1,25 +1,48 @@
 import React from 'react';
-import { TextField, Button, Box } from '@mui/material';
+import { Button, Grid, TextField } from '@mui/material';
 
-const BasicInfo = ({ formData, setFormData }) => {
-  const handleChange = (e) => {
+const BasicInfo = ({ formData, setFormData, handleNext }) => {
+  const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleNext();
   };
 
   return (
     <div>
-      <TextField
-        label="Field 1"
-        name="field1"
-        value={formData.field1 || ''}
-        onChange={handleChange}
-      />
-      <TextField
-        label="Field 2"
-        name="field2"
-        value={formData.field2 || ''}
-        onChange={handleChange}
-      />
+      <h1>Basic Info</h1>
+      <form onSubmit={handleSubmit}>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              label="Name"
+              name="name"
+              variant="outlined"
+              fullWidth
+              value={formData.name}
+              onChange={handleInputChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Email"
+              name="email"
+              variant="outlined"
+              fullWidth
+              value={formData.email}
+              onChange={handleInputChange}
+            />
+          </Grid>
+        </Grid>
+        <Grid item xs={12} style={{ margin: '0 auto', display: 'grid', paddingBottom: '100px' }}>
+          <Button type="submit" variant="contained" color="primary">
+            Next
+          </Button>
+        </Grid>
+      </form>
     </div>
   );
 };
