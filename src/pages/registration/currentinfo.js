@@ -81,23 +81,25 @@ const CurrentInfo = ({ formData, setFormData, handleNext }) => {
 
   return (
     <div>
-      <h1>Current Info</h1>
+      <h1>現職（直近）情報</h1>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2} sx={{ textAlign: 'left', marginTop: '10px' }}>
         <Grid item xs={12}>
           <FormControl fullWidth required error={!!selectedOptionError}>
-            <FormLabel id="demo-radio-buttons-group-label">Option 2</FormLabel>
+            <FormLabel id="demo-radio-buttons-group-label">現在（直近）の在籍会社での役職を教えてください </FormLabel>
             <Select
               value={selectedOption}
               onChange={handleSelectChange}
               displayEmpty
             >
               <MenuItem value="" disabled>
-                Placeholder
+              オプションを選んでください
               </MenuItem>
-              <MenuItem value="option1">Option 1</MenuItem>
-              <MenuItem value="option2">Option 2</MenuItem>
-              <MenuItem value="option3">Option 3</MenuItem>
+              <MenuItem value="CFO（役員）">CFO（役員）</MenuItem>
+              <MenuItem value="部長">部長（部門責任者）​</MenuItem>
+              <MenuItem value="課長（マネージャー）">課長（マネージャー）</MenuItem>
+              <MenuItem value="係長（マネージャー候補）">係長（マネージャー候補）</MenuItem>
+              <MenuItem value="主任（リーダー）">主任（リーダー）</MenuItem>
             </Select>
             <FormHelperText style={{ color: 'red' }}>{selectedOptionError}</FormHelperText>
           </FormControl>
@@ -105,18 +107,21 @@ const CurrentInfo = ({ formData, setFormData, handleNext }) => {
 
         <Grid item xs={12}>
           <FormControl fullWidth required error={!!secondDropdownError}>
-            <FormLabel id="second-dropdown-label">Second Dropdown</FormLabel>
+            <FormLabel id="second-dropdown-label">現在（直近）の在籍会社での経験職種を教えてください </FormLabel>
             <Select
               value={secondDropdownValue}
               onChange={handleSecondDropdownChange}
               displayEmpty
             >
               <MenuItem value="" disabled>
-                Select an option
+              オプションを選んでください
               </MenuItem>
-              <MenuItem value="optionA">Option A</MenuItem>
-              <MenuItem value="optionB">Option B</MenuItem>
-              <MenuItem value="optionC">Option C</MenuItem>
+              <MenuItem value="管理部門系全て">管理部門系全て</MenuItem>
+              <MenuItem value="経理">経理</MenuItem>
+              <MenuItem value="財務・コントローラー">財務・コントローラー</MenuItem>
+              <MenuItem value="会計・税務">会計・税務</MenuItem>
+              <MenuItem value="広報・IR">広報・IR</MenuItem>
+              <MenuItem value="管理部長">管理部長</MenuItem>
             </Select>
             <FormHelperText style={{ color: 'red' }}>{secondDropdownError}</FormHelperText>
           </FormControl>
@@ -124,25 +129,27 @@ const CurrentInfo = ({ formData, setFormData, handleNext }) => {
 
         <Grid item xs={12}>
           <FormControl fullWidth required error={!!thirdDropdownError}>
-            <FormLabel id="third-dropdown-label">Third Dropdown</FormLabel>
+            <FormLabel id="third-dropdown-label">現在（直近）の在籍会社の業種を教えてください</FormLabel>
             <Select
               value={thirdDropdownValue}
               onChange={handleThirdDropdownChange}
               displayEmpty
             >
               <MenuItem value="" disabled>
-                Select an option
+                オプションを選んでください
               </MenuItem>
-              <MenuItem value="optionA">Option A</MenuItem>
-              <MenuItem value="optionB">Option B</MenuItem>
-              <MenuItem value="optionC">Option C</MenuItem>
+              <MenuItem value="IT・インタネット・ゲーム">IT・インタネット・ゲーム</MenuItem>
+              <MenuItem value="メーカー​">メーカー​</MenuItem>
+              <MenuItem value="商社">商社</MenuItem>
+              <MenuItem value="流通・小売・サービス">流通・小売・サービス</MenuItem>
+              <MenuItem value="広告・出版・マスコミ">広告・出版・マスコミ</MenuItem>
             </Select>
             <FormHelperText style={{ color: 'red' }}>{thirdDropdownError}</FormHelperText>
           </FormControl>
         </Grid>
         <Grid item xs={12}>
           <FormControl component="fieldset" required error={!!newRadioError}>
-            <FormLabel component="legend">New Radio Group</FormLabel>
+            <FormLabel component="legend">マネジメント経験を教えてください</FormLabel>
             <RadioGroup
               row
               aria-label="newRadio"
@@ -150,9 +157,8 @@ const CurrentInfo = ({ formData, setFormData, handleNext }) => {
               value={newRadioValue}
               onChange={handleNewRadioChange}
             >
-              <FormControlLabel value="optionX" control={<Radio />} label="Option X" />
-              <FormControlLabel value="optionY" control={<Radio />} label="Option Y" />
-              <FormControlLabel value="optionZ" control={<Radio />} label="Option Z" />
+              <FormControlLabel value="あり" control={<Radio />} label="あり" />
+              <FormControlLabel value="なし" control={<Radio />} label="なし" />
             </RadioGroup>
             <FormHelperText style={{ color: 'red' }}>{newRadioError}</FormHelperText>
           </FormControl>
@@ -160,18 +166,21 @@ const CurrentInfo = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12}>
           {/* Fourth Dropdown */}
           <FormControl fullWidth required error={!!dropdown4Error}>
-            <FormLabel id="dropdown4-label">Fourth Dropdown</FormLabel>
+            <FormLabel id="dropdown4-label">経理での経験業務を選択してください​</FormLabel>
             <Select
               value={dropdown4Value}
               onChange={handleDropdown4Change}
               displayEmpty
             >
               <MenuItem value="" disabled>
-                Select an option
+              オプションを選んでください
               </MenuItem>
-              <MenuItem value="optionD1">Option D1</MenuItem>
-              <MenuItem value="optionD2">Option D2</MenuItem>
-              <MenuItem value="optionD3">Option D3</MenuItem>
+              <MenuItem value="税務申告書作成実務">税務申告書作成実務</MenuItem>
+              <MenuItem value="アニュアルレポート作成業務">アニュアルレポート作成業務</MenuItem>
+              <MenuItem value="年次決算">年次決算</MenuItem>
+              <MenuItem value="月次決算">月次決算</MenuItem>
+              <MenuItem value="原価計算実務">原価計算実務</MenuItem>
+              <MenuItem value="固定資産管理">固定資産管理</MenuItem>
             </Select>
             <FormHelperText style={{ color: 'red' }}>{dropdown4Error}</FormHelperText>
           </FormControl>
@@ -180,18 +189,23 @@ const CurrentInfo = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12}>
           {/* Fifth Dropdown */}
           <FormControl fullWidth required error={!!dropdown5Error}>
-            <FormLabel id="dropdown5-label">Fifth Dropdown</FormLabel>
+            <FormLabel id="dropdown5-label">今まで在籍したことのある会社の
+カテゴリを教えてください</FormLabel>
             <Select
               value={dropdown5Value}
               onChange={handleDropdown5Change}
               displayEmpty
             >
               <MenuItem value="" disabled>
-                Select an option
+              オプションを選んでください
               </MenuItem>
-              <MenuItem value="optionE1">Option E1</MenuItem>
-              <MenuItem value="optionE2">Option E2</MenuItem>
-              <MenuItem value="optionE3">Option E3</MenuItem>
+              <MenuItem value="上場企業​">上場企業​</MenuItem>
+              <MenuItem value="上場グループ企業​">上場グループ企業​</MenuItem>
+              <MenuItem value="非上場企業​">非上場企業​</MenuItem>
+              <MenuItem value="外資系企業​">外資系企業​</MenuItem>
+              <MenuItem value="ベンチャー企業​">ベンチャー企業​</MenuItem>
+              <MenuItem value="官公庁​">官公庁​</MenuItem>
+              <MenuItem value="団体​​">団体​​</MenuItem>
             </Select>
             <FormHelperText style={{ color: 'red' }}>{dropdown5Error}</FormHelperText>
           </FormControl>
@@ -200,18 +214,20 @@ const CurrentInfo = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12}>
           {/* Sixth Dropdown */}
           <FormControl fullWidth required error={!!dropdown6Error}>
-            <FormLabel id="dropdown6-label">Sixth Dropdown</FormLabel>
+            <FormLabel id="dropdown6-label">保有資格を教えてください</FormLabel>
             <Select
               value={dropdown6Value}
               onChange={handleDropdown6Change}
               displayEmpty
             >
               <MenuItem value="" disabled>
-                Select an option
+              オプションを選んでください
               </MenuItem>
-              <MenuItem value="optionE1">Option E1</MenuItem>
-              <MenuItem value="optionE2">Option E2</MenuItem>
-              <MenuItem value="optionE3">Option E3</MenuItem>
+              <MenuItem value="公認会計士">公認会計士</MenuItem>
+              <MenuItem value="CPA（米国公認会計士）">CPA（米国公認会計士）</MenuItem>
+              <MenuItem value="税理士​">税理士​</MenuItem>
+              <MenuItem value="日商簿記検定1級​">日商簿記検定1級​</MenuItem>
+              <MenuItem value="日商簿記検定2級​">日商簿記検定2級​</MenuItem>
             </Select>
             <FormHelperText style={{ color: 'red' }}>{dropdown6Error}</FormHelperText>
           </FormControl>
@@ -220,26 +236,29 @@ const CurrentInfo = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12}>
           {/* Seven Dropdown */}
           <FormControl fullWidth required error={!!dropdown7Error}>
-            <FormLabel id="dropdown7-label">Seven Dropdown</FormLabel>
+            <FormLabel id="dropdown7-label">使用可能会計ソフトを教えてください​</FormLabel>
             <Select
               value={dropdown7Value}
               onChange={handleDropdown7Change}
               displayEmpty
             >
               <MenuItem value="" disabled>
-                Select an option
+              オプションを選んでください              
               </MenuItem>
-              <MenuItem value="optionE1">Option E1</MenuItem>
-              <MenuItem value="optionE2">Option E2</MenuItem>
-              <MenuItem value="optionE3">Option E3</MenuItem>
+              <MenuItem value="MFクラウド会計">MFクラウド会計</MenuItem>
+              <MenuItem value="freee">freee</MenuItem>
+              <MenuItem value="MJS">MJS</MenuItem>
+              <MenuItem value="TKC">TKC</MenuItem>
+              <MenuItem value="JDL">JDL</MenuItem>
+              <MenuItem value="ICS">ICS</MenuItem>
             </Select>
             <FormHelperText style={{ color: 'red' }}>{dropdown7Error}</FormHelperText>
           </FormControl>
         </Grid>
         </Grid>
-        <Grid item xs={12} style={{ margin: '0 auto', display: 'grid', paddingBottom: '100px', paddingTop:'20px' }}>
+        <Grid item xs={12} style={{ margin: '10px auto', display: 'grid', paddingTop:'20px' }}>
           <Button type="submit" variant="contained" color="primary">
-            Next Page
+          希望条件の入力へ
           </Button>
         </Grid>
       </form>

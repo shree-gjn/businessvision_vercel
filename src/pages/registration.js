@@ -62,7 +62,7 @@ const RegistrationStepper = () => {
 
         <div>
           <Button disabled={activeStep === 0} onClick={handleBack} sx={{marginBottom:'100px'}}>
-            Back
+            戻る
           </Button>
           {/* <Button variant="contained" color="primary" onClick={handleNext}>
             {activeStep === steps.length - 1 ? 'Finish' : 'Next'}

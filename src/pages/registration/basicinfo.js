@@ -150,11 +150,6 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
       return;
     }
 
-    if (email.trim() === '') {
-      alert('Email is required.');
-      return;
-    }
-
     if (!isChecked) {
       alert('Please agree to the terms and conditions.');
       return;
@@ -565,7 +560,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
         </Grid>
         <Grid item xs={12} style={{ margin: '10px auto', display: 'grid', paddingTop:'30px' }}>
           <Button type="submit" variant="contained" color="primary">
-            Next
+          現職・直近情報の入力へ
           </Button>
         </Grid>
       </form>

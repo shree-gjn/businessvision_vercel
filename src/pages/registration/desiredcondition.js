@@ -22,6 +22,8 @@ const DesiredCondition = ({ formData, setFormData, handleNext }) => {
   const [dropdown5Error, setDropdown5Error] = useState('');
   const [dropdown6Value, setDropdown6Value] = useState('');
   const [dropdown6Error, setDropdown6Error] = useState('');
+  const [dropdown7Value, setDropdown7Value] = useState('');
+  const [dropdown7Error, setDropdown7Error] = useState('');
 
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
@@ -53,6 +55,11 @@ const DesiredCondition = ({ formData, setFormData, handleNext }) => {
     setDropdown6Error('');
   };
 
+  const handleDropdown7Change = (event) => {
+    setDropdown7Value(event.target.value);
+    setDropdown7Error('');
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     handleNext();
@@ -60,24 +67,27 @@ const DesiredCondition = ({ formData, setFormData, handleNext }) => {
 
   return (
     <div>
-      <h1>Desired Condition</h1>
+      <h1>希望条件</h1>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2} sx={{ textAlign: 'left', marginTop: '10px' }}>
        
         <Grid item xs={12}>
           <FormControl fullWidth required error={!!selectedOptionError}>
-            <FormLabel id="demo-radio-buttons-group-label">Option 2</FormLabel>
+            <FormLabel id="demo-radio-buttons-group-label">ご希望の年収を教えてください</FormLabel>
             <Select
               value={selectedOption}
               onChange={handleSelectChange}
               displayEmpty
             >
               <MenuItem value="" disabled>
-                Placeholder
+              オプションを選んでください
               </MenuItem>
-              <MenuItem value="option1">Option 1</MenuItem>
-              <MenuItem value="option2">Option 2</MenuItem>
-              <MenuItem value="option3">Option 3</MenuItem>
+              <MenuItem value="299万円以下">299万円以下</MenuItem>
+              <MenuItem value="300万円以下">300万円以下</MenuItem>
+              <MenuItem value="350万円以下">350万円以下</MenuItem>
+              <MenuItem value="400万円以下">400万円以下</MenuItem>
+              <MenuItem value="450万円以下">450万円以下</MenuItem>
+              <MenuItem value="500万円以下">500万円以下</MenuItem>
             </Select>
             <FormHelperText style={{ color: 'red' }}>{selectedOptionError}</FormHelperText>
           </FormControl>
@@ -85,18 +95,21 @@ const DesiredCondition = ({ formData, setFormData, handleNext }) => {
 
         <Grid item xs={12}>
           <FormControl fullWidth required error={!!secondDropdownError}>
-            <FormLabel id="second-dropdown-label">Second Dropdown</FormLabel>
+            <FormLabel id="second-dropdown-label">ご希望の職種を教えてください​</FormLabel>
             <Select
               value={secondDropdownValue}
               onChange={handleSecondDropdownChange}
               displayEmpty
             >
               <MenuItem value="" disabled>
-                Select an option
+              オプションを選んでください
               </MenuItem>
-              <MenuItem value="optionA">Option A</MenuItem>
-              <MenuItem value="optionB">Option B</MenuItem>
-              <MenuItem value="optionC">Option C</MenuItem>
+              <MenuItem value="管理部門系全て">管理部門系全て</MenuItem>
+              <MenuItem value="経理​">経理​</MenuItem>
+              <MenuItem value="財務・コントローラー​">財務・コントローラー​</MenuItem>
+              <MenuItem value="会計・税務">会計・税務</MenuItem>
+              <MenuItem value="内部監査​">内部監査​</MenuItem>
+              <MenuItem value="広報・IR​">広報・IR​</MenuItem>
             </Select>
             <FormHelperText style={{ color: 'red' }}>{secondDropdownError}</FormHelperText>
           </FormControl>
@@ -104,18 +117,20 @@ const DesiredCondition = ({ formData, setFormData, handleNext }) => {
 
         <Grid item xs={12}>
           <FormControl fullWidth required error={!!thirdDropdownError}>
-            <FormLabel id="third-dropdown-label">Third Dropdown</FormLabel>
+            <FormLabel id="third-dropdown-label">ご希望の業種を教えてください​</FormLabel>
             <Select
               value={thirdDropdownValue}
               onChange={handleThirdDropdownChange}
               displayEmpty
             >
               <MenuItem value="" disabled>
-                Select an option
+                オプションを選んでください
               </MenuItem>
-              <MenuItem value="optionA">Option A</MenuItem>
-              <MenuItem value="optionB">Option B</MenuItem>
-              <MenuItem value="optionC">Option C</MenuItem>
+              <MenuItem value="IT・インタネット・ゲーム">IT・インタネット・ゲーム</MenuItem>
+              <MenuItem value="メーカー​">メーカー​</MenuItem>
+              <MenuItem value="商社">商社</MenuItem>
+              <MenuItem value="流通・小売・サービス">流通・小売・サービス</MenuItem>
+              <MenuItem value="広告・出版・マスコミ">広告・出版・マスコミ</MenuItem>
             </Select>
             <FormHelperText style={{ color: 'red' }}>{thirdDropdownError}</FormHelperText>
           </FormControl>
@@ -124,18 +139,20 @@ const DesiredCondition = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12}>
           {/* Fourth Dropdown */}
           <FormControl fullWidth required error={!!dropdown4Error}>
-            <FormLabel id="dropdown4-label">Fourth Dropdown</FormLabel>
+            <FormLabel id="dropdown4-label">ご希望の役職を教えてください​</FormLabel>
             <Select
               value={dropdown4Value}
               onChange={handleDropdown4Change}
               displayEmpty
             >
               <MenuItem value="" disabled>
-                Select an option
+                オプションを選んでください
               </MenuItem>
-              <MenuItem value="optionD1">Option D1</MenuItem>
-              <MenuItem value="optionD2">Option D2</MenuItem>
-              <MenuItem value="optionD3">Option D3</MenuItem>
+              <MenuItem value="特に希望しない">特に希望しない</MenuItem>
+              <MenuItem value="担当者（スタッフ）">担当者（スタッフ）</MenuItem>
+              <MenuItem value="主任（リーダー）">主任（リーダー）</MenuItem>
+              <MenuItem value="係長（マネージャー候補">係長（マネージャー候補</MenuItem>
+              <MenuItem value="課長（マネージャー）">課長（マネージャー）</MenuItem>
             </Select>
             <FormHelperText style={{ color: 'red' }}>{dropdown4Error}</FormHelperText>
           </FormControl>
@@ -144,18 +161,21 @@ const DesiredCondition = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12}>
           {/* Fifth Dropdown */}
           <FormControl fullWidth required error={!!dropdown5Error}>
-            <FormLabel id="dropdown5-label">Fifth Dropdown</FormLabel>
+            <FormLabel id="dropdown5-label">ご希望の勤務地（都道府県）を教えてください​</FormLabel>
             <Select
               value={dropdown5Value}
               onChange={handleDropdown5Change}
               displayEmpty
             >
               <MenuItem value="" disabled>
-                Select an option
+                オプションを選んでください
               </MenuItem>
-              <MenuItem value="optionE1">Option E1</MenuItem>
-              <MenuItem value="optionE2">Option E2</MenuItem>
-              <MenuItem value="optionE3">Option E3</MenuItem>
+              <MenuItem value="東京都">東京都</MenuItem>
+              <MenuItem value="神奈川県​">神奈川県​</MenuItem>
+              <MenuItem value="千葉県​">千葉県​</MenuItem>
+              <MenuItem value="埼玉県​">埼玉県​</MenuItem>
+              <MenuItem value="１都３県全て">１都３県全て</MenuItem>
+              <MenuItem value="北海道・東北​">北海道・東北​</MenuItem>
             </Select>
             <FormHelperText style={{ color: 'red' }}>{dropdown5Error}</FormHelperText>
           </FormControl>
@@ -164,28 +184,53 @@ const DesiredCondition = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12}>
           {/* Sixth Dropdown */}
           <FormControl fullWidth required error={!!dropdown6Error}>
-            <FormLabel id="dropdown6-label">Sixth Dropdown</FormLabel>
+            <FormLabel id="dropdown6-label">ご希望の企業カテゴリを教えてください​</FormLabel>
             <Select
               value={dropdown6Value}
               onChange={handleDropdown6Change}
               displayEmpty
             >
               <MenuItem value="" disabled>
-                Select an option
+                オプションを選んでください
               </MenuItem>
-              <MenuItem value="optionE1">Option E1</MenuItem>
-              <MenuItem value="optionE2">Option E2</MenuItem>
-              <MenuItem value="optionE3">Option E3</MenuItem>
+              <MenuItem value="上場企業">上場企業</MenuItem>
+              <MenuItem value="上場グループ企業">上場グループ企業</MenuItem>
+              <MenuItem value="非上場企業">非上場企業</MenuItem>
+              <MenuItem value="外資系企業​">外資系企業​</MenuItem>
+              <MenuItem value="ベンチャー企業​">ベンチャー企業​</MenuItem>
             </Select>
             <FormHelperText style={{ color: 'red' }}>{dropdown6Error}</FormHelperText>
           </FormControl>
         </Grid>
 
+        <Grid item xs={12}>
+          {/* 7 Dropdown */}
+          <FormControl fullWidth required error={!!dropdown7Error}>
+            <FormLabel id="dropdown7-label">ご希望の従業員規模を教えてください​</FormLabel>
+            <Select
+              value={dropdown7Value}
+              onChange={handleDropdown7Change}
+              displayEmpty
+            >
+              <MenuItem value="" disabled>
+                オプションを選んでください  
+              </MenuItem>
+              <MenuItem value="10名以下">10名以下</MenuItem>
+              <MenuItem value="11～50名​">11～50名​</MenuItem>
+              <MenuItem value="51～100名​">51～100名​</MenuItem>
+              <MenuItem value="101～500名​">101～500名​</MenuItem>
+              <MenuItem value="501～1000名​">501～1000名​</MenuItem>
+              <MenuItem value="1000名以上​">1000名以上​</MenuItem>
+            </Select>
+            <FormHelperText style={{ color: 'red' }}>{dropdown7Error}</FormHelperText>
+          </FormControl>
         </Grid>
 
-        <Grid item xs={12} style={{ margin: '0 auto', display: 'grid', paddingBottom: '100px' }}>
+        </Grid>
+
+        <Grid item xs={12} style={{ margin: '10px auto', display: 'grid' }}>
           <Button type="submit" variant="contained" color="primary">
-            Next Page
+            完了ページに入る
           </Button>
         </Grid>
       </form>
