@@ -27,7 +27,7 @@ const RegistrationStepper = () => {
     dropdown2Value: '',
   });
 
-  const steps = ['Step 1', 'Step 2', 'Step 3', 'Completion'];
+  const steps = ['基本情報', '現職（直近）情報', '希望条件', '完了'];
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -61,12 +61,12 @@ const RegistrationStepper = () => {
         )}
 
         <div>
-          <Button disabled={activeStep === 0} onClick={handleBack}>
+          <Button disabled={activeStep === 0} onClick={handleBack} sx={{marginBottom:'100px'}}>
             Back
           </Button>
-          <Button variant="contained" color="primary" onClick={handleNext}>
+          {/* <Button variant="contained" color="primary" onClick={handleNext}>
             {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-          </Button>
+          </Button> */}
         </div>
       </div>
     </Container>
