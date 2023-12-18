@@ -12,15 +12,18 @@ import {
   FormHelperText,
   Select,
   MenuItem,
+  InputLabel,
+  ListItemText,
+  Collapse,
+  List,
+  ListItem,
 } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import Collapse from '@mui/material/Collapse';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const BasicInfo = ({ formData, setFormData, handleNext }) => {
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const [isChecked, setIsChecked] = useState(false);
   const [gender, setGender] = useState('');
   const [genderError, setGenderError] = useState('');
@@ -47,27 +50,24 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
   const [new2RadioValue, setNew2RadioValue] = useState('');
   const [new2RadioError, setNew2RadioError] = useState('');
   const [expanded, setExpanded] = useState(false);
-  const [expanded1, setExpanded1] = useState(false);
   const [dropdown1Value, setDropdown1Value] = useState('');
   const [dropdown2Value, setDropdown2Value] = useState('');
-
-  const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const [selectedValue, setSelectedValue] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [selectedValues, setSelectedValues] = useState([]);
 
   const handleNameChange = (event) => {
     setName(event.target.value);
     setFormData({ ...formData, name: event.target.value });
   };
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-    setFormData({ ...formData, email: event.target.value });
-  };
-
   const handleCheckboxChange = (event) => {
     setIsChecked(event.target.checked);
     setFormData({ ...formData, isChecked: event.target.checked });
+  };
+
+  const handleToggle = () => {
+    setOpen(!open);
   };
 
   const handleGenderChange = (event) => {
@@ -141,6 +141,18 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
   const handleDropdown2Change = (event) => {
     setDropdown2Value(event.target.value);
   };
+
+  const handleChange = (event) => {
+    setSelectedValue(event.target.value);
+  };
+
+  const menuItems = [
+    'ネイティブレベル',
+    'ビジネスレベル',
+    '日常会話レベル',
+    '基礎会話レベル',
+    'なし',
+  ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -424,6 +436,21 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
               <MenuItem value="3年以上">3年以上</MenuItem>
               <MenuItem value="4年以上">4年以上</MenuItem>
               <MenuItem value="5年以上">5年以上</MenuItem>
+              <MenuItem value="6年以上">6年以上</MenuItem>
+              <MenuItem value="7年以上">7年以上</MenuItem>
+              <MenuItem value="8年以上">8年以上</MenuItem>
+              <MenuItem value="9年以上">9年以上</MenuItem>
+              <MenuItem value="10年以上">10年以上</MenuItem>
+              <MenuItem value="11年以上">11年以上</MenuItem>
+              <MenuItem value="12年以上">12年以上</MenuItem>
+              <MenuItem value="13年以上">13年以上</MenuItem>
+              <MenuItem value="14年以上">14年以上</MenuItem>
+              <MenuItem value="15年以上">15年以上</MenuItem>
+              <MenuItem value="16年以上">16年以上</MenuItem>
+              <MenuItem value="17年以上">17年以上</MenuItem>
+              <MenuItem value="18年以上">18年以上</MenuItem>
+              <MenuItem value="19年以上">19年以上</MenuItem>
+              <MenuItem value="20年以上">20年以上</MenuItem>
             </Select>
             <FormHelperText style={{ color: 'red' }}>{dropdown8Error}</FormHelperText>
           </FormControl>
@@ -488,26 +515,36 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
           </Grid>
 
         <Grid item xs={12}>
-
-          {/* Eight Dropdown */}
-          <FormControl fullWidth required error={!!dropdown9Error}>
-            <FormLabel id="dropdown9-label">英語</FormLabel>
-            <Select
-              value={dropdown9Value}
-              onChange={handleDropdown9Change}
-              displayEmpty
-            >
-              <MenuItem value="" disabled>
-                レベルを選択
-              </MenuItem>
-              <MenuItem value="ネイティブレベル">ネイティブレベル</MenuItem>
-              <MenuItem value="ビジネスレベル">ビジネスレベル</MenuItem>
-              <MenuItem value="日常会話レベル">日常会話レベル</MenuItem>
-              <MenuItem value="基礎会話レベル">基礎会話レベル</MenuItem>
-              <MenuItem value="なし">なし</MenuItem>
-            </Select>
-            <FormHelperText style={{ color: 'red' }}>{dropdown9Error}</FormHelperText>
-          </FormControl>
+        <FormLabel id="dropdown9-label">英語​</FormLabel>
+        <FormControl fullWidth>
+  <InputLabel htmlFor="level-select" shrink={false}>
+    レベルを選択
+  </InputLabel>
+  <Select
+    value={selectedValue}
+    onChange={handleChange}
+    inputProps={{
+      name: 'level',
+      id: 'level-select',
+    }}
+    renderValue={(selected) => (selected ? selected : '')}
+  >
+    <MenuItem value="">
+      <em>選択してください</em>
+    </MenuItem>
+    <RadioGroup value={selectedValue} onChange={handleChange}>
+      {menuItems.map((item) => (
+        <MenuItem key={item} value={item}>
+          <FormControlLabel
+            value={item}
+            control={<Radio />}
+            label={item}
+          />
+        </MenuItem>
+      ))}
+    </RadioGroup>
+  </Select>
+</FormControl>
         </Grid>
 
         <Grid item xs={12}>
