@@ -28,6 +28,8 @@
   color: #61dafb;
 }
 
+/* Headers */
+
 .PageHeader {
   border-bottom: 1px solid #ccc; /* Adjust the color and style as needed */
 }
@@ -35,6 +37,12 @@
 .PageHeader p{
   color:#16375A;
   font-size: 14px;
+}
+
+/* Footer Profile Size */
+
+.css-imwso6-MuiBottomNavigationAction-label.Mui-selected{
+  font-size: 0.75rem !important;
 }
 
 @keyframes App-logo-spin {
