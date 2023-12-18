@@ -28,11 +28,14 @@
   color: #61dafb;
 }
 
-/* Stepper Alignment */
-/* .css-vnkopk-MuiStepLabel-iconContainer{
-  display: inline-block !important;
-  margin: 0 auto;
-} */
+.PageHeader {
+  border-bottom: 1px solid #ccc; /* Adjust the color and style as needed */
+}
+
+.PageHeader p{
+  color:#16375A;
+  font-size: 14px;
+}
 
 @keyframes App-logo-spin {
   from {
