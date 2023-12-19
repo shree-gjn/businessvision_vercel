@@ -10,6 +10,7 @@ import MyPage from './pages/mypage';
 import MessageComponent from './pages/message';
 import InProgressComponent from './pages/inprogress';
 import ProfileComponent from './pages/profile';
+import RecruitmentFullInfo from './pages/RecruitmentFullInfo';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/messages" element={<MessageComponent />} />
           <Route path="/inprogress" element={<InProgressComponent />} />
           <Route path="/profile" element={<ProfileComponent />} />
+          <Route path="/recruitment" element={<RecruitmentFullInfo/>} />
         </Routes>
       </Router>
     </div>

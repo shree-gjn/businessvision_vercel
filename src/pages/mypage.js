@@ -6,6 +6,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import BottomNav from '../components/BottomNav';
 import RecruitmentInfo from '../pages/RecruitmentInfo';
+import JobSearch from '../pages/jobsearch';
 
 const MyPage = ({ handleNext }) => {
   const [value, setValue] = React.useState('1');
@@ -27,7 +28,7 @@ const MyPage = ({ handleNext }) => {
         </TabList>
       </Box>
       <TabPanel value="1">
-        Tab One
+        <JobSearch />
       </TabPanel>
       <TabPanel value="2" sx={{backgroundColor: '#FAFAFA', overflow: 'scroll'}}>
         <Box sx={{backgroundColor: '#FAFAFA'}}>

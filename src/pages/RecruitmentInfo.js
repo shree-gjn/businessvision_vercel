@@ -99,7 +99,7 @@ export default function RecruitmentInfo() {
               <Button component={Link} to="/" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる </Button>
             </Grid>
             <Grid item xs={6}>
-              <Button component={Link} to="/dummy" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
+              <Button component={Link} to="/recruitment" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
             </Grid>
         </Grid>
         </Box>
@@ -174,7 +174,7 @@ export default function RecruitmentInfo() {
               <Button component={Link} to="/" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる </Button>
             </Grid>
             <Grid item xs={6}>
-              <Button component={Link} to="/dummy" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
+              <Button component={Link} to="/recruitment" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
             </Grid>
         </Grid>
         </Box>
@@ -249,7 +249,7 @@ export default function RecruitmentInfo() {
               <Button component={Link} to="/" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる </Button>
             </Grid>
             <Grid item xs={6}>
-              <Button component={Link} to="/dummy" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
+              <Button component={Link} to="/recruitment" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
             </Grid>
         </Grid>
         </Box>
