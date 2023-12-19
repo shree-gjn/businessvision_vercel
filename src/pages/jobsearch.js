@@ -49,7 +49,7 @@ const JobSearch = () => {
       
       <Card sx={{ minWidth: 275, marginBottom:'30px', marginTop:'20px', borderRadius:'0px' }}>
       <CardContent sx={{padding:'0px', paddingBottom:'0px !important'}}>
-      <Link to="/path-to-component1" style={{textDecoration:'none'}}>
+      <Link to="/occupation" style={{textDecoration:'none'}}>
         <Box sx={{ flexGrow: 1 , borderBottom: '1px solid #ccc'}}>
         <Grid container spacing={1}>
             <Grid item xs={1}>
@@ -64,7 +64,7 @@ const JobSearch = () => {
         </Grid>
         </Box>
         </Link>
-        <Link to="/path-to-component1" style={{textDecoration:'none'}}>
+        <Link to="/industry" style={{textDecoration:'none'}}>
         <Box sx={{ flexGrow: 1 , borderBottom: '1px solid #ccc'}}>
         <Grid container spacing={1}>
         <Grid item xs={1}>
@@ -79,7 +79,7 @@ const JobSearch = () => {
         </Grid>
         </Box>
         </Link>
-        <Link to="/path-to-component1" style={{textDecoration:'none'}}>
+        <Link to="/income" style={{textDecoration:'none'}}>
         <Box sx={{ flexGrow: 1 , borderBottom: '1px solid #ccc'}}>
         <Grid container spacing={1}>
         <Grid item xs={1}>
@@ -94,7 +94,7 @@ const JobSearch = () => {
         </Grid>
         </Box>
         </Link>
-        <Link to="/path-to-component1" style={{textDecoration:'none'}}>
+        <Link to="/location" style={{textDecoration:'none'}}>
         <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1}>
         <Grid item xs={1}>

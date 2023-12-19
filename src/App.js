@@ -11,6 +11,10 @@ import MessageComponent from './pages/message';
 import InProgressComponent from './pages/inprogress';
 import ProfileComponent from './pages/profile';
 import RecruitmentFullInfo from './pages/RecruitmentFullInfo';
+import OccupationComponent from './components/occupation';
+import IndustryComponent from './components/industry';
+import IncomeComponent from './components/income';
+import LocationComponent from './components/location';
 
 function App() {
   return (
@@ -26,7 +30,11 @@ function App() {
           <Route path="/messages" element={<MessageComponent />} />
           <Route path="/inprogress" element={<InProgressComponent />} />
           <Route path="/profile" element={<ProfileComponent />} />
-          <Route path="/recruitment" element={<RecruitmentFullInfo/>} />
+          <Route path="/recruitment" element={<RecruitmentFullInfo />} />
+          <Route path="/occupation" element={<OccupationComponent />} /> 
+          <Route path="/industry" element={<IndustryComponent />} />
+          <Route path="/income" element={<IncomeComponent />} />
+          <Route path="/location" element={<LocationComponent />} />
         </Routes>
       </Router>
     </div>
