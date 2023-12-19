@@ -8,6 +8,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import {ReactComponent as GoIcon} from '../assets/GoIcon.svg';
 import {ReactComponent as BuildingIcon} from '../assets/BuildingIcon.svg';
@@ -30,6 +31,11 @@ const JobSearch = () => {
   const handleSearch = (event) => {
     // Handle search logic here
     console.log('Search:', event.target.value);
+  };
+
+  const handleReset = () => {
+    // Handle reset logic here
+    console.log('Resetting search conditions');
   };
 
   return (
@@ -111,6 +117,17 @@ const JobSearch = () => {
         </Link>
       </CardContent>
     </Card>
+
+    <Button component={Link} to="/mypage" variant="contained" color="primary" sx={{ width: '90%', marginBottom: '20px' }}>
+    この条件で検索する
+      </Button>
+
+      <Button onClick={handleReset} variant="text" sx={{ textAlign: 'right' }}>
+        <Link to="#" style={{ textDecoration: 'none', color: 'inherit' }}>
+          検索条件をリセット
+        </Link>
+      </Button>
+    
     </>
   );
 };

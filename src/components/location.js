@@ -97,60 +97,56 @@ const LocationComponent = ({ handleNext }) => {
         <div style={{textAlign:'left', padding:'10px'}}>
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox1} onChange={handleChangeOne('checkbox1')} />}
-            label="Checkbox 1"
+            label="すべて選択"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox2} onChange={handleChangeOne('checkbox2')} />}
-            label="Checkbox 2"
+            label="東京都"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox3} onChange={handleChangeOne('checkbox3')} />}
-            label="Checkbox 3"
+            label="神奈川県​"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox4} onChange={handleChangeOne('checkbox4')} />}
-            label="Checkbox 4"
+            label="千葉県​"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox5} onChange={handleChangeOne('checkbox5')} />}
-            label="Checkbox 5"
+            label="埼玉県"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox6} onChange={handleChangeOne('checkbox6')} />}
-            label="Checkbox 6"
+            label="１都３県全て"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox7} onChange={handleChangeOne('checkbox7')} />}
-            label="Checkbox 7"
+            label="北海道・東北​"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox8} onChange={handleChangeOne('checkbox8')} />}
-            label="Checkbox 8"
+            label="北関東"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox9} onChange={handleChangeOne('checkbox9')} />}
-            label="Checkbox 9"
+            label="中部"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox10} onChange={handleChangeOne('checkbox10')} />}
-            label="Checkbox 10"
+            label="近畿"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox11} onChange={handleChangeOne('checkbox11')} />}
-            label="Checkbox 11"
+            label="中国・四国​​"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox12} onChange={handleChangeOne('checkbox12')} />}
-            label="Checkbox 12"
+            label="九州・沖縄​"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox13} onChange={handleChangeOne('checkbox13')} />}
-            label="Checkbox 13"
+            label="海外"
           /> <br />
-          <FormControlLabel
-            control={<Checkbox checked={checkboxes.checkbox14} onChange={handleChangeOne('checkbox14')} />}
-            label="Checkbox 14"
-          /> 
         </div>
         <Button variant="contained" color="primary" onClick={handleLinkClick} sx={{width:'70%', marginBottom:'20px'}}>
           この条件で設定

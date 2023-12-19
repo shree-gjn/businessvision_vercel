@@ -14,11 +14,10 @@ import {ReactComponent as MoneyIcon} from '../assets/MoneyIcon.svg';
 import {ReactComponent as MapsIcon} from '../assets/MapsIcon.svg';
 import {ReactComponent as BuildingIcon} from '../assets/BuildingIcon.svg';
 import {ReactComponent as BagIcon} from '../assets/BagIcon.svg';
-import {ReactComponent as BagBrownIcon} from '../assets/BagBrownIcon.svg';
-import {ReactComponent as TickBrown} from '../assets/TickBrown.svg';
-import {ReactComponent as BuildingBrownIcon} from '../assets/BuildingBrownIcon.svg'; 
 import {ReactComponent as TrashIcon} from '../assets/TrashIcon.svg';
 import {ReactComponent as UserFolder} from '../assets/UserFolder.svg';
+import {ReactComponent as BigBagIcon}  from '../assets/BigBagIcon.svg';
+import {ReactComponent as CalendarIcon} from '../assets/CalendarIcon.svg';
 import BottomNav from '../components/BottomNav';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -112,28 +111,29 @@ export default function RecruitmentFullInfo() {
               <Item sx={{fontSize:'12px', textAlign:'left'}}>東京<br /> 東京都渋谷区 ※最寄駅：渋谷駅​</Item>
               </Grid>
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務地</Item>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>雇用形態</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>東京<br /> 東京都渋谷区 ※最寄駅：渋谷駅​</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>正社員​</Item>
               </Grid>
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務地</Item>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>想定年収</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>東京<br /> 東京都渋谷区 ※最寄駅：渋谷駅​</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>700万円〜900万円<br /> 月給：46.6万円～60万​</Item>
               </Grid>
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務地</Item>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>役職</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>東京<br /> 東京都渋谷区 ※最寄駅：渋谷駅​</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>課長（マネージャー）​</Item>
               </Grid>
                   <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務地</Item>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}></Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>東京<br /> 東京都渋谷区 ※最寄駅：渋谷駅​</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>東京都渋谷区にある1991年に設立した企業で、IT環境の大きな変化に柔軟に対応しながら土台を構築し、この10年間で売上規模を約10倍規模の成長を実現されています。過去数年間はSaaS/ASPが主流でしたが、企業や社会が抱える課題に対してIT/IoT/AI/デジタルの面で解決策を提供する事業を展開し、また、M&A等を通じて幅広い事業ポートフォリオを築いております。
+今後の事業拡大に伴い、経理部門強化の採用です。グループ全社の経理機能を担っている経理部において、経理部マネージャー（管理職）として、月次・四半期・年次含むIFRS（国際会計基準）会計関連の業務をご担当いただきます。​</Item>
               </Grid>
        
           </Grid>
@@ -143,43 +143,36 @@ export default function RecruitmentFullInfo() {
           <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={1}>
               <Grid item xs={1} sx={{borderBottom: '1px solid #D3B76A'}}>
-              <Item sx={{textAlign:'left'}}><UserFolder style={{margin:'0 auto'}}/></Item>
+              <Item sx={{textAlign:'left'}}><BigBagIcon style={{margin:'0 auto'}}/></Item>
               </Grid>
               <Grid item xs={11} sx={{borderBottom: '1px solid #D3B76A'}}>
-              <Item sx={{fontSize:'14px', textAlign:'left', color: '#16375A', fontWeight:'500'}}>基本情報​</Item>
+              <Item sx={{fontSize:'14px', textAlign:'left', color: '#16375A', fontWeight:'500'}}> 仕事について </Item>
               </Grid>
               
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務地</Item>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>業務内容</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>東京<br /> 東京都渋谷区 ※最寄駅：渋谷駅​</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>・マネジメント・連結決算取りまとめ（月次・四半期）・決算短信・計算書類等関連・有価証券（四半期）報告書の作成＆チェック・各事業部の会計処理課題解決への取り組み・経営陣向けの報告資料作成・監査法人対応​</Item>
               </Grid>
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務地</Item>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>必要資格</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>東京<br /> 東京都渋谷区 ※最寄駅：渋谷駅​</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>​</Item>
               </Grid>
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務地</Item>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>必要経験</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>東京<br /> 東京都渋谷区 ※最寄駅：渋谷駅​</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>連結決算（IFRS）の経験マ<br /> ネジメント経験​</Item>
               </Grid>
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務地</Item>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>歓迎スキル</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>東京<br /> 東京都渋谷区 ※最寄駅：渋谷駅​</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>​</Item>
               </Grid>
-                  <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務地</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>東京<br /> 東京都渋谷区 ※最寄駅：渋谷駅​</Item>
-              </Grid>
-       
           </Grid>
           </Box>
         </CardContent>
@@ -187,43 +180,36 @@ export default function RecruitmentFullInfo() {
           <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={1}>
               <Grid item xs={1} sx={{borderBottom: '1px solid #D3B76A'}}>
-              <Item sx={{textAlign:'left'}}><UserFolder style={{margin:'0 auto'}}/></Item>
+              <Item sx={{textAlign:'left'}}><CalendarIcon style={{margin:'0 auto'}}/></Item>
               </Grid>
               <Grid item xs={11} sx={{borderBottom: '1px solid #D3B76A'}}>
-              <Item sx={{fontSize:'14px', textAlign:'left', color: '#16375A', fontWeight:'500'}}>基本情報​</Item>
+              <Item sx={{fontSize:'14px', textAlign:'left', color: '#16375A', fontWeight:'500'}}>勤務について</Item>
               </Grid>
               
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務地</Item>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務時間</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>東京<br /> 東京都渋谷区 ※最寄駅：渋谷駅​</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>9:00～18:00(休憩時間 1時間00分) ※時間外勤務有 有 （平均40H/月）​</Item>
               </Grid>
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務地</Item>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>待遇・福利厚生</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>東京<br /> 東京都渋谷区 ※最寄駅：渋谷駅​</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>各種社会保険完備（雇用・労災・健康・厚生年金）■通勤手当 会社規定に基づき支給 月100,000円まで■その他制度 従業員持株会制度(25%の奨励金あり)、住宅手当(条件有)​</Item>
               </Grid>
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務地</Item>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>休日休暇</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>東京<br /> 東京都渋谷区 ※最寄駅：渋谷駅​</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>＜年間休日120日＞(内訳)土曜 日曜 祝日 その他(慶弔休暇、赴任休暇等)■有給休暇 入社半年経過後10日~​</Item>
               </Grid>
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務地</Item>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>ワンポイント</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>東京<br /> 東京都渋谷区 ※最寄駅：渋谷駅​</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>土日祝完全休暇, 賞与あり, 駅から徒歩5分以内​</Item>
               </Grid>
-                  <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務地</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>東京<br /> 東京都渋谷区 ※最寄駅：渋谷駅​</Item>
-              </Grid>
-       
           </Grid>
           </Box>
         </CardContent>
@@ -231,17 +217,23 @@ export default function RecruitmentFullInfo() {
           <Box sx={{ flexGrow: 1, marginBottom:'20px' }}>
           <Grid container spacing={1}>
               <Grid item xs={1} sx={{borderBottom: '1px solid #D3B76A'}}>
-              <Item sx={{textAlign:'left'}}><UserFolder style={{margin:'0 auto'}}/></Item>
+              <Item sx={{textAlign:'left'}}><MapsIcon style={{margin:'0 auto'}}/></Item>
               </Grid>
               <Grid item xs={11} sx={{borderBottom: '1px solid #D3B76A'}}>
-              <Item sx={{fontSize:'14px', textAlign:'left', color: '#16375A', fontWeight:'500'}}>基本情報​</Item>
+              <Item sx={{fontSize:'14px', textAlign:'left', color: '#16375A', fontWeight:'500'}}>会社について​</Item>
               </Grid>
               
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務地</Item>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>上場区分</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>東京<br /> 東京都渋谷区 ※最寄駅：渋谷駅​</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>上場企業​</Item>
+              </Grid>
+              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>業種</Item>
+              </Grid>
+              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>機械・電気・自動車​</Item>
               </Grid>
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
               <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務地</Item>
@@ -250,22 +242,28 @@ export default function RecruitmentFullInfo() {
               <Item sx={{fontSize:'12px', textAlign:'left'}}>東京<br /> 東京都渋谷区 ※最寄駅：渋谷駅​</Item>
               </Grid>
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務地</Item>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>会社概要</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>東京<br /> 東京都渋谷区 ※最寄駅：渋谷駅​</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>​</Item>
               </Grid>
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務地</Item>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>従業員数</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>東京<br /> 東京都渋谷区 ※最寄駅：渋谷駅​</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>10名以下​</Item>
               </Grid>
-                  <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務地</Item>
+              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>社歴</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>東京<br /> 東京都渋谷区 ※最寄駅：渋谷駅​</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>10年以下</Item>
+              </Grid>
+              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>選考プロセス</Item>
+              </Grid>
+              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>書類選考→面接（2-3回）＋適性検査 → 内定 （面接回数・選考内容に変更がある場合もあります）</Item>
               </Grid>
        
           </Grid>

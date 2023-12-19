@@ -220,7 +220,6 @@ const IndustryComponent = ({ handleNext }) => {
           /> <br />
             </div>
             </Collapse>
-
             <Button onClick={handleToggle3} variant="contained" color="primary" sx={{ width: '90%', background:'#fff', color:'#000', borderRadius:'0px' }}>
           {isExpanded3 ? '商社' : '商社'}
           </Button>
