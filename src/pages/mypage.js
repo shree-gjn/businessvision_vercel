@@ -29,7 +29,7 @@ const MyPage = ({ handleNext }) => {
       <TabPanel value="1">
         Tab One
       </TabPanel>
-      <TabPanel value="2" sx={{backgroundColor: '#FAFAFA'}}>
+      <TabPanel value="2" sx={{backgroundColor: '#FAFAFA', overflow: 'scroll'}}>
         <Box sx={{backgroundColor: '#FAFAFA'}}>
             <RecruitmentInfo />
           </Box>
