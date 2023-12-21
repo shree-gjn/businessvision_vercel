@@ -1,7 +1,19 @@
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Box,
+  Button,
+  CardContent,
+  Checkbox,
+  Collapse,
+  FormControlLabel,
+  Grid,
+  Typography,
+} from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Tab from '@mui/material/Tab';
-import Button from '@mui/material/Button';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
@@ -9,15 +21,10 @@ import BottomNav from '../components/BottomNav';
 import RecruitmentInfo from '../pages/RecruitmentInfo';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
 import { Link, useNavigate } from 'react-router-dom';
 import {ReactComponent as BagIcon} from '../assets/BagIcon.svg';
 import {ReactComponent as BackArrowIcon} from '../assets/BackArrowIcon.svg';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Collapse from '@mui/material/Collapse';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -123,6 +130,7 @@ const IndustryComponent = ({ handleNext }) => {
         </TabList>
       </Box>
       <TabPanel value="1">
+    
       <Card sx={{ minWidth: 275, marginBottom:'30px', marginTop:'20px', borderRadius:'0px' }}>
       <CardContent sx={{padding:'0px', paddingBottom:'0px !important'}}>
       <Link style={{textDecoration:'none'}} onClick={handleLinkClick}>
@@ -514,6 +522,7 @@ const IndustryComponent = ({ handleNext }) => {
         </Button>
       </CardContent>
     </Card>
+    
       </TabPanel>
       <TabPanel value="2" sx={{backgroundColor: '#FAFAFA', overflow: 'scroll'}}>
         <Box sx={{backgroundColor: '#FAFAFA'}}>

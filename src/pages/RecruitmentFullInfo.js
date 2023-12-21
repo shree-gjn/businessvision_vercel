@@ -269,6 +269,16 @@ export default function RecruitmentFullInfo() {
           </Grid>
           </Box>
         </CardContent>
+        <Box sx={{ flexGrow: 1 }}>
+        <Grid container spacing={1} sx={{marginBottom:'30px'}}>
+            <Grid item xs={6}>
+              <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px', fontSize:'12px', padding:'7px 0px'}}> シークレットエントリー </Button>
+            </Grid>
+            <Grid item xs={6}>
+              <Button component={Link} to="/recruitment" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 正式応募 </Button>
+            </Grid>
+        </Grid>
+        </Box>
       </Card>
       <BottomNav />
   </>
