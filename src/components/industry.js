@@ -41,7 +41,7 @@ const IndustryComponent = ({ handleNext }) => {
     checkbox1: false,
     checkbox2: false,
     checkbox3: false,
-    // Add more checkboxes as needed
+    // Add more checkboxes as neededd
   });
   const [isExpanded, setExpanded] = useState(false);
   const [isExpanded2, setExpanded2] = useState(false);
