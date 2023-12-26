@@ -14,6 +14,7 @@ import {ReactComponent as ChatBlue} from '../assets/ChatBlue.svg';
 import {ReactComponent as ArrowRight} from '../assets/ArrowRight.svg';
 import {ReactComponent as NoteIcon} from '../assets/NoteIcon.svg';
 import BottomNav from '../components/BottomNav';
+import { useNavigate } from 'react-router-dom';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -27,9 +28,16 @@ const Item = styled(Paper)(({ theme }) => ({
   
 
 export default function ProgressStepThree() {
+  const navigate = useNavigate();
+
+   const handleCardClick = () => {
+    // Navigate to "/hello" on card click
+    navigate('/fullprogress');
+  };
+
   return (
     <>
-    <Card sx={{ minWidth: 275, marginBottom:'30px', marginTop:'10px' }}>
+    <Card sx={{ minWidth: 275, marginBottom:'30px', marginTop:'10px' }} onClick={handleCardClick}>
       <CardContent>
         <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1}>
@@ -83,7 +91,7 @@ export default function ProgressStepThree() {
       </CardContent>
     </Card>
 
-    <Card sx={{ minWidth: 275, marginBottom:'30px', marginTop:'10px' }}>
+    <Card sx={{ minWidth: 275, marginBottom:'30px', marginTop:'10px' }} onClick={handleCardClick}>
       <CardContent>
         <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1}>
@@ -137,7 +145,7 @@ export default function ProgressStepThree() {
       </CardContent>
     </Card>
 
-    <Card sx={{ minWidth: 275, marginBottom:'30px', marginTop:'10px' }}>
+    <Card sx={{ minWidth: 275, marginBottom:'30px', marginTop:'10px' }} onClick={handleCardClick}>
       <CardContent>
         <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1}>
@@ -191,7 +199,7 @@ export default function ProgressStepThree() {
       </CardContent>
     </Card>
 
-    <Card sx={{ minWidth: 275, marginBottom:'30px', marginTop:'10px' }}>
+    <Card sx={{ minWidth: 275, marginBottom:'30px', marginTop:'10px' }} onClick={handleCardClick}>
       <CardContent>
         <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1}>
@@ -245,7 +253,7 @@ export default function ProgressStepThree() {
       </CardContent>
     </Card>
 
-    <Card sx={{ minWidth: 275, marginBottom:'30px', marginTop:'10px' }}>
+    <Card sx={{ minWidth: 275, marginBottom:'30px', marginTop:'10px' }} onClick={handleCardClick}>
       <CardContent>
         <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1}>
