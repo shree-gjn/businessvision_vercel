@@ -37,7 +37,6 @@ function App() {
           <Route path="/industry" element={<IndustryComponent />} />
           <Route path="/income" element={<IncomeComponent />} />
           <Route path="/location" element={<LocationComponent />} />
-          <Route path="/dropdown" element={<DropdownWithAccordions />} />
           <Route path="/scout" element={<CorporateScout />} />
         </Routes>
       </Router>
