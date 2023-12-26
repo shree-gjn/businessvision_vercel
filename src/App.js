@@ -16,6 +16,7 @@ import IndustryComponent from './components/industry';
 import IncomeComponent from './components/income';
 import LocationComponent from './components/location';
 import DropdownWithAccordions from './components/dropdown';
+import CorporateScout from './pages/CorporateScoutFull';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="/income" element={<IncomeComponent />} />
           <Route path="/location" element={<LocationComponent />} />
           <Route path="/dropdown" element={<DropdownWithAccordions />} />
+          <Route path="/scout" element={<CorporateScout />} />
         </Routes>
       </Router>
     </div>

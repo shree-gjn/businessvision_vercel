@@ -2,6 +2,7 @@ import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -41,7 +42,7 @@ const Item = styled(Paper)(({ theme }) => ({
     marginBottom:'8px',
   }));
 
-export default function RecruitmentFullInfo() {
+export default function CorporateFull() {
   const navigate = useNavigate();  // Get the history object from react-router-dom
 
   const goBack = () => {
@@ -52,6 +53,7 @@ export default function RecruitmentFullInfo() {
     <>
       <BackLink to="#" onClick={goBack} > <BackButton /> 戻る </BackLink>
       <Box sx={{ flexGrow: 1 , padding:'10px', overflow:'scroll'}}>
+        Hello
           <Grid container spacing={1}>
               <Grid item xs={6}>
               <Item sx={{textAlign:'left', fontSize:'12px'}}>求人no: 1691</Item>

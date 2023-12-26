@@ -5,6 +5,7 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import BottomNav from '../components/BottomNav';
+import CorporateScout from './CorporateScout';
 
 const MessageComponent = ({ handleNext }) => {
   const [value, setValue] = React.useState('1');
@@ -26,7 +27,9 @@ const MessageComponent = ({ handleNext }) => {
         </TabList>
       </Box>
       <TabPanel value="1">Item One</TabPanel>
-      <TabPanel value="2">Item Two</TabPanel>
+      <TabPanel value="2">
+        <CorporateScout />
+      </TabPanel>
     </TabContext>
     <BottomNav />
   </Box>

@@ -8,7 +8,10 @@ import {
   Checkbox,
   FormControlLabel,
 } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'; // Import the desired icon
+import {ReactComponent as YenIcon} from '../assets/YenIcon.svg';
+import {ReactComponent as BackButton} from '../assets/BackButton.svg';
+
+// import ExpandMoreIcon from '@material-ui/icons/ExpandMore'; // Import the desired icon
 
 const DropdownWithAccordions = () => {
   const [selectedValues, setSelectedValues] = useState([]);
@@ -31,7 +34,7 @@ const DropdownWithAccordions = () => {
     >
       <MenuItem value="item1">
         <ExpansionPanel>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <ExpansionPanelSummary expandIcon={<YenIcon />}>
             Accordion 1
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
@@ -52,7 +55,7 @@ const DropdownWithAccordions = () => {
 
       <MenuItem value="item2">
         <ExpansionPanel>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <ExpansionPanelSummary expandIcon={<YenIcon />}>
             Accordion 2
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
