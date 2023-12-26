@@ -9,13 +9,8 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
-import {ReactComponent as MoneyIcon} from '../assets/MoneyIcon.svg';
-import {ReactComponent as MapsIcon} from '../assets/MapsIcon.svg';
 import {ReactComponent as BuildingIcon} from '../assets/BuildingIcon.svg';
 import {ReactComponent as BagIcon} from '../assets/BagIcon.svg';
-import {ReactComponent as BagBrownIcon} from '../assets/BagBrownIcon.svg';
-import {ReactComponent as TickBrown} from '../assets/TickBrown.svg';
-import {ReactComponent as BuildingBrownIcon} from '../assets/BuildingBrownIcon.svg';
 import {ReactComponent as ChatIcon} from '../assets/ChatIcon.svg'; 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -81,7 +76,7 @@ export default function CorporateScout() {
               <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる </Button>
             </Grid>
             <Grid item xs={6}>
-              <Button component={Link} to="/recruitment" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
+              <Button component={Link} to="/messages/scout" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
             </Grid>
         </Grid>
         </Box>
@@ -137,7 +132,7 @@ export default function CorporateScout() {
               <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる </Button>
             </Grid>
             <Grid item xs={6}>
-              <Button component={Link} to="/recruitment" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
+              <Button component={Link} to="/scout" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
             </Grid>
         </Grid>
         </Box>
@@ -194,7 +189,7 @@ export default function CorporateScout() {
               <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる </Button>
             </Grid>
             <Grid item xs={6}>
-              <Button component={Link} to="/recruitment" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
+              <Button component={Link} to="/scout" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
             </Grid>
         </Grid>
         </Box>

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -18,6 +17,7 @@ import {ReactComponent as TrashIcon} from '../assets/TrashIcon.svg';
 import {ReactComponent as UserFolder} from '../assets/UserFolder.svg';
 import {ReactComponent as BigBagIcon}  from '../assets/BigBagIcon.svg';
 import {ReactComponent as CalendarIcon} from '../assets/CalendarIcon.svg';
+import {ReactComponent as ChatIcon} from '../assets/ChatIcon.svg'; 
 import BottomNav from '../components/BottomNav';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -53,7 +53,20 @@ export default function CorporateFull() {
     <>
       <BackLink to="#" onClick={goBack} > <BackButton /> 戻る </BackLink>
       <Box sx={{ flexGrow: 1 , padding:'10px', overflow:'scroll'}}>
-        Hello
+        <Typography variant="h6" component="div" sx={{textAlign:'left', fontSize:'12px'}}> 企業からのコメント </Typography>
+        <Box sx={{ flexGrow: 1 }} style={{background:'#DFD0A7', borderRadius:'5px', marginTop:'10px'}}>
+        <Grid container spacing={1} sx={{paddingTop:'0px'}}> 
+            <Grid item xs={1}>
+            <Item sx={{textAlign:'left', display:'grid', background:'#DFD0A7', borderRadius:'5px'}}><ChatIcon style={{marginTop:'10px', marginLeft:'3px'}}/></Item>
+            </Grid>
+            <Grid item xs={11}>
+            <Item sx={{fontSize:'12px', textAlign:'left', background: 'rgba(223, 208, 167, 0.20)', padding:'13px', fontSize:'8px' }}>【特別スカウト】渋谷/上場企業での経理マネ‐ジャー を募集しております。
+今までのご経験をぜひ、弊社で活かしてみませんか？
+ご応募お待ちしております。​</Item>
+            </Grid>
+        </Grid>
+        </Box>
+        <Box sx={{borderBottom: '1px solid #EEEEEE', marginTop:'10px'}}> </Box>
           <Grid container spacing={1}>
               <Grid item xs={6}>
               <Item sx={{textAlign:'left', fontSize:'12px'}}>求人no: 1691</Item>

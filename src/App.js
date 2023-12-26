@@ -15,7 +15,7 @@ import OccupationComponent from './components/occupation';
 import IndustryComponent from './components/industry';
 import IncomeComponent from './components/income';
 import LocationComponent from './components/location';
-import CorporateScout from './pages/CorporateScoutFull';
+import CorporateFull from './pages/CorporateScoutFull';
 
 function App() {
   return (
@@ -36,7 +36,8 @@ function App() {
           <Route path="/industry" element={<IndustryComponent />} />
           <Route path="/income" element={<IncomeComponent />} />
           <Route path="/location" element={<LocationComponent />} />
-          <Route path="/scout" element={<CorporateScout />} />
+          <Route path="/messages/scout" element={<CorporateFull />} />
+
         </Routes>
       </Router>
     </div>
