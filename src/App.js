@@ -15,7 +15,6 @@ import OccupationComponent from './components/occupation';
 import IndustryComponent from './components/industry';
 import IncomeComponent from './components/income';
 import LocationComponent from './components/location';
-import DropdownWithAccordions from './components/dropdown';
 import CorporateScout from './pages/CorporateScoutFull';
 
 function App() {
