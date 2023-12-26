@@ -1,73 +1,67 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { styled } from '@mui/system';
-import { Paper, List, ListItem, ListItemText, TextField, Button, Container } from '@mui/material';
-
+import React, { useState } from 'react';
+import { Avatar, TextField, Paper, Grid, InputAdornment, IconButton } from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
 
 const ChatComponent = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
-  const messagesEndRef = useRef(null);
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const handleInputChange = (event) => {
-    setNewMessage(event.target.value);
-  };
 
   const handleSendMessage = () => {
     if (newMessage.trim() !== '') {
-      setMessages([...messages, { text: newMessage, sender: 'user', timestamp: new Date() }]);
-      // In a real-world application, you might send the message to a server here.
+      setMessages([...messages, { text: newMessage, sender: 'user' }]);
       setNewMessage('');
     }
   };
 
-  const handleBotResponse = () => {
-    // Simulate a bot response after a delay
-    setTimeout(() => {
-      setMessages([
-        ...messages,
-        { text: 'I am a bot. Hello!', sender: 'bot', timestamp: new Date() },
-      ]);
-    }, 500);
-  };
-
   return (
-    <Container maxWidth="sm">
-      <Paper elevation={3}>
-        <List>
+    <div style={{ padding: 16 }}>
+      <Grid container component={Paper} elevation={3} style={{ padding: 16 }}>
+        {/* Messages Container */}
+        <Grid item xs={12} style={{ height: '400px', overflowY: 'auto' }}>
           {messages.map((message, index) => (
-            <ListItem key={index} alignItems="flex-start">
-              <ListItemText
-                primary={message.text}
-                secondary={`${message.sender} - ${message.timestamp.toLocaleTimeString()}`}
-              />
-            </ListItem>
+            <div key={index} style={{ marginBottom: 8, display: 'flex', alignItems: 'center' }}>
+              {message.sender === 'user' ? (
+                <>
+                  <Avatar src="path_to_user_avatar" alt="User Avatar" />
+                  <div style={{ marginLeft: 8, background: '#e3f2fd', padding: 8, borderRadius: 8 }}>
+                    {message.text}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div style={{ marginRight: 8, background: '#f0f0f0', padding: 8, borderRadius: 8 }}>
+                    {message.text}
+                  </div>
+                  <Avatar src="path_to_received_avatar" alt="Received Avatar" />
+                </>
+              )}
+            </div>
           ))}
-          <div ref={messagesEndRef} />
-        </List>
-        <div>
-          <TextField
-            fullWidth
-            label="Type your message"
-            value={newMessage}
-            onChange={handleInputChange}
-          />
-          <Button variant="contained" color="primary" onClick={handleSendMessage}>
-            Send
-          </Button>
-        </div>
-      </Paper>
-      <Button variant="outlined" onClick={handleBotResponse} style={{ marginTop: '10px' }}>
-        Simulate Bot Response
-      </Button>
-    </Container>
+        </Grid>
+
+        {/* Send Message Text Field */}
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={10}>
+            <TextField
+              label="Type your message"
+              variant="outlined"
+              fullWidth
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleSendMessage} edge="end">
+                      <SendIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+    </div>
   );
 };
 
