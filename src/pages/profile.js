@@ -5,6 +5,7 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import BottomNav from '../components/BottomNav';
+import ResumeTab from './profile/ResumeTab';
 
 const ProfileComponent = ({ handleNext }) => {
   const [value, setValue] = React.useState('1');
@@ -25,7 +26,9 @@ const ProfileComponent = ({ handleNext }) => {
           <Tab label="設定" value="2" sx={{width:'50%'}}/>
         </TabList>
       </Box>
-      <TabPanel value="1">Item One</TabPanel>
+      <TabPanel value="1">
+        <ResumeTab />
+      </TabPanel>
       <TabPanel value="2">Item Two</TabPanel>
     </TabContext>
     <BottomNav />
