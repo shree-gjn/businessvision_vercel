@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
-import {ReactComponent as BuildingIcon} from '../assets/BuildingIcon.svg';
 import {ReactComponent as BagIcon} from '../assets/BagIcon.svg';
 import {ReactComponent as BuildingMap} from '../assets/BuildingMap.svg';
 import {ReactComponent as ChatBlue} from '../assets/ChatBlue.svg';
