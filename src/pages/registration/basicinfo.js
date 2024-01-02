@@ -154,6 +154,14 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
     'なし',
   ];
 
+  const generateValues = (start, end, step) => {
+    const values = [];
+    for (let i = start; i <= end; i += step) {
+      values.push(`${i}万円以上`);
+    }
+    return values;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -263,6 +271,47 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
               <MenuItem value="宮城県">宮城県</MenuItem>
               <MenuItem value="秋田県">秋田県</MenuItem>
               <MenuItem value="山形県">山形県</MenuItem>
+              <MenuItem value="茨城県">茨城県</MenuItem>
+              <MenuItem value="栃木県">栃木県</MenuItem>
+              <MenuItem value="群馬県">群馬県</MenuItem>
+              <MenuItem value="埼玉県">埼玉県</MenuItem>
+              <MenuItem value="千葉県">千葉県</MenuItem>
+              <MenuItem value="東京都">東京都</MenuItem>
+              <MenuItem value="神奈川県">神奈川県</MenuItem>
+              <MenuItem value="新潟県">新潟県</MenuItem>
+              <MenuItem value="富山県">富山県</MenuItem>
+              <MenuItem value="石川県">石川県</MenuItem>
+              <MenuItem value="福井県">福井県</MenuItem>
+              <MenuItem value="山梨県">山梨県</MenuItem>
+              <MenuItem value="長野県">長野県</MenuItem>
+              <MenuItem value="岐阜県">岐阜県</MenuItem>
+              <MenuItem value="静岡県">静岡県</MenuItem>
+              <MenuItem value="愛知県">愛知県</MenuItem>
+              <MenuItem value="三重県">三重県</MenuItem>
+              <MenuItem value="滋賀県">滋賀県</MenuItem>
+              <MenuItem value="京都府">京都府</MenuItem>
+              <MenuItem value="大阪府">大阪府</MenuItem>
+              <MenuItem value="兵庫県">兵庫県</MenuItem>
+              <MenuItem value="奈良県">奈良県</MenuItem>
+              <MenuItem value="和歌山県">和歌山県</MenuItem>
+              <MenuItem value="鳥取県">鳥取県</MenuItem>
+              <MenuItem value="島根県">島根県</MenuItem>
+              <MenuItem value="岡山県">岡山県</MenuItem>
+              <MenuItem value="広島県">広島県</MenuItem>
+              <MenuItem value="山口県">山口県</MenuItem>
+              <MenuItem value="徳島県">徳島県</MenuItem>
+              <MenuItem value="香川県">香川県</MenuItem>
+              <MenuItem value="愛媛県">愛媛県</MenuItem>
+              <MenuItem value="高知県">高知県</MenuItem>
+              <MenuItem value="福岡県">福岡県</MenuItem>
+              <MenuItem value="佐賀県">佐賀県</MenuItem>
+              <MenuItem value="長崎県">長崎県</MenuItem>
+              <MenuItem value="熊本県">熊本県</MenuItem>
+              <MenuItem value="大分県">大分県</MenuItem>
+              <MenuItem value="宮崎県">宮崎県</MenuItem>
+              <MenuItem value="鹿児島県">鹿児島県</MenuItem>
+              <MenuItem value="沖縄県">沖縄県</MenuItem>
+              <MenuItem value="海外">海外</MenuItem>
             </Select>
             <FormHelperText style={{ color: 'red' }}>{selectedOptionError}</FormHelperText>
           </FormControl>
@@ -349,27 +398,32 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
         </Grid>
 
         <Grid item xs={12}>
-          {/* Fifth Dropdown */}
-          <FormControl fullWidth required error={!!dropdown5Error}>
-            <FormLabel id="dropdown5-label">現在年収を教えてください</FormLabel>
-            <Select
-              value={dropdown5Value}
-              onChange={handleDropdown5Change}
-              displayEmpty
-            >
-              <MenuItem value="" disabled>
-              オプションを選んでください
-              </MenuItem>
-              <MenuItem value="299万円以下">299万円以下</MenuItem>
-              <MenuItem value="300万円以上">300万円以上</MenuItem>
-              <MenuItem value="350万円以上">350万円以上</MenuItem>
-              <MenuItem value="400万円以上">400万円以上</MenuItem>
-              <MenuItem value="450万円以上">450万円以上</MenuItem>
-              <MenuItem value="500万円以上">500万円以上</MenuItem>
-            </Select>
-            <FormHelperText style={{ color: 'red' }}>{dropdown5Error}</FormHelperText>
-          </FormControl>
-        </Grid>
+      {/* Fifth Dropdown */}
+      <FormControl fullWidth required error={!!dropdown5Error}>
+        <FormLabel id="dropdown5-label">現在年収を教えてください</FormLabel>
+        <Select
+          value={dropdown5Value}
+          onChange={handleDropdown5Change}
+          displayEmpty
+        >
+          <MenuItem value="" disabled>
+            オプションを選んでください
+          </MenuItem>
+          <MenuItem value="299万円以上">299万円以上</MenuItem>
+          {generateValues(300, 2000, 50).map((value) => (
+            <MenuItem key={value} value={value}>
+              {value}
+            </MenuItem>
+          ))}
+          {generateValues(2000, 5000, 500).map((value) => (
+            <MenuItem key={value} value={value}>
+              {value}
+            </MenuItem>
+          ))}
+        </Select>
+        <FormHelperText style={{ color: 'red' }}>{dropdown5Error}</FormHelperText>
+      </FormControl>
+    </Grid>
 
         <Grid item xs={12}>
           {/* Sixth Dropdown */}
@@ -389,6 +443,16 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
               <MenuItem value="営業系">営業系</MenuItem>
               <MenuItem value="マーケティング・販促企画・商品開発系">マーケティング・販促企画・商品開発系</MenuItem>
               <MenuItem value="コンサルタント系">コンサルタント系</MenuItem>
+              <MenuItem value="金融系専門職">金融系専門職</MenuItem>
+              <MenuItem value="不動産系専門職">不動産系専門職</MenuItem>
+              <MenuItem value="技術系（IT・Web・通信系）">技術系（IT・Web・通信系）</MenuItem>
+              <MenuItem value="技術系（電気・電子・半導体）">技術系（電気・電子・半導体）</MenuItem>
+              <MenuItem value="技術系（機械・メカトロ・自動車）">技術系（機械・メカトロ・自動車）</MenuItem>
+              <MenuItem value="技術系（化学・素材・食品・衣料）">技術系（化学・素材・食品・衣料）</MenuItem>
+              <MenuItem value="技術系（建築・設備・土木・プラント）">技術系（建築・設備・土木・プラント）</MenuItem>
+              <MenuItem value="技術・専門職系（メディカル）">技術・専門職系（メディカル）</MenuItem>
+              <MenuItem value="サービス・流通系">サービス・流通系</MenuItem>
+              <MenuItem value="クリエイティブ系">クリエイティブ系</MenuItem>
             </Select>
             <FormHelperText style={{ color: 'red' }}>{dropdown6Error}</FormHelperText>
           </FormControl>
@@ -412,7 +476,11 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
               <MenuItem value="流通・小売・サービス">流通・小売・サービス</MenuItem>
               <MenuItem value="広告・出版・マスコミ">広告・出版・マスコミ</MenuItem>
               <MenuItem value="コンサルティング">コンサルティング</MenuItem>
-
+              <MenuItem value="金融">金融</MenuItem>
+              <MenuItem value="建設・不動産">建設・不動産</MenuItem>
+              <MenuItem value="メディカル">メディカル</MenuItem>
+              <MenuItem value="物流・運輸">物流・運輸</MenuItem>
+              <MenuItem value="その他（インフラ・教育・官公庁など）">その他（インフラ・教育・官公庁など）</MenuItem>
             </Select>
             <FormHelperText style={{ color: 'red' }}>{dropdown7Error}</FormHelperText>
           </FormControl>
@@ -577,9 +645,30 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
             onChange={handleDropdown1Change}
             style={{ marginBottom: '10px', marginRight: '10px', width:'48%' }}
           >
-            <MenuItem value="option1">Option 1</MenuItem>
-            <MenuItem value="option2">Option 2</MenuItem>
-            <MenuItem value="option3">Option 3</MenuItem>
+            <MenuItem value="北京語">北京語</MenuItem>
+            <MenuItem value="韓国語">韓国語</MenuItem>
+            <MenuItem value="アラビア語">アラビア語</MenuItem>
+            <MenuItem value="広東語">広東語</MenuItem>
+            <MenuItem value="スペイン語">スペイン語</MenuItem>
+            <MenuItem value="フィンランド語">フィンランド語</MenuItem>
+            <MenuItem value="スウェーデン語">スウェーデン語</MenuItem>
+            <MenuItem value="スペイン語">スペイン語</MenuItem>
+            <MenuItem value="台湾語">台湾語</MenuItem>
+            <MenuItem value="フランス語">フランス語</MenuItem>
+            <MenuItem value="ドイツ語">ドイツ語</MenuItem>
+            <MenuItem value="ヘブライ語">ヘブライ語</MenuItem>
+            <MenuItem value="ヒンディー語">ヒンディー語</MenuItem>
+            <MenuItem value="インドネシア語">インドネシア語</MenuItem>
+            <MenuItem value="イタリア語">イタリア語</MenuItem>
+            <MenuItem value="マレーシア語">マレーシア語</MenuItem>
+            <MenuItem value="オランダ語">オランダ語</MenuItem>
+            <MenuItem value="ノルウェー語">ノルウェー語</MenuItem>
+            <MenuItem value="ポルトガル語">ポルトガル語</MenuItem>
+            <MenuItem value="ロシア語">ロシア語</MenuItem>
+            <MenuItem value="スワヒリ語">スワヒリ語</MenuItem>
+            <MenuItem value="タイ語">タイ語</MenuItem>
+            <MenuItem value="カダログ語">カダログ語</MenuItem>
+            <MenuItem value="ベトナム語">ベトナム語</MenuItem>
           </Select>
           <Select
             value={dropdown2Value}
