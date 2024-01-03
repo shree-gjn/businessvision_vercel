@@ -16,7 +16,7 @@ const ProfileComponent = ({ handleNext }) => {
   };
 
   return (
-    <Box sx={{ width: '100%', typography: 'body1' }}>
+    <Box sx={{ width: '100%', typography: 'body1', marginBottom:'100px'}}>
     <div className="PageHeader">
       <p>プロフィール</p>
     </div>

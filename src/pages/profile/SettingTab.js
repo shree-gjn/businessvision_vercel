@@ -25,7 +25,7 @@ const SettingTab = () => {
       
       <Card sx={{ minWidth: 275, marginBottom:'30px', marginTop:'20px', borderRadius:'0px'}}>
       <CardContent sx={{padding:'0px', paddingBottom:'0px !important'}}>
-      <Link to="#" style={{textDecoration:'none'}}>
+      <Link to="/maskingresume" style={{textDecoration:'none'}}>
         <Box sx={{ flexGrow: 1 , padding:'10px'}}>
         <Grid container spacing={1}>
             <Grid item xs={10}>
@@ -38,7 +38,7 @@ const SettingTab = () => {
         </Box>
         </Link>
         <Divider />
-        <Link to="#" style={{textDecoration:'none'}}>
+        <Link to="/recommendedjob" style={{textDecoration:'none'}}>
         <Box sx={{ flexGrow: 1 , padding:'10px'}}>
         <Grid container spacing={1}>
             <Grid item xs={10}>
@@ -64,7 +64,7 @@ const SettingTab = () => {
         </Box>
         </Link>
         <Divider />
-        <Link to="#" style={{textDecoration:'none'}}>
+        <Link to="/emaildelivery" style={{textDecoration:'none'}}>
         <Box sx={{ flexGrow: 1 , padding:'10px'}}>
         <Grid container spacing={1}>
             <Grid item xs={10}>
@@ -77,7 +77,7 @@ const SettingTab = () => {
         </Box>
         </Link>
         <Divider />
-        <Link to="#" style={{textDecoration:'none'}}>
+        <Link to="/terms" style={{textDecoration:'none'}}>
         <Box sx={{ flexGrow: 1 , padding:'10px'}}>
         <Grid container spacing={1}>
             <Grid item xs={10}>
@@ -87,7 +87,7 @@ const SettingTab = () => {
         </Box>
         </Link>
         <Divider />
-        <Link to="#" style={{textDecoration:'none'}}>
+        <Link to="/privacy" style={{textDecoration:'none'}}>
         <Box sx={{ flexGrow: 1 , padding:'10px'}}>
         <Grid container spacing={1}>
             <Grid item xs={10}>
@@ -97,7 +97,7 @@ const SettingTab = () => {
         </Box>
         </Link>
         <Divider />
-        <Link to="#" style={{textDecoration:'none'}}>
+        <Link to="/inquiry" style={{textDecoration:'none'}}>
         <Box sx={{ flexGrow: 1 , padding:'10px'}}>
         <Grid container spacing={1}>
             <Grid item xs={10}>
@@ -107,7 +107,7 @@ const SettingTab = () => {
         </Box>
         </Link>
         <Divider />
-        <Link to="#" style={{textDecoration:'none'}}>
+        <Link to="/changememberid" style={{textDecoration:'none'}}>
         <Box sx={{ flexGrow: 1 , padding:'10px'}}>
         <Grid container spacing={1}>
             <Grid item xs={10}>

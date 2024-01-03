@@ -2,8 +2,15 @@ import React from 'react';
 import {Typography} from '@mui/material';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 
 const Terms = () => {
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1); // Navigate to the previous page
+  };
+
   return (
     <div style={{width:"90%", margin: '0 auto'}}>
     <Typography variant="h6" gutterBottom sx={{marginTop:'5px', padding:'20px'}} > 利用規約 </Typography> 
@@ -124,9 +131,9 @@ const Terms = () => {
     </Typography>
 
     
-    <Button component={Link} to="/" variant="contained" color="primary" style={{marginBottom:'50px', marginTop:'20px'}}>
-    前の画面に戻る
-  </Button>
+    <Button onClick={goBack} variant="contained" color="primary" style={{ marginBottom: '50px', marginTop: '20px' }}>
+        前の画面に戻る
+      </Button>
 </div>
   );
 };
