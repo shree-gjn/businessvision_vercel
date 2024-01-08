@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
-const LoginForm = () => {
+const RegistrationForm = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -129,11 +129,15 @@ const LoginForm = () => {
       {/* Display login button when not loading */}
       {!loading && (
         <Button type="submit" variant="contained" color="primary" fullWidth>
-          Login
+          新規登録こちら (簡単60秒）
         </Button>
       )}
+      <Typography variant="body2" sx={{marginTop:'10px'}}>
+            <a href="/login">会員登録済みの方はこちら</a>
+          </Typography>
     </form>
+    
   );
 };
 
-export default LoginForm;
+export default RegistrationForm;

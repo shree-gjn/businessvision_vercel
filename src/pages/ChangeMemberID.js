@@ -87,6 +87,7 @@ const ChangeMemberID = () => {
           <Typography variant="body1" sx={{marginTop:'10px'}}>
           ご入力された内容をご確認ください。
           </Typography>
+          
           <div style={{marginTop:'40px', width:'90%', margin:'0 auto'}}>
       <Typography variant="body1" sx={{ marginBottom: '16px', textAlign:'left' }}>
       会員ID（メールアドレス）

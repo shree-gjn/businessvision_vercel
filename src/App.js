@@ -4,7 +4,7 @@ import MyAppBar from './components/AppBar';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Terms from './pages/terms';
 import Privacy from './pages/privacy';
-import LoginForm from './pages/loginscreen';
+import RegistrationForm from './pages/RegistrationForm';
 import RegistrationStepper from './pages/registration';
 import MyPage from './pages/mypage';
 import MessageComponent from './pages/message';
@@ -22,6 +22,8 @@ import RecommendedJobSettings from './pages/RecommendedJobSettings';
 import EmailDeliverySettings from './pages/EmailDeliverySettings';
 import Inquiry from './pages/Inquiry';
 import ChangeMemberID from './pages/ChangeMemberID';
+import LoginForm from './pages/LoginForm';
+import ForgetPassword from './pages/ForgetPassword';
 
 function App() {
   return (
@@ -29,7 +31,7 @@ function App() {
       <MyAppBar />
       <Router>
         <Routes>
-          <Route path="/" element={<LoginForm />} />
+          <Route path="/" element={<RegistrationForm />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/registration" element={<RegistrationStepper />} />
@@ -49,6 +51,8 @@ function App() {
           <Route path="/emaildelivery" element={<EmailDeliverySettings />} />
           <Route path="/inquiry" element={<Inquiry />} />
           <Route path="/changememberid" element={<ChangeMemberID />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/forgetpassword" element={<ForgetPassword />} />
         </Routes>
       </Router>
     </div>
