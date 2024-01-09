@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import Modal from '@mui/material/Modal';
 import { Link, useNavigate } from 'react-router-dom'; 
 import {ReactComponent as BackButton} from '../assets/BackButton.svg';
 import {ReactComponent as MoneyIcon} from '../assets/MoneyIcon.svg';
@@ -17,6 +18,7 @@ import {ReactComponent as TrashIcon} from '../assets/TrashIcon.svg';
 import {ReactComponent as UserFolder} from '../assets/UserFolder.svg';
 import {ReactComponent as BigBagIcon}  from '../assets/BigBagIcon.svg';
 import {ReactComponent as CalendarIcon} from '../assets/CalendarIcon.svg';
+import {ReactComponent as WarningIcon} from '../assets/WarningIcon.svg';
 import BottomNav from '../components/BottomNav';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -42,6 +44,23 @@ const Item = styled(Paper)(({ theme }) => ({
   }));
 
 export default function RecruitmentFullInfo() {
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+
+  const handleOpenDeleteModal = () => {
+    setDeleteModalOpen(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setDeleteModalOpen(false);
+  };
+
+  const handleDelete = () => {
+    // Implement the logic to delete the item
+    // You can use an API call or other methods to delete the item
+    // After deletion, you may want to navigate to a different page or update the UI
+    // For now, let's just close the modal
+    handleCloseDeleteModal();
+  };
   const navigate = useNavigate();  // Get the history object from react-router-dom
 
   const goBack = () => {
@@ -88,7 +107,27 @@ export default function RecruitmentFullInfo() {
               </Grid>
               <Grid item xs={2} sx={{paddingTop:'0px'}}>
               <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
-                <TrashIcon />​</Item>
+                <TrashIcon onClick={handleOpenDeleteModal} />​</Item>
+
+                <Modal
+                  open={isDeleteModalOpen}
+                  onClose={handleCloseDeleteModal}
+                  aria-labelledby="delete-confirmation-modal"
+                  aria-describedby="delete-confirmation-description"
+                >
+                  <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'background.paper', boxShadow: 24, p: 4, width: 300, textAlign:'center' }}>
+                    <WarningIcon />
+                    <Typography id="delete-confirmation-modal" variant="h6" component="div">
+                      削除してもよろしいですか?
+                    </Typography>
+                    <Button onClick={handleCloseDeleteModal} variant="contained" sx={{ mt: 2, ml: 2, backgroundColor: "#949494" }}>
+                    キャンセル
+                    </Button>
+                    <Button onClick={handleDelete} variant="contained" sx={{ mt: 2, ml: 2 , backgroundColor:"#F96264" }}>
+                    削除する
+                    </Button>
+                  </Box>
+                </Modal>
               </Grid>
           </Grid>
           </Box>
@@ -280,6 +319,7 @@ export default function RecruitmentFullInfo() {
         </Box>
       </Card>
       <BottomNav />
+      
   </>
   );
 }

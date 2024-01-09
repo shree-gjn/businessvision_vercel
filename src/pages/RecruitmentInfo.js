@@ -32,7 +32,7 @@ export default function RecruitmentInfo() {
     <>
     <Card sx={{ minWidth: 275, marginBottom:'30px' }}>
       <CardContent>
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, textDecoration:'none' }} component={Link} to="/recruitment">
         <Grid container spacing={1}>
             <Grid item xs={6}>
             <Item sx={{textAlign:'left', fontSize:'12px'}}>求人no: 1691</Item>
@@ -48,7 +48,7 @@ export default function RecruitmentInfo() {
         <Typography variant="h6" component="div" sx={{fontSize:'14px', fontWeight:'700', textAlign:'left'}}>
         【渋谷/プライム上場】SaaS/ASPのパイオニア企業での経理マネージャー/リモート有
         </Typography>
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, textDecoration:'none' }} component={Link} to="/recruitment">
         <Grid container spacing={1}>
             <Grid item xs={6}>
             <Item sx={{textAlign:'left', display:'flex', gap:'5px', marginTop:'5px'}}> 
@@ -69,7 +69,7 @@ export default function RecruitmentInfo() {
             </Grid>
         </Grid>
         </Box>
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, textDecoration:'none' }} component={Link} to="/recruitment">
         <Grid container spacing={1}>
             <Grid item xs={3} sx={{borderBottom: '1px solid #ccc'}}>
             <Item sx={{textAlign:'left', fontSize:'12px', display:'grid', background:'#FAFAFA', borderRadius:'5px'}}><BagBrownIcon style={{margin:'0 auto'}}/>仕事内容</Item>
@@ -93,7 +93,7 @@ export default function RecruitmentInfo() {
         </Box>
       </CardContent>
       <CardActions>
-      <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1 , textDecoration:'none'}} component={Link} to="/recruitment">
         <Grid container spacing={1}>
             <Grid item xs={6}>
               <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる </Button>
@@ -107,7 +107,7 @@ export default function RecruitmentInfo() {
     </Card>
     <Card sx={{ minWidth: 275, marginBottom:'30px' }}>
       <CardContent>
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1 , textDecoration:'none'}} component={Link} to="/recruitment">
         <Grid container spacing={1}>
             <Grid item xs={6}>
             <Item sx={{textAlign:'left', fontSize:'12px'}}>求人no: 1691</Item>
@@ -123,7 +123,7 @@ export default function RecruitmentInfo() {
         <Typography variant="h6" component="div" sx={{fontSize:'14px', fontWeight:'700', textAlign:'left'}}>
         【渋谷/プライム上場】SaaS/ASPのパイオニア企業での経理マネージャー/リモート有
         </Typography>
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1 , textDecoration:'none'}} component={Link} to="/recruitment">
         <Grid container spacing={1}>
             <Grid item xs={6}>
             <Item sx={{textAlign:'left', display:'flex', gap:'5px', marginTop:'5px'}}> 
@@ -144,7 +144,7 @@ export default function RecruitmentInfo() {
             </Grid>
         </Grid>
         </Box>
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, textDecoration:'none' }} component={Link} to="/recruitment">
         <Grid container spacing={1}>
             <Grid item xs={3} sx={{borderBottom: '1px solid #ccc'}}>
             <Item sx={{textAlign:'left', fontSize:'12px', display:'grid', background:'#FAFAFA', borderRadius:'5px'}}><BagBrownIcon style={{margin:'0 auto'}}/>仕事内容</Item>
@@ -168,7 +168,7 @@ export default function RecruitmentInfo() {
         </Box>
       </CardContent>
       <CardActions>
-      <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1 }} component={Link} to="/recruitment">
         <Grid container spacing={1}>
             <Grid item xs={6}>
               <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる </Button>
@@ -182,7 +182,7 @@ export default function RecruitmentInfo() {
     </Card>
     <Card sx={{ minWidth: 275, marginBottom:'30px' }}>
       <CardContent>
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, textDecoration:'none' }} component={Link} to="/recruitment">
         <Grid container spacing={1}>
             <Grid item xs={6}>
             <Item sx={{textAlign:'left', fontSize:'12px'}}>求人no: 1691</Item>
@@ -198,7 +198,7 @@ export default function RecruitmentInfo() {
         <Typography variant="h6" component="div" sx={{fontSize:'14px', fontWeight:'700', textAlign:'left'}}>
         【渋谷/プライム上場】SaaS/ASPのパイオニア企業での経理マネージャー/リモート有
         </Typography>
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1 }} component={Link} to="/recruitment">
         <Grid container spacing={1}>
             <Grid item xs={6}>
             <Item sx={{textAlign:'left', display:'flex', gap:'5px', marginTop:'5px'}}> 
@@ -219,7 +219,7 @@ export default function RecruitmentInfo() {
             </Grid>
         </Grid>
         </Box>
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, textDecoration:'none' }} component={Link} to="/recruitment">
         <Grid container spacing={1}>
             <Grid item xs={3} sx={{borderBottom: '1px solid #ccc'}}>
             <Item sx={{textAlign:'left', fontSize:'12px', display:'grid', background:'#FAFAFA', borderRadius:'5px'}}><BagBrownIcon style={{margin:'0 auto'}}/>仕事内容</Item>
@@ -243,7 +243,7 @@ export default function RecruitmentInfo() {
         </Box>
       </CardContent>
       <CardActions>
-      <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1, textDecoration:'none'}} component={Link} to="/recruitment">
         <Grid container spacing={1}>
             <Grid item xs={6}>
               <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる </Button>
