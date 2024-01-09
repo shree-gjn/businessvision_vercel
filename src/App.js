@@ -24,6 +24,8 @@ import Inquiry from './pages/Inquiry';
 import ChangeMemberID from './pages/ChangeMemberID';
 import LoginForm from './pages/LoginForm';
 import ForgetPassword from './pages/ForgetPassword';
+import FPAuthentication from './pages/fp-authentication';
+import ResetPasswordPage from './pages/ResetPasswordPage';
 
 function App() {
   return (
@@ -53,6 +55,8 @@ function App() {
           <Route path="/changememberid" element={<ChangeMemberID />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/forgetpassword" element={<ForgetPassword />} />
+          <Route path="/fpauthentication" element={<FPAuthentication />} />
+          <Route path="/resetpassword" element={<ResetPasswordPage />} />
         </Routes>
       </Router>
     </div>

@@ -77,27 +77,83 @@ const NestedAccordion = ({ title, innerAccordions }) => {
   );
 };
 
-const NestedDropdownMenu = () => {
+const AccordianBasicInfo = () => {
   const accordionData = [
     {
-      title: 'Accordion 2',
+      title: 'オプションを選んでください',
       innerAccordions: [
         {
-          title: 'Inner Accordion 2.1',
+          title: 'IT・インタネット・ゲーム',
           checkboxes: [
             { label: 'Checkbox 2.1.1' },
             { label: 'Checkbox 2.1.2' },
           ],
         },
         {
-          title: 'Inner Accordion 2.2',
+          title: 'メーカー',
           checkboxes: [
             { label: 'Checkbox 2.2.1' },
             { label: 'Checkbox 2.2.2' },
           ],
         },
         {
-          title: 'Inner Accordion 2.2',
+          title: '商社',
+          checkboxes: [
+            { label: 'Checkbox 2.2.1' },
+            { label: 'Checkbox 2.2.2' },
+          ],
+        },
+        {
+          title: '流通・小売・サービス',
+          checkboxes: [
+            { label: 'Checkbox 2.2.1' },
+            { label: 'Checkbox 2.2.2' },
+          ],
+        },
+        {
+          title: '広告・出版・マスコミ',
+          checkboxes: [
+            { label: 'Checkbox 2.2.1' },
+            { label: 'Checkbox 2.2.2' },
+          ],
+        },
+        {
+          title: 'コンサルティング',
+          checkboxes: [
+            { label: 'Checkbox 2.2.1' },
+            { label: 'Checkbox 2.2.2' },
+          ],
+        },
+        {
+          title: '金融',
+          checkboxes: [
+            { label: 'Checkbox 2.2.1' },
+            { label: 'Checkbox 2.2.2' },
+          ],
+        },
+        {
+          title: '建設・不動産',
+          checkboxes: [
+            { label: 'Checkbox 2.2.1' },
+            { label: 'Checkbox 2.2.2' },
+          ],
+        },
+        {
+          title: 'メディカル',
+          checkboxes: [
+            { label: 'Checkbox 2.2.1' },
+            { label: 'Checkbox 2.2.2' },
+          ],
+        },
+        {
+          title: '物流・運輸',
+          checkboxes: [
+            { label: 'Checkbox 2.2.1' },
+            { label: 'Checkbox 2.2.2' },
+          ],
+        },
+        {
+          title: 'その他（インフラ・教育・官公庁など）',
           checkboxes: [
             { label: 'Checkbox 2.2.1' },
             { label: 'Checkbox 2.2.2' },
@@ -125,4 +181,4 @@ const NestedDropdownMenu = () => {
   );
 };
 
-export default NestedDropdownMenu;
+export default AccordianBasicInfo;

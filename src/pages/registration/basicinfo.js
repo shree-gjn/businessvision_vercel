@@ -13,14 +13,13 @@ import {
   Select,
   MenuItem,
   InputLabel,
-  ListItemText,
   Collapse,
-  List,
-  ListItem,
+  Typography,
 } from '@mui/material';
-import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import AccordianBasicInfo from './components/AccordianBasicInfo';
+import CustomDatePicker from './components/DatePicker';
 
 const BasicInfo = ({ formData, setFormData, handleNext }) => {
   const [name, setName] = useState('');
@@ -254,6 +253,15 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
             <FormHelperText style={{ color: 'red' }}>{genderError}</FormHelperText>
           </FormControl>
         </Grid>
+        <Grid item xs={12} sx={{padding:'2px'}}>
+          {/* Date Picker */}
+          <FormControl fullWidth required error={!!dropdown7Error}>
+            <FormLabel id="dropdown7-label">生まれた年を教えてください​</FormLabel>
+            <CustomDatePicker />
+            <FormHelperText style={{ color: 'red' }}>{dropdown7Error}</FormHelperText>
+          </FormControl>
+          
+        </Grid>
         <Grid item xs={12}>
           <FormControl fullWidth required error={!!selectedOptionError}>
             <FormLabel id="demo-radio-buttons-group-label">お住まいの都道府県を教えてください​</FormLabel>
@@ -457,31 +465,12 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
             <FormHelperText style={{ color: 'red' }}>{dropdown6Error}</FormHelperText>
           </FormControl>
         </Grid>
-
+          
         <Grid item xs={12}>
           {/* Seven Dropdown */}
           <FormControl fullWidth required error={!!dropdown7Error}>
             <FormLabel id="dropdown7-label">これまでのキャリアで経験した業種を教えてください <br />（複数選択可）​</FormLabel>
-            <Select
-              value={dropdown7Value}
-              onChange={handleDropdown7Change}
-              displayEmpty
-            >
-              <MenuItem value="" disabled>
-              オプションを選んでください
-              </MenuItem>
-              <MenuItem value="IT・インタネット・ゲーム">IT・インタネット・ゲーム</MenuItem>
-              <MenuItem value="メーカー">メーカー</MenuItem>
-              <MenuItem value="商社">商社</MenuItem>
-              <MenuItem value="流通・小売・サービス">流通・小売・サービス</MenuItem>
-              <MenuItem value="広告・出版・マスコミ">広告・出版・マスコミ</MenuItem>
-              <MenuItem value="コンサルティング">コンサルティング</MenuItem>
-              <MenuItem value="金融">金融</MenuItem>
-              <MenuItem value="建設・不動産">建設・不動産</MenuItem>
-              <MenuItem value="メディカル">メディカル</MenuItem>
-              <MenuItem value="物流・運輸">物流・運輸</MenuItem>
-              <MenuItem value="その他（インフラ・教育・官公庁など）">その他（インフラ・教育・官公庁など）</MenuItem>
-            </Select>
+            <AccordianBasicInfo />
             <FormHelperText style={{ color: 'red' }}>{dropdown7Error}</FormHelperText>
           </FormControl>
         </Grid>
