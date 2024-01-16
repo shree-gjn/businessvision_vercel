@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const CustomDatePicker = () => {
+const CustomDatePicker = ({ required = true }) => {
   const [selectedDate, setSelectedDate] = useState('');
 
   const handleDateChange = (event) => {
@@ -14,7 +14,8 @@ const CustomDatePicker = () => {
         id="customDatePicker"
         value={selectedDate}
         onChange={handleDateChange}
-        style={{fontSize:'14px', width:'100%', height:'45px'}}
+        style={{ fontSize: '14px', width: '100%', height: '45px' }}
+        // required={required} // Add or remove this line based on the 'required' prop
       />
       {selectedDate && <p>Selected Date: {selectedDate}</p>}
     </div>

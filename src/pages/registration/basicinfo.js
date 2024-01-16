@@ -164,70 +164,70 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (name.trim() === '') {
-      alert('Name is required.');
-      return;
-    }
+    // if (name.trim() === '') {
+    //   alert('Name is required.');
+    //   return;
+    // }
 
-    if (!isChecked) {
-      alert('Please agree to the terms and conditions.');
-      return;
-    }
+    // if (!isChecked) {
+    //   alert('Please agree to the terms and conditions.');
+    //   return;
+    // }
 
-    if (gender === '') {
-      setGenderError('Please select a gender.');
-      return;
-    }
+    // if (gender === '') {
+    //   setGenderError('Please select a gender.');
+    //   return;
+    // }
 
-    if (selectedOption === '') {
-      setSelectedOptionError('Please select an option.');
-      return;
-    }
+    // if (selectedOption === '') {
+    //   setSelectedOptionError('Please select an option.');
+    //   return;
+    // }
 
-    if (secondDropdownValue === '') {
-      setSecondDropdownError('Please select a value for the second dropdown.');
-      return;
-    }
+    // if (secondDropdownValue === '') {
+    //   setSecondDropdownError('Please select a value for the second dropdown.');
+    //   return;
+    // }
 
-    if (thirdDropdownValue === '') {
-      setThirdDropdownError('Please select a value for the third dropdown.');
-      return;
-    }
+    // if (thirdDropdownValue === '') {
+    //   setThirdDropdownError('Please select a value for the third dropdown.');
+    //   return;
+    // }
 
-    if (newRadioValue === '') {
-      setNewRadioError('Please select a value for the new radio button group.');
-      return;
-    }
+    // if (newRadioValue === '') {
+    //   setNewRadioError('Please select a value for the new radio button group.');
+    //   return;
+    // }
 
-    if (new2RadioValue === '') {
-      setNewRadioError('Please select a value for the new radio button group.');
-      return;
-    }
+    // if (new2RadioValue === '') {
+    //   setNewRadioError('Please select a value for the new radio button group.');
+    //   return;
+    // }
 
-    if (dropdown4Value === '') {
-      setDropdown4Error('Please select a value for the fourth dropdown.');
-      return;
-    }
+    // if (dropdown4Value === '') {
+    //   setDropdown4Error('Please select a value for the fourth dropdown.');
+    //   return;
+    // }
 
-    if (dropdown5Value === '') {
-      setDropdown5Error('Please select a value for the fifth dropdown.');
-      return;
-    }
+    // if (dropdown5Value === '') {
+    //   setDropdown5Error('Please select a value for the fifth dropdown.');
+    //   return;
+    // }
 
-    if (dropdown6Value === '') {
-      setDropdown6Error('Please select a value for the sixth dropdown.');
-      return;
-    }
+    // if (dropdown6Value === '') {
+    //   setDropdown6Error('Please select a value for the sixth dropdown.');
+    //   return;
+    // }
 
-    if (dropdown7Value === '') {
-      setDropdown7Error('Please select a value for the seventh dropdown.');
-      return;
-    }
+    // if (dropdown7Value === '') {
+    //   setDropdown7Error('Please select a value for the seventh dropdown.');
+    //   return;
+    // }
 
-    if (dropdown8Value === '') {
-      setDropdown8Error('Please select a value for the eighth dropdown.');
-      return;
-    }
+    // if (dropdown8Value === '') {
+    //   setDropdown8Error('Please select a value for the eighth dropdown.');
+    //   return;
+    // }
 
     handleNext();
   };
@@ -257,7 +257,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
           {/* Date Picker */}
           <FormControl fullWidth required error={!!dropdown7Error}>
             <FormLabel id="dropdown7-label">生まれた年を教えてください​</FormLabel>
-            <CustomDatePicker />
+            <CustomDatePicker required={false} />
             <FormHelperText style={{ color: 'red' }}>{dropdown7Error}</FormHelperText>
           </FormControl>
           
@@ -470,8 +470,8 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
           {/* Seven Dropdown */}
           <FormControl fullWidth required error={!!dropdown7Error}>
             <FormLabel id="dropdown7-label">これまでのキャリアで経験した業種を教えてください <br />（複数選択可）​</FormLabel>
-            <AccordianBasicInfo />
-            <FormHelperText style={{ color: 'red' }}>{dropdown7Error}</FormHelperText>
+            <AccordianBasicInfo required={false} />
+            <FormHelperText style={{ color: 'red' }}>{dropdown7Error}</FormHelperText> 
           </FormControl>
         </Grid>
 
