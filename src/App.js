@@ -26,6 +26,7 @@ import LoginForm from './pages/LoginForm';
 import ForgetPassword from './pages/ForgetPassword';
 import FPAuthentication from './pages/fp-authentication';
 import ResetPasswordPage from './pages/ResetPasswordPage';
+import AgentPage from './pages/AgentPage';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<RegistrationForm />} />
+          <Route path="/agent" element={<AgentPage />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/registration" element={<RegistrationStepper />} />

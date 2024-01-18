@@ -27,10 +27,10 @@ const MessageComponent = ({ handleNext }) => {
           <Tab label="企業スカウト" value="2" sx={{width:'50%'}}/>
         </TabList>
       </Box>
-      <TabPanel value="1">
+      <TabPanel value="1" style={{background:'#FAFAFA'}}>
         <SecretEntry />
       </TabPanel>
-      <TabPanel value="2">
+      <TabPanel value="2" style={{background:'#FAFAFA'}}>
         <CorporateScout />
       </TabPanel>
     </TabContext>

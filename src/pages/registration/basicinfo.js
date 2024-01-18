@@ -53,7 +53,17 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
   const [dropdown2Value, setDropdown2Value] = useState('');
   const [selectedValue, setSelectedValue] = useState([]);
   const [open, setOpen] = useState(false);
-  const [selectedValues, setSelectedValues] = useState([]);
+  const [familyMembers, setFamilyMembers] = useState('');
+  const [currentCompany, setCurrentCompany] = useState('');
+
+  const handleFamilyMembersChange = (event) => {
+    setFamilyMembers(event.target.value);
+  };
+
+  const handleCurrentCompanyChange = (event) => {
+    setCurrentCompany(event.target.value);
+  };
+
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -515,15 +525,16 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
 
         <Grid item xs={12}>
         <FormLabel id="textfield-label">現在（直近）の在籍会社名を入力してください <br /> (複数登録が可能です。）</FormLabel>
-          <TextField
-            fullWidth
-            placeholder="現在（直近）の在籍会社名を入力してください"
-            variant="outlined"
-            value={name}
-            onChange={handleNameChange}
-            required
-          />
-        </Grid>
+        <TextField
+          fullWidth
+          placeholder="現在（直近）の在籍会社名を入力してください"
+          variant="outlined"
+          value={currentCompany}
+          onChange={handleCurrentCompanyChange}
+          required
+        />
+      </Grid>
+        
         <Grid item xs={12}>
           <FormControlLabel
             control={
@@ -562,7 +573,8 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
             variant="outlined"
             type="name"
             placeholder="扶養される家族数について教えてください​"
-            value={name}
+            value={familyMembers}
+            onChange={handleFamilyMembersChange}
             required
           />
         </Grid>
@@ -571,38 +583,39 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
         <FormLabel id="dropdown9-label" style={{marginBottom:'10px'}}>語学スキルについて教えてください​​</FormLabel>
           </Grid>
 
-        <Grid item xs={12}>
-        <FormLabel id="dropdown9-label">英語​</FormLabel>
-        <FormControl fullWidth>
-  <InputLabel htmlFor="level-select" shrink={false}>
-    レベルを選択
-  </InputLabel>
-  <Select
-    value={selectedValue}
-    onChange={handleChange}
-    inputProps={{
-      name: 'level',
-      id: 'level-select',
-    }}
-    renderValue={(selected) => (selected ? selected : '')}
-  >
-    <MenuItem value="">
-      <em>選択してください</em>
-    </MenuItem>
-    <RadioGroup value={selectedValue} onChange={handleChange}>
-      {menuItems.map((item) => (
-        <MenuItem key={item} value={item}>
-          <FormControlLabel
-            value={item}
-            control={<Radio />}
-            label={item}
-          />
-        </MenuItem>
-      ))}
-    </RadioGroup>
-  </Select>
-</FormControl>
-        </Grid>
+          <Grid item xs={12}>
+      <FormLabel id="dropdown9-label">英語​</FormLabel>
+      <FormControl fullWidth>
+        <Select
+          value={selectedValue}
+          onChange={handleChange}
+          inputProps={{
+            name: 'level',
+            id: 'level-select',
+          }}
+          renderValue={(selected) => (selected ? selected : '選択してください')}
+        >
+          <MenuItem value="" disabled>
+            <em>選択してください</em>
+          </MenuItem>
+          {menuItems.map((item) => (
+            <MenuItem key={item} value={item}>
+              <RadioGroup
+                value={selectedValue}
+                onChange={handleChange}
+                style={{ display: 'flex', flexDirection: 'row' }}
+              >
+                <FormControlLabel
+                  value={item}
+                  control={<Radio />}
+                  label={item}
+                />
+              </RadioGroup>
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </Grid>
 
         <Grid item xs={12}>
         <IconButton onClick={handleExpandToggle}>

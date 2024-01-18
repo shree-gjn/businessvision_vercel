@@ -2,8 +2,7 @@
 import React from 'react';
 import { AppBar, Toolbar, IconButton, Typography } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import bvlogo from '../assets/bvlogo.svg'
+import bvlogo from '../assets/bvlogo.svg';
 
 // Create the functional component for the app bar
 const MyAppBar = () => {
@@ -12,7 +11,6 @@ const MyAppBar = () => {
       <Toolbar>
         {/* Left corner logo/icon */}
         <IconButton edge="start" color="inherit" aria-label="menu">
-          {/* Replace 'your_logo_image_path' with the actual path to your logo image */}
           <img src={bvlogo} alt="Logo" style={{ width: '70px', height: '40px', marginLeft: '10px' }} />
         </IconButton>
         {/* App title */}
@@ -21,11 +19,9 @@ const MyAppBar = () => {
         </Typography>
 
         {/* Right corner icons */}
-        <IconButton color="blue">
-          <NotificationsIcon />
-        </IconButton>
-        <IconButton color="blue">
-          <AccountCircle />
+        <IconButton color="blue" sx={{display:'block'}}>
+          <AccountCircle /> <br /> 
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize:'12px' }}>エージェント</Typography>
         </IconButton>
       </Toolbar>
     </AppBar>

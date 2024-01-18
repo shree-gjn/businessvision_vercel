@@ -27,6 +27,7 @@ const MyPage = ({ handleNext }) => {
           <Tab label="求人案内" value="2" sx={{width:'50%'}}/>
         </TabList>
       </Box>
+
       <TabPanel value="1">
         <JobSearch />
       </TabPanel>

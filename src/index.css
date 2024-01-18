@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.css-3bmhjh-MuiPaper-root-MuiPopover-paper{
+  left: 25px !important;
+  width: 90%;
+}

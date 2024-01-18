@@ -60,7 +60,7 @@ const ForgetPassword = () => {
     <div className="PageHeader" style={{marginBottom:'25px'}}>
       <Box sx={{ display: 'grid', gridTemplateColumns: '30% 40% 30%'}}>
         <BackLink to="#" sx={{width:'70%'}} onClick={goBack} > <BackButton /> 戻る </BackLink>
-        <p>マスキング履歴書設定</p>
+        <p>パスワードの再設定</p>
         <p> </p>
       </Box>
     </div>

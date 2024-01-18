@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
+import FilterGrid from '../components/FilterGrid';
 import {ReactComponent as MoneyIcon} from '../assets/MoneyIcon.svg';
 import {ReactComponent as MapsIcon} from '../assets/MapsIcon.svg';
 import {ReactComponent as BuildingIcon} from '../assets/BuildingIcon.svg';
@@ -30,6 +31,14 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function RecruitmentInfo() {
   return (
     <>
+      <Grid container spacing={2} alignItems="center">
+        <Grid item xs={4} sx={{margin:'10px 0px 10px 0px'}}>
+          <FilterGrid />
+        </Grid>
+        <Grid item xs={8} sx={{textAlign:'end', marginTop:'10px'}}>
+          45 件中 1 ～ 5 件
+        </Grid>
+      </Grid>
     <Card sx={{ minWidth: 275, marginBottom:'30px' }}>
       <CardContent>
         <Box sx={{ flexGrow: 1, textDecoration:'none' }} component={Link} to="/recruitment">
