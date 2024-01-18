@@ -97,59 +97,59 @@ const OccupationComponent = ({ handleNext }) => {
         <div style={{textAlign:'left', padding:'10px'}}>
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox1} onChange={handleChangeOne('checkbox1')} />}
-            label="Checkbox 1"
+            label="管理部門系全て"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox2} onChange={handleChangeOne('checkbox2')} />}
-            label="Checkbox 2"
+            label="経理"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox3} onChange={handleChangeOne('checkbox3')} />}
-            label="Checkbox 3"
+            label="財務・コントローラー"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox4} onChange={handleChangeOne('checkbox4')} />}
-            label="Checkbox 4"
+            label="会計・税務"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox5} onChange={handleChangeOne('checkbox5')} />}
-            label="Checkbox 5"
+            label="内部監査"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox6} onChange={handleChangeOne('checkbox6')} />}
-            label="Checkbox 6"
+            label="広報・IR"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox7} onChange={handleChangeOne('checkbox7')} />}
-            label="Checkbox 7"
+            label="管理部長"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox8} onChange={handleChangeOne('checkbox8')} />}
-            label="Checkbox 8"
+            label="CFO（役員）"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox9} onChange={handleChangeOne('checkbox9')} />}
-            label="Checkbox 9"
+            label="総務"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox10} onChange={handleChangeOne('checkbox10')} />}
-            label="Checkbox 10"
+            label="人事（採用・労務・教育など）"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox11} onChange={handleChangeOne('checkbox11')} />}
-            label="Checkbox 11"
+            label="人事制度・企画"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox12} onChange={handleChangeOne('checkbox12')} />}
-            label="Checkbox 12"
+            label="法務・コンプライアンス"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox13} onChange={handleChangeOne('checkbox13')} />}
-            label="Checkbox 13"
+            label="特許・知的財産関連"
           /> <br />
           <FormControlLabel
             control={<Checkbox checked={checkboxes.checkbox14} onChange={handleChangeOne('checkbox14')} />}
-            label="Checkbox 14"
+            label="その他"
           /> 
         </div>
         <Button variant="contained" color="primary" onClick={handleLinkClick} sx={{width:'70%', marginBottom:'20px'}}>
