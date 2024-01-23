@@ -27,6 +27,8 @@ import ForgetPassword from './pages/ForgetPassword';
 import FPAuthentication from './pages/fp-authentication';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import AgentPage from './pages/AgentPage';
+import RegistrationAuth from './pages/registrationauth';
+import NormalApplication from './pages/normalapplication';
 
 function App() {
   return (
@@ -59,6 +61,8 @@ function App() {
           <Route path="/forgetpassword" element={<ForgetPassword />} />
           <Route path="/fpauthentication" element={<FPAuthentication />} />
           <Route path="/resetpassword" element={<ResetPasswordPage />} />
+          <Route path="/registrationauth" element={<RegistrationAuth />} />
+          <Route path="/normalapplication" element={<NormalApplication />} />
         </Routes>
       </Router>
     </div>

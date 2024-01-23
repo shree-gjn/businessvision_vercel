@@ -53,7 +53,7 @@ const RegistrationForm = () => {
         setLoading(false);
 
         // Navigate to the registration page
-        navigate('/registration');
+        navigate('/registrationauth');
       }, 2000); // Simulating a 2-second login process
     } else {
       // Handle validation error
