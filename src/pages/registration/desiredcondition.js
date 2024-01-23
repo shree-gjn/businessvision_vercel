@@ -60,6 +60,14 @@ const DesiredCondition = ({ formData, setFormData, handleNext }) => {
     setDropdown7Error('');
   };
 
+  const generateValues = (start, end, step) => {
+    const values = [];
+    for (let i = start; i <= end; i += step) {
+      values.push(`${i}万円以上`);
+    }
+    return values;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     handleNext();
@@ -82,12 +90,16 @@ const DesiredCondition = ({ formData, setFormData, handleNext }) => {
               <MenuItem value="" disabled>
               オプションを選んでください
               </MenuItem>
-              <MenuItem value="299万円以下">299万円以下</MenuItem>
-              <MenuItem value="300万円以下">300万円以下</MenuItem>
-              <MenuItem value="350万円以下">350万円以下</MenuItem>
-              <MenuItem value="400万円以下">400万円以下</MenuItem>
-              <MenuItem value="450万円以下">450万円以下</MenuItem>
-              <MenuItem value="500万円以下">500万円以下</MenuItem>
+              {generateValues(300, 2000, 50).map((value) => (
+              <MenuItem key={value} value={value}>
+                {value}
+              </MenuItem>
+              ))}
+              {generateValues(2000, 5000, 500).map((value) => (
+                <MenuItem key={value} value={value}>
+                  {value}
+                </MenuItem>
+              ))}
             </Select>
             <FormHelperText style={{ color: 'red' }}>{selectedOptionError}</FormHelperText>
           </FormControl>
@@ -110,6 +122,14 @@ const DesiredCondition = ({ formData, setFormData, handleNext }) => {
               <MenuItem value="会計・税務">会計・税務</MenuItem>
               <MenuItem value="内部監査​">内部監査​</MenuItem>
               <MenuItem value="広報・IR​">広報・IR​</MenuItem>
+              <MenuItem value="管理部長">管理部長</MenuItem>
+              <MenuItem value="CFO（役員）">CFO（役員）</MenuItem>
+              <MenuItem value="総務">総務</MenuItem>
+              <MenuItem value="人事（採用・労務・教育など）">人事（採用・労務・教育など）</MenuItem>
+              <MenuItem value="人事制度・企画">人事制度・企画</MenuItem>
+              <MenuItem value="法務・コンプライアンス">法務・コンプライアンス</MenuItem>
+              <MenuItem value="特許・知的財産関連">特許・知的財産関連</MenuItem>
+              <MenuItem value="その他">その他</MenuItem>
             </Select>
             <FormHelperText style={{ color: 'red' }}>{secondDropdownError}</FormHelperText>
           </FormControl>
@@ -131,6 +151,12 @@ const DesiredCondition = ({ formData, setFormData, handleNext }) => {
               <MenuItem value="商社">商社</MenuItem>
               <MenuItem value="流通・小売・サービス">流通・小売・サービス</MenuItem>
               <MenuItem value="広告・出版・マスコミ">広告・出版・マスコミ</MenuItem>
+              <MenuItem value="コンサルティング">コンサルティング</MenuItem>
+              <MenuItem value="金融">金融</MenuItem>
+              <MenuItem value="建設・不動産">建設・不動産</MenuItem>
+              <MenuItem value="メディカル">メディカル</MenuItem>
+              <MenuItem value="物流・運輸">物流・運輸</MenuItem>
+              <MenuItem value="その他（インフラ・教育・官公庁など）">その他（インフラ・教育・官公庁など）</MenuItem>
             </Select>
             <FormHelperText style={{ color: 'red' }}>{thirdDropdownError}</FormHelperText>
           </FormControl>
@@ -153,6 +179,10 @@ const DesiredCondition = ({ formData, setFormData, handleNext }) => {
               <MenuItem value="主任（リーダー）">主任（リーダー）</MenuItem>
               <MenuItem value="係長（マネージャー候補">係長（マネージャー候補</MenuItem>
               <MenuItem value="課長（マネージャー）">課長（マネージャー）</MenuItem>
+              <MenuItem value="部長（部門責任者）">部長（部門責任者）</MenuItem>
+              <MenuItem value="CFO（役員）">CFO（役員）</MenuItem>
+              <MenuItem value="顧問">顧問</MenuItem>
+              <MenuItem value="その他">その他</MenuItem>
             </Select>
             <FormHelperText style={{ color: 'red' }}>{dropdown4Error}</FormHelperText>
           </FormControl>
@@ -176,6 +206,12 @@ const DesiredCondition = ({ formData, setFormData, handleNext }) => {
               <MenuItem value="埼玉県​">埼玉県​</MenuItem>
               <MenuItem value="１都３県全て">１都３県全て</MenuItem>
               <MenuItem value="北海道・東北​">北海道・東北​</MenuItem>
+              <MenuItem value="北関東">北関東</MenuItem>
+              <MenuItem value="中部">中部</MenuItem>
+              <MenuItem value="近畿">近畿</MenuItem>
+              <MenuItem value="中国・四国">中国・四国</MenuItem>
+              <MenuItem value="九州・沖縄">九州・沖縄</MenuItem>
+              <MenuItem value="海外">海外</MenuItem>
             </Select>
             <FormHelperText style={{ color: 'red' }}>{dropdown5Error}</FormHelperText>
           </FormControl>
@@ -198,6 +234,8 @@ const DesiredCondition = ({ formData, setFormData, handleNext }) => {
               <MenuItem value="非上場企業">非上場企業</MenuItem>
               <MenuItem value="外資系企業​">外資系企業​</MenuItem>
               <MenuItem value="ベンチャー企業​">ベンチャー企業​</MenuItem>
+              <MenuItem value="官公庁">官公庁</MenuItem>
+              <MenuItem value="団体">団体</MenuItem>
             </Select>
             <FormHelperText style={{ color: 'red' }}>{dropdown6Error}</FormHelperText>
           </FormControl>
