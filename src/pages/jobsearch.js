@@ -101,7 +101,7 @@ const JobSearch = () => {
         </Box>
         </Link>
         <Link to="/location" style={{textDecoration:'none'}}>
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1 , borderBottom: '1px solid #ccc'}}>
         <Grid container spacing={1}>
         <Grid item xs={1}>
             <Item><MapsIcon /></Item>

@@ -19,6 +19,7 @@ import CorporateFull from './pages/CorporateScoutFull';
 import FullProgress from './pages/FullProgress';
 import MaskingResume from './pages/MaskingResume';
 import RecommendedJobSettings from './pages/RecommendedJobSettings';
+import RecommendedJobForm  from './pages/RecommendedJobForm';
 import EmailDeliverySettings from './pages/EmailDeliverySettings';
 import Inquiry from './pages/Inquiry';
 import ChangeMemberID from './pages/ChangeMemberID';
@@ -54,6 +55,7 @@ function App() {
           <Route path="/fullprogress" element={<FullProgress />} />
           <Route path="/maskingresume" element={<MaskingResume />} />
           <Route path="/recommendedjob" element={<RecommendedJobSettings />} />
+          <Route path="/recommendedjobform" element={<RecommendedJobForm />} />
           <Route path="/emaildelivery" element={<EmailDeliverySettings />} />
           <Route path="/inquiry" element={<Inquiry />} />
           <Route path="/changememberid" element={<ChangeMemberID />} />

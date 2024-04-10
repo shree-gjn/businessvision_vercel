@@ -32,10 +32,13 @@ export default function RecruitmentInfo() {
   return (
     <>
       <Grid container spacing={2} alignItems="center">
-        <Grid item xs={4} sx={{margin:'10px 0px 10px 0px'}}>
+        <Grid item xs={8} sx={{margin:'10px 0px 10px 0px', display: 'flex', justifyContent: 'space-between'}}>
           <FilterGrid />
+          <Button variant="contained" color="primary">
+            おすすめ設定
+          </Button>
         </Grid>
-        <Grid item xs={8} sx={{textAlign:'end', marginTop:'10px'}}>
+        <Grid item xs={4} sx={{textAlign:'end', marginTop:'10px'}}>
           45 件中 1 ～ 5 件
         </Grid>
       </Grid>

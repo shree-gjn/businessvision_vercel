@@ -4,7 +4,10 @@ import BottomNav from '../components/BottomNav';
 import {ReactComponent as BackButton} from '../assets/BackButton.svg';
 import { styled } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom'; 
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, RadioGroup, Radio, 
+  FormControl, FormControlLabel, Typography, Button} from '@mui/material';
+import {ReactComponent as PencilEdit} from '../assets/PencilEdit.svg';
+import { width } from '@mui/system';
 
 const BackLink = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
@@ -67,7 +70,7 @@ const RecommendedJobSettings = () => {
       <p>おすすめ求人設定</p>
     </div>
     <BackLink to="#" onClick={goBack} > <BackButton /> 戻る </BackLink>
-    <TableContainer component={Paper} sx={{marginBottom:'200px'}}>
+    {/* <TableContainer component={Paper} sx={{marginBottom:'200px'}}>
       <Table>
         <TableBody>
           {data.map((row) => (
@@ -78,7 +81,52 @@ const RecommendedJobSettings = () => {
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
+    </TableContainer> */}
+
+    <div style={{padding: '24px'}}>
+      <div style={{border: '1px solid #e6e6e6', borderRadius: '5px'}}>
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell sx={{background:'#F2F2F2'}}>年収幅おすすめ設定</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell sx={{background:'#fff'}}>業種おすすめ設定</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell sx={{background:'#F2F2F2'}}>企業カテゴリおすすめ設定</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell sx={{background:'#fff'}}>従業員規模おすすめ設定</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell sx={{background:'#F2F2F2'}}>経理スキルおすすめ設定</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+        <RadioGroup
+          row
+          aria-label="gender"
+          name="gender"
+          // value={gender}
+          // onChange={handleGenderChange}
+          style={{padding: '10px', textAlign: 'center', display: 'block'}}
+        >
+          <FormControlLabel value="希望通り" control={<Radio />} label="希望通り" />
+          <FormControlLabel value="少し広め" control={<Radio />} label="少し広め" />
+        </RadioGroup>
+      </div>
+      <div style={{padding: '20px 0', display: 'flex', justifyContent: 'space-between'}}>
+        <Typography variant="paragraph" component="div" sx={{padding: '10px 0 10px 0', textAlign: 'left'}}> 詳細おすすめ設定 (カスタマイズ) </Typography>
+        <div style={{padding: '10px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '80px'}}>
+          <span>
+            <PencilEdit style={{width: '40px'}} />
+          </span>
+          <Typography variant='paragraph'>編集</Typography>
+        </div>
+      </div>
+      <Button type="submit" variant="contained" color="primary" fullWidth>変更内容を保存</Button>
+    </div>
     <BottomNav />
   </Box>
   );

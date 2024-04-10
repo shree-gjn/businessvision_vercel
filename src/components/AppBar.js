@@ -1,5 +1,6 @@
 // Import necessary React and Material-UI components
 import React from 'react';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { AppBar, Toolbar, IconButton, Typography } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import bvlogo from '../assets/bvlogo.svg';
@@ -19,7 +20,7 @@ const MyAppBar = () => {
         </Typography>
 
         {/* Right corner icons */}
-        <IconButton color="blue" sx={{display:'block'}}>
+        <IconButton color="blue" sx={{display:'block'}}  to="/agent">
           <AccountCircle /> <br /> 
           <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize:'12px' }}>エージェント</Typography>
         </IconButton>
