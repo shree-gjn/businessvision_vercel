@@ -14,9 +14,10 @@ const BackLink = styled(Link)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: '5px',
-  paddingLeft:'10px',
-  marginTop:'10px',
-  marginBottom:'8px',
+  paddingLeft:'15px', 
+  position: 'absolute',
+  top: '50%',
+  transform: 'translateY(-50%)'
 }));
 
 const MaskingResume = () => {
@@ -88,9 +89,9 @@ const MaskingResume = () => {
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
     <div className="PageHeader">
-      <p>マスキング履歴書設定</p>
+      <BackLink to="#" onClick={goBack} > <BackButton /> 戻る </BackLink>
+      <p>進行中</p>
     </div>
-    <BackLink to="#" onClick={goBack} > <BackButton /> 戻る </BackLink>
     <TableContainer component={Paper} sx={{marginBottom:'200px'}}>
       <Table>
         <TableBody>

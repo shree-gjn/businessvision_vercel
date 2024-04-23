@@ -44,7 +44,7 @@ const Inquiry = () => {
   };
 
   return (
-    <Box sx={{ width: '100%', typography: 'body1' }}>
+    <Box sx={{ width: 'auto', typography: 'body1', padding: '24px'}}>
       <BackLink to="#" onClick={goBack}>
         <BackButton /> 戻る
       </BackLink>

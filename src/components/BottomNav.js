@@ -52,28 +52,28 @@ export default function BottomNav() {
           icon={value === 0 ? <JobIconBlue /> : <JobIcon />}
           component={RouterLink}
           to="/mypage"
-          sx={{ '& > span': { marginTop: 1 } }}
+          sx={{ '& > span': { marginTop: 1, fontSize: '12px' } }}
         />
         <BottomNavigationAction
           label="メッセージ"
           icon={value === 1 ? <MessageIconBlue /> : <MessageIcon />}
           component={RouterLink}
           to="/messages"
-          sx={{ '& > span': { marginTop: 1 } }}
+          sx={{ '& > span': { marginTop: 1, fontSize: '12px' } }}
         />
         <BottomNavigationAction
           label="進行中"
           icon={value === 2 ? <InProgressBlue /> : <InProgress />}
           component={RouterLink}
           to="/inprogress"
-          sx={{ '& > span': { marginTop: 1 } }}
+          sx={{ '& > span': { marginTop: 1, fontSize: '12px' } }}
         />
         <BottomNavigationAction
           label="プロフィール"
           icon={value === 3 ? <ProfileBlue /> : <Profile />}
           component={RouterLink}
           to="/profile"
-          sx={{ '& > span': { marginTop: 1 } }}
+          sx={{ '& > span': { marginTop: 1, fontSize: '12px' } }}
         />
       </BottomNavigation>
     </Box>

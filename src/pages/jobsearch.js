@@ -62,7 +62,7 @@ const JobSearch = () => {
 
   return (
     <>
-    <div style={{ display: 'flex', alignItems: 'center' }}>
+    <div style={{ display: 'flex', alignItems: 'center'}}>
       <TextField
         label="Search"
         variant="outlined"
@@ -75,7 +75,7 @@ const JobSearch = () => {
       </IconButton>
       </div>
       
-      <Card sx={{ minWidth: 275, marginBottom:'30px', marginTop:'20px', borderRadius:'0px' }}>
+      <Card sx={{ minWidth: 275, marginBottom:'30px', marginTop:'20px', borderRadius:'0px', boxShadow: 'none' }}>
       <CardContent sx={{padding:'0px', paddingBottom:'0px !important'}}>
       {/* <Link to="/occupation" style={{textDecoration:'none'}}>
         <Box sx={{ flexGrow: 1 , borderBottom: '1px solid #ccc'}}>
@@ -107,22 +107,22 @@ const JobSearch = () => {
         </Grid>
         </Box>
         </Link> */}
-        <Accordion>
+        <Accordion style={{boxShadow: 'none', borderBottom: '1px solid #ccc'}}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
+          expandIcon={<GoIcon style={{width: '34px'}} />}
           aria-controls="panel1a-content"
           id="panel1a-header"
           style={{padding: '0 10px'}}
         >
-          <BagIcon style={{marginRight: '10px'}} />
+          <BagIcon style={{marginRight: '16px'}} />
           <Typography style={{fontSize: '12px'}}>業種</Typography>
         </AccordionSummary>
         <AccordionDetails sx={{padding:'0px', textAlign:'left'}}>
         <div>
           <Divider />
           <Link to="/industry" style={{textDecoration:'none'}}>
-            <Box sx={{ flexGrow: 1 , borderBottom: '1px solid #ccc'}}>
-            <Grid container spacing={1}>
+            <Box sx={{ flexGrow: 1}}>
+            <Grid container spacing={1} style={{marginTop: '0'}}>
             <Grid item xs={1}>
                 <Item><BagIcon /></Item>
                 </Grid>
@@ -136,8 +136,8 @@ const JobSearch = () => {
             </Box>
           </Link>
           <Link to="/industry" style={{textDecoration:'none'}}>
-            <Box sx={{ flexGrow: 1 , borderBottom: '1px solid #ccc'}}>
-            <Grid container spacing={1}>
+            <Box sx={{ flexGrow: 1}}>
+            <Grid container spacing={1} style={{marginTop: '0'}}>
             <Grid item xs={1}>
                 <Item><BagIcon /></Item>
                 </Grid>
@@ -150,8 +150,8 @@ const JobSearch = () => {
             </Grid>
             </Box>
           </Link>
-          <FormControlLabel fullWidth style={{textAlign: 'left', width: '100%', margin: '0', fontSize: '12px'}}
-            control={<Checkbox checked={checkboxes.checkbox8} onChange={handleChangeOne('checkbox8')} style={{fontSize: '12px'}} />}
+          <FormControlLabel className='searchcheckbox' fullWidth style={{textAlign: 'left', width: '100%', margin: '0', fontSize: '12px'}}
+            control={<Checkbox checked={checkboxes.checkbox8} onChange={handleChangeOne('checkbox8')} style={{padding: '10px 5px'}} />}
             label="こだわらない"
           />
         </div>
@@ -159,7 +159,7 @@ const JobSearch = () => {
         </Accordion>
         <Link to="/income" style={{textDecoration:'none'}}>
         <Box sx={{ flexGrow: 1 , borderBottom: '1px solid #ccc'}}>
-        <Grid container spacing={1}>
+        <Grid container spacing={1} style={{marginTop: '0'}}>
         <Grid item xs={1}>
             <Item><YenIcon /></Item>
             </Grid>
@@ -174,7 +174,7 @@ const JobSearch = () => {
         </Link>
         <Link to="/location" style={{textDecoration:'none'}}>
         <Box sx={{ flexGrow: 1 , borderBottom: '1px solid #ccc'}}>
-        <Grid container spacing={1}>
+        <Grid container spacing={1} style={{marginTop: '0'}}>
         <Grid item xs={1}>
             <Item><MapsIcon /></Item>
             </Grid>
@@ -187,22 +187,22 @@ const JobSearch = () => {
         </Grid>
         </Box>
         </Link>
-        <Accordion>
+        <Accordion style={{boxShadow: 'none'}}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
+          expandIcon={<GoIcon style={{width: '34px'}} />}
           aria-controls="panel1a-content"
           id="panel1a-header"
-          style={{padding: '0 10px'}}
+          style={{padding: '0 10px', alignItems: 'center'}}
         >
-          <AccountingSkill style={{marginRight: '10px'}} />
+          <AccountingSkill style={{marginRight: '16px'}} />
           <Typography style={{fontSize: '12px'}}>経理スキル</Typography>
         </AccordionSummary>
         <AccordionDetails sx={{padding:'0px', textAlign:'left'}}>
         <div>
           <Divider />
           <Link to="" style={{textDecoration:'none'}}>
-            <Box sx={{ flexGrow: 1 , borderBottom: '1px solid #ccc'}}>
-            <Grid container spacing={1}>
+            <Box sx={{ flexGrow: 1}}>
+            <Grid container spacing={1} style={{marginTop: '0'}}>
             <Grid item xs={1}>
                 <Item><AccountingSkill /></Item>
                 </Grid>
@@ -216,8 +216,8 @@ const JobSearch = () => {
             </Box>
           </Link>
           <Link to="" style={{textDecoration:'none'}}>
-            <Box sx={{ flexGrow: 1 , borderBottom: '1px solid #ccc'}}>
-            <Grid container spacing={1}>
+            <Box sx={{ flexGrow: 1}}>
+            <Grid container spacing={1} style={{marginTop: '0'}}>
             <Grid item xs={1}>
                 <Item><AccountingSkill /></Item>
                 </Grid>
@@ -230,7 +230,7 @@ const JobSearch = () => {
             </Grid>
             </Box>
           </Link>
-          <FormControlLabel fullWidth style={{textAlign: 'left', width: '100%', margin: '0', fontSize: '12px'}}
+          <FormControlLabel className='searchcheckbox' fullWidth style={{textAlign: 'left', width: '100%', margin: '0', fontSize: '12px'}}
             control={<Checkbox checked={checkboxes.checkbox8} onChange={handleChangeOne('checkbox8')} style={{fontSize: '12px'}} />}
             label="全ての条件を無視"
           />
