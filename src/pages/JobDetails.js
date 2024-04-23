@@ -223,7 +223,7 @@ export default function JobDetails() {
           </Box>
         </CardContent>
          <CardContent>       
-          <Box sx={{ flexGrow: 1, marginBottom:'20px' }}>
+          <Box sx={{ flexGrow: 1, marginBottom:'100px' }}>
           <Grid container spacing={1}>
               <Grid item xs={1} sx={{borderBottom: '1px solid #D3B76A'}}>
               <Item sx={{textAlign:'left'}}><MapsIcon style={{margin:'0 auto'}}/></Item>
@@ -279,13 +279,21 @@ export default function JobDetails() {
           </Box>
         </CardContent>
         <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1} sx={{marginBottom:'30px'}}>
+        {/* <Grid container spacing={1} sx={{marginBottom:'30px'}}>
             <Grid item xs={6}>
-              <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px', fontSize:'12px', padding:'7px 0px'}}> シークレットエントリー </Button>
+              <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px', fontSize:'12px', padding:'7px 0px'}}> 内定を受諾する </Button>
             </Grid>
             <Grid item xs={6}>
-              <Button component={Link} to="/recruitment" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 正式応募 </Button>
+              <Button component={Link} to="/recruitment" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 内定辞退 </Button>
             </Grid>
+        </Grid> */}
+        <Grid container spacing={1} style={{position: 'fixed', bottom: '0', left: '0', marginBottom: '56px', padding: '15px', background: 'rgb(255 255 255 / 87%)'}}>
+          <Grid item xs={6}>
+            <Button component={Link} to="#" variant="contained" color="primary" sx={{fontSize:'12px', width: '100%'}}> 内定を受諾する </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button component={Link} to="#" variant="contained" color="primary" sx={{fontSize: '12px', width: '100%'}}>内定辞退 </Button>
+          </Grid>
         </Grid>
         </Box>
       </Card>

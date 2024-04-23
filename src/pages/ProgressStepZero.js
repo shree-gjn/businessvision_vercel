@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
-import {ReactComponent as BuildingIcon} from '../assets/BuildingIcon.svg';
 import {ReactComponent as BagIcon} from '../assets/BagIcon.svg';
 import {ReactComponent as BuildingMap} from '../assets/BuildingMap.svg';
 import {ReactComponent as ChatBlue} from '../assets/ChatBlue.svg';
@@ -27,13 +26,13 @@ const Item = styled(Paper)(({ theme }) => ({
   }));
   
 
-export default function ProgressStepThree() {
+export default function ProgressStepZero() {
   const navigate = useNavigate();
 
-   const handleCardClick = () => {
-    // Navigate to "/hello" on card click
-    navigate('/fullprogress');
-  };
+  const handleCardClick = () => {
+   // Navigate to "/hello" on card click
+   navigate('/fullprogress');
+ };
 
   return (
     <>
@@ -47,7 +46,7 @@ export default function ProgressStepThree() {
             <Item sx={{fontSize:'12px', border:'1px solid #78D9D3', color:'#78D9D3', marginBottom:'5px'}}>未読​</Item>
             </Grid>
             <Grid item xs={4}>
-            <Item sx={{fontSize:'12px', background:'rgba(187, 236, 233, 0.54)', marginBottom:'5px'}}>内定受諾</Item>
+            <Item sx={{fontSize:'12px', background:'rgba(212, 184, 107, 0.54)', marginBottom:'5px'}}>応募書類準備中</Item>
             </Grid>
         </Grid>
         </Box>
@@ -77,7 +76,7 @@ export default function ProgressStepThree() {
             <Grid item xs={2}>
               <Typography variant="body1" sx={{fontSize:'8px', color:'#949494', fontWeight:'500'}}> 11月12日 </Typography>​
             </Grid>
-            <Grid item xs={2}>
+            {/* <Grid item xs={2}>
               <ChatBlue /> 
             </Grid>
             <Grid item xs={9}>
@@ -85,7 +84,7 @@ export default function ProgressStepThree() {
             </Grid>
             <Grid item xs={1}>
               <ArrowRight />​
-            </Grid>
+            </Grid> */}
         </Grid>
         </Box>
       </CardContent>
@@ -101,7 +100,7 @@ export default function ProgressStepThree() {
             <Item sx={{fontSize:'12px', border:'1px solid #78D9D3', color:'#78D9D3', marginBottom:'5px'}}>未読​</Item>
             </Grid>
             <Grid item xs={4}>
-            <Item sx={{fontSize:'12px', background:'rgba(187, 236, 233, 0.54)', marginBottom:'5px'}}>内定受諾</Item>
+            <Item sx={{fontSize:'12px', background:'rgba(212, 184, 107, 0.54)', marginBottom:'5px'}}>応募書類準備中</Item>
             </Grid>
         </Grid>
         </Box>
@@ -131,7 +130,7 @@ export default function ProgressStepThree() {
             <Grid item xs={2}>
               <Typography variant="body1" sx={{fontSize:'8px', color:'#949494', fontWeight:'500'}}> 11月12日 </Typography>​
             </Grid>
-            <Grid item xs={2}>
+            {/* <Grid item xs={2}>
               <ChatBlue /> 
             </Grid>
             <Grid item xs={9}>
@@ -139,7 +138,7 @@ export default function ProgressStepThree() {
             </Grid>
             <Grid item xs={1}>
               <ArrowRight />​
-            </Grid>
+            </Grid> */}
         </Grid>
         </Box>
       </CardContent>
@@ -152,10 +151,9 @@ export default function ProgressStepThree() {
             <Grid item xs={6}>
             </Grid>
             <Grid item xs={2}>
-            <Item sx={{fontSize:'12px', border:'1px solid #78D9D3', color:'#78D9D3', marginBottom:'5px'}}>未読​</Item>
             </Grid>
             <Grid item xs={4}>
-            <Item sx={{fontSize:'12px', background:'rgba(187, 236, 233, 0.54)', marginBottom:'5px'}}>内定受諾</Item>
+            <Item sx={{fontSize:'12px', background:'rgba(212, 184, 107, 0.54)', marginBottom:'5px'}}>応募書類準備中</Item>
             </Grid>
         </Grid>
         </Box>
@@ -185,7 +183,7 @@ export default function ProgressStepThree() {
             <Grid item xs={2}>
               <Typography variant="body1" sx={{fontSize:'8px', color:'#949494', fontWeight:'500'}}> 11月12日 </Typography>​
             </Grid>
-            <Grid item xs={2}>
+            {/* <Grid item xs={2}>
               <ChatBlue /> 
             </Grid>
             <Grid item xs={9}>
@@ -193,7 +191,7 @@ export default function ProgressStepThree() {
             </Grid>
             <Grid item xs={1}>
               <ArrowRight />​
-            </Grid>
+            </Grid> */}
         </Grid>
         </Box>
       </CardContent>
@@ -206,10 +204,9 @@ export default function ProgressStepThree() {
             <Grid item xs={6}>
             </Grid>
             <Grid item xs={2}>
-            <Item sx={{fontSize:'12px', border:'1px solid #78D9D3', color:'#78D9D3', marginBottom:'5px'}}>未読​</Item>
             </Grid>
             <Grid item xs={4}>
-            <Item sx={{fontSize:'12px', background:'rgba(187, 236, 233, 0.54)', marginBottom:'5px'}}>内定受諾</Item>
+            <Item sx={{fontSize:'12px', background:'rgba(212, 184, 107, 0.54)', marginBottom:'5px'}}>応募書類準備中</Item>
             </Grid>
         </Grid>
         </Box>
@@ -229,7 +226,7 @@ export default function ProgressStepThree() {
         </Grid>
         </Box>
         <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1} sx={{marginTop:'10px'}}>
+        <Grid container spacing={1} sx={{marginTop:'5px'}}>
             <Grid item xs={2}>
               <BuildingMap /> 
             </Grid>
@@ -239,7 +236,7 @@ export default function ProgressStepThree() {
             <Grid item xs={2}>
               <Typography variant="body1" sx={{fontSize:'8px', color:'#949494', fontWeight:'500'}}> 11月12日 </Typography>​
             </Grid>
-            <Grid item xs={2}>
+            {/* <Grid item xs={2}>
               <ChatBlue /> 
             </Grid>
             <Grid item xs={9}>
@@ -247,7 +244,7 @@ export default function ProgressStepThree() {
             </Grid>
             <Grid item xs={1}>
               <ArrowRight />​
-            </Grid>
+            </Grid> */}
         </Grid>
         </Box>
       </CardContent>
@@ -260,10 +257,9 @@ export default function ProgressStepThree() {
             <Grid item xs={6}>
             </Grid>
             <Grid item xs={2}>
-            <Item sx={{fontSize:'12px', border:'1px solid #78D9D3', color:'#78D9D3', marginBottom:'5px'}}>未読​</Item>
             </Grid>
             <Grid item xs={4}>
-            <Item sx={{fontSize:'12px', background:'rgba(187, 236, 233, 0.54)', marginBottom:'5px'}}>内定受諾</Item>
+            <Item sx={{fontSize:'12px', background:'rgba(212, 184, 107, 0.54)', marginBottom:'5px'}}>応募書類準備中</Item>
             </Grid>
         </Grid>
         </Box>
@@ -293,7 +289,7 @@ export default function ProgressStepThree() {
             <Grid item xs={2}>
               <Typography variant="body1" sx={{fontSize:'8px', color:'#949494', fontWeight:'500'}}> 11月12日 </Typography>​
             </Grid>
-            <Grid item xs={2}>
+            {/* <Grid item xs={2}>
               <ChatBlue /> 
             </Grid>
             <Grid item xs={9}>
@@ -301,7 +297,7 @@ export default function ProgressStepThree() {
             </Grid>
             <Grid item xs={1}>
               <ArrowRight />​
-            </Grid>
+            </Grid> */}
         </Grid>
         </Box>
       </CardContent>

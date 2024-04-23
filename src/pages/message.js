@@ -23,7 +23,7 @@ const MessageComponent = ({ handleNext }) => {
     <TabContext value={value}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <TabList onChange={handleChange} aria-label="lab API tabs example">
-          <Tab label="シークレットエントリー" value="1" sx={{width:'50%'}}/>
+          <Tab label="匿名エントリー" value="1" sx={{width:'50%'}}/>
           <Tab label="企業スカウト" value="2" sx={{width:'50%'}}/>
         </TabList>
       </Box>

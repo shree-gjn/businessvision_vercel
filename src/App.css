@@ -32,12 +32,19 @@
 
 .PageHeader {
   border-bottom: 1px solid #ccc; /* Adjust the color and style as needed */
+  padding: 15px 0;
 }
 
 .PageHeader p{
   color:#16375A;
   font-size: 14px;
+  margin: 0;
 }
+
+.PageHeader{
+  position: relative;
+}
+
 
 /* Footer Profile Size */
 

@@ -35,7 +35,7 @@ const SecretFilterGrid = () => {
 
   return (
     <>
-      <Button onClick={handleClick} style={{borderRadius: '5px', border: '1px solid #EEE', background: '#FFF'}}>
+      <Button onClick={handleClick} style={{borderRadius: '5px', border: '1px solid #EEE', background: '#FFF', width: '100%'}}>
         <FilterListIcon /> 絞り込む
       </Button>
       <Popover

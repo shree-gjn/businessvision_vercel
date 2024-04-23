@@ -38,7 +38,7 @@ export default function RecruitmentInfo() {
             おすすめ設定
           </Button>
         </Grid>
-        <Grid item xs={4} sx={{textAlign:'end', marginTop:'10px'}}>
+        <Grid item xs={4} sx={{textAlign:'end', marginTop:'10px', fontSize: '14px'}}>
           45 件中 1 ～ 5 件
         </Grid>
       </Grid>
@@ -108,7 +108,7 @@ export default function RecruitmentInfo() {
       <Box sx={{ flexGrow: 1 , textDecoration:'none'}} component={Link} to="/recruitment">
         <Grid container spacing={1}>
             <Grid item xs={6}>
-              <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる </Button>
+              <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる済 </Button>
             </Grid>
             <Grid item xs={6}>
               <Button component={Link} to="/recruitment" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
@@ -183,7 +183,7 @@ export default function RecruitmentInfo() {
       <Box sx={{ flexGrow: 1 }} component={Link} to="/recruitment">
         <Grid container spacing={1}>
             <Grid item xs={6}>
-              <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる </Button>
+              <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる済 </Button>
             </Grid>
             <Grid item xs={6}>
               <Button component={Link} to="/recruitment" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
@@ -192,7 +192,7 @@ export default function RecruitmentInfo() {
         </Box>
       </CardActions>
     </Card>
-    <Card sx={{ minWidth: 275, marginBottom:'30px' }}>
+    <Card sx={{ minWidth: 275, marginBottom:'100px' }}>
       <CardContent>
         <Box sx={{ flexGrow: 1, textDecoration:'none' }} component={Link} to="/recruitment">
         <Grid container spacing={1}>
@@ -258,7 +258,7 @@ export default function RecruitmentInfo() {
       <Box sx={{ flexGrow: 1, textDecoration:'none'}} component={Link} to="/recruitment">
         <Grid container spacing={1}>
             <Grid item xs={6}>
-              <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる </Button>
+              <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる済 </Button>
             </Grid>
             <Grid item xs={6}>
               <Button component={Link} to="/recruitment" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>

@@ -38,17 +38,17 @@ export default function ProgressStepTwo() {
 
   return (
     <>
-    <Card sx={{ minWidth: 275, marginBottom:'30px', marginTop:'10px' }} onClick={handleCardClick}>
+    <Card sx={{ minWidth: 275, marginBottom:'20px', marginTop:'10px', boxShadow: 'none', border: '1px solid #EEEEEE', borderRadius: '10px'}} onClick={handleCardClick}>
       <CardContent>
         <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1}>
+        <Grid container spacing={1} style={{marginBottom: '5px'}}>
             <Grid item xs={6}>
             </Grid>
             <Grid item xs={2}>
             <Item sx={{fontSize:'12px', border:'1px solid #78D9D3', color:'#78D9D3', marginBottom:'5px'}}>未読​</Item>
             </Grid>
             <Grid item xs={4}>
-            <Item sx={{fontSize:'12px', background:'rgba(120, 217, 211, 0.54)', marginBottom:'5px'}}>1次面接</Item>
+            <Item sx={{fontSize:'12px', background:'rgba(212, 184, 107, 0.54)', marginBottom:'5px'}}>面接中</Item>
             </Grid>
         </Grid>
         </Box>
@@ -92,17 +92,17 @@ export default function ProgressStepTwo() {
       </CardContent>
     </Card>
 
-    <Card sx={{ minWidth: 275, marginBottom:'30px', marginTop:'10px' }} onClick={handleCardClick}>
+    <Card sx={{ minWidth: 275, marginBottom:'20px', marginTop:'10px', boxShadow: 'none', border: '1px solid #EEEEEE', borderRadius: '10px'}} onClick={handleCardClick}>
       <CardContent>
         <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1}>
+        <Grid container spacing={1} style={{marginBottom: '5px'}}>
             <Grid item xs={6}>
             </Grid>
             <Grid item xs={2}>
             <Item sx={{fontSize:'12px', border:'1px solid #78D9D3', color:'#78D9D3', marginBottom:'5px'}}>未読​</Item>
             </Grid>
             <Grid item xs={4}>
-            <Item sx={{fontSize:'12px', background:'rgba(201, 219, 232, 0.54)', marginBottom:'5px'}}>選考終了</Item>
+            <Item sx={{fontSize:'12px', background:'#D8DDE3', marginBottom:'5px'}}>内定提示中</Item>
             </Grid>
         </Grid>
         </Box>
@@ -146,16 +146,16 @@ export default function ProgressStepTwo() {
       </CardContent>
     </Card>
 
-    <Card sx={{ minWidth: 275, marginBottom:'30px', marginTop:'10px' }} onClick={handleCardClick}>
+    <Card sx={{ minWidth: 275, marginBottom:'20px', marginTop:'10px', boxShadow: 'none', border: '1px solid #EEEEEE', borderRadius: '10px'}} onClick={handleCardClick}>
       <CardContent>
         <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1}>
+        <Grid container spacing={1} style={{marginBottom: '5px'}}>
             <Grid item xs={6}>
             </Grid>
             <Grid item xs={2}>
             </Grid>
             <Grid item xs={4}>
-            <Item sx={{fontSize:'12px', background:'rgba(120, 217, 211, 0.54)', marginBottom:'5px'}}>1次面接</Item>
+            <Item sx={{fontSize:'12px', background:'rgba(249, 98, 100, 0.30)', marginBottom:'5px'}}>企業よりお断り</Item>
             </Grid>
         </Grid>
         </Box>
@@ -199,16 +199,16 @@ export default function ProgressStepTwo() {
       </CardContent>
     </Card>
 
-    <Card sx={{ minWidth: 275, marginBottom:'30px', marginTop:'10px' }} onClick={handleCardClick}>
+    <Card sx={{ minWidth: 275, marginBottom:'20px', marginTop:'10px', boxShadow: 'none', border: '1px solid #EEEEEE', borderRadius: '10px'}} onClick={handleCardClick}>
       <CardContent>
         <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1}>
+        <Grid container spacing={1} style={{marginBottom: '5px'}}>
             <Grid item xs={6}>
             </Grid>
             <Grid item xs={2}>
             </Grid>
             <Grid item xs={4}>
-            <Item sx={{fontSize:'12px', background:'rgba(201, 219, 232, 0.54)', marginBottom:'5px'}}>選考終了</Item>
+            <Item sx={{fontSize:'12px', background:'rgba(249, 98, 100, 0.30)', marginBottom:'5px'}}>選考辞退</Item>
             </Grid>
         </Grid>
         </Box>
@@ -252,16 +252,16 @@ export default function ProgressStepTwo() {
       </CardContent>
     </Card>
 
-    <Card sx={{ minWidth: 275, marginBottom:'30px', marginTop:'10px' }} onClick={handleCardClick}>
+    <Card sx={{ minWidth: 275, marginBottom:'100px', marginTop:'10px', boxShadow: 'none', border: '1px solid #EEEEEE', borderRadius: '10px'}} onClick={handleCardClick}>
       <CardContent>
         <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1}>
+        <Grid container spacing={1} style={{marginBottom: '5px'}}>
             <Grid item xs={6}>
             </Grid>
             <Grid item xs={2}>
             </Grid>
             <Grid item xs={4}>
-            <Item sx={{fontSize:'12px', background:'rgba(201, 219, 232, 0.54)', marginBottom:'5px'}}>選考終了</Item>
+            <Item sx={{fontSize:'12px', background:'rgba(249, 98, 100, 0.30)', marginBottom:'5px'}}>内定辞退</Item>
             </Grid>
         </Grid>
         </Box>

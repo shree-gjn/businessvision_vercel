@@ -12,17 +12,19 @@ import JobDetails from './JobDetails';
 import ChatComponent from '../components/ChatUI';
 
 const BackLink = styled(Link)(({ theme }) => ({
-    textDecoration: 'none',
-    color: '#16375A',
-    fontSize: '12px',
-    fontWeight: 'bold',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '5px',
-    paddingLeft:'10px',
-    marginTop:'10px',
-    marginBottom:'8px',
-  }));
+  textDecoration: 'none',
+  color: '#16375A',
+  fontSize: '12px',
+  fontWeight: 'bold',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '5px',
+  paddingLeft:'15px', 
+  position: 'absolute',
+  top: '50%',
+  transform: 'translateY(-50%)'
+}));
+
 
 const FullProgress = ({ handleNext }) => {
   const [value, setValue] = React.useState('1');
@@ -40,7 +42,8 @@ const FullProgress = ({ handleNext }) => {
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
     <div className="PageHeader">
-    <BackLink to="#" onClick={goBack} > <BackButton /> 戻る </BackLink>
+      <BackLink to="#" onClick={goBack} > <BackButton /> 戻る </BackLink>
+      <p>進行中</p>
     </div>
     <TabContext value={value}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -62,3 +65,4 @@ const FullProgress = ({ handleNext }) => {
 };
 
 export default FullProgress;
+

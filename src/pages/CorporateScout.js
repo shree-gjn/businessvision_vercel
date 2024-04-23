@@ -27,27 +27,30 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function CorporateScout() {
   return (
     <>
-    <Grid container spacing={2} alignItems="center">
+    <Grid container spacing={1} alignItems="center">
       <Grid item xs={4} sx={{margin:'10px 0px 10px 0px'}}>
-        <MessagesFilterGrid />
+        <MessagesFilterGrid style={{width: '100%'}} />
       </Grid>
-      <Grid item xs={8} sx={{textAlign:'end', marginTop:'10px'}}>
+      <Grid item xs={8} sx={{textAlign:'end', marginTop:'10px', fontSize: '14px'}}>
         15 件中 1 ～ 5 件
       </Grid>
     </Grid>
-    <div style={{background:'#FFF', marginBottom:'20px'}}>
+    <div style={{background:'#FFF', marginBottom:'20px', border: '1px solid #EEEEEE', borderRadius: '10px'}}>
     <Card sx={{ minWidth: 275, marginBottom:'30px', textDecoration:'none'}} component={Link} to="/messages/scout">
       <CardContent>
         <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1}>
-            <Grid item xs={6}>
+        <Grid container spacing={1} style={{paddingBottom: '10px'}}>
+            <Grid item xs={4}>
             <Item sx={{textAlign:'left', fontSize:'12px'}}>求人no: 1691</Item>
+            </Grid>
+            <Grid item xs={3} style={{paddingLeft: '0'}}>
+            <Item sx={{textAlign:'center', fontSize:'11px', backgroundColor: '#E7D8AF'}}>1次面接案内</Item>
             </Grid>
             <Grid item xs={2}>
             <Item sx={{fontSize:'12px'}}>未読​</Item>
             </Grid>
-            <Grid item xs={4}>
-            <Item sx={{fontSize:'12px'}}>10-08-2023</Item>
+            <Grid item xs={3}>
+            <Item sx={{fontSize:'11px'}}>10-08-2023</Item>
             </Grid>
         </Grid>
         </Box>
@@ -83,7 +86,7 @@ export default function CorporateScout() {
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1}>
             <Grid item xs={6}>
-              <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる </Button>
+              <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる済 </Button>
             </Grid>
             <Grid item xs={6}>
               <Button component={Link} to="/messages/scout" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
@@ -94,19 +97,22 @@ export default function CorporateScout() {
     </Card>
     </div>
 
-    <div style={{background:'#FFF', marginBottom:'20px'}}>
+    <div style={{background:'#FFF', marginBottom:'20px', border: '1px solid #EEEEEE', borderRadius: '10px'}}>
     <Card sx={{ minWidth: 275, marginBottom:'30px', textDecoration:'none'}} component={Link} to="/messages/scout">
       <CardContent>
         <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1}>
-            <Grid item xs={6}>
+        <Grid container spacing={1} style={{paddingBottom: '10px'}}>
+            <Grid item xs={4}>
             <Item sx={{textAlign:'left', fontSize:'12px'}}>求人no: 1691</Item>
+            </Grid>
+            <Grid item xs={3} style={{paddingLeft: '0'}}>
+            <Item sx={{textAlign:'center', fontSize:'11px', backgroundColor: '#E2EBF2'}}>書類選考案内</Item>
             </Grid>
             <Grid item xs={2}>
             <Item sx={{fontSize:'12px'}}>未読​</Item>
             </Grid>
-            <Grid item xs={4}>
-            <Item sx={{fontSize:'12px'}}>10-08-2023</Item>
+            <Grid item xs={3}>
+            <Item sx={{fontSize:'11px'}}>10-08-2023</Item>
             </Grid>
         </Grid>
         </Box>
@@ -142,10 +148,10 @@ export default function CorporateScout() {
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1}>
             <Grid item xs={6}>
-              <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる </Button>
+              <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる済 </Button>
             </Grid>
             <Grid item xs={6}>
-              <Button component={Link} to="/scout" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
+              <Button component={Link} to="/messages/scout" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
             </Grid>
         </Grid>
         </Box>
@@ -153,19 +159,22 @@ export default function CorporateScout() {
     </Card>
     </div>
 
-    <div style={{background:'#FFF', marginBottom:'20px'}}>
+    <div style={{background:'#FFF', marginBottom:'20px', border: '1px solid #EEEEEE', borderRadius: '10px'}}>
     <Card sx={{ minWidth: 275, marginBottom:'30px', textDecoration:'none'}} component={Link} to="/messages/scout">
       <CardContent>
         <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1}>
-            <Grid item xs={6}>
+        <Grid container spacing={1} style={{paddingBottom: '10px'}}>
+            <Grid item xs={4}>
             <Item sx={{textAlign:'left', fontSize:'12px'}}>求人no: 1691</Item>
+            </Grid>
+            <Grid item xs={3} style={{paddingLeft: '0'}}>
+            <Item sx={{textAlign:'center', fontSize:'11px', backgroundColor: '#E7D8AF'}}>1次面接案内</Item>
             </Grid>
             <Grid item xs={2}>
             <Item sx={{fontSize:'12px'}}>未読​</Item>
             </Grid>
-            <Grid item xs={4}>
-            <Item sx={{fontSize:'12px'}}>10-08-2023</Item>
+            <Grid item xs={3}>
+            <Item sx={{fontSize:'11px'}}>10-08-2023</Item>
             </Grid>
         </Grid>
         </Box>
@@ -201,10 +210,10 @@ export default function CorporateScout() {
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1}>
             <Grid item xs={6}>
-              <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる </Button>
+              <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる済 </Button>
             </Grid>
             <Grid item xs={6}>
-              <Button component={Link} to="/scout" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
+              <Button component={Link} to="/messages/scout" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
             </Grid>
         </Grid>
         </Box>
@@ -212,19 +221,22 @@ export default function CorporateScout() {
     </Card>
     </div>
 
-    <div style={{background:'#FFF', marginBottom:'20px'}}>
+    <div style={{background:'#FFF', marginBottom:'20px', border: '1px solid #EEEEEE', borderRadius: '10px'}}>
     <Card sx={{ minWidth: 275, marginBottom:'30px', textDecoration:'none'}} component={Link} to="/messages/scout">
       <CardContent>
         <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1}>
-            <Grid item xs={6}>
+        <Grid container spacing={1} style={{paddingBottom: '10px'}}>
+            <Grid item xs={4}>
             <Item sx={{textAlign:'left', fontSize:'12px'}}>求人no: 1691</Item>
+            </Grid>
+            <Grid item xs={3} style={{paddingLeft: '0'}}>
+            <Item sx={{textAlign:'center', fontSize:'11px', backgroundColor: '#E2EBF2'}}>書類選考案内</Item>
             </Grid>
             <Grid item xs={2}>
             <Item sx={{fontSize:'12px'}}>未読​</Item>
             </Grid>
-            <Grid item xs={4}>
-            <Item sx={{fontSize:'12px'}}>10-08-2023</Item>
+            <Grid item xs={3}>
+            <Item sx={{fontSize:'11px'}}>10-08-2023</Item>
             </Grid>
         </Grid>
         </Box>
@@ -260,10 +272,10 @@ export default function CorporateScout() {
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1}>
             <Grid item xs={6}>
-              <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる </Button>
+              <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる済 </Button>
             </Grid>
             <Grid item xs={6}>
-              <Button component={Link} to="/scout" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
+              <Button component={Link} to="/messages/scout" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
             </Grid>
         </Grid>
         </Box>
@@ -271,19 +283,22 @@ export default function CorporateScout() {
     </Card>
     </div>
 
-    <div style={{background:'#FFF', marginBottom:'20px'}}>
+    <div style={{background:'#FFF', marginBottom:'100px', border: '1px solid #EEEEEE', borderRadius: '10px'}}>
     <Card sx={{ minWidth: 275, marginBottom:'30px', textDecoration:'none'}} component={Link} to="/messages/scout">
       <CardContent>
         <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1}>
-            <Grid item xs={6}>
+        <Grid container spacing={1} style={{paddingBottom: '10px'}}>
+            <Grid item xs={4}>
             <Item sx={{textAlign:'left', fontSize:'12px'}}>求人no: 1691</Item>
+            </Grid>
+            <Grid item xs={3} style={{paddingLeft: '0'}}>
+            <Item sx={{textAlign:'center', fontSize:'11px', backgroundColor: '#E7D8AF'}}>1次面接案内</Item>
             </Grid>
             <Grid item xs={2}>
             <Item sx={{fontSize:'12px'}}>未読​</Item>
             </Grid>
-            <Grid item xs={4}>
-            <Item sx={{fontSize:'12px'}}>10-08-2023</Item>
+            <Grid item xs={3}>
+            <Item sx={{fontSize:'11px'}}>10-08-2023</Item>
             </Grid>
         </Grid>
         </Box>
@@ -319,10 +334,10 @@ export default function CorporateScout() {
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1}>
             <Grid item xs={6}>
-              <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる </Button>
+              <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 気になる済 </Button>
             </Grid>
             <Grid item xs={6}>
-              <Button component={Link} to="/scout" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
+              <Button component={Link} to="/messages/scout" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
             </Grid>
         </Grid>
         </Box>

@@ -28,11 +28,14 @@ export default function SecretEntry() {
       <Grid item xs={4} sx={{margin:'10px 0px 10px 0px'}}>
         <SecretFilterGrid />
       </Grid>
-      <Grid item xs={8} sx={{textAlign:'end', marginTop:'10px'}}>
+      {/* <Grid item xs={8} sx={{textAlign:'end', marginTop:'10px'}}>
+      </Grid> */}
+      <Grid item xs={8} sx={{textAlign:'end', marginTop:'10px', fontSize: '14px'}}>
+        15 件中 1 ～ 5 件
       </Grid>
     </Grid>
 
-    <div style={{background:'#FFF', marginBottom:'20px'}}>
+    <div style={{background:'#FFF', marginBottom:'20px', border: '1px solid #EEEEEE', borderRadius: '10px'}}>
     <Card sx={{ minWidth: 275, marginBottom:'30px', textDecoration:'none' }} component={Link} to="/messages/scout">
       <CardContent>
         <Box sx={{ flexGrow: 1 }}>
@@ -42,7 +45,7 @@ export default function SecretEntry() {
             <Grid item xs={2}>
             </Grid>
             <Grid item xs={4}>
-            <Item sx={{fontSize:'12px', background:'rgba(212, 184, 107, 0.54)', marginBottom:'5px'}}>応募済み</Item>
+            <Item sx={{fontSize:'12px', background:'rgba(212, 184, 107, 0.54)', marginBottom:'10px'}}>1次面接案内</Item>
             </Grid>
         </Grid>
         </Box>
@@ -65,7 +68,7 @@ export default function SecretEntry() {
     </Card>
     </div>
 
-    <div style={{background:'#FFF', marginBottom:'20px'}}>
+    <div style={{background:'#FFF', marginBottom:'20px', border: '1px solid #EEEEEE', borderRadius: '10px'}}>
     <Card sx={{ minWidth: 275, marginBottom:'30px', textDecoration:'none' }} component={Link} to="/messages/scout">
       <CardContent>
         <Box sx={{ flexGrow: 1 }}>
@@ -75,7 +78,7 @@ export default function SecretEntry() {
             <Grid item xs={2}>
             </Grid>
             <Grid item xs={4}>
-            <Item sx={{fontSize:'12px', background:'rgba(212, 184, 107, 0.54)', marginBottom:'5px'}}>応募済み</Item>
+            <Item sx={{fontSize:'12px', background:'rgba(201, 219, 232, 0.54)', marginBottom:'10px',}}>書類選考案内</Item>
             </Grid>
         </Grid>
         </Box>
@@ -98,7 +101,7 @@ export default function SecretEntry() {
     </Card>
     </div>
 
-    <div style={{background:'#FFF', marginBottom:'20px'}}>
+    <div style={{background:'#FFF', marginBottom:'20px', border: '1px solid #EEEEEE', borderRadius: '10px'}}>
     <Card sx={{ minWidth: 275, marginBottom:'30px', textDecoration:'none' }} component={Link} to="/messages/scout">
       <CardContent>
         <Box sx={{ flexGrow: 1 }}>
@@ -108,7 +111,7 @@ export default function SecretEntry() {
             <Grid item xs={2}>
             </Grid>
             <Grid item xs={4}>
-            <Item sx={{fontSize:'12px', background:'rgba(212, 184, 107, 0.54)', marginBottom:'5px'}}>応募済み</Item>
+            <Item sx={{fontSize:'12px', background:'#DADADA', marginBottom:'10px'}}>匿名選考中</Item>
             </Grid>
         </Grid>
         </Box>
@@ -131,7 +134,7 @@ export default function SecretEntry() {
     </Card>
     </div>
 
-    <div style={{background:'#FFF', marginBottom:'20px'}}>
+    <div style={{background:'#FFF', marginBottom:'20px', border: '1px solid #EEEEEE', borderRadius: '10px'}}>
     <Card sx={{ minWidth: 275, marginBottom:'30px', textDecoration:'none' }} component={Link} to="/messages/scout">
       <CardContent>
         <Box sx={{ flexGrow: 1 }}>
@@ -141,7 +144,7 @@ export default function SecretEntry() {
             <Grid item xs={2}>
             </Grid>
             <Grid item xs={4}>
-            <Item sx={{fontSize:'12px', background:'rgba(212, 184, 107, 0.54)', marginBottom:'5px'}}>応募済み</Item>
+            <Item sx={{fontSize:'12px', background:'#DADADA', marginBottom:'10px'}}>選考期日経過</Item>
             </Grid>
         </Grid>
         </Box>
@@ -164,7 +167,7 @@ export default function SecretEntry() {
     </Card>
     </div>
 
-    <div style={{background:'#FFF', marginBottom:'20px'}}>
+    <div style={{background:'#FFF', marginBottom:'100px', border: '1px solid #EEEEEE', borderRadius: '10px'}}>
     <Card sx={{ minWidth: 275, marginBottom:'30px', textDecoration:'none' }} component={Link} to="/messages/scout">
       <CardContent>
         <Box sx={{ flexGrow: 1 }}>
@@ -174,7 +177,7 @@ export default function SecretEntry() {
             <Grid item xs={2}>
             </Grid>
             <Grid item xs={4}>
-            <Item sx={{fontSize:'12px', background:'rgba(212, 184, 107, 0.54)', marginBottom:'5px'}}>応募済み</Item>
+            <Item sx={{fontSize:'12px', background:'#DADADA', marginBottom:'10px'}}>選考不通過</Item>
             </Grid>
         </Grid>
         </Box>

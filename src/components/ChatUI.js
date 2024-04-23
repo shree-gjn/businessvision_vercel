@@ -35,10 +35,10 @@ const ChatComponent = () => {
   };
 
   return (
-    <div style={{ padding: 16 }}>
-      <Grid container component={Paper} elevation={3} style={{ padding: 16 }}>
+    <div>
+      <Grid container component={Paper} elevation={3} style={{boxShadow: 'none', background: 'rgb(250, 250, 250)'}}>
         {/* Messages Container */}
-        <Grid item xs={12} style={{ height: '400px', overflowY: 'auto' }}>
+        <Grid item xs={12} style={{ height: '400px', overflowY: 'auto', boxShadow: 'none' }}>
           {messages.map((message, index) => (
             <div key={index} style={{ marginBottom: 8 }}>
               <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -56,9 +56,9 @@ const ChatComponent = () => {
 
         {/* Send Message Text Field */}
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={10}>
+          <Grid item xs={12}>
             <TextField
-              label="Type your message"
+              label="メッセージを入力してください"
               variant="outlined"
               fullWidth
               value={newMessage}

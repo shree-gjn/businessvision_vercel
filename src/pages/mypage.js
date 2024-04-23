@@ -23,8 +23,8 @@ const MyPage = ({ handleNext }) => {
     <TabContext value={value}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <TabList onChange={handleChange} aria-label="lab API tabs example">
-          <Tab label="求人検索" value="1" sx={{width:'50%'}}/>
-          <Tab label="求人案内" value="2" sx={{width:'50%'}}/>
+          <Tab label="検索" value="1" sx={{width:'50%'}}/>
+          <Tab label="おすすめ" value="2" sx={{width:'50%'}}/>
         </TabList>
       </Box>
 
