@@ -13,6 +13,7 @@ import {
   Typography,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
@@ -149,8 +150,9 @@ const IndustryComponent = ({ handleNext }) => {
         </Box>
         </Link>
         <div>
-          <Button onClick={handleToggle} variant="contained" color="primary" sx={{ width: '90%', background:'#fff', color:'#000', borderRadius:'0px' }}>
+          <Button onClick={handleToggle} variant="contained" color="primary" sx={{ width: '90%', background:'#fff', color:'#000', borderRadius:'0px', textAlign: 'left', justifyContent: 'space-between'}}>
             {isExpanded ? 'IT・インタネット・ゲーム' : 'IT・インタネット・ゲーム'}
+            {isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />} {/* Add arrow icon */}
           </Button>
           <Collapse in={isExpanded}>
           <div style={{textAlign:'left', paddingLeft:'20px'}}>
@@ -181,8 +183,9 @@ const IndustryComponent = ({ handleNext }) => {
             </div>
           </Collapse>
 
-          <Button onClick={handleToggle2} variant="contained" color="primary" sx={{ width: '90%', background:'#fff', color:'#000', borderRadius:'0px' }}>
+          <Button onClick={handleToggle2} variant="contained" color="primary" sx={{ width: '90%', background:'#fff', color:'#000', borderRadius:'0px', justifyContent: 'space-between'}}>
           {isExpanded2 ? 'メーカー' : 'メーカー'}
+          {isExpanded2 ? <ExpandLessIcon /> : <ExpandMoreIcon />} {/* Add arrow icon */}
           </Button>
             <Collapse in={isExpanded2}>
             <div style={{textAlign:'left', paddingLeft:'30px'}}>
@@ -228,8 +231,9 @@ const IndustryComponent = ({ handleNext }) => {
           /> <br />
             </div>
             </Collapse>
-            <Button onClick={handleToggle3} variant="contained" color="primary" sx={{ width: '90%', background:'#fff', color:'#000', borderRadius:'0px' }}>
+            <Button onClick={handleToggle3} variant="contained" color="primary" sx={{ width: '90%', background:'#fff', color:'#000', borderRadius:'0px', justifyContent: 'space-between'}}>
           {isExpanded3 ? '商社' : '商社'}
+          {isExpanded3 ? <ExpandLessIcon /> : <ExpandMoreIcon />} {/* Add arrow icon */}
           </Button>
             <Collapse in={isExpanded3}>
             <div style={{textAlign:'left', paddingLeft:'30px'}}>
@@ -276,8 +280,9 @@ const IndustryComponent = ({ handleNext }) => {
             </div>
             </Collapse>
 
-            <Button onClick={handleToggle4} variant="contained" color="primary" sx={{ width: '90%', background:'#fff', color:'#000', borderRadius:'0px' }}>
+            <Button onClick={handleToggle4} variant="contained" color="primary" sx={{ width: '90%', background:'#fff', color:'#000', borderRadius:'0px', justifyContent: 'space-between'}}>
           {isExpanded4 ? '流通・小売・サービス' : '流通・小売・サービス'}
+          {isExpanded4 ? <ExpandLessIcon /> : <ExpandMoreIcon />} {/* Add arrow icon */}
           </Button>
             <Collapse in={isExpanded4}>
             <div style={{textAlign:'left', paddingLeft:'30px'}}>
@@ -332,8 +337,9 @@ const IndustryComponent = ({ handleNext }) => {
             </div>
             </Collapse>
 
-            <Button onClick={handleToggle5} variant="contained" color="primary" sx={{ width: '90%', background:'#fff', color:'#000', borderRadius:'0px' }}>
+            <Button onClick={handleToggle5} variant="contained" color="primary" sx={{ width: '90%', background:'#fff', color:'#000', borderRadius:'0px', justifyContent: 'space-between'}}>
           {isExpanded5 ? '広告・出版・マスコミ' : '広告・出版・マスコミ'}
+          {isExpanded5 ? <ExpandLessIcon /> : <ExpandMoreIcon />} {/* Add arrow icon */}
           </Button>
             <Collapse in={isExpanded5}>
             <div style={{textAlign:'left', paddingLeft:'30px'}}>
@@ -344,8 +350,9 @@ const IndustryComponent = ({ handleNext }) => {
             </div>
             </Collapse>
 
-            <Button onClick={handleToggle6} variant="contained" color="primary" sx={{ width: '90%', background:'#fff', color:'#000', borderRadius:'0px' }}>
+            <Button onClick={handleToggle6} variant="contained" color="primary" sx={{ width: '90%', background:'#fff', color:'#000', borderRadius:'0px', justifyContent: 'space-between'}}>
           {isExpanded6 ? 'コンサルティング' : 'コンサルティング'}
+          {isExpanded6 ? <ExpandLessIcon /> : <ExpandMoreIcon />} {/* Add arrow icon */}
           </Button>
             <Collapse in={isExpanded6}>
             <div style={{textAlign:'left', paddingLeft:'30px'}}>
@@ -356,8 +363,9 @@ const IndustryComponent = ({ handleNext }) => {
             </div>
             </Collapse>
 
-            <Button onClick={handleToggle7} variant="contained" color="primary" sx={{ width: '90%', background:'#fff', color:'#000', borderRadius:'0px' }}>
+            <Button onClick={handleToggle7} variant="contained" color="primary" sx={{ width: '90%', background:'#fff', color:'#000', borderRadius:'0px', justifyContent: 'space-between'}}>
           {isExpanded7 ? '金融' : '金融'}
+          {isExpanded7 ? <ExpandLessIcon /> : <ExpandMoreIcon />} {/* Add arrow icon */}
           </Button>
             <Collapse in={isExpanded7}>
             <div style={{textAlign:'left', paddingLeft:'30px'}}>
@@ -380,8 +388,9 @@ const IndustryComponent = ({ handleNext }) => {
             </div>
             </Collapse>
 
-            <Button onClick={handleToggle8} variant="contained" color="primary" sx={{ width: '90%', background:'#fff', color:'#000', borderRadius:'0px' }}>
+            <Button onClick={handleToggle8} variant="contained" color="primary" sx={{ width: '90%', background:'#fff', color:'#000', borderRadius:'0px', justifyContent: 'space-between'}}>
           {isExpanded8 ? '建設・不動産' : '建設・不動産'}
+          {isExpanded8 ? <ExpandLessIcon /> : <ExpandMoreIcon />} {/* Add arrow icon */}
           </Button>
             <Collapse in={isExpanded8}>
             <div style={{textAlign:'left', paddingLeft:'30px'}}>
@@ -396,8 +405,9 @@ const IndustryComponent = ({ handleNext }) => {
             </div>
             </Collapse>
 
-            <Button onClick={handleToggle9} variant="contained" color="primary" sx={{ width: '90%', background:'#fff', color:'#000', borderRadius:'0px' }}>
-          {isExpanded3 ? 'メディカル' : 'メディカル'}
+            <Button onClick={handleToggle9} variant="contained" color="primary" sx={{ width: '90%', background:'#fff', color:'#000', borderRadius:'0px', justifyContent: 'space-between'}}>
+          {isExpanded9 ? 'メディカル' : 'メディカル'}
+          {isExpanded9 ? <ExpandLessIcon /> : <ExpandMoreIcon />} {/* Add arrow icon */}
           </Button>
             <Collapse in={isExpanded9}>
             <div style={{textAlign:'left', paddingLeft:'30px'}}>
@@ -412,8 +422,9 @@ const IndustryComponent = ({ handleNext }) => {
             </div>
             </Collapse>
 
-            <Button onClick={handleToggle10} variant="contained" color="primary" sx={{ width: '90%', background:'#fff', color:'#000', borderRadius:'0px' }}>
+            <Button onClick={handleToggle10} variant="contained" color="primary" sx={{ width: '90%', background:'#fff', color:'#000', borderRadius:'0px', justifyContent: 'space-between'}}>
           {isExpanded10 ? '物流・運輸' : '物流・運輸'}
+          {isExpanded10 ? <ExpandLessIcon /> : <ExpandMoreIcon />} {/* Add arrow icon */}
           </Button>
             <Collapse in={isExpanded10}>
             <div style={{textAlign:'left', paddingLeft:'30px'}}>
@@ -428,8 +439,9 @@ const IndustryComponent = ({ handleNext }) => {
             </div>
             </Collapse>
 
-            <Button onClick={handleToggle11} variant="contained" color="primary" sx={{ width: '90%', background:'#fff', color:'#000', borderRadius:'0px' }}>
+            <Button onClick={handleToggle11} variant="contained" color="primary" sx={{ width: '90%', background:'#fff', color:'#000', borderRadius:'0px', justifyContent: 'space-between'}}>
           {isExpanded11 ? 'その他（インフラ・教育・官公庁）' : 'その他（インフラ・教育・官公庁）'}
+          {isExpanded11 ? <ExpandLessIcon /> : <ExpandMoreIcon />} {/* Add arrow icon */}
           </Button>
             <Collapse in={isExpanded11}>
             <div style={{textAlign:'left', paddingLeft:'30px'}}>

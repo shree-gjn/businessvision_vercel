@@ -29,7 +29,9 @@ import FPAuthentication from './pages/fp-authentication';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import AgentPage from './pages/AgentPage';
 import RegistrationAuth from './pages/registrationauth';
-import NormalApplication from './pages/normalapplication';
+import NormalResume from './pages/normalresume';
+import MaskingApplication from './pages/MaskingApplication';
+import MaskingApplicationConfirm from './pages/MaskingApplicationConfirm';
 
 function App() {
   return (
@@ -64,7 +66,9 @@ function App() {
           <Route path="/fpauthentication" element={<FPAuthentication />} />
           <Route path="/resetpassword" element={<ResetPasswordPage />} />
           <Route path="/registrationauth" element={<RegistrationAuth />} />
-          <Route path="/normalapplication" element={<NormalApplication />} />
+          <Route path="/normalresume" element={<NormalResume />} />
+          <Route path="/maskingapplication" element={<MaskingApplication />} />
+          <Route path="/maskingapplicationconfirm" element={<MaskingApplicationConfirm />} />
         </Routes>
       </Router>
     </div>

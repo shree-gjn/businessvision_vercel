@@ -317,7 +317,7 @@ export default function RecruitmentFullInfo() {
               <Button component={Link} to="#" variant="contained" color="primary" sx={{fontSize:'12px', width: '100%'}}> 気になる済 </Button>
             </Grid>
             <Grid item xs={4}>
-              <Button component={Link} to="#" variant="contained" color="primary" sx={{fontSize: '12px', width: '100%'}}> 匿名エントリー </Button>
+              <Button component={Link} to="/maskingapplication" variant="contained" color="primary" sx={{fontSize: '12px', width: '100%'}}> 匿名エントリー </Button>
             </Grid>
             <Grid item xs={4}>
               <Button component={Link} to="#" variant="contained" color="primary" sx={{fontSize: '12px', width: '100%'}}> 書類選考応募 </Button>

@@ -74,11 +74,13 @@ const IncomeComponent = ({ handleNext }) => {
                   </Grid>
                 </Box>
               </Link>
+              
               <div style={{ textAlign: 'left', padding: '10px' }}>
                 <Select
                   value={selectedValue === '' ? '' : selectedValue}
                   onChange={(e) => setSelectedValue(e.target.value)}
                   sx={{ width: '100%', marginBottom: '20px' }}
+                  displayEmpty
                 >
                   <MenuItem value="" disabled>
                     オプションを選んでください
@@ -93,6 +95,7 @@ const IncomeComponent = ({ handleNext }) => {
                   value={selectedValue1 === '' ? '' : selectedValue1}
                   onChange={(e) => setSelectedValue1(e.target.value)}
                   sx={{ width: '100%', marginBottom: '20px' }}
+                  displayEmpty
                 >
                   <MenuItem value="" disabled>
                     オプションを選んでください

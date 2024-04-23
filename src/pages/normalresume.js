@@ -29,7 +29,7 @@ const BackLink = styled(Link)(({ theme }) => ({
   marginBottom: '8px',
 }));
 
-const NormalApplication = () => {
+const NormalResume = () => {
   const navigate = useNavigate(); // Get the history object from react-router-dom
   const [openModal1, setOpenModal1] = useState(false);
   const [openModal2, setOpenModal2] = useState(false);
@@ -369,4 +369,4 @@ const NormalApplication = () => {
   );
 };
 
-export default NormalApplication;
+export default NormalResume;
