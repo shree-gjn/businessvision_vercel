@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -10,9 +9,27 @@ import Grid from '@mui/material/Grid';
 import Modal from '@mui/material/Modal';
 import { Link, useNavigate } from 'react-router-dom'; 
 import BottomNav from '../components/BottomNav';
+import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
 import {ReactComponent as BackButton} from '../assets/BackButton.svg';
 import {ReactComponent as PencilEdit} from '../assets/PencilEdit.svg';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#16375A',
+    },
+    secondary: {
+      main: '#877151',
+    },
+    grey: {
+      main: '#949494', // Change to your desired color
+    },
+    text: {
+      grey: '#ffffff', // Change to your desired text color
+    },
+  },
+});
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -120,66 +137,68 @@ export default function MaskingApplication() {
   replaceAndRemoveRows(29, 30, 30, data);
 
   return (
-    <>
-      <div className="PageHeader">
-        <BackLink to="#" onClick={goBack} > <BackButton /> 戻る </BackLink>
-        <p>求人情報</p>
-      </div>
-      <Box sx={{ width: 'auto', padding: '24px', background: 'rgb(250, 250, 250)', marginBottom: '100px'}}>
-        <Grid container spacing={1}>
-          <Grid item xs={12} style={{width: '100%'}}>
-            <Item sx={{textAlign: 'center'}}>
-            応募情報の確認
-            </Item>
+    <ThemeProvider theme={theme}>
+      <>
+        <div className="PageHeader">
+          <BackLink to="#" onClick={goBack} > <BackButton /> 戻る </BackLink>
+          <p>求人情報</p>
+        </div>
+        <Box sx={{ width: 'auto', padding: '24px', background: 'rgb(250, 250, 250)', marginBottom: '100px'}}>
+          <Grid container spacing={1}>
+            <Grid item xs={12} style={{width: '100%'}}>
+              <Item sx={{textAlign: 'center', background: 'transparent'}}>
+              応募情報の確認
+              </Item>
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid container style={{}}>
-          <Grid item xs={12} style={{marginBottom: '10px'}}>
-            <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '80px', display: 'flex', gap: '15px'}}>
-              <span>
-                <PencilEdit />
-              </span>
-              <Typography variant='paragraph'>編集</Typography>
-            </Item>
+          <Grid container style={{}}>
+            <Grid item xs={4} style={{marginBottom: '10px', marginLeft: 'auto'}}>
+              <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '60px', display: 'flex', gap: '15px', marginLeft: 'auto'}}>
+                <span>
+                  <PencilEdit />
+                </span>
+                <Typography variant='paragraph'>編集</Typography>
+              </Item>
+            </Grid>
+            <Grid item xs={12} style={{width: '100%', height: '200px'}}>
+              <Item sx={{border: '1px solid #EEEEEE', height: '200px'}}>
+              <TableContainer component={Paper} sx={{boxShadow: 'none', height: '200px'}}>
+                <Table>
+                  <TableBody>
+                    {data.map((row) => (
+                      <TableRow key={row.id}>
+                        <TableCell sx={{color:'#16375A'}}>{row.column1.split('\n').map((line, index) => <div key={index}>{line}</div>)}</TableCell>
+                        <TableCell sx={{width:'60%'}}>{row.column2.split('\n').map((line, index) => <div key={index}>{line}</div>)}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              </Item>
+            </Grid>
           </Grid>
-          <Grid item xs={12} style={{width: '100%', height: '200px'}}>
-            <Item sx={{border: '1px solid #EEEEEE', height: '200px'}}>
-            <TableContainer component={Paper} sx={{boxShadow: 'none', height: '200px'}}>
-              <Table>
-                <TableBody>
-                  {data.map((row) => (
-                    <TableRow key={row.id}>
-                      <TableCell sx={{color:'#16375A'}}>{row.column1.split('\n').map((line, index) => <div key={index}>{line}</div>)}</TableCell>
-                      <TableCell sx={{width:'60%'}}>{row.column2.split('\n').map((line, index) => <div key={index}>{line}</div>)}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            </Item>
+          <Grid container style={{width: '100%', marginBottom: '20px'}}>
+            <Grid item xs={12} style={{width: '100%'}}>
+              <Item style={{textAlign: 'left'}}>メッセージを入力</Item>
+              <TextField style={{}}
+                id="outlined-multiline-static"
+                variant="outlined"
+                fullWidth
+                multiline
+                placeholder="その他の相談事項" 
+                // name="username"
+                rows={4}
+              />
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid container style={{width: '100%', marginBottom: '20px'}}>
-          <Grid item xs={12} style={{width: '100%'}}>
-            <Item style={{textAlign: 'left'}}>メッセージを入力</Item>
-            <TextField style={{}}
-              id="outlined-multiline-static"
-              variant="outlined"
-              fullWidth
-              multiline
-              placeholder="その他の相談事項" 
-              // name="username"
-              rows={4}
-            />
+          <Grid container style={{width: '100%'}}>
+            <Grid item xs={12} style={{width: '100%'}}>
+            <Button component={Link} to="/maskingapplicationconfirm" variant="contained" color="primary" sx={{ width: '100%', marginBottom: '20px' }}>匿名エントリー</Button>
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid container style={{width: '100%'}}>
-          <Grid item xs={12} style={{width: '100%'}}>
-          <Button component={Link} to="/maskingapplicationconfirm" variant="contained" color="primary" sx={{ width: '100%', marginBottom: '20px' }}>匿名エントリー</Button>
-          </Grid>
-        </Grid>
-      </Box>
-      <BottomNav />
-  </>
+        </Box>
+        <BottomNav />
+      </>
+    </ThemeProvider>
   );
 }

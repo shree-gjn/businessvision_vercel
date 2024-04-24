@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -7,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
+import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import {ReactComponent as BuildingIcon} from '../assets/BuildingIcon.svg';
 import {ReactComponent as BagIcon} from '../assets/BagIcon.svg';
 import {ReactComponent as BuildingMap} from '../assets/BuildingMap.svg';
@@ -16,7 +16,22 @@ import {ReactComponent as NoteIcon} from '../assets/NoteIcon.svg';
 import BottomNav from '../components/BottomNav';
 import { useNavigate } from 'react-router-dom';
 
-
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#16375A',
+    },
+    secondary: {
+      main: '#877151',
+    },
+    grey: {
+      main: '#949494', // Change to your desired color
+    },
+    text: {
+      grey: '#ffffff', // Change to your desired text color
+    },
+  },
+});
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -37,7 +52,8 @@ export default function ProgressStepTwo() {
   };
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
+      <>
     <Card sx={{ minWidth: 275, marginBottom:'20px', marginTop:'10px', boxShadow: 'none', border: '1px solid #EEEEEE', borderRadius: '10px'}} onClick={handleCardClick}>
       <CardContent>
         <Box sx={{ flexGrow: 1 }}>
@@ -309,5 +325,6 @@ export default function ProgressStepTwo() {
     <BottomNav />
     </>
   </>
+    </ThemeProvider>
   );
 }

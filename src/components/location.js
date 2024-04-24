@@ -7,7 +7,6 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import BottomNav from '../components/BottomNav';
 import RecruitmentInfo from '../pages/RecruitmentInfo';
-import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
@@ -17,6 +16,24 @@ import {ReactComponent as MapsIcon} from '../assets/MapsIcon.svg';
 import {ReactComponent as BackArrowIcon} from '../assets/BackArrowIcon.svg';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#16375A',
+    },
+    secondary: {
+      main: '#877151',
+    },
+    grey: {
+      main: '#949494', // Change to your desired color
+    },
+    text: {
+      grey: '#ffffff', // Change to your desired text color
+    },
+  },
+});
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -65,7 +82,8 @@ const LocationComponent = ({ handleNext }) => {
   };
 
   return (
-    <Box sx={{ width: '100%', typography: 'body1' }}>
+    <ThemeProvider theme={theme}>
+      <Box sx={{ width: '100%', typography: 'body1' }}>
     <div className="PageHeader">
       <p>求人情報</p>
     </div>
@@ -162,6 +180,7 @@ const LocationComponent = ({ handleNext }) => {
     </TabContext>
     <BottomNav />
   </Box>
+    </ThemeProvider>
   );
 };
 

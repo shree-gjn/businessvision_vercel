@@ -7,6 +7,26 @@ import TabPanel from '@mui/lab/TabPanel';
 import BottomNav from '../components/BottomNav';
 import RecruitmentInfo from '../pages/RecruitmentInfo';
 import JobSearch from '../pages/jobsearch';
+import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#16375A',
+    },
+    secondary: {
+      main: '#877151',
+    },
+    grey: {
+      main: '#949494', // Change to your desired color
+    },
+    text: {
+      grey: '#ffffff', // Change to your desired text color
+    },
+  },
+});
+
+
 
 const MyPage = ({ handleNext }) => {
   const [value, setValue] = React.useState('1');
@@ -16,29 +36,31 @@ const MyPage = ({ handleNext }) => {
   };
 
   return (
-    <Box sx={{ width: '100%', typography: 'body1' }}>
-    <div className="PageHeader">
-      <p>求人情報</p>
-    </div>
-    <TabContext value={value}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <TabList onChange={handleChange} aria-label="lab API tabs example">
-          <Tab label="検索" value="1" sx={{width:'50%'}}/>
-          <Tab label="おすすめ" value="2" sx={{width:'50%'}}/>
-        </TabList>
-      </Box>
-
-      <TabPanel value="1">
-        <JobSearch />
-      </TabPanel>
-      <TabPanel value="2" sx={{backgroundColor: '#FAFAFA', overflow: 'scroll'}}>
-        <Box sx={{backgroundColor: '#FAFAFA'}}>
-            <RecruitmentInfo />
+    <ThemeProvider theme={theme}>
+      <Box sx={{ width: '100%', typography: 'body1' }}>
+        <div className="PageHeader">
+          <p>求人情報</p>
+        </div>
+        <TabContext value={value}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <TabList onChange={handleChange} aria-label="lab API tabs example">
+              <Tab label="検索" value="1" sx={{width:'50%'}}/>
+              <Tab label="おすすめ" value="2" sx={{width:'50%'}}/>
+            </TabList>
           </Box>
-      </TabPanel>
-    </TabContext>
-    <BottomNav />
-  </Box>
+
+          <TabPanel value="1">
+            <JobSearch />
+          </TabPanel>
+          <TabPanel value="2" sx={{backgroundColor: '#FAFAFA', overflow: 'scroll'}}>
+            <Box sx={{backgroundColor: '#FAFAFA'}}>
+                <RecruitmentInfo />
+              </Box>
+          </TabPanel>
+        </TabContext>
+        <BottomNav />
+      </Box>
+    </ThemeProvider>
   );
 };
 

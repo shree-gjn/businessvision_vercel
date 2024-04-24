@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import BottomNav from '../components/BottomNav';
 import {ReactComponent as BackButton} from '../assets/BackButton.svg';
-import { styled } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom'; 
 // import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, RadioGroup, Radio, 
 //   FormControl, FormControlLabel, Typography, Button, Switch, FormLabel} from '@mui/material';
@@ -16,6 +15,24 @@ import AccordianBasicInfo from './registration/components/AccordianBasicInfo';
 import Divider from '@mui/material/Divider';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AccordionDetails from '@mui/material/AccordionDetails';
+import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#16375A',
+    },
+    secondary: {
+      main: '#877151',
+    },
+    grey: {
+      main: '#949494', // Change to your desired color
+    },
+    text: {
+      grey: '#ffffff', // Change to your desired text color
+    },
+  },
+});
 
 const BackLink = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
@@ -131,7 +148,8 @@ const RecommendedJobSettings = () => {
   };
 
   return (
-    <Box sx={{ width: '100%', typography: 'body1' }}>
+    <ThemeProvider theme={theme}>
+       <Box sx={{ width: '100%', typography: 'body1' }}>
     {/* <div className="PageHeader">
       <p>おすすめ求人設定</p>
     </div> */}
@@ -572,6 +590,7 @@ const RecommendedJobSettings = () => {
     </div>
     <BottomNav />
   </Box>
+    </ThemeProvider>
   );
 };
 

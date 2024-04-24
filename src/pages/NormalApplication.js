@@ -11,10 +11,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import BottomNav from '../components/BottomNav';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
+import ResumeTab from './profile/ResumeTab';
 import {ReactComponent as BackButton} from '../assets/BackButton.svg';
 import {ReactComponent as PencilEdit} from '../assets/PencilEdit.svg';
-import {ReactComponent as SuccessMsg} from '../assets/SuccessMsg.svg';
-import {ReactComponent as Cancel} from '../assets/Cancel.svg';
 
 const theme = createTheme({
   palette: {
@@ -56,7 +55,7 @@ const Item = styled(Paper)(({ theme }) => ({
     transform: 'translateY(-50%)'
   }));
 
-export default function MaskingApplicationConfirm() {
+export default function NormalApplication() {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const handleOpenDeleteModal = () => {
@@ -149,84 +148,45 @@ export default function MaskingApplicationConfirm() {
           <Grid container spacing={1}>
             <Grid item xs={12} style={{width: '100%'}}>
               <Item sx={{textAlign: 'center'}}>
-              提出書類の確認をお願いします
+              応募情報の確認
               </Item>
             </Grid>
           </Grid>
-          <Grid container spacing={1} style={{width: '100%', marginBottom: '20px', background: '#FFFFFF', marginLeft: '0', marginTop: '10px', height: '150px', borderRadius: '10px', border: '1px solid #EEEEEE'}}>
-            <Grid item xs={8} style={{width: '100%'}}>
-              <Item style={{textAlign: 'left'}}>メッセージ</Item>
-            </Grid>
-            <Grid item xs={4}>
-              <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '60px', display: 'flex', gap: '15px'}}>
+          <Grid container style={{}}>
+            <Grid item xs={4} style={{marginBottom: '10px', marginLeft: 'auto'}}>
+              <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '60px', display: 'flex', gap: '15px', marginLeft: 'auto'}}>
                 <span>
                   <PencilEdit />
                 </span>
                 <Typography variant='paragraph'>編集</Typography>
               </Item>
             </Grid>
-          </Grid>
-          <Grid container spacing={1} style={{background: '#FFFFFF', border: '1px solid #EEEEEE', borderRadius: '10px', width: '100%', marginLeft: '0', marginBottom: '50px'}}>
-            <Grid item xs={4} style={{marginLeft: 'auto'}}>
-              <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '60px', display: 'flex', gap: '15px'}}>
-                <span>
-                  <PencilEdit />
-                </span>
-                <Typography variant='paragraph'>編集</Typography>
+            <Grid item xs={12} style={{width: '100%', height: '200px', overflowY: 'auto', border: '1px solid #EEEEEE'}}>
+              <Item sx={{height: '200px'}}>
+              <ResumeTab style={{paddingBottom: '20px'}} />
               </Item>
             </Grid>
-            <Grid item xs={12} style={{width: '100%', height: '150px', overflowY: 'auto'}}>
-              <Item xs={{border: '1px solid #EEEEEE', height: '150px'}}>
-              <TableContainer component={Paper} sx={{boxShadow: 'none', height: '150px'}}>
-                <Table>
-                  <TableBody>
-                    {data.map((row) => (
-                      <TableRow key={row.id}>
-                        <TableCell sx={{color:'#16375A'}}>{row.column1.split('\n').map((line, index) => <div key={index}>{line}</div>)}</TableCell>
-                        <TableCell sx={{width:'60%'}}>{row.column2.split('\n').map((line, index) => <div key={index}>{line}</div>)}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-              </Item>
+          </Grid>
+          <Grid container style={{width: '100%', marginBottom: '20px'}}>
+            <Grid item xs={12} style={{width: '100%'}}>
+              <Item style={{textAlign: 'left'}}>メッセージを入力</Item>
+              <TextField style={{}}
+                id="outlined-multiline-static"
+                variant="outlined"
+                fullWidth
+                multiline
+                placeholder="その他の相談事項" 
+                // name="username"
+                rows={4}
+              />
             </Grid>
           </Grid>
           <Grid container style={{width: '100%'}}>
             <Grid item xs={12} style={{width: '100%'}}>
-            <Button onClick={handleOpenDeleteModal} component={Link} to="" variant="contained" color="primary" sx={{ width: '100%', marginBottom: '20px' }}>匿名エントリー</Button>
+            <Button component={Link} to="/normalapplicationconfirm" variant="contained" color="secondary" sx={{ width: '100%', marginBottom: '20px' }}>書類選考応募</Button>
             </Grid>
           </Grid>
         </Box>
-
-        <Modal
-              open={isDeleteModalOpen}
-              onClose={handleCloseDeleteModal}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-          >
-              <Box sx={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  width: 300,
-                  bgcolor: 'background.paper',
-                  borderRadius: '20px',
-                  boxShadow: 24,
-                  textAlign: 'center',
-                  p: 4,
-              }}>
-                  <Cancel onClick={handleCloseDeleteModal} style={{position: 'absolute', right: '0', top: '0', padding: '10px'}} />
-                  <SuccessMsg style={{marginBottom: '10px'}} />
-                  <Typography id="modal-modal-title" variant="h6" component="h2" style={{fontSize: '14px'}}>
-                    匿名エントリーが完了しました
-                  </Typography>
-                  {/* <Button onClick={handleDelete}>Delete</Button>
-                  <Button onClick={handleCloseDeleteModal}>Cancel</Button> */}
-              </Box>
-        </Modal>
-        
         <BottomNav />
       </>
     </ThemeProvider>

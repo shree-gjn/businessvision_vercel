@@ -11,6 +11,24 @@ import { ReactComponent as InProgress } from '../assets/InProgress.svg';
 import { ReactComponent as InProgressBlue } from '../assets/InProgressBlue.svg';
 import { ReactComponent as Profile } from '../assets/Profile.svg';
 import { ReactComponent as ProfileBlue } from '../assets/ProfileBlue.svg';
+import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#16375A',
+    },
+    secondary: {
+      main: '#877151',
+    },
+    grey: {
+      main: '#949494', // Change to your desired color
+    },
+    text: {
+      grey: '#ffffff', // Change to your desired text color
+    },
+  },
+});
 
 export default function BottomNav() {
   const location = useLocation();
@@ -39,43 +57,45 @@ export default function BottomNav() {
   }, [location.pathname]);
 
   return (
-    <Box sx={{ width: '100%', position:'fixed', left:'0', bottom:'0' }}>
-      <BottomNavigation
-        showLabels
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-      >
-        <BottomNavigationAction
-          label="求人情報"
-          icon={value === 0 ? <JobIconBlue /> : <JobIcon />}
-          component={RouterLink}
-          to="/mypage"
-          sx={{ '& > span': { marginTop: 1, fontSize: '12px' } }}
-        />
-        <BottomNavigationAction
-          label="メッセージ"
-          icon={value === 1 ? <MessageIconBlue /> : <MessageIcon />}
-          component={RouterLink}
-          to="/messages"
-          sx={{ '& > span': { marginTop: 1, fontSize: '12px' } }}
-        />
-        <BottomNavigationAction
-          label="進行中"
-          icon={value === 2 ? <InProgressBlue /> : <InProgress />}
-          component={RouterLink}
-          to="/inprogress"
-          sx={{ '& > span': { marginTop: 1, fontSize: '12px' } }}
-        />
-        <BottomNavigationAction
-          label="プロフィール"
-          icon={value === 3 ? <ProfileBlue /> : <Profile />}
-          component={RouterLink}
-          to="/profile"
-          sx={{ '& > span': { marginTop: 1, fontSize: '12px' } }}
-        />
-      </BottomNavigation>
-    </Box>
+    <ThemeProvider theme={theme}>
+      <Box sx={{ width: '100%', position:'fixed', left:'0', bottom:'0' }}>
+        <BottomNavigation
+          showLabels
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+        >
+          <BottomNavigationAction
+            label="求人情報"
+            icon={value === 0 ? <JobIconBlue /> : <JobIcon />}
+            component={RouterLink}
+            to="/mypage"
+            sx={{ '& > span': { marginTop: 1, fontSize: '12px' } }}
+          />
+          <BottomNavigationAction
+            label="メッセージ"
+            icon={value === 1 ? <MessageIconBlue /> : <MessageIcon />}
+            component={RouterLink}
+            to="/messages"
+            sx={{ '& > span': { marginTop: 1, fontSize: '12px' } }}
+          />
+          <BottomNavigationAction
+            label="進行中"
+            icon={value === 2 ? <InProgressBlue /> : <InProgress />}
+            component={RouterLink}
+            to="/inprogress"
+            sx={{ '& > span': { marginTop: 1, fontSize: '12px' } }}
+          />
+          <BottomNavigationAction
+            label="プロフィール"
+            icon={value === 3 ? <ProfileBlue /> : <Profile />}
+            component={RouterLink}
+            to="/profile"
+            sx={{ '& > span': { marginTop: 1, fontSize: '12px' } }}
+          />
+        </BottomNavigation>
+      </Box>
+    </ThemeProvider>
   );
 }

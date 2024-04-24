@@ -22,7 +22,7 @@ import {ReactComponent as BuildingIcon} from '../assets/BuildingIcon.svg';
 import {ReactComponent as BagIcon} from '../assets/BagIcon.svg';
 import {ReactComponent as YenIcon} from '../assets/YenIcon.svg';
 import {ReactComponent as MapsIcon} from '../assets/MapsIcon.svg';
-import {ReactComponent as AccountingSkill} from '../assets/AccountingSkill.svg'
+import {ReactComponent as Accounting} from '../assets/Accounting.svg'
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -194,17 +194,17 @@ const JobSearch = () => {
           id="panel1a-header"
           style={{padding: '0 10px', alignItems: 'center'}}
         >
-          <AccountingSkill style={{marginRight: '16px'}} />
+          <Accounting style={{marginRight: '16px'}} />
           <Typography style={{fontSize: '12px'}}>経理スキル</Typography>
         </AccordionSummary>
         <AccordionDetails sx={{padding:'0px', textAlign:'left'}}>
         <div>
           <Divider />
-          <Link to="" style={{textDecoration:'none'}}>
+          <Link to="/accountingskill" style={{textDecoration:'none'}}>
             <Box sx={{ flexGrow: 1}}>
             <Grid container spacing={1} style={{marginTop: '0'}}>
             <Grid item xs={1}>
-                <Item><AccountingSkill /></Item>
+                <Item><Accounting /></Item>
                 </Grid>
                 <Grid item xs={9}>
                 <Item sx={{textAlign:'left', fontSize:'12px'}}>完全一致</Item>
@@ -215,11 +215,11 @@ const JobSearch = () => {
             </Grid>
             </Box>
           </Link>
-          <Link to="" style={{textDecoration:'none'}}>
+          <Link to="/accountingskill" style={{textDecoration:'none'}}>
             <Box sx={{ flexGrow: 1}}>
             <Grid container spacing={1} style={{marginTop: '0'}}>
             <Grid item xs={1}>
-                <Item><AccountingSkill /></Item>
+                <Item><Accounting /></Item>
                 </Grid>
                 <Grid item xs={9}>
                 <Item sx={{textAlign:'left', fontSize:'12px'}}>上記の条件を広めに設定</Item>
@@ -238,9 +238,16 @@ const JobSearch = () => {
         </AccordionDetails>
         </Accordion>
       </CardContent>
+      <Grid container style={{marginTop: '10px'}}>
+        <Grid item xs="12" style={{display: 'contents'}}>
+          <Item style={{background: '#EEEEEE', marginRight: '5px', marginBottom: '5px'}}>ゲーム</Item>
+          <Item style={{background: '#EEEEEE', marginRight: '5px', marginBottom: '5px'}}>通信キャリア</Item>
+          <Item style={{background: '#EEEEEE', marginRight: '5px', marginBottom: '5px'}}>東京都</Item>
+        </Grid>
+      </Grid>
     </Card>
 
-    <Button component={Link} to="/mypage" variant="contained" color="primary" sx={{ width: '90%', marginBottom: '20px' }}>
+    <Button component={Link} to="/mypage" variant="contained" color="primary" sx={{ width: '90%', marginBottom: '10px' }}>
     この条件で検索する
       </Button>
 

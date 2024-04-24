@@ -65,3 +65,8 @@
   font-size: 12px;
   padding-left: 5px;
 }
+
+.favorite-button{
+  background-color: '#949494';
+  color: #fff;
+}

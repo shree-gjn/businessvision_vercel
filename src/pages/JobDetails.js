@@ -289,10 +289,10 @@ export default function JobDetails() {
         </Grid> */}
         <Grid container spacing={1} style={{position: 'fixed', bottom: '0', left: '0', marginBottom: '56px', padding: '15px', background: 'rgb(255 255 255 / 87%)'}}>
           <Grid item xs={6}>
-            <Button component={Link} to="#" variant="contained" color="primary" sx={{fontSize:'12px', width: '100%'}}> 内定を受諾する </Button>
+            <Button component={Link} to="#" variant="contained" color="secondary" sx={{fontSize:'12px', width: '100%'}}> 内定を受諾する </Button>
           </Grid>
           <Grid item xs={6}>
-            <Button component={Link} to="#" variant="contained" color="primary" sx={{fontSize: '12px', width: '100%'}}>内定辞退 </Button>
+            <Button component={Link} to="#" variant="outlined" color="primary" sx={{fontSize: '12px', width: '100%'}}>内定辞退 </Button>
           </Grid>
         </Grid>
         </Box>

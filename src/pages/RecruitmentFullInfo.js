@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -9,6 +8,7 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Modal from '@mui/material/Modal';
 import { Link, useNavigate } from 'react-router-dom'; 
+import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import {ReactComponent as BackButton} from '../assets/BackButton.svg';
 import {ReactComponent as MoneyIcon} from '../assets/MoneyIcon.svg';
 import {ReactComponent as MapsIcon} from '../assets/MapsIcon.svg';
@@ -20,6 +20,23 @@ import {ReactComponent as BigBagIcon}  from '../assets/BigBagIcon.svg';
 import {ReactComponent as CalendarIcon} from '../assets/CalendarIcon.svg';
 import {ReactComponent as WarningIcon} from '../assets/WarningIcon.svg';
 import BottomNav from '../components/BottomNav';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#16375A',
+    },
+    secondary: {
+      main: '#877151',
+    },
+    grey: {
+      main: '#949494', // Change to your desired color
+    },
+    text: {
+      grey: '#ffffff', // Change to your desired text color
+    },
+  },
+});
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -69,7 +86,8 @@ export default function RecruitmentFullInfo() {
   };
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
+       <>
       <div className="PageHeader">
         <BackLink to="#" onClick={goBack} > <BackButton /> 戻る </BackLink>
         <p>求人情報</p>
@@ -314,13 +332,13 @@ export default function RecruitmentFullInfo() {
         <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1} style={{position: 'fixed', bottom: '0', marginBottom: '56px', padding: '15px', background: 'rgb(255 255 255 / 87%)'}}>
             <Grid item xs={4}>
-              <Button component={Link} to="#" variant="contained" color="primary" sx={{fontSize:'12px', width: '100%'}}> 気になる済 </Button>
+              <Button className='favorite-button' component={Link} to="#" variant="contained" color="grey" sx={{fontSize:'12px', width: '100%', color: '#fff'}}> 気になる済 </Button>
             </Grid>
             <Grid item xs={4}>
               <Button component={Link} to="/maskingapplication" variant="contained" color="primary" sx={{fontSize: '12px', width: '100%'}}> 匿名エントリー </Button>
             </Grid>
             <Grid item xs={4}>
-              <Button component={Link} to="#" variant="contained" color="primary" sx={{fontSize: '12px', width: '100%'}}> 書類選考応募 </Button>
+              <Button component={Link} to="/normalapplication" variant="contained" color="secondary" sx={{fontSize: '12px', width: '100%'}}> 書類選考応募 </Button>
             </Grid>
         </Grid>
         </Box>
@@ -328,5 +346,6 @@ export default function RecruitmentFullInfo() {
       <BottomNav />
       
   </>
+    </ThemeProvider>
   );
 }

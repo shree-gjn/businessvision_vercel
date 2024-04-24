@@ -4,6 +4,24 @@ import ProgressStepZero from './ProgressStepZero';
 import ProgressStepOne from './ProgressStepOne';
 import ProgressStepTwo from './ProgressStepTwo';
 import ProgressStepThree from './ProgressStepThree';
+import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#16375A',
+    },
+    secondary: {
+      main: '#877151',
+    },
+    grey: {
+      main: '#949494', // Change to your desired color
+    },
+    text: {
+      grey: '#ffffff', // Change to your desired text color
+    },
+  },
+});
 
 const InProgressComponent = () => {
   const [completedSteps, setCompletedSteps] = useState([]);
@@ -41,23 +59,25 @@ const InProgressComponent = () => {
   };
 
   return (
-    <>
-      <div className="PageHeader">
-        <p>進行中</p>
-      </div>
-      <Container style={{background: 'rgb(250, 250, 250)'}}>
-        <Stepper activeStep={activeStep} alternativeLabel sx={{margin: '20px 0'}}>
-          {steps.map((label, index) => (
-            <Step key={label} completed={completedSteps.includes(index)}>
-              <StepLabel onClick={() => handleStepClick(index)}>{label}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
-        <div>
-          {renderStepContent()}
+    <ThemeProvider theme={theme}>
+      <>
+        <div className="PageHeader">
+          <p>進行中</p>
         </div>
-      </Container>
-    </>
+        <Container style={{background: 'rgb(250, 250, 250)'}}>
+          <Stepper activeStep={activeStep} alternativeLabel sx={{margin: '20px 0'}}>
+            {steps.map((label, index) => (
+              <Step key={label} completed={completedSteps.includes(index)}>
+                <StepLabel onClick={() => handleStepClick(index)}>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+          <div>
+            {renderStepContent()}
+          </div>
+        </Container>
+      </>
+    </ThemeProvider>
   );
 };
 

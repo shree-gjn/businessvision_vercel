@@ -7,9 +7,26 @@ import TabPanel from '@mui/lab/TabPanel';
 import BottomNav from '../components/BottomNav';
 import { Link, useNavigate } from 'react-router-dom'; 
 import {ReactComponent as BackButton} from '../assets/BackButton.svg';
-import { styled } from '@mui/material/styles';
 import JobDetails from './JobDetails';
 import ChatComponent from '../components/ChatUI';
+import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#16375A',
+    },
+    secondary: {
+      main: '#877151',
+    },
+    grey: {
+      main: '#949494', // Change to your desired color
+    },
+    text: {
+      grey: '#ffffff', // Change to your desired text color
+    },
+  },
+});
 
 const BackLink = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
@@ -40,27 +57,29 @@ const FullProgress = ({ handleNext }) => {
   };
 
   return (
-    <Box sx={{ width: '100%', typography: 'body1' }}>
-    <div className="PageHeader">
-      <BackLink to="#" onClick={goBack} > <BackButton /> 戻る </BackLink>
-      <p>進行中</p>
-    </div>
-    <TabContext value={value}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <TabList onChange={handleChange} aria-label="lab API tabs example">
-          <Tab label="チャット" value="1" sx={{width:'50%'}}/>
-          <Tab label="求人内容" value="2" sx={{width:'50%'}}/>
-        </TabList>
+    <ThemeProvider theme={theme}>
+      <Box sx={{ width: '100%', typography: 'body1' }}>
+        <div className="PageHeader">
+          <BackLink to="#" onClick={goBack} > <BackButton /> 戻る </BackLink>
+          <p>進行中</p>
+        </div>
+        <TabContext value={value}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <TabList onChange={handleChange} aria-label="lab API tabs example">
+              <Tab label="チャット" value="1" sx={{width:'50%'}}/>
+              <Tab label="求人内容" value="2" sx={{width:'50%'}}/>
+            </TabList>
+          </Box>
+          <TabPanel value="1">
+            <ChatComponent />
+          </TabPanel>
+          <TabPanel value="2">
+            <JobDetails />
+          </TabPanel>
+        </TabContext>
+        <BottomNav />
       </Box>
-      <TabPanel value="1">
-        <ChatComponent />
-      </TabPanel>
-      <TabPanel value="2">
-        <JobDetails />
-      </TabPanel>
-    </TabContext>
-    <BottomNav />
-  </Box>
+    </ThemeProvider>
   );
 };
 

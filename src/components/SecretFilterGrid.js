@@ -7,6 +7,24 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#16375A',
+    },
+    secondary: {
+      main: '#877151',
+    },
+    grey: {
+      main: '#949494', // Change to your desired color
+    },
+    text: {
+      grey: '#ffffff', // Change to your desired text color
+    },
+  },
+});
 
 const SecretFilterGrid = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -34,48 +52,50 @@ const SecretFilterGrid = () => {
   };
 
   return (
-    <>
-      <Button onClick={handleClick} style={{borderRadius: '5px', border: '1px solid #EEE', background: '#FFF', width: '100%'}}>
-        <FilterListIcon /> 絞り込む
-      </Button>
-      <Popover
-        open={Boolean(anchorEl)}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-      >
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px' }}>
-          <Button onClick={handleClose}>
-            <CloseIcon />
-          </Button>
-        </div>
-        <div style={{padding:'20px'}}>
-          <div>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}> ステータス </Typography>
-            <Select value={statusValue} onChange={(e) => setStatusValue(e.target.value)} sx={{width:'100%'}}>
-              <MenuItem value={'書類選考中'}>書類選考中</MenuItem>
-              <MenuItem value={'書類選考結果'}>書類選考結果</MenuItem>
-              <MenuItem value={'書類選考NG'}>書類選考NG</MenuItem>
-              <MenuItem value={'書類選考期日経過'}>書類選考期日経過</MenuItem>
-              <MenuItem value={'ゴミ箱'}>ゴミ箱</MenuItem>
-              <MenuItem value={'すべて'}>すべて</MenuItem>
-            </Select>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-            <Button variant="contained" color="primary" onClick={handleSubmit}>
-              この条件で絞り込む
+    <ThemeProvider theme={theme}>
+      <>
+        <Button onClick={handleClick} style={{borderRadius: '5px', border: '1px solid #EEE', background: '#FFF', width: '100%'}}>
+          <FilterListIcon /> 絞り込む
+        </Button>
+        <Popover
+          open={Boolean(anchorEl)}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px' }}>
+            <Button onClick={handleClose}>
+              <CloseIcon />
             </Button>
           </div>
-        </div>
-      </Popover>
-    </>
+          <div style={{padding:'20px'}}>
+            <div>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}> ステータス </Typography>
+              <Select value={statusValue} onChange={(e) => setStatusValue(e.target.value)} sx={{width:'100%'}}>
+                <MenuItem value={'書類選考中'}>書類選考中</MenuItem>
+                <MenuItem value={'書類選考結果'}>書類選考結果</MenuItem>
+                <MenuItem value={'書類選考NG'}>書類選考NG</MenuItem>
+                <MenuItem value={'書類選考期日経過'}>書類選考期日経過</MenuItem>
+                <MenuItem value={'ゴミ箱'}>ゴミ箱</MenuItem>
+                <MenuItem value={'すべて'}>すべて</MenuItem>
+              </Select>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+              <Button variant="contained" color="primary" onClick={handleSubmit}>
+                この条件で絞り込む
+              </Button>
+            </div>
+          </div>
+        </Popover>
+      </>
+    </ThemeProvider>
   );
 };
 

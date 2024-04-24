@@ -15,6 +15,7 @@ import OccupationComponent from './components/occupation';
 import IndustryComponent from './components/industry';
 import IncomeComponent from './components/income';
 import LocationComponent from './components/location';
+import AccountingSkill from './components/AccountingSkill';
 import CorporateFull from './pages/CorporateScoutFull';
 import FullProgress from './pages/FullProgress';
 import MaskingResume from './pages/MaskingResume';
@@ -32,6 +33,8 @@ import RegistrationAuth from './pages/registrationauth';
 import NormalResume from './pages/normalresume';
 import MaskingApplication from './pages/MaskingApplication';
 import MaskingApplicationConfirm from './pages/MaskingApplicationConfirm';
+import NormalApplication from './pages/NormalApplication';
+import NormalApplicationConfirm from './pages/NormalApplicationConfirm';
 
 function App() {
   return (
@@ -53,6 +56,7 @@ function App() {
           <Route path="/industry" element={<IndustryComponent />} />
           <Route path="/income" element={<IncomeComponent />} />
           <Route path="/location" element={<LocationComponent />} />
+          <Route path="/accountingskill" element={<AccountingSkill />} />
           <Route path="/messages/scout" element={<CorporateFull />} />
           <Route path="/fullprogress" element={<FullProgress />} />
           <Route path="/maskingresume" element={<MaskingResume />} />
@@ -69,6 +73,8 @@ function App() {
           <Route path="/normalresume" element={<NormalResume />} />
           <Route path="/maskingapplication" element={<MaskingApplication />} />
           <Route path="/maskingapplicationconfirm" element={<MaskingApplicationConfirm />} />
+          <Route path="/normalapplication" element={<NormalApplication />} />
+          <Route path="/normalapplicationconfirm" element={<NormalApplicationConfirm />} />
         </Routes>
       </Router>
     </div>
