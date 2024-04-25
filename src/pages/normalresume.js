@@ -247,7 +247,7 @@ const NormalResume = () => {
             <Typography variant="body1" sx={{ marginBottom: '5px' }}> 連絡先 （現住所以外に連絡を希望する場合のみ記入） </Typography>
             <Divider sx={{ marginBottom: '10px' }} />
 
-            <Typography variant="h5" sx={{ marginBottom: '10px', marginTop:'35px' }}> 学歴 </Typography>
+            {/* <Typography variant="h5" sx={{ marginBottom: '10px', marginTop:'35px' }}> 学歴 </Typography>
             <Typography variant="body1" sx={{ marginBottom: '5px' }}> 学校  1 </Typography>
             <Divider sx={{ marginBottom: '10px' }} />
             <Typography variant="body1" sx={{ marginBottom: '5px' }}> 入学年・月 </Typography>
@@ -263,7 +263,7 @@ const NormalResume = () => {
             <Typography variant="body1" sx={{ marginBottom: '5px' }}> 卒業年・月 </Typography>
             <Divider sx={{ marginBottom: '10px' }} />
             <Typography variant="body1" sx={{ marginBottom: '5px' }}> 学校名 </Typography>
-            <Divider sx={{ marginBottom: '10px' }} />
+            <Divider sx={{ marginBottom: '10px' }} /> */}
 
             <Typography variant="h5" sx={{ marginBottom: '10px', marginTop:'35px' }}> 職歴 </Typography>
             <Typography variant="body1" sx={{ marginBottom: '5px' }}> 学校  1 </Typography>

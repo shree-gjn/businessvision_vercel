@@ -58,7 +58,7 @@ export default function BottomNav() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ width: '100%', position:'fixed', left:'0', bottom:'0' }}>
+      <Box sx={{ width: '100%', position:'fixed', left:'0', bottom:'0', paddingTop: '5px', borderTop: '1px solid rgba(22, 55, 90, 0.20)', background: '#fff'}}>
         <BottomNavigation
           showLabels
           value={value}
@@ -99,3 +99,4 @@ export default function BottomNav() {
     </ThemeProvider>
   );
 }
+

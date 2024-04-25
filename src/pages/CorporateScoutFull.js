@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -62,7 +62,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function CorporateFull() {
   const navigate = useNavigate();  // Get the history object from react-router-dom
-
+  
   const goBack = () => {
     navigate(-1);  // Navigate to the previous page
   };
@@ -307,20 +307,12 @@ export default function CorporateFull() {
               </Box>
             </CardContent>
             <Box sx={{ flexGrow: 1 }}>
-            {/* <Grid container spacing={1} sx={{marginBottom:'30px'}}>
-                <Grid item xs={6}>
-                  <Button component={Link} to="#" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px', fontSize:'12px', padding:'7px 0px'}}> シークレットエントリー </Button>
-                </Grid>
-                <Grid item xs={6}>
-                  <Button component={Link} to="/recruitment" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 正式応募 </Button>
-                </Grid>
-            </Grid> */}
             <Grid container spacing={1} style={{position: 'fixed', bottom: '0', marginBottom: '56px', padding: '15px', background: 'rgb(255 255 255 / 87%)'}}>
               <Grid item xs={6}>
-                <Button component={Link} to="#" variant="contained" color="primary" sx={{fontSize:'12px', width: '100%'}}> 1次面接エントリー </Button>
+                <Button component={Link} to="/maskingapplication" variant="contained" color="primary" sx={{fontSize:'12px', width: '100%'}}> 1次面接エントリー </Button>
               </Grid>
               <Grid item xs={6}>
-                <Button component={Link} to="#" variant="contained" color="secondary" sx={{fontSize: '12px', width: '100%'}}> 書類選考から エントリー </Button>
+                <Button component={Link} to="/normalapplication" variant="contained" color="secondary" sx={{fontSize: '12px', width: '100%'}}> 書類選考から エントリー </Button>
               </Grid>
               <Grid item xs={6}>
                 <Button component={Link} to="#" variant="contained" color="grey" sx={{fontSize: '12px', width: '100%', color: '#fff'}}> 気になる済 </Button>
@@ -331,7 +323,7 @@ export default function CorporateFull() {
             </Grid>
             </Box>
           </Card>
-          <BottomNav />
+          <BottomNav/>
       </>
     </ThemeProvider>
   );

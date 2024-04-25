@@ -59,7 +59,7 @@ export default function RecruitmentInfo() {
             45 件中 1 ～ 5 件
           </Grid>
         </Grid>
-      <Card sx={{ minWidth: 275, marginBottom:'30px' }}>
+      <Card sx={{ minWidth: 275, marginBottom:'20px', boxShadow: 'none', borderRadius: '5px', border: '1px solid #EEEEEE'}}>
         <CardContent>
           <Box sx={{ flexGrow: 1, textDecoration:'none' }} component={Link} to="/recruitment">
           <Grid container spacing={1}>
@@ -134,7 +134,7 @@ export default function RecruitmentInfo() {
           </Box>
         </CardActions>
       </Card>
-      <Card sx={{ minWidth: 275, marginBottom:'30px' }}>
+      <Card sx={{ minWidth: 275, marginBottom:'20px', boxShadow: 'none', borderRadius: '5px', border: '1px solid #EEEEEE' }}>
         <CardContent>
           <Box sx={{ flexGrow: 1 , textDecoration:'none'}} component={Link} to="/recruitment">
           <Grid container spacing={1}>
@@ -209,7 +209,7 @@ export default function RecruitmentInfo() {
           </Box>
         </CardActions>
       </Card>
-      <Card sx={{ minWidth: 275, marginBottom:'100px' }}>
+      <Card sx={{ minWidth: 275, marginBottom:'100px', boxShadow: 'none', borderRadius: '5px', border: '1px solid #EEEEEE' }}>
         <CardContent>
           <Box sx={{ flexGrow: 1 , textDecoration:'none'}} component={Link} to="/recruitment">
           <Grid container spacing={1}>

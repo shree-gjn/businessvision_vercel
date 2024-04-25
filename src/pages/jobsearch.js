@@ -23,6 +23,7 @@ import {ReactComponent as BagIcon} from '../assets/BagIcon.svg';
 import {ReactComponent as YenIcon} from '../assets/YenIcon.svg';
 import {ReactComponent as MapsIcon} from '../assets/MapsIcon.svg';
 import {ReactComponent as Accounting} from '../assets/Accounting.svg'
+import CloseIcon from '@mui/icons-material/Close';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -58,6 +59,16 @@ const JobSearch = () => {
   const handleReset = () => {
     // Handle reset logic here
     console.log('Resetting search conditions');
+  };
+
+  const [expanded, setExpanded] = React.useState(false);
+  const handleChangeAccordion = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
+
+  const [expanded2, setExpanded2] = React.useState(false);
+  const handleChangeAccordion2 = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
   };
 
   return (
@@ -107,9 +118,9 @@ const JobSearch = () => {
         </Grid>
         </Box>
         </Link> */}
-        <Accordion style={{boxShadow: 'none', borderBottom: '1px solid #ccc'}}>
+        <Accordion expanded={expanded === 'panel1'} onChange={handleChangeAccordion('panel1')} style={{boxShadow: 'none', borderBottom: '1px solid #ccc'}}>
         <AccordionSummary
-          expandIcon={<GoIcon style={{width: '34px'}} />}
+          expandIcon={<GoIcon style={{ width: '34px', transform: expanded === 'panel1' ? 'rotate(90deg)' : 'none' }} />}
           aria-controls="panel1a-content"
           id="panel1a-header"
           style={{padding: '0 10px'}}
@@ -187,9 +198,9 @@ const JobSearch = () => {
         </Grid>
         </Box>
         </Link>
-        <Accordion style={{boxShadow: 'none'}}>
+        <Accordion expanded={expanded === 'panel2'} onChange={handleChangeAccordion2('panel2')} style={{boxShadow: 'none'}}>
         <AccordionSummary
-          expandIcon={<GoIcon style={{width: '34px'}} />}
+          expandIcon={<GoIcon style={{ width: '34px', transform: expanded === 'panel2' ? 'rotate(90deg)' : 'none' }} />}
           aria-controls="panel1a-content"
           id="panel1a-header"
           style={{padding: '0 10px', alignItems: 'center'}}
@@ -240,9 +251,18 @@ const JobSearch = () => {
       </CardContent>
       <Grid container style={{marginTop: '10px'}}>
         <Grid item xs="12" style={{display: 'contents'}}>
-          <Item style={{background: '#EEEEEE', marginRight: '5px', marginBottom: '5px'}}>ゲーム</Item>
-          <Item style={{background: '#EEEEEE', marginRight: '5px', marginBottom: '5px'}}>通信キャリア</Item>
-          <Item style={{background: '#EEEEEE', marginRight: '5px', marginBottom: '5px'}}>東京都</Item>
+          <Item style={{background: '#EEEEEE', marginRight: '5px', marginBottom: '5px', display: 'flex', gap: '5px', alignItems: 'center'}}>
+            <Typography sx={{fontSize: '12px'}}>ゲーム</Typography>
+            <button style={{border: 'none', background: 'none', display: 'flex', alignItems: 'center'}}><CloseIcon style={{fontSize: '18px'}} /></button>
+          </Item>
+          <Item style={{background: '#EEEEEE', marginRight: '5px', marginBottom: '5px', display: 'flex', gap: '5px', alignItems: 'center'}}>
+            <Typography sx={{fontSize: '12px'}}>通信キャリア</Typography>
+            <button style={{border: 'none', background: 'none', display: 'flex', alignItems: 'center'}}><CloseIcon style={{fontSize: '18px'}} /></button>
+          </Item>
+          <Item style={{background: '#EEEEEE', marginRight: '5px', marginBottom: '5px', display: 'flex', gap: '5px', alignItems: 'center'}}>
+            <Typography sx={{fontSize: '12px'}}>東京都</Typography>
+            <button style={{border: 'none', background: 'none', display: 'flex', alignItems: 'center'}}><CloseIcon style={{fontSize: '18px'}} /></button>
+          </Item>
         </Grid>
       </Grid>
     </Card>
