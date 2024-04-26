@@ -23,7 +23,7 @@ const SettingTab = () => {
   return (
     <>
       
-      <Card sx={{ minWidth: 275, marginBottom:'30px', marginTop:'20px', borderRadius:'0px'}}>
+      <Card sx={{ minWidth: 275, marginBottom:'30px', marginTop:'20px', borderRadius:'0px', boxShadow: 'none'}}>
       <CardContent sx={{padding:'0px', paddingBottom:'0px !important'}}>
       <Link to="/maskingresume" style={{textDecoration:'none'}}>
         <Box sx={{ flexGrow: 1 , padding:'10px'}}>
@@ -127,7 +127,7 @@ const SettingTab = () => {
         </Box>
         </Link>
         <Divider />
-        <Link to="#" style={{textDecoration:'none'}}>
+        <Link to="/changepassword" style={{textDecoration:'none'}}>
         <Box sx={{ flexGrow: 1 , padding:'10px'}}>
         <Grid container spacing={1}>
             <Grid item xs={10}>

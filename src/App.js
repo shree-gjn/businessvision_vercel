@@ -35,6 +35,7 @@ import MaskingApplication from './pages/MaskingApplication';
 import MaskingApplicationConfirm from './pages/MaskingApplicationConfirm';
 import NormalApplication from './pages/NormalApplication';
 import NormalApplicationConfirm from './pages/NormalApplicationConfirm';
+import ChangePassword from './pages/ChangePassword';
 
 function App() {
   return (
@@ -69,6 +70,7 @@ function App() {
           <Route path="/forgetpassword" element={<ForgetPassword />} />
           <Route path="/fpauthentication" element={<FPAuthentication />} />
           <Route path="/resetpassword" element={<ResetPasswordPage />} />
+          <Route path="/changepassword" element={<ChangePassword />} />
           <Route path="/registrationauth" element={<RegistrationAuth />} />
           <Route path="/normalresume" element={<NormalResume />} />
           <Route path="/maskingapplication" element={<MaskingApplication />} />

@@ -41,7 +41,6 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
     boxShadow: 'none', 
   }));
-
   
 
 export default function RecruitmentInfo() {
@@ -51,7 +50,7 @@ export default function RecruitmentInfo() {
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={8} sx={{margin:'10px 0px 10px 0px', display: 'flex', justifyContent: 'space-between'}}>
             <FilterGrid />
-            <Button component={Link} to="/recommendedjob" variant="contained" color="primary">
+            <Button component={Link} to="/recommendedjob" variant="contained" style={{background: '#d5dbe1', boxShadow: 'none', color: '#16375A'}}>
               おすすめ設定
             </Button>
           </Grid>

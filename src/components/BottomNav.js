@@ -11,8 +11,8 @@ import { ReactComponent as InProgress } from '../assets/InProgress.svg';
 import { ReactComponent as InProgressBlue } from '../assets/InProgressBlue.svg';
 import { ReactComponent as Profile } from '../assets/Profile.svg';
 import { ReactComponent as ProfileBlue } from '../assets/ProfileBlue.svg';
-import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import {Typography } from '@mui/material';
+import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { Typography } from '@mui/material';
 
 const theme = createTheme({
   palette: {
@@ -51,7 +51,12 @@ export default function BottomNav() {
       case '/profile':
         setValue(3);
         break;
-      // Add cases for other routes as needed
+      case '/messages/scout':
+        setValue(1); 
+        break;
+      case '/fullprogress':
+        setValue(2); 
+        break;
       default:
         setValue(0); // Set a default value if the route doesn't match any case
     }
@@ -59,7 +64,7 @@ export default function BottomNav() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ width: '100%', position:'fixed', left:'0', bottom:'0', paddingTop: '5px', borderTop: '1px solid rgba(22, 55, 90, 0.20)', background: '#fff'}}>
+      <Box sx={{ width: '100%', position: 'fixed', left: '0', bottom: '0', paddingTop: '5px', borderTop: '1px solid rgba(22, 55, 90, 0.20)', background: '#fff' }}>
         <BottomNavigation
           showLabels
           value={value}
@@ -68,28 +73,28 @@ export default function BottomNav() {
           }}
         >
           <BottomNavigationAction
-            label={<Typography variant="body2" sx={{fontSize: '12px'}}>求人情報</Typography>}
+            label={<Typography variant="body2" sx={{ fontSize: '12px' }}>求人情報</Typography>}
             icon={value === 0 ? <JobIconBlue /> : <JobIcon />}
             component={RouterLink}
             to="/mypage"
             sx={{ '& > span': { marginTop: 1, fontSize: '12px' } }}
           />
           <BottomNavigationAction
-            label={<Typography variant="body2" sx={{fontSize: '12px'}}>メッセージ</Typography>}
+            label={<Typography variant="body2" sx={{ fontSize: '12px' }}>メッセージ</Typography>}
             icon={value === 1 ? <MessageIconBlue /> : <MessageIcon />}
             component={RouterLink}
             to="/messages"
             sx={{ '& > span': { marginTop: 1, fontSize: '12px' } }}
           />
           <BottomNavigationAction
-           label={<Typography variant="body2" sx={{fontSize: '12px'}}>進行中</Typography>}
+            label={<Typography variant="body2" sx={{ fontSize: '12px' }}>進行中</Typography>}
             icon={value === 2 ? <InProgressBlue /> : <InProgress />}
             component={RouterLink}
             to="/inprogress"
             sx={{ '& > span': { marginTop: 1, fontSize: '12px' } }}
           />
           <BottomNavigationAction
-            label={<Typography variant="body2" sx={{fontSize: '12px'}}>プロフィール</Typography>}
+            label={<Typography variant="body2" sx={{ fontSize: '12px' }}>プロフィール</Typography>}
             icon={value === 3 ? <ProfileBlue /> : <Profile />}
             component={RouterLink}
             to="/profile"
@@ -100,4 +105,3 @@ export default function BottomNav() {
     </ThemeProvider>
   );
 }
-

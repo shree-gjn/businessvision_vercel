@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
@@ -71,9 +71,19 @@ const JobSearch = () => {
     setExpanded(isExpanded ? panel : false);
   };
 
+  const [items, setItems] = useState([
+    { id: 1, label: 'ゲーム' },
+    { id: 2, label: '通信キャリア' },
+    { id: 3, label: '東京都' },
+  ]);
+
+  const handleClose = (id) => {
+    setItems(items.filter(item => item.id !== id));
+  };
+
   return (
     <>
-    <div style={{ display: 'flex', alignItems: 'center'}}>
+    <div style={{ display: 'flex', alignItems: 'center', position: 'relative'}}>
       <TextField
         label="Search"
         variant="outlined"
@@ -81,8 +91,8 @@ const JobSearch = () => {
         onChange={handleSearch}
         fullWidth
       />
-      <IconButton aria-label="search" color="primary" size="small">
-        <SearchIcon />
+      <IconButton aria-label="search" color="primary" size="small" sx={{width: '30px', height: '30px', background: '#d5dbe1', borderRadius: '5px', position: 'absolute', right: '0', marginRight: '5px'}}>
+        <SearchIcon sx={{fontSize: '20px'}} />
       </IconButton>
       </div>
       
@@ -251,7 +261,7 @@ const JobSearch = () => {
       </CardContent>
       <Grid container style={{marginTop: '10px'}}>
         <Grid item xs="12" style={{display: 'contents'}}>
-          <Item style={{background: '#EEEEEE', marginRight: '5px', marginBottom: '5px', display: 'flex', gap: '5px', alignItems: 'center'}}>
+          {/* <Item style={{background: '#EEEEEE', marginRight: '5px', marginBottom: '5px', display: 'flex', gap: '5px', alignItems: 'center'}}>
             <Typography sx={{fontSize: '12px'}}>ゲーム</Typography>
             <button style={{border: 'none', background: 'none', display: 'flex', alignItems: 'center'}}><CloseIcon style={{fontSize: '18px'}} /></button>
           </Item>
@@ -262,7 +272,15 @@ const JobSearch = () => {
           <Item style={{background: '#EEEEEE', marginRight: '5px', marginBottom: '5px', display: 'flex', gap: '5px', alignItems: 'center'}}>
             <Typography sx={{fontSize: '12px'}}>東京都</Typography>
             <button style={{border: 'none', background: 'none', display: 'flex', alignItems: 'center'}}><CloseIcon style={{fontSize: '18px'}} /></button>
-          </Item>
+          </Item> */}
+          {items.map(item => (
+            <Item key={item.id} style={{ background: '#EEEEEE', marginRight: '5px', marginBottom: '5px', display: 'flex', gap: '5px', alignItems: 'center' }}>
+              <Typography sx={{ fontSize: '12px' }}>{item.label}</Typography>
+              <Button style={{ border: 'none', background: 'none', display: 'flex', alignItems: 'center', minWidth: 'inherit', padding: '0 5px'}} onClick={() => handleClose(item.id)}>
+                <CloseIcon style={{ fontSize: '18px' }} />
+              </Button>
+            </Item>
+          ))}
         </Grid>
       </Grid>
     </Card>

@@ -30,7 +30,7 @@ const InProgressComponent = () => {
   const steps = ['応募書類準備中', '書類選考', '面接', '内定​'];
 
   const handleStepClick = (step) => {
-    setActiveStep(step);
+    setActiveStep(step - 1);
   };
 
   const handleNext = () => {
@@ -68,7 +68,7 @@ const InProgressComponent = () => {
           <Stepper activeStep={activeStep} alternativeLabel sx={{margin: '20px 0'}}>
             {steps.map((label, index) => (
               <Step key={label} completed={completedSteps.includes(index)}>
-                <StepLabel onClick={() => handleStepClick(index)}>{label}</StepLabel>
+                <StepLabel onClick={() => handleStepClick(index + 1)}>{label}</StepLabel>
               </Step>
             ))}
           </Stepper>

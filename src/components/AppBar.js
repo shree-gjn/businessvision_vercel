@@ -21,10 +21,10 @@ const MyAppBar = () => {
         </Typography>
 
         {/* Right corner icons */}
-        <IconButton color="blue" sx={{display:'block'}}>
-            <AccountCircle /> <br /> 
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize:'12px' }} >エージェント</Typography>
-        </IconButton>
+          <IconButton color="blue" sx={{display:'block'}} to="/agent">
+              <AccountCircle /> <br /> 
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize:'12px' }} >エージェント</Typography>
+          </IconButton>
       </Toolbar>
     </AppBar>
   );

@@ -63,22 +63,22 @@ const IncomeComponent = ({ handleNext }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ width: '100%', typography: 'body1' }}>
+      <Box sx={{ width: '100%', typography: 'body1', boxShadow: 'none'}}>
         <div className="PageHeader">
           <p>求人情報</p>
         </div>
         <TabContext value={value}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
             <TabList onChange={handleChange} aria-label="lab API tabs example">
               <Tab label="検索" value="1" sx={{ width: '50%' }} />
               <Tab label="おすすめ" value="2" sx={{ width: '50%' }} />
             </TabList>
           </Box>
           <TabPanel value="1">
-            <Card sx={{ minWidth: 275, marginBottom: '30px', marginTop: '20px', borderRadius: '0px' }}>
+            <Card sx={{ minWidth: 275, marginBottom: '30px', marginTop: '20px', borderRadius: '0px',boxShadow: 'none'}}>
               <CardContent sx={{ padding: '0px', paddingBottom: '0px !important' }}>
                 <Link style={{ textDecoration: 'none' }} onClick={handleLinkClick}>
-                  <Box sx={{ flexGrow: 1, borderBottom: '1px solid #ccc' }}>
+                  <Box sx={{ flexGrow: 1, borderBottom: '1px solid #ccc'}}>
                     <Grid container spacing={1}>
                       <Grid item xs={1}>
                         <Item><BackArrowIcon /></Item>
@@ -93,7 +93,7 @@ const IncomeComponent = ({ handleNext }) => {
                   </Box>
                 </Link>
                 
-                <div style={{ textAlign: 'left', padding: '10px' }}>
+                <div style={{ textAlign: 'left', padding: '20px 0' }}>
                   <Select
                     value={selectedValue === '' ? '' : selectedValue}
                     onChange={(e) => setSelectedValue(e.target.value)}
@@ -125,7 +125,7 @@ const IncomeComponent = ({ handleNext }) => {
                     ))}
                   </Select>
                 </div>
-                <Button variant="contained" color="primary" onClick={handleLinkClick} sx={{ width: '70%', marginBottom: '20px' }}>
+                <Button variant="contained" color="secondary" onClick={handleLinkClick} sx={{ width: '50%', marginBottom: '20px' }}>
                   この条件で設定
                 </Button>
               </CardContent>

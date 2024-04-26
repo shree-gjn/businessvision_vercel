@@ -108,7 +108,7 @@ import Saitama from './saitamaprefecture';
             </Grid>
           </Grid>
 
-          <Button variant="contained" color="primary" onClick={handleLinkClick} sx={{width:'70%', marginBottom:'20px'}}>
+          <Button variant="contained" color="secondary" onClick={handleLinkClick} sx={{width:'50%', marginBottom:'20px'}}>
             この条件で設定
           </Button>
         </CardContent>

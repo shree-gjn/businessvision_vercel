@@ -1,10 +1,14 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import BottomNav from '../components/BottomNav';
+import {ReactComponent as PencilEdit} from '../assets/PencilEdit.svg';
+import Typography from '@mui/material/Typography';
 import {ReactComponent as BackButton} from '../assets/BackButton.svg';
 import { styled } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom'; 
+import Grid from '@mui/material/Grid';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+
 
 const BackLink = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
@@ -62,6 +66,15 @@ const MaskingResume = () => {
     // Add more rows as needed
   ];
 
+  const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    boxShadow: 'none', 
+  }));
+
   function replaceAndRemoveRows(targetId, replaceId, removeId, data) {
     const targetIndex = data.findIndex((row) => row.id === targetId);
   
@@ -90,9 +103,19 @@ const MaskingResume = () => {
     <Box sx={{ width: '100%', typography: 'body1' }}>
     <div className="PageHeader">
       <BackLink to="#" onClick={goBack} > <BackButton /> 戻る </BackLink>
-      <p>進行中</p>
+      <p>マスキング履歴書設定</p>
     </div>
-    <TableContainer component={Paper} sx={{marginBottom:'200px'}}>
+    <TableContainer component={Paper} sx={{marginBottom:'200px', boxShadow: 'none', width: 'auto', padding: '20px'}}>
+      <Grid container style={{}}>
+        <Grid item xs={4} style={{marginBottom: '10px', marginLeft: 'auto'}}>
+          <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '60px', display: 'flex', gap: '15px', marginLeft: 'auto'}}>
+            <span>
+              <PencilEdit />
+            </span>
+            <Typography variant='paragraph'>編集</Typography>
+          </Item>
+        </Grid>
+      </Grid>
       <Table>
         <TableBody>
           {data.map((row) => (
