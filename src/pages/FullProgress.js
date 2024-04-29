@@ -56,6 +56,7 @@ const FullProgress = ({ handleNext }) => {
     navigate(-1);  // Navigate to the previous page
   };
 
+
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ width: '100%', typography: 'body1' }}>
@@ -73,7 +74,7 @@ const FullProgress = ({ handleNext }) => {
           <TabPanel value="1">
             <ChatComponent />
           </TabPanel>
-          <TabPanel value="2">
+          <TabPanel value="2" style={{padding: '0'}}>
             <JobDetails />
           </TabPanel>
         </TabContext>

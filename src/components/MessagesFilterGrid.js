@@ -29,7 +29,7 @@ const theme = createTheme({
 const MessagesFilterGrid = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [unreadReadValue, setUnreadReadValue] = useState('未読');
-  const [statusValue, setStatusValue] = useState('応募済み');
+  const [statusValue, setStatusValue] = useState('１次面接案内');
   const navigate = useNavigate();
 
   const handleClick = (event) => {
@@ -78,27 +78,27 @@ const MessagesFilterGrid = () => {
             </Button>
           </div>
           <div style={{padding:'20px'}}>
-            <div>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}> 未読/閱読 </Typography>
+            <div style={{marginBottom: "10px"}}>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize: '14px', marginBottom: '5px'}}> 未読/閱読 </Typography>
               <Select value={unreadReadValue} onChange={(e) => setUnreadReadValue(e.target.value)} sx={{width:'100%'}}>
                 <MenuItem value={'未読'}>未読</MenuItem>
                 <MenuItem value={'既読'}>既読</MenuItem>
-                <MenuItem value={'すべて'}>すべて</MenuItem>
+                <MenuItem value={'全て'}>全て</MenuItem>
               </Select>
             </div>
             <div>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}> ステータス </Typography>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize: '14px', marginBottom: '5px'}}> ステータス </Typography>
               <Select value={statusValue} onChange={(e) => setStatusValue(e.target.value)} sx={{width:'100%'}}>
-                <MenuItem value={'応募済み'}>応募済み</MenuItem>
+                <MenuItem value={'１次面接案内'}>１次面接案内</MenuItem>
+                <MenuItem value={'書類選考案内'}>書類選考案内</MenuItem>
                 <MenuItem value={'辞退済み'}>辞退済み</MenuItem>
+                <MenuItem value={'全て'}>全て</MenuItem>
                 <MenuItem value={'ゴミ箱'}>ゴミ箱</MenuItem>
-                <MenuItem value={'すべて'}>すべて</MenuItem>
                 <MenuItem value={'気になる'}>気になる</MenuItem>
-                <MenuItem value={'書類選考期日経過'}>書類選考期日経過</MenuItem>
               </Select>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-              <Button variant="contained" color="primary" onClick={handleSubmit}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+              <Button fullWidth variant="outlined" color="primary" onClick={handleSubmit}>
                 この条件で絞り込む
               </Button>
             </div>

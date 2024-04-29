@@ -28,7 +28,7 @@ const theme = createTheme({
 
 const SecretFilterGrid = () => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [statusValue, setStatusValue] = useState('書類選考中');
+  const [statusValue, setStatusValue] = useState('１次面接案内');
   const navigate = useNavigate();
 
   const handleClick = (event) => {
@@ -77,18 +77,19 @@ const SecretFilterGrid = () => {
           </div>
           <div style={{padding:'20px'}}>
             <div>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}> ステータス </Typography>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize: '14px', marginBottom: '5px'}}> ステータス </Typography>
               <Select value={statusValue} onChange={(e) => setStatusValue(e.target.value)} sx={{width:'100%'}}>
-                <MenuItem value={'書類選考中'}>書類選考中</MenuItem>
-                <MenuItem value={'書類選考結果'}>書類選考結果</MenuItem>
-                <MenuItem value={'書類選考NG'}>書類選考NG</MenuItem>
-                <MenuItem value={'書類選考期日経過'}>書類選考期日経過</MenuItem>
+                <MenuItem value={'１次面接案内'}>１次面接案内</MenuItem>
+                <MenuItem value={'書類選考案内'}>書類選考案内</MenuItem>
+                <MenuItem value={'匿名選考中'}>匿名選考中</MenuItem>
+                <MenuItem value={'期日経過'}>期日経過</MenuItem>
+                <MenuItem value={'選考不通過'}>選考不通過</MenuItem>
                 <MenuItem value={'ゴミ箱'}>ゴミ箱</MenuItem>
-                <MenuItem value={'すべて'}>すべて</MenuItem>
+                <MenuItem value={'全て'}>ゴミ箱</MenuItem>
               </Select>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-              <Button variant="contained" color="primary" onClick={handleSubmit}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+              <Button fullWidth variant="outlined" color="primary" onClick={handleSubmit}>
                 この条件で絞り込む
               </Button>
             </div>

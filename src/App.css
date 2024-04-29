@@ -70,3 +70,9 @@
   background-color: '#949494';
   color: #fff;
 }
+
+.skill-level-indicator span{
+  width: 15px;
+  height: 15px;
+  display: block;
+}

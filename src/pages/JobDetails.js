@@ -8,6 +8,8 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Link, useNavigate } from 'react-router-dom'; 
+import BottomNav from '../components/BottomNav';
+import {Table, TableBody, TableCell, TableRow, TableContainer} from '@mui/material';
 import {ReactComponent as BackButton} from '../assets/BackButton.svg';
 import {ReactComponent as MoneyIcon} from '../assets/MoneyIcon.svg';
 import {ReactComponent as MapsIcon} from '../assets/MapsIcon.svg';
@@ -18,7 +20,8 @@ import {ReactComponent as UserFolder} from '../assets/UserFolder.svg';
 import {ReactComponent as BigBagIcon}  from '../assets/BigBagIcon.svg';
 import {ReactComponent as CalendarIcon} from '../assets/CalendarIcon.svg';
 import {ReactComponent as ChatIcon} from '../assets/ChatIcon.svg'; 
-import BottomNav from '../components/BottomNav';
+import {ReactComponent as Skill} from '../assets/Skill.svg';
+
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -45,9 +48,42 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function JobDetails() {
   const navigate = useNavigate();  // Get the history object from react-router-dom
 
+  const tableData = [
+    { id: 1, label: '01', description: '日次取引仕訳', level: 'L4' },
+    { id: 2, label: '02', description: '月次決算', level: 'L3' },
+    { id: 3, label: '03', description: '本決算', level: 'L2' },
+    { id: 1, label: '04', description: '予算', level: 'L1' },
+    { id: 2, label: '05', description: '給与計算', level: 'L2' },
+    { id: 3, label: '06', description: '社会保険', level: 'L3' },
+    { id: 1, label: '07', description: '消費税', level: 'L0' },
+    { id: 2, label: '08', description: '法人税他', level: 'L1' },
+    { id: 3, label: '09', description: '監査対象決算子会社', level: 'L0' },
+    { id: 3, label: '10', description: '監査対象決算親会社', level: 'L0' },
+    { id: 3, label: '11', description: '連結決算', level: 'L1' },
+    { id: 3, label: '12', description: '開示書類', level: 'L0' },
+    // Add more rows as needed
+  ];
+
+  const getItemBackgroundColor = (level) => {
+    switch (level) {
+      case 'L0':
+        return '#EEEEEE'; // Red for L0
+      case 'L1':
+        return '#949494'; // Yellow for L1
+      case 'L2':
+        return '#9BC1E6'; // Green for L2
+      case 'L3':
+        return '#085D95'; // Blue for L3
+      case 'L4':
+        return '#16375A'; // Purple for L4
+      default:
+        return 'inherit';
+    }
+  };
+
   return (
     <>
-      <Box sx={{ flexGrow: 1 , padding:'10px', overflow:'scroll'}}>
+      <Box sx={{ flexGrow: 1 , padding:'10px', overflow:'scroll', padding: '20px'}}>
         <Typography variant="h6" component="div" sx={{textAlign:'left', fontSize:'12px'}}> 企業からのコメント </Typography>
         <Box sx={{ flexGrow: 1 }} style={{background:'#DFD0A7', borderRadius:'5px', marginTop:'10px'}}>
         <Grid container spacing={1} sx={{paddingTop:'0px'}}> 
@@ -223,7 +259,7 @@ export default function JobDetails() {
           </Box>
         </CardContent>
          <CardContent>       
-          <Box sx={{ flexGrow: 1, marginBottom:'100px' }}>
+          <Box sx={{ flexGrow: 1}}>
           <Grid container spacing={1}>
               <Grid item xs={1} sx={{borderBottom: '1px solid #D3B76A'}}>
               <Item sx={{textAlign:'left'}}><MapsIcon style={{margin:'0 auto'}}/></Item>
@@ -278,6 +314,70 @@ export default function JobDetails() {
           </Grid>
           </Box>
         </CardContent>
+
+        <CardContent>       
+          <Box sx={{ flexGrow: 1, marginBottom:'100px' }}>
+          <Grid container spacing={1}>
+              <Grid item xs={1} sx={{borderBottom: '1px solid #D3B76A'}}>
+              <Item sx={{textAlign:'left'}}><Skill style={{margin:'0 auto'}}/></Item>
+              </Grid>
+              <Grid item xs={11} sx={{borderBottom: '1px solid #D3B76A'}}>
+              <Item sx={{fontSize:'14px', textAlign:'left', color: '#16375A', fontWeight:'500'}}>希望情報</Item>
+              </Grid>
+              
+              <Grid item xs={1}>
+              <Item className='skill-level-indicator' sx={{textAlign:'left', fontSize:'12px'}}><span style={{background: '#EEEEEE'}}></span></Item>
+              </Grid>
+              <Grid item xs={11}>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>LO:知識なし</Item>
+              </Grid>
+              <Grid item xs={1}>
+              <Item className='skill-level-indicator' sx={{textAlign:'left', fontSize:'12px'}}><span style={{background: '#949494'}}></span></Item>
+              </Grid>
+              <Grid item xs={11}>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>L1:知識あり​</Item>
+              </Grid>
+              <Grid item xs={1}>
+              <Item className='skill-level-indicator' sx={{textAlign:'left', fontSize:'12px'}}><span style={{background: '#9BC1E6'}}></span></Item>
+              </Grid>
+              <Grid item xs={11}>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>L2:サポートがあれば実施できるレベル（もしくはソフトまかせ）​</Item>
+              </Grid>
+              <Grid item xs={1}>
+              <Item className='skill-level-indicator' sx={{textAlign:'left', fontSize:'12px'}}><span style={{background: '#085D95'}}></span></Item>
+              </Grid>
+              <Grid item xs={11}>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>L3:独力で実施できるレベル（もしくは対応・判断・作成・計算できる）​</Item>
+              </Grid>
+              <Grid item xs={1}>
+              <Item className='skill-level-indicator' sx={{textAlign:'left', fontSize:'12px'}}><span style={{background: '#16375A'}}></span></Item>
+              </Grid>
+              <Grid item xs={11}>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>L4:他者を指導できるレベル（もしくは議論・交渉できる）</Item>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Item sx={{border: '1px solid #EEEEEE', height: '100%', padding: '0'}}>
+                  <TableContainer component={Paper} sx={{boxShadow: 'none', height: '100%'}}>
+                    <Table>
+                      <TableBody>
+                        {tableData.map(row => (
+                          <TableRow key={row.id} >
+                            <TableCell>{row.label}</TableCell>
+                            <TableCell>{row.description}</TableCell>
+                            <TableCell style={{width: '10%', backgroundColor: getItemBackgroundColor(row.level), color: row.level === 'L0' ? '#16375A' : '#fff'}}>{row.level}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Item>
+              </Grid>
+          </Grid>
+          </Box>
+        </CardContent>
+
+
         <Box sx={{ flexGrow: 1 }}>
         {/* <Grid container spacing={1} sx={{marginBottom:'30px'}}>
             <Grid item xs={6}>

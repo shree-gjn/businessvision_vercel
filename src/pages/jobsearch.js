@@ -24,6 +24,8 @@ import {ReactComponent as YenIcon} from '../assets/YenIcon.svg';
 import {ReactComponent as MapsIcon} from '../assets/MapsIcon.svg';
 import {ReactComponent as Accounting} from '../assets/Accounting.svg'
 import CloseIcon from '@mui/icons-material/Close';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -81,6 +83,8 @@ const JobSearch = () => {
     setItems(items.filter(item => item.id !== id));
   };
 
+
+
   return (
     <>
     <div style={{ display: 'flex', alignItems: 'center', position: 'relative'}}>
@@ -131,6 +135,7 @@ const JobSearch = () => {
         <Accordion expanded={expanded === 'panel1'} onChange={handleChangeAccordion('panel1')} style={{boxShadow: 'none', borderBottom: '1px solid #ccc'}}>
         <AccordionSummary
           expandIcon={<GoIcon style={{ width: '34px', transform: expanded === 'panel1' ? 'rotate(90deg)' : 'none' }} />}
+          // expandIcon={expanded ? <RemoveIcon sx={{fontSize: '20px'}} /> : <AddIcon sx={{fontSize: '20px'}} />}
           aria-controls="panel1a-content"
           id="panel1a-header"
           style={{padding: '0 10px'}}

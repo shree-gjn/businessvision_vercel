@@ -79,16 +79,16 @@ const FilterGrid = () => {
               <CloseIcon />
             </Button>
           </div>
-          <div style={{padding:'20px'}}>
-            <div>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}> 未読/閱読 </Typography>
+          <div style={{padding:'20px', width: 'auto'}}>
+            <div style={{marginBottom: '10px'}}>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize: '14px', marginBottom: '5px'}}> 未読/閱読 </Typography>
               <Select value={unreadReadValue} onChange={(e) => setUnreadReadValue(e.target.value)} sx={{width:'100%'}}>
                 <MenuItem value={'未読'}>未読</MenuItem>
                 <MenuItem value={'既読'}>既読</MenuItem>
                 <MenuItem value={'すべて'}>すべて</MenuItem>
               </Select>
             </div>
-            <div>
+            {/* <div>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}> ステータス </Typography>
               <Select value={statusValue} onChange={(e) => setStatusValue(e.target.value)} sx={{width:'100%'}}>
                 <MenuItem value={'逆指名'}>逆指名</MenuItem>
@@ -96,17 +96,17 @@ const FilterGrid = () => {
                 <MenuItem value={'書類選考'}>書類選考</MenuItem>
                 <MenuItem value={'期日経過'}>期日経過</MenuItem>
               </Select>
-            </div>
+            </div> */}
             <div>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}> その他 </Typography>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize: '14px', marginBottom: '5px'}}> その他 </Typography>
               <Select value={otherValue} onChange={(e) => setOtherValue(e.target.value)} sx={{width:'100%'}}>
                 <MenuItem value={'気になる'}>気になる</MenuItem>
                 <MenuItem value={'ゴミ箱'}>ゴミ箱</MenuItem>
                 <MenuItem value={'辞退する​'}>辞退する​</MenuItem>
               </Select>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-              <Button variant="contained" color="primary" onClick={handleSubmit}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
+              <Button fullWidth variant="outlined" color="primary" onClick={handleSubmit}>
                 この条件で絞り込む
               </Button>
             </div>
