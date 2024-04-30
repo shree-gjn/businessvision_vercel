@@ -32,7 +32,7 @@ const theme = createTheme({
   },
 });
 
-const Agent = () => {
+const AgentPage = () => {
 
   const navigate = useNavigate();  // Get the history object from react-router-dom
   
@@ -258,4 +258,4 @@ const Agent = () => {
   );
 };
 
-export default Agent;
+export default AgentPage;

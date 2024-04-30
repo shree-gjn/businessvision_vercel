@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Accordion,
   AccordionSummary,
@@ -29,6 +30,7 @@ import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { fontSize } from '@mui/system';
+import CloseIcon from '@mui/icons-material/Close';
 
 const theme = createTheme({
   palette: {
@@ -62,12 +64,27 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const IndustryComponent = ({ handleNext }) => {
   const [value, setValue] = React.useState('1');
-  const [checkboxes, setCheckboxes] = React.useState({
-    checkbox1: false,
-    checkbox2: false,
-    checkbox3: false,
-    // Add more checkboxes as neededd
+  // const [checkboxes, setCheckboxes] = React.useState({
+  //   checkbox1: false,
+  //   checkbox2: false,
+  //   checkbox3: false,
+  // });
+
+  const [checkboxes, setCheckboxes] = useState({
+    checkbox1: localStorage.getItem('checkbox1') === 'true',
+    checkbox2: localStorage.getItem('checkbox2') === 'true',
+    checkbox3: localStorage.getItem('checkbox3') === 'true',
+    checkbox4: localStorage.getItem('checkbox4') === 'true',
+    checkbox5: localStorage.getItem('checkbox5') === 'true',
+    checkbox6: localStorage.getItem('checkbox6') === 'true',
+    checkbox7: localStorage.getItem('checkbox7') === 'true',
+    checkbox8: localStorage.getItem('checkbox8') === 'true',
+    checkbox9: localStorage.getItem('checkbox9') === 'true',
+    checkbox10: localStorage.getItem('checkbox10') === 'true',
+    checkbox11: localStorage.getItem('checkbox11') === 'true',
   });
+
+  
   const [isExpanded, setExpanded] = useState(false);
   const [isExpanded2, setExpanded2] = useState(false);
   const [isExpanded3, setExpanded3] = useState(false);
@@ -135,11 +152,80 @@ const IndustryComponent = ({ handleNext }) => {
     navigate(-1); // This will navigate back one step in the history
   };
 
+  // const handleChangeOne = (name) => (event) => {
+  //   setCheckboxes({
+  //     ...checkboxes,
+  //     [name]: event.target.checked,
+  //   });
+  //   if (event.target.checked) {
+  //     const newItem = { id: Date.now(), label: event.target.name };
+  //     setItems([...items, newItem]);
+  //   } else {
+  //     // If the checkbox is unchecked, remove the corresponding item from items state
+  //     const itemId = items.find((item) => item.label === event.target.name).id;
+  //     setItems(items.filter((item) => item.id !== itemId));
+  //   }
+  // };
+
+  // Handle checkbox change localstorage
   const handleChangeOne = (name) => (event) => {
-    setCheckboxes({
-      ...checkboxes,
-      [name]: event.target.checked,
-    });
+    const isChecked = event.target.checked;
+    setCheckboxes((prevState) => ({
+      ...prevState,
+      [name]: isChecked,
+    }));
+    // Save checkbox state to localStorage
+    localStorage.setItem(name, isChecked);
+    // Update items state based on checkbox state
+    if (isChecked) {
+      const newItem = { id: name, label: event.target.name };
+      setItems([...items, newItem]);
+    } else {
+      // If the checkbox is unchecked, remove the corresponding item from items state
+      const updatedItems = items.filter((item) => item.id !== name);
+      setItems(updatedItems);
+    }
+  };
+
+
+  const [items, setItems] = useState([
+    // { id: 1, label: 'ゲーム' },
+    // { id: 2, label: '通信キャリア' },
+    // { id: 3, label: '東京都' },
+  ]);
+
+  useEffect(() => {
+    // Load items state from localStorage when component mounts
+    const savedItems = JSON.parse(localStorage.getItem('items')) || [];
+    setItems(savedItems);
+  }, []);
+
+  useEffect(() => {
+    // Save items state to localStorage whenever it changes
+    localStorage.setItem('items', JSON.stringify(items));
+  }, [items]);
+
+  useEffect(() => {
+    // Load checkbox state from localStorage
+    const savedCheckboxes = {
+      checkbox1: localStorage.getItem('checkbox1') === 'true',
+      checkbox2: localStorage.getItem('checkbox2') === 'true',
+      checkbox3: localStorage.getItem('checkbox3') === 'true',
+      checkbox4: localStorage.getItem('checkbox4') === 'true',
+      checkbox5: localStorage.getItem('checkbox5') === 'true',
+      checkbox6: localStorage.getItem('checkbox6') === 'true',
+      checkbox7: localStorage.getItem('checkbox7') === 'true',
+      checkbox8: localStorage.getItem('checkbox8') === 'true',
+      checkbox9: localStorage.getItem('checkbox9') === 'true',
+      checkbox10: localStorage.getItem('checkbox10') === 'true',
+      checkbox11: localStorage.getItem('checkbox11') === 'true',
+    };
+    setCheckboxes(savedCheckboxes);
+  }, []);
+
+
+  const handleClose = (id) => {
+    setItems(items.filter(item => item.id !== id));
   };
 
   return (
@@ -156,6 +242,19 @@ const IndustryComponent = ({ handleNext }) => {
             </TabList>
           </Box>
           <TabPanel value="1">
+
+          <Grid container style={{marginTop: '10px'}}>
+            <Grid item xs="12" style={{display: 'contents'}}>
+              {items.map(item => (
+                <Item key={item.id} style={{ background: '#EEEEEE', marginRight: '5px', marginBottom: '5px', display: 'flex', gap: '5px', alignItems: 'center' }}>
+                  <Typography sx={{ fontSize: '12px' }}>{item.label}</Typography>
+                  <Button style={{ border: 'none', background: 'none', display: 'flex', alignItems: 'center', minWidth: 'inherit', padding: '0 5px'}} onClick={() => handleClose(item.id)}>
+                    <CloseIcon style={{ fontSize: '18px' }} />
+                  </Button>
+                </Item>
+              ))}
+            </Grid>
+          </Grid>
         
           <Card sx={{ minWidth: 275, marginBottom:'30px', marginTop:'20px', borderRadius:'0px', boxShadow: 'none'}}>
           <CardContent sx={{padding:'0px', paddingBottom:'0px !important'}}>
@@ -182,27 +281,27 @@ const IndustryComponent = ({ handleNext }) => {
               <Collapse in={isExpanded} style={{boxShadow: 'none'}}>
               <div style={{textAlign:'left', paddingLeft:'15px'}}>
                 <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox1} onChange={handleChangeOne('checkbox1')} />}
+                control={<Checkbox checked={checkboxes.checkbox1} name='IT' onChange={handleChangeOne('checkbox1')} />}
                 label={<Typography sx={{fontSize: '12px'}}>IT</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox2} onChange={handleChangeOne('checkbox2')} />}
+                control={<Checkbox checked={checkboxes.checkbox2} name='通信キャリア' onChange={handleChangeOne('checkbox2')} />}
                  label={<Typography sx={{fontSize: '12px'}}>通信キャリア</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox3} onChange={handleChangeOne('checkbox3')} />}
+                control={<Checkbox checked={checkboxes.checkbox3} name='インターネット広告・メディア' onChange={handleChangeOne('checkbox3')} />}
                 label={<Typography sx={{fontSize: '12px'}}>インターネット広告・メディア</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox4} onChange={handleChangeOne('checkbox4')} />}
+                control={<Checkbox checked={checkboxes.checkbox4} name='Web制作・Webデザイン' onChange={handleChangeOne('checkbox4')} />}
                 label={<Typography sx={{fontSize: '12px'}}>Web制作・Webデザイン</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox5} onChange={handleChangeOne('checkbox5')} />}
+                control={<Checkbox checked={checkboxes.checkbox5} name='ゲーム' onChange={handleChangeOne('checkbox5')} />}
                 label={<Typography sx={{fontSize: '12px'}}>ゲーム</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox6} onChange={handleChangeOne('checkbox6')} />}
+                control={<Checkbox checked={checkboxes.checkbox6} name='IT・インターネット・ゲーム（その他）' onChange={handleChangeOne('checkbox6')} />}
                 label={<Typography sx={{fontSize: '12px'}}>IT・インターネット・ゲーム（その他）</Typography>}
               /> <br />
                 </div>
@@ -215,43 +314,43 @@ const IndustryComponent = ({ handleNext }) => {
                 <Collapse in={isExpanded2}>
                 <div style={{textAlign:'left', paddingLeft:'15px'}}>
                 <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox7} onChange={handleChangeOne('checkbox7')} />}
+                control={<Checkbox checked={checkboxes.checkbox7} name='メーカー（コンピューター・通信系）' onChange={handleChangeOne('checkbox7')} />}
                 label={<Typography sx={{fontSize: '12px'}}>メーカー（コンピューター・通信系）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox8} onChange={handleChangeOne('checkbox8')} />}
+                control={<Checkbox checked={checkboxes.checkbox8} name='メーカー（電気・電子・半導体）' onChange={handleChangeOne('checkbox8')} />}
                 label={<Typography sx={{fontSize: '12px'}}>メーカー（電気・電子・半導体）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox9} onChange={handleChangeOne('checkbox9')} />}
+                control={<Checkbox checked={checkboxes.checkbox9} name='メーカー（自動車・輸送機器）' onChange={handleChangeOne('checkbox9')} />}
                 label={<Typography sx={{fontSize: '12px'}}>メーカー（自動車・輸送機器）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox10} onChange={handleChangeOne('checkbox10')} />}
+                control={<Checkbox checked={checkboxes.checkbox10} name='メーカー（機械）' onChange={handleChangeOne('checkbox10')} />}
                 label={<Typography sx={{fontSize: '12px'}}>メーカー（機械）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox11} onChange={handleChangeOne('checkbox11')} />}
+                control={<Checkbox checked={checkboxes.checkbox11} name='メーカー（化学・素材）' onChange={handleChangeOne('checkbox11')} />}
                 label={<Typography sx={{fontSize: '12px'}}>メーカー（化学・素材）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox12} onChange={handleChangeOne('checkbox12')} />}
+                control={<Checkbox checked={checkboxes.checkbox12} name='メーカー（食品）' onChange={handleChangeOne('checkbox12')} />}
                 label={<Typography sx={{fontSize: '12px'}}>メーカー（食品）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox13} onChange={handleChangeOne('checkbox13')} />}
+                control={<Checkbox checked={checkboxes.checkbox13} name='メーカー（医療品・医療機器）' onChange={handleChangeOne('checkbox13')} />}
                 label={<Typography sx={{fontSize: '12px'}}>メーカー（医療品・医療機器）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox14} onChange={handleChangeOne('checkbox14')} />}
+                control={<Checkbox checked={checkboxes.checkbox14} name='メーカー（ファッション・アパレル）' onChange={handleChangeOne('checkbox14')} />}
                 label={<Typography sx={{fontSize: '12px'}}>メーカー（ファッション・アパレル）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox15} onChange={handleChangeOne('checkbox15')} />}
+                control={<Checkbox checked={checkboxes.checkbox15} name='メーカー（日用品・化粧品）' onChange={handleChangeOne('checkbox15')} />}
                 label={<Typography sx={{fontSize: '12px'}}>メーカー（日用品・化粧品）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox16} onChange={handleChangeOne('checkbox16')} />}
+                control={<Checkbox checked={checkboxes.checkbox16} name='メーカー（その他' onChange={handleChangeOne('checkbox16')} />}
                 label={<Typography sx={{fontSize: '12px'}}>メーカー（その他）</Typography>}
               /> <br />
                 </div>
@@ -263,43 +362,43 @@ const IndustryComponent = ({ handleNext }) => {
                 <Collapse in={isExpanded3}>
                 <div style={{textAlign:'left', paddingLeft:'15px'}}>
                 <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox17} onChange={handleChangeOne('checkbox17')} />}
+                control={<Checkbox checked={checkboxes.checkbox17} name='商社（総合）' onChange={handleChangeOne('checkbox17')} />}
                 label={<Typography sx={{fontSize: '12px'}}>商社（総合）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox18} onChange={handleChangeOne('checkbox18')} />}
+                control={<Checkbox checked={checkboxes.checkbox18} name='商社（化学・石油・ガラス・セラミック・セメント）' onChange={handleChangeOne('checkbox18')} />}
                 label={<Typography sx={{fontSize: '12px'}}>商社（化学・石油・ガラス・セラミック・セメント）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox19} onChange={handleChangeOne('checkbox19')} />}
+                control={<Checkbox checked={checkboxes.checkbox19} name='商社（鉄鋼・金属）' onChange={handleChangeOne('checkbox19')} />}
                 label={<Typography sx={{fontSize: '12px'}}>商社（鉄鋼・金属）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox20} onChange={handleChangeOne('checkbox20')} />}
+                control={<Checkbox checked={checkboxes.checkbox20} name='商社（住宅・建材・エクステリア）' onChange={handleChangeOne('checkbox20')} />}
                 label={<Typography sx={{fontSize: '12px'}}>商社（住宅・建材・エクステリア）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox21} onChange={handleChangeOne('checkbox21')} />}
+                control={<Checkbox checked={checkboxes.checkbox21} name='商社（医療品・化粧品・バイオ）' onChange={handleChangeOne('checkbox21')} />}
                 label={<Typography sx={{fontSize: '12px'}}>商社（医療品・化粧品・バイオ）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox22} onChange={handleChangeOne('checkbox22')} />}
+                control={<Checkbox checked={checkboxes.checkbox22} name='商社（食品）' onChange={handleChangeOne('checkbox22')} />}
                 label={<Typography sx={{fontSize: '12px'}}>商社（食品）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox23} onChange={handleChangeOne('checkbox23')} />}
+                control={<Checkbox checked={checkboxes.checkbox23} name='商社（紙・パルプ）' onChange={handleChangeOne('checkbox23')} />}
                 label={<Typography sx={{fontSize: '12px'}}>商社（紙・パルプ）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox24} onChange={handleChangeOne('checkbox24')} />}
+                control={<Checkbox checked={checkboxes.checkbox24} name='商社（ファッション・アパレル）' onChange={handleChangeOne('checkbox24')} />}
                 label={<Typography sx={{fontSize: '12px'}}>商社（ファッション・アパレル）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox25} onChange={handleChangeOne('checkbox25')} />}
+                control={<Checkbox checked={checkboxes.checkbox25} name='商社（インテリア）' onChange={handleChangeOne('checkbox25')} />}
                 label={<Typography sx={{fontSize: '12px'}}>商社（インテリア）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox26} onChange={handleChangeOne('checkbox26')} />}
+                control={<Checkbox checked={checkboxes.checkbox26} name='商社（その他）' onChange={handleChangeOne('checkbox26')} />}
                 label={<Typography sx={{fontSize: '12px'}}>商社（その他）</Typography>}
               /> <br />
                 </div>
@@ -312,51 +411,51 @@ const IndustryComponent = ({ handleNext }) => {
                 <Collapse in={isExpanded4}>
                 <div style={{textAlign:'left', paddingLeft:'15px'}}>
                 <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox27} onChange={handleChangeOne('checkbox27')} />}
+                control={<Checkbox checked={checkboxes.checkbox27} name='流通・小売（百貨店・スーパー・コンビニ）' onChange={handleChangeOne('checkbox27')} />}
                 label={<Typography sx={{fontSize: '12px'}}>流通・小売（百貨店・スーパー・コンビニ）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox28} onChange={handleChangeOne('checkbox28')} />}
+                control={<Checkbox checked={checkboxes.checkbox28} name='流通・小売（ファッション・アパレル）' onChange={handleChangeOne('checkbox28')} />}
                 label={<Typography sx={{fontSize: '12px'}}>流通・小売（ファッション・アパレル）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox29} onChange={handleChangeOne('checkbox29')} />}
+                control={<Checkbox checked={checkboxes.checkbox29} name='流通・小売（医薬品・化粧品）' onChange={handleChangeOne('checkbox29')} />}
                 label={<Typography sx={{fontSize: '12px'}}>流通・小売（医薬品・化粧品）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox30} onChange={handleChangeOne('checkbox30')} />}
+                control={<Checkbox checked={checkboxes.checkbox30} name='流通・小売（食品）' onChange={handleChangeOne('checkbox30')} />}
                 label={<Typography sx={{fontSize: '12px'}}>流通・小売（食品）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox31} onChange={handleChangeOne('checkbox31')} />}
+                control={<Checkbox checked={checkboxes.checkbox31} name='流通・小売（家電）' onChange={handleChangeOne('checkbox31')} />}
                 label={<Typography sx={{fontSize: '12px'}}>流通・小売（家電）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox32} onChange={handleChangeOne('checkbox32')} />}
+                control={<Checkbox checked={checkboxes.checkbox32} name='通信販売' onChange={handleChangeOne('checkbox32')} />}
                 label={<Typography sx={{fontSize: '12px'}}>通信販売</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox33} onChange={handleChangeOne('checkbox33')} />}
+                control={<Checkbox checked={checkboxes.checkbox33} name='フード・レストラン' onChange={handleChangeOne('checkbox33')} />}
                 label={<Typography sx={{fontSize: '12px'}}>フード・レストラン</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox34} onChange={handleChangeOne('checkbox34')} />}
+                control={<Checkbox checked={checkboxes.checkbox34} name='レジャー・アミューズメント' onChange={handleChangeOne('checkbox34')} />}
                 label={<Typography sx={{fontSize: '12px'}}>レジャー・アミューズメント</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox35} onChange={handleChangeOne('checkbox35')} />}
+                control={<Checkbox checked={checkboxes.checkbox35} name='ホテル・観光' onChange={handleChangeOne('checkbox35')} />}
                 label={<Typography sx={{fontSize: '12px'}}>ホテル・観光</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox36} onChange={handleChangeOne('checkbox36')} />}
+                control={<Checkbox checked={checkboxes.checkbox36} name='人材ビジネス' onChange={handleChangeOne('checkbox36')} />}
                 label={<Typography sx={{fontSize: '12px'}}>人材ビジネス</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox37} onChange={handleChangeOne('checkbox37')} />}
+                control={<Checkbox checked={checkboxes.checkbox37} name='コールセンター' onChange={handleChangeOne('checkbox37')} />}
                 label={<Typography sx={{fontSize: '12px'}}>コールセンター</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox38} onChange={handleChangeOne('checkbox38')} />}
+                control={<Checkbox checked={checkboxes.checkbox38} name='流通・小売・サービス（その他）' onChange={handleChangeOne('checkbox38')} />}
                 label={<Typography sx={{fontSize: '12px'}}>流通・小売・サービス（その他）</Typography>}
               /> <br />
                 </div>
@@ -369,7 +468,7 @@ const IndustryComponent = ({ handleNext }) => {
                 <Collapse in={isExpanded5}>
                 <div style={{textAlign:'left', paddingLeft:'15px'}}>
                 <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox39} onChange={handleChangeOne('checkbox39')} />}
+                control={<Checkbox checked={checkboxes.checkbox39} name='放送・広告・印刷・出版' onChange={handleChangeOne('checkbox39')} />}
                 label={<Typography sx={{fontSize: '12px'}}>放送・広告・印刷・出版</Typography>}
               /> <br />
                 </div>
@@ -382,7 +481,7 @@ const IndustryComponent = ({ handleNext }) => {
                 <Collapse in={isExpanded6}>
                 <div style={{textAlign:'left', paddingLeft:'30px'}}>
                 <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox40} onChange={handleChangeOne('checkbox40')} />}
+                control={<Checkbox checked={checkboxes.checkbox40} name='コンサルティングファーム・シンクタンク' onChange={handleChangeOne('checkbox40')} />}
                 label={<Typography sx={{fontSize: '12px'}}>コンサルティングファーム・シンクタンク</Typography>}
               /> <br />
                 </div>
@@ -395,19 +494,19 @@ const IndustryComponent = ({ handleNext }) => {
                 <Collapse in={isExpanded7}>
                 <div style={{textAlign:'left', paddingLeft:'15px'}}>
                 <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox41} onChange={handleChangeOne('checkbox41')} />}
+                control={<Checkbox checked={checkboxes.checkbox41} name='金融（銀行）' onChange={handleChangeOne('checkbox41')} />}
                 label={<Typography sx={{fontSize: '12px'}}>金融（銀行）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox42} onChange={handleChangeOne('checkbox42')} />}
+                control={<Checkbox checked={checkboxes.checkbox42} name='融（保険）' onChange={handleChangeOne('checkbox42')} />}
                 label={<Typography sx={{fontSize: '12px'}}>融（保険）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox43} onChange={handleChangeOne('checkbox43')} />}
+                control={<Checkbox checked={checkboxes.checkbox43} name='金融（証券）' onChange={handleChangeOne('checkbox43')} />}
                 label={<Typography sx={{fontSize: '12px'}}>金融（証券）</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox44} onChange={handleChangeOne('checkbox44')} />}
+                control={<Checkbox checked={checkboxes.checkbox44} name='金融（その他）' onChange={handleChangeOne('checkbox44')} />}
                 label={<Typography sx={{fontSize: '12px'}}>金融（その他）</Typography>}
               /> <br />
                 </div>
@@ -420,11 +519,11 @@ const IndustryComponent = ({ handleNext }) => {
                 <Collapse in={isExpanded8}>
                 <div style={{textAlign:'left', paddingLeft:'15px'}}>
                 <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox45} onChange={handleChangeOne('checkbox45')} />}
+                control={<Checkbox checked={checkboxes.checkbox45} name='不動産' onChange={handleChangeOne('checkbox45')} />}
                 label={<Typography sx={{fontSize: '12px'}}>不動産</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox46} onChange={handleChangeOne('checkbox46')} />}
+                control={<Checkbox checked={checkboxes.checkbox46} name='建築・土木' onChange={handleChangeOne('checkbox46')} />}
                 label={<Typography sx={{fontSize: '12px'}}>建築・土木</Typography>}
               /> <br />
                 </div>
@@ -437,11 +536,11 @@ const IndustryComponent = ({ handleNext }) => {
                 <Collapse in={isExpanded9}>
                 <div style={{textAlign:'left', paddingLeft:'15px'}}>
                 <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox47} onChange={handleChangeOne('checkbox47')} />}
+                control={<Checkbox checked={checkboxes.checkbox47} name='医療' onChange={handleChangeOne('checkbox47')} />}
                 label={<Typography sx={{fontSize: '12px'}}>医療</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox48} onChange={handleChangeOne('checkbox48')} />}
+                control={<Checkbox checked={checkboxes.checkbox48} name='福祉・介護' onChange={handleChangeOne('checkbox48')} />}
                 label={<Typography sx={{fontSize: '12px'}}>福祉・介護</Typography>}
               /> <br />
                 </div>
@@ -454,11 +553,11 @@ const IndustryComponent = ({ handleNext }) => {
                 <Collapse in={isExpanded10}>
                 <div style={{textAlign:'left', paddingLeft:'15px'}}>
                 <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox49} onChange={handleChangeOne('checkbox49')} />}
+                control={<Checkbox checked={checkboxes.checkbox49} name='物流・倉庫' onChange={handleChangeOne('checkbox49')} />}
                 label={<Typography sx={{fontSize: '12px'}}>物流・倉庫</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox50} onChange={handleChangeOne('checkbox50')} />}
+                control={<Checkbox checked={checkboxes.checkbox50} name='陸運・海運・航空・鉄道' onChange={handleChangeOne('checkbox50')} />}
                 label={<Typography sx={{fontSize: '12px'}}>陸運・海運・航空・鉄道</Typography>}
               /> <br />
                 </div>
@@ -471,19 +570,19 @@ const IndustryComponent = ({ handleNext }) => {
                 <Collapse in={isExpanded11}>
                 <div style={{textAlign:'left', paddingLeft:'15px'}}>
                 <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox51} onChange={handleChangeOne('checkbox51')} />}
+                control={<Checkbox checked={checkboxes.checkbox51} name='電気・ガス・水道' onChange={handleChangeOne('checkbox51')} />}
                 label={<Typography sx={{fontSize: '12px'}}>電気・ガス・水道</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox52} onChange={handleChangeOne('checkbox52')} />}
+                control={<Checkbox checked={checkboxes.checkbox52} name='教育・学校' onChange={handleChangeOne('checkbox52')} />}
                 label={<Typography sx={{fontSize: '12px'}}>教育・学校</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox53} onChange={handleChangeOne('checkbox53')} />}
+                control={<Checkbox checked={checkboxes.checkbox53} name='団体・連合会・官公庁' onChange={handleChangeOne('checkbox53')} />}
                 label={<Typography sx={{fontSize: '12px'}}>団体・連合会・官公庁</Typography>}
               /> <br />
               <FormControlLabel
-                control={<Checkbox checked={checkboxes.checkbox54} onChange={handleChangeOne('checkbox54')} />}
+                control={<Checkbox checked={checkboxes.checkbox54} name='その他業種' onChange={handleChangeOne('checkbox54')} />}
                 label={<Typography sx={{fontSize: '12px'}}>その他業種</Typography>}
               /> <br />
                 </div>

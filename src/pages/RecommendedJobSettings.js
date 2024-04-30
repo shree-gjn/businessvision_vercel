@@ -490,6 +490,30 @@ const RecommendedJobSettings = () => {
                 </RadioGroup>
               </FormControl>
           </Grid>
+
+          <FormControl fullWidth>
+          {/* <FormLabel id="dropdown7-label" style={{textAlign: 'left'}}>日次取引仕訳</FormLabel> */}
+          <RadioGroup
+            row
+            aria-label="recommendedsetting"
+            name="recommendedsetting"
+            // value={gender}
+            // onChange={handleGenderChange}
+            style={{padding: '10px 0', textAlign: 'left', display: 'block'}}>
+            <FormControlLabel value="希望通り" control={<Radio />} label="希望通り" />
+            <FormControlLabel value="少し広め" control={<Radio />} label="少し広め" />
+          </RadioGroup>
+          </FormControl>
+
+          <div style={{padding: '20px 0', display: 'flex', justifyContent: 'space-between', width: 'auto'}}>
+            <Typography variant="paragraph" component="div" sx={{padding: '10px 0 10px 0', textAlign: 'left'}}> 詳細おすすめ設定 (カスタマイズ) </Typography>
+            <div style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '80px', display: 'flex', gap: '15px'}}>
+              <span>
+                <PencilEdit />
+              </span>
+              <Typography variant='paragraph'>編集</Typography>
+            </div>
+          </div>
         </>
       )}
        {/* <Table>
@@ -558,29 +582,6 @@ const RecommendedJobSettings = () => {
           </TableBody>
         </Table> */}
 
-        <FormControl fullWidth>
-          {/* <FormLabel id="dropdown7-label" style={{textAlign: 'left'}}>日次取引仕訳</FormLabel> */}
-          <RadioGroup
-            row
-            aria-label="recommendedsetting"
-            name="recommendedsetting"
-            // value={gender}
-            // onChange={handleGenderChange}
-            style={{padding: '10px 0', textAlign: 'left', display: 'block'}}>
-            <FormControlLabel value="希望通り" control={<Radio />} label="希望通り" />
-            <FormControlLabel value="少し広め" control={<Radio />} label="少し広め" />
-          </RadioGroup>
-          </FormControl>
-
-        <div style={{padding: '20px 0', display: 'flex', justifyContent: 'space-between', width: 'auto'}}>
-        <Typography variant="paragraph" component="div" sx={{padding: '10px 0 10px 0', textAlign: 'left'}}> 詳細おすすめ設定 (カスタマイズ) </Typography>
-        <div style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '80px', display: 'flex', gap: '15px'}}>
-          <span>
-            <PencilEdit />
-          </span>
-          <Typography variant='paragraph'>編集</Typography>
-        </div>
-      </div>
       <Button type="submit" variant="contained" color="primary" fullWidth style={{marginBottom: '10px'}}>変更内容を保存</Button>
       <Button onClick={handleReset} variant="text" sx={{ textAlign: 'right' }}>
         <Link to="#" style={{ textDecoration: 'none', color: 'inherit' }}>

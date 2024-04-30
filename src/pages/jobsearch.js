@@ -11,7 +11,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import {FormControlLabel, Checkbox, MenuItem, TextField, Multiline, Button} from '@mui/material';
+import {FormControlLabel,RadioGroup, Radio, FormControl, FormLabel,Checkbox, MenuItem, TextField, Multiline, Button} from '@mui/material';
 import { Typography } from '@mui/material';
 import Divider from '@mui/material/Divider';
 // import { Button } from '@mui/material';
@@ -36,8 +36,12 @@ const Item = styled(Paper)(({ theme }) => ({
     boxShadow: 'none', 
   }));
 
-const JobSearch = () => {
-  // You can handle search functionality and state here
+const JobSearch = ({ switchToSearchInfo }) => {
+
+  const handleButtonClick = () => {
+    // Call the function to switch to the SearchInfo component
+    switchToSearchInfo();
+  };
 
   const [checkboxes, setCheckboxes] = React.useState({
     checkbox1: false,
@@ -61,6 +65,7 @@ const JobSearch = () => {
   const handleReset = () => {
     // Handle reset logic here
     console.log('Resetting search conditions');
+    setItems([]);
   };
 
   const [expanded, setExpanded] = React.useState(false);
@@ -226,7 +231,7 @@ const JobSearch = () => {
         <AccordionDetails sx={{padding:'0px', textAlign:'left'}}>
         <div>
           <Divider />
-          <Link to="/accountingskill" style={{textDecoration:'none'}}>
+          {/* <Link to="/accountingskill" style={{textDecoration:'none'}}>
             <Box sx={{ flexGrow: 1}}>
             <Grid container spacing={1} style={{marginTop: '0'}}>
             <Grid item xs={1}>
@@ -259,25 +264,29 @@ const JobSearch = () => {
           <FormControlLabel className='searchcheckbox' fullWidth style={{textAlign: 'left', width: '100%', margin: '0', fontSize: '12px'}}
             control={<Checkbox checked={checkboxes.checkbox8} onChange={handleChangeOne('checkbox8')} style={{fontSize: '12px'}} />}
             label="全ての条件を無視"
-          />
+          /> */}
+
+          <FormControl fullWidth style={{marginBottom: '20px', padding: '10px'}}>
+            {/* <FormLabel id="dropdown7-label" style={{textAlign: 'left'}}><Typography sx={{fontSize: '14px'}}>日次取引仕訳</Typography></FormLabel> */}
+            <RadioGroup
+              row
+              aria-label="gender"
+              name="gender"
+              // value={gender}
+              // onChange={handleGenderChange}
+              style={{textAlign: 'left', display: 'block', display: 'flex', flexDirection: 'column'}}>
+              <FormControlLabel value="完全一致" control={<Radio />} label={<Typography sx={{fontSize: '12px'}}>完全一致</Typography>}/>
+              <FormControlLabel value="上記の条件を広めに設定" control={<Radio />} label={<Typography sx={{fontSize: '12px'}}>上記の条件を広めに設定</Typography>}/>
+              <FormControlLabel value="全ての条件を無視" control={<Radio />} label={<Typography sx={{fontSize: '12px'}}>全ての条件を無視</Typography>}/>
+            </RadioGroup>
+          </FormControl>
+
         </div>
         </AccordionDetails>
         </Accordion>
       </CardContent>
       <Grid container style={{marginTop: '10px'}}>
         <Grid item xs="12" style={{display: 'contents'}}>
-          {/* <Item style={{background: '#EEEEEE', marginRight: '5px', marginBottom: '5px', display: 'flex', gap: '5px', alignItems: 'center'}}>
-            <Typography sx={{fontSize: '12px'}}>ゲーム</Typography>
-            <button style={{border: 'none', background: 'none', display: 'flex', alignItems: 'center'}}><CloseIcon style={{fontSize: '18px'}} /></button>
-          </Item>
-          <Item style={{background: '#EEEEEE', marginRight: '5px', marginBottom: '5px', display: 'flex', gap: '5px', alignItems: 'center'}}>
-            <Typography sx={{fontSize: '12px'}}>通信キャリア</Typography>
-            <button style={{border: 'none', background: 'none', display: 'flex', alignItems: 'center'}}><CloseIcon style={{fontSize: '18px'}} /></button>
-          </Item>
-          <Item style={{background: '#EEEEEE', marginRight: '5px', marginBottom: '5px', display: 'flex', gap: '5px', alignItems: 'center'}}>
-            <Typography sx={{fontSize: '12px'}}>東京都</Typography>
-            <button style={{border: 'none', background: 'none', display: 'flex', alignItems: 'center'}}><CloseIcon style={{fontSize: '18px'}} /></button>
-          </Item> */}
           {items.map(item => (
             <Item key={item.id} style={{ background: '#EEEEEE', marginRight: '5px', marginBottom: '5px', display: 'flex', gap: '5px', alignItems: 'center' }}>
               <Typography sx={{ fontSize: '12px' }}>{item.label}</Typography>
@@ -290,7 +299,7 @@ const JobSearch = () => {
       </Grid>
     </Card>
 
-    <Button component={Link} to="/mypage" variant="contained" color="primary" sx={{ width: '90%', marginBottom: '10px' }}>
+    <Button onClick={handleButtonClick} variant="contained" color="primary" sx={{ width: '90%', marginBottom: '10px' }}>
     この条件で検索する
       </Button>
 

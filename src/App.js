@@ -36,6 +36,7 @@ import MaskingApplicationConfirm from './pages/MaskingApplicationConfirm';
 import NormalApplication from './pages/NormalApplication';
 import NormalApplicationConfirm from './pages/NormalApplicationConfirm';
 import ChangePassword from './pages/ChangePassword';
+import SearchInfo from './pages/SearchInfo';
 
 function App() {
   return (
@@ -76,7 +77,8 @@ function App() {
           <Route path="/maskingapplication" element={<MaskingApplication />} />
           <Route path="/maskingapplicationconfirm" element={<MaskingApplicationConfirm />} />
           <Route path="/normalapplication" element={<NormalApplication />} />
-          <Route path="/normalapplicationconfirm" element={<NormalApplicationConfirm />} />
+          <Route path="/normalapplicationconfirm" element={<NormalApplicationConfirm />} />SearchInfo
+          <Route path="/searchinfo" element={<SearchInfo />} />
         </Routes>
       </Router>
     </div>

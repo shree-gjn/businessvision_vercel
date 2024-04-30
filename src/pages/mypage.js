@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -8,6 +8,7 @@ import BottomNav from '../components/BottomNav';
 import RecruitmentInfo from '../pages/RecruitmentInfo';
 import JobSearch from '../pages/jobsearch';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import SearchInfo from './SearchInfo';
 
 const theme = createTheme({
   palette: {
@@ -35,6 +36,13 @@ const MyPage = ({ handleNext }) => {
     setValue(newValue);
   };
 
+  const [showJobSearch, setShowJobSearch] = useState(true);
+
+  const switchToSearchInfo = () => {
+    setShowJobSearch(false); // Hide the JobSearch component
+  };
+
+
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ width: '100%', typography: 'body1' }}>
@@ -50,7 +58,13 @@ const MyPage = ({ handleNext }) => {
           </Box>
 
           <TabPanel value="1">
-            <JobSearch />
+            {/* <JobSearch /> */}
+            {/* Conditionally render either JobSearch or SearchInfo based on showJobSearch state */}
+            {showJobSearch ? (
+              <JobSearch switchToSearchInfo={switchToSearchInfo} />
+            ) : (
+              <SearchInfo />
+            )}
           </TabPanel>
           <TabPanel value="2" sx={{backgroundColor: '#FAFAFA', overflow: 'scroll'}}>
             <Box sx={{backgroundColor: '#FAFAFA'}}>

@@ -33,6 +33,7 @@ const theme = createTheme({
 
 export default function BottomNav() {
   const location = useLocation();
+
   const [value, setValue] = React.useState(0);
 
   React.useEffect(() => {
