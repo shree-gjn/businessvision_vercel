@@ -3,6 +3,24 @@ import {Typography} from '@mui/material';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#16375A',
+    },
+    secondary: {
+      main: '#877151',
+    },
+    grey: {
+      main: '#949494', // Change to your desired color
+    },
+    text: {
+      grey: '#ffffff', // Change to your desired text color
+    },
+  },
+});
 
 const Privacy = () => {
   const navigate = useNavigate();
@@ -12,7 +30,8 @@ const Privacy = () => {
   };
 
   return (
-    <div style={{width:"90%", margin: '0 auto'}}>
+    <ThemeProvider theme={theme}>
+      <div style={{width:"90%", margin: '0 auto'}}>
         <Typography variant="h6" gutterBottom sx={{marginTop:'5px', padding:'20px'}} > プライバシーポリシー </Typography> 
         <Typography variant="body1" gutterBottom sx={{textAlign: "left"}}> 個人情報取扱規約 </Typography>
         <Typography variant="body1" gutterBottom sx={{textAlign: "left"}}> 【株式会社ビジネスビジョン】</Typography>
@@ -87,6 +106,7 @@ const Privacy = () => {
         前の画面に戻る
       </Button>
     </div>
+    </ThemeProvider>
   );
 };
 

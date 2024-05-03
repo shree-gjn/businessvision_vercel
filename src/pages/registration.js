@@ -4,6 +4,24 @@ import BasicInfo from './registration/basicinfo';
 import CurrentInfo from './registration/currentinfo';
 import DesiredCondition from './registration/desiredcondition';
 import Completion from './registration/completion';
+import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#16375A',
+    },
+    secondary: {
+      main: '#877151',
+    },
+    grey: {
+      main: '#949494', // Change to your desired color
+    },
+    text: {
+      grey: '#ffffff', // Change to your desired text color
+    },
+  },
+});
 
 const RegistrationStepper = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -38,38 +56,40 @@ const RegistrationStepper = () => {
   };
 
   return (
-    <Container>
-      <Stepper activeStep={activeStep} alternativeLabel sx={{ marginTop: '10px' }}>
-        {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
-      <div>
-        {activeStep === 0 && (
-          <BasicInfo formData={formData} setFormData={setFormData} handleNext={handleNext} />
-        )}
-        {activeStep === 1 && (
-          <CurrentInfo formData={formData} setFormData={setFormData} handleNext={handleNext} />
-        )}
-        {activeStep === 2 && (
-          <DesiredCondition formData={formData} setFormData={setFormData} handleNext={handleNext} />
-        )}
-        {activeStep === 3 && (
-          <Completion formData={formData} setFormData={setFormData} handleNext={handleNext} />
-        )}
-
+    <ThemeProvider theme={theme}>
+      <Container>
+        <Stepper activeStep={activeStep} alternativeLabel sx={{ marginTop: '10px' }}>
+          {steps.map((label) => (
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
         <div>
-          <Button disabled={activeStep === 0} onClick={handleBack} sx={{marginBottom:'100px'}}>
-            戻る
-          </Button>
-          {/* <Button variant="contained" color="primary" onClick={handleNext}>
-            {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-          </Button> */}
+          {activeStep === 0 && (
+            <BasicInfo formData={formData} setFormData={setFormData} handleNext={handleNext} />
+          )}
+          {activeStep === 1 && (
+            <CurrentInfo formData={formData} setFormData={setFormData} handleNext={handleNext} />
+          )}
+          {activeStep === 2 && (
+            <DesiredCondition formData={formData} setFormData={setFormData} handleNext={handleNext} />
+          )}
+          {activeStep === 3 && (
+            <Completion formData={formData} setFormData={setFormData} handleNext={handleNext} />
+          )}
+
+          <div>
+            <Button disabled={activeStep === 0} onClick={handleBack} sx={{marginBottom:'100px'}}>
+              戻る
+            </Button>
+            {/* <Button variant="contained" color="primary" onClick={handleNext}>
+              {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+            </Button> */}
+          </div>
         </div>
-      </div>
-    </Container>
+      </Container>
+    </ThemeProvider>
   );
 };
 

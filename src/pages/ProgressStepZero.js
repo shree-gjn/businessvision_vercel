@@ -47,7 +47,11 @@ export default function ProgressStepZero() {
 
   const handleCardClick = () => {
    // Navigate to "/hello" on card click
-   navigate('/fullprogress');
+  //  navigate('/fullprogress');
+  navigate('/fullprogress', { state: { hideChatTab: true, showJobDetails: true, isFromProgressStepZero: true } });
+  // navigate('/full-progress', { state: { source: 'ProgressStepZero' } });
+  // navigate('/full-progress', { state: { showJobDetails: true } });
+
  };
 
   return (

@@ -153,7 +153,7 @@ export default function MaskingApplication() {
           </Grid>
           <Grid container style={{}}>
             <Grid item xs={4} style={{marginBottom: '10px', marginLeft: 'auto'}}>
-              <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '60px', display: 'flex', gap: '15px', marginLeft: 'auto'}}>
+              <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '70px', display: 'flex', gap: '15px', marginLeft: 'auto'}}>
                 <span>
                   <PencilEdit />
                 </span>

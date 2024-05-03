@@ -37,6 +37,7 @@ import NormalApplication from './pages/NormalApplication';
 import NormalApplicationConfirm from './pages/NormalApplicationConfirm';
 import ChangePassword from './pages/ChangePassword';
 import SearchInfo from './pages/SearchInfo';
+import WorkHistory from './pages/profile/WorkHistory';
 
 function App() {
   return (
@@ -79,6 +80,7 @@ function App() {
           <Route path="/normalapplication" element={<NormalApplication />} />
           <Route path="/normalapplicationconfirm" element={<NormalApplicationConfirm />} />SearchInfo
           <Route path="/searchinfo" element={<SearchInfo />} />
+          <Route path="/workhistory" element={<WorkHistory />} />
         </Routes>
       </Router>
     </div>

@@ -11,6 +11,24 @@ import {
   Typography,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#16375A',
+    },
+    secondary: {
+      main: '#877151',
+    },
+    grey: {
+      main: '#949494', // Change to your desired color
+    },
+    text: {
+      grey: '#ffffff', // Change to your desired text color
+    },
+  },
+});
 
 const RegistrationForm = () => {
   const navigate = useNavigate();
@@ -62,9 +80,10 @@ const RegistrationForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{width:'90%', margin:'0 auto'}}>
+    <ThemeProvider theme={theme}>
+          <form onSubmit={handleSubmit} style={{width:'90%', margin:'0 auto'}}>
     <div>
-        <Typography variant="h6" gutterBottom sx={{marginTop:'5px', padding:'20px'}} > 会員登録 </Typography> 
+        <Typography variant="h6" gutterBottom sx={{marginTop:'5px', padding:'20px'}} > 会員登録（無料） </Typography> 
     </div>
     <Typography variant="body1" gutterBottom sx={{textAlign:'left', marginTop:'5px'}} > メールアドレス </Typography> 
     <Typography variant="body2" gutterBottom sx={{textAlign:'left', color:'#949494'}} > (半角英数字・記号で入力してください） </Typography> 
@@ -101,7 +120,7 @@ const RegistrationForm = () => {
         }}
       />
 
-      <FormControlLabel
+      <FormControlLabel style={{display: 'flex', alignItems: 'flex-start', margin: '10px 0'}}
         control={
           <Checkbox
             checked={formData.agree}
@@ -109,12 +128,13 @@ const RegistrationForm = () => {
             name="agree"
             color="primary"
             required
+            style={{padding: '0'}}
           />
         }
         label={
-          <Typography variant="body2">
-            登録ボタンをクリックすると、経理エージェントの <a href="/terms">利用規約</a> と{' '}
-            <a href="/privacy">プライバシーポリシー</a>に同意したことになります。
+          <Typography variant="body2" style={{padding: '0 10px'}}>
+            登録ボタンをクリックすると、経理エージェントの <a href="/terms" style={{textDecoration: 'none', color: '#16375A'}}>利用規約</a> と{' '}
+            <a href="/privacy" style={{textDecoration: 'none', color: '#16375A', marginRight: '5px'}}>プライバシーポリシー</a>に同意したことになります
           </Typography>
         }
       />
@@ -129,14 +149,14 @@ const RegistrationForm = () => {
       {/* Display login button when not loading */}
       {!loading && (
         <Button type="submit" variant="contained" color="primary" fullWidth>
-          新規登録こちら (簡単60秒）
+         無料登録して次へ(簡単60秒)
         </Button>
       )}
       <Typography variant="body2" sx={{marginTop:'10px'}}>
-            <a href="/login">会員登録済みの方はこちら</a>
+            <a href="/login" style={{textDecoration: 'none', color:'#16375A'}}>会員登録済みの方はこちら</a>
           </Typography>
     </form>
-    
+    </ThemeProvider>    
   );
 };
 

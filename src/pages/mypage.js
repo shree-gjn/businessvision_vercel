@@ -9,6 +9,8 @@ import RecruitmentInfo from '../pages/RecruitmentInfo';
 import JobSearch from '../pages/jobsearch';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import SearchInfo from './SearchInfo';
+import { Link, useNavigate } from 'react-router-dom';
+import {ReactComponent as BackButton} from '../assets/BackButton.svg';
 
 const theme = createTheme({
   palette: {
@@ -31,15 +33,40 @@ const theme = createTheme({
 
 const MyPage = ({ handleNext }) => {
   const [value, setValue] = React.useState('1');
+  const [showJobSearch, setShowJobSearch] = useState(true);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const [showJobSearch, setShowJobSearch] = useState(true);
+  // const switchToSearchInfo = () => {
+  //   setShowJobSearch(false); // Hide the JobSearch component
+  // };
 
-  const switchToSearchInfo = () => {
-    setShowJobSearch(false); // Hide the JobSearch component
+  const toggleSearchComponent = () => {
+    setShowJobSearch(!showJobSearch);
+  };
+  
+  const BackLink = styled(Link)(({ theme }) => ({
+    textDecoration: 'none',
+    color: '#16375A',
+    fontSize: '12px',
+    fontWeight: 'bold',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '5px',
+    paddingLeft:'15px', 
+    position: 'absolute',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    visibility: showJobSearch ? 'hidden' : 'visible'
+  }));
+
+  const navigate = useNavigate();  // Get the history object from react-router-dom
+
+  const goBack = () => {
+    setShowJobSearch(true); // Reset to default state
+    setValue('1'); 
   };
 
 
@@ -47,6 +74,7 @@ const MyPage = ({ handleNext }) => {
     <ThemeProvider theme={theme}>
       <Box sx={{ width: '100%', typography: 'body1' }}>
         <div className="PageHeader">
+          <BackLink to="#" onClick={goBack} > <BackButton /> 戻る </BackLink>
           <p>求人情報</p>
         </div>
         <TabContext value={value}>
@@ -61,7 +89,7 @@ const MyPage = ({ handleNext }) => {
             {/* <JobSearch /> */}
             {/* Conditionally render either JobSearch or SearchInfo based on showJobSearch state */}
             {showJobSearch ? (
-              <JobSearch switchToSearchInfo={switchToSearchInfo} />
+              <JobSearch switchToSearchInfo={toggleSearchComponent} />
             ) : (
               <SearchInfo />
             )}

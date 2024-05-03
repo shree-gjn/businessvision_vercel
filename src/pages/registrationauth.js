@@ -4,11 +4,28 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import Typography from '@mui/material/Typography';
 import { ReactComponent as BackButton } from '../assets/BackButton.svg';
-import { styled } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom';
 import { ReactComponent as AuthenticationCode } from '../assets/AuthenticationCode.svg';
 import { ReactComponent as Key } from '../assets/Key.svg';
 import { TextField } from '@mui/material';
+import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#16375A',
+    },
+    secondary: {
+      main: '#877151',
+    },
+    grey: {
+      main: '#949494', // Change to your desired color
+    },
+    text: {
+      grey: '#ffffff', // Change to your desired text color
+    },
+  },
+});
 
 const BackLink = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
@@ -18,9 +35,10 @@ const BackLink = styled(Link)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: '5px',
-  paddingLeft: '10px',
-  marginTop: '10px',
-  marginBottom: '8px',
+  paddingLeft:'15px', 
+  position: 'absolute',
+  top: '50%',
+  transform: 'translateY(-50%)'
 }));
 
 const ConfirmationModal = ({ open, onClose }) => {
@@ -94,57 +112,63 @@ const RegistrationAuth = () => {
   };
 
   return (
-    <Box sx={{ width: '100%', typography: 'body1' }}>
-      <div className="PageHeader" style={{ marginBottom: '25px', textAlign: 'center' }}>
-        <Box sx={{ display: 'grid', gridTemplateColumns: '30% 40% 30%' }}>
-          <BackLink to="#" sx={{ width: '70%' }} onClick={goBack}>
-            {' '}
-            <BackButton /> 戻る{' '}
-          </BackLink>
-          <p style={{ textAlign: 'center' }}>認証コード</p>
-          <p> </p>
-        </Box>
-      </div>
-      <AuthenticationCode />
-      <div style={{ textAlign: 'center', marginTop: '30px', padding: '20px' }}>
-        <Typography variant="paragraph" gutterBottom sx={{ marginTop: '5px', color: 'red' }}>
-        新しいコードがご登録のメールアドレス に再送信されました
-        </Typography>{' '}
-        <br />
-      </div>
-      <div style={{ textAlign: 'center', padding: '20px', display: 'flex', justifyContent: 'center' }}>
-        {/* Authentication Code Blocks */}
-        {otpDigits.map((digit, index) => (
-          <TextField
-            key={index}
-            variant="outlined"
-            value={digit}
-            onChange={(event) => handleOtpChange(index, event)}
-            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} // Allow only numeric input
-            inputRef={refs[index]} // Assign the ref
-            sx={{ margin: '0 5px', width: '50px' }}
-          />
-        ))}
-      </div>
-      <div>
-        <Typography variant="paragraph" sx={{ color: '#085D95', fontWeight: '500', textAlign: 'center' }} onClick={handleConfirmClick}> 
-          メールリンクより確認後
-        </Typography>
-        <br />
-        <Button
-          variant="contained"
-          color="primary"
-          type="submit"
-          style={{ margin: '20px auto' }}
-          onClick={handleConfirmRegistration}
-        >
-          確認
-        </Button>
-      </div>
+    <ThemeProvider theme={theme}>
+      <Box sx={{ width: '100%', typography: 'body1'}}>
+        {/* <div className="PageHeader" style={{ marginBottom: '25px', textAlign: 'center' }}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: '30% 40% 30%' }}>
+            <BackLink to="#" sx={{ width: '70%' }} onClick={goBack}>
+              {' '}
+              <BackButton /> 戻る{' '}
+            </BackLink>
+            <p style={{ textAlign: 'center' }}>認証コード</p>
+            <p> </p>
+          </Box>
+        </div> */}
+        <div className="PageHeader" style={{marginBottom: '30px'}}>
+          <BackLink to="#" onClick={goBack} > <BackButton /> 戻る </BackLink>
+          <p>求人情報</p>
+        </div>
+        <AuthenticationCode />
+        <div style={{ textAlign: 'center', padding: '20px' }}>
+          <Typography variant="paragraph" gutterBottom sx={{ marginTop: '5px', color: 'red' }}>
+          新しいコードがご登録のメールアドレス に再送信されました
+          </Typography>{' '}
+          <br />
+        </div>
+        <div style={{ textAlign: 'center', padding: '20px', display: 'flex', justifyContent: 'center' }}>
+          {/* Authentication Code Blocks */}
+          {otpDigits.map((digit, index) => (
+            <TextField
+              key={index}
+              variant="outlined"
+              value={digit}
+              onChange={(event) => handleOtpChange(index, event)}
+              inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} // Allow only numeric input
+              inputRef={refs[index]} // Assign the ref
+              sx={{ margin: '0 5px', width: '50px' }}
+            />
+          ))}
+        </div>
+        <div>
+          <Typography variant="paragraph" sx={{ color: '#085D95', fontWeight: '500', textAlign: 'center' }} onClick={handleConfirmClick}> 
+            メールリンクより確認後
+          </Typography>
+          <br />
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            style={{ margin: '20px auto' }}
+            onClick={handleConfirmRegistration}
+          >
+            確認
+          </Button>
+        </div>
 
-      {/* Confirmation Modal */}
-      <ConfirmationModal open={isModalOpen} onClose={handleCloseModal} />
-    </Box>
+        {/* Confirmation Modal */}
+        <ConfirmationModal open={isModalOpen} onClose={handleCloseModal} />
+      </Box>
+    </ThemeProvider>
   );
 };
 

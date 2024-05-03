@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link, useNavigate } from 'react-router-dom'; 
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -6,9 +7,49 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 import {ReactComponent as PencilEdit} from '../../assets/PencilEdit.svg';
+import {styled} from '@mui/material/styles';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+import Modal from '@mui/material/Modal';
+import Button from '@mui/material/Button';
+import { Box } from '@mui/system';
+import {ReactComponent as Cancel} from '../../assets/Cancel.svg';
 
 export default function ResumeTab() {
+  const [open, setOpen] = React.useState(false);
+  const [selectedFile, setSelectedFile] = React.useState(null);
+
+    // Add a state to store the uploaded file
+  const [uploadedFile, setUploadedFile] = React.useState(null);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleFileSelect = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+    setUploadedFile(file);
+  };
+  
+  const handleOpenFileModal = () => {
+    setOpen(true);
+  };
+
+  const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    boxShadow: 'none', 
+  }));
+
   return (
     <div style={{background: 'rgb(250, 250, 250)'}}>
       <Grid container>
@@ -16,7 +57,7 @@ export default function ResumeTab() {
           <Typography variant="h6" component="h6" sx={{marginBottom:'10px'}}> 履歴書 </Typography>
         </Grid>
         <Grid Item xs={12}>
-          <div style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '60px', display: 'flex', gap: '15px', marginLeft: 'auto', marginBottom: '10px'}}>
+          <div style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '80px', display: 'flex', gap: '15px', marginLeft: 'auto', marginBottom: '10px'}}>
             <span>
               <PencilEdit />
             </span>
@@ -193,12 +234,32 @@ export default function ResumeTab() {
         <Grid Item xs={12}>
           <Typography variant="h6" component="h6" sx={{marginBottom:'10px'}}> 職務経歴書 </Typography>
         </Grid>
-        <Grid Item xs={12}>
-          <div style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '60px', display: 'flex', gap: '15px', marginLeft: 'auto', marginBottom: '10px'}}>
+        {/* {selectedFile && (
+          <Typography variant="body1">
+            Selected File: {selectedFile.name}
+          </Typography>
+        )}
+
+        {uploadedFile && (
+          <Typography variant="body1">
+            Uploaded File: {uploadedFile.name}
+          </Typography>
+        )} */}
+  
+        <Grid Item xs={6} style={{paddingRight: '10px'}}>
+          <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '80px', display: 'flex', gap: '15px', marginLeft: 'auto', marginBottom: '10px'}} component={Link} to="/workhistory">
             <span>
               <PencilEdit />
             </span>
             <Typography variant='paragraph'>編集</Typography>
+          </Item>
+        </Grid>
+        <Grid Item xs={6} onClick={handleOpen}>
+          <div style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', display: 'flex', gap: '15px', marginLeft: 'auto', marginBottom: '10px', height: '25px'}}>
+            <span>
+              <UploadFileIcon />
+            </span>
+            <Typography variant='paragraph'>アップロード</Typography>
           </div>
         </Grid>
       </Grid>
@@ -334,6 +395,36 @@ export default function ResumeTab() {
         </div>
         </AccordionDetails>
       </Accordion>
+
+      {/* Modal for file selection */}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 300,
+          bgcolor: 'background.paper',
+          boxShadow: 24,
+          borderRadius: '15px',
+          border: 'none',
+          p: 4,
+        }}>
+          <Typography id="modal-modal-title" variant="h6" component="h2" sx={{marginBottom: '10px'}}>
+            Select File
+          </Typography>
+          <input type="file" onChange={handleFileSelect} />
+          <div style={{position: 'absolute', top: '0', right: '0', padding: '10px'}}>
+            <Cancel onClick={handleClose}  />
+          </div>
+        </Box>
+      </Modal>
+
     </div>
   );
 }

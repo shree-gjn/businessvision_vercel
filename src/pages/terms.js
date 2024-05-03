@@ -3,6 +3,24 @@ import {Typography} from '@mui/material';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#16375A',
+    },
+    secondary: {
+      main: '#877151',
+    },
+    grey: {
+      main: '#949494', // Change to your desired color
+    },
+    text: {
+      grey: '#ffffff', // Change to your desired text color
+    },
+  },
+});
 
 const Terms = () => {
   const navigate = useNavigate();
@@ -12,7 +30,8 @@ const Terms = () => {
   };
 
   return (
-    <div style={{width:"90%", margin: '0 auto'}}>
+    <ThemeProvider theme={theme}>
+      <div style={{width:"90%", margin: '0 auto'}}>
     <Typography variant="h6" gutterBottom sx={{marginTop:'5px', padding:'20px'}} > 利用規約 </Typography> 
     <Typography variant="body2" gutterButtom sx={{textAlign: "left", marginTop: '10px', marginBottom:'30px'}}> 
         エン・ジャパン株式会社（以下「エン・ジャパン」といいます）が提供する転職支援サービスのご利用にあたっては、以下の利用規約をご確認、ご承諾いただいたうえでお申込みくださいますようお願い致します。
@@ -126,7 +145,7 @@ const Terms = () => {
     </Typography>
 
     <Typography variant="body1" gutterBottom sx={{textAlign: "left"}}> 【本規約の制定日】 </Typography>
-    <Typography variant="body2" gutterButtom sx={{textAlign: "left", marginTop: '10px', marginBottom:'30px'}}> 
+    <Typography variant="body2" gutterButtom sx={{textAlign: "left", marginTop: '10px', marginBottom:'10px'}}> 
         2015年8月24日
     </Typography>
 
@@ -135,6 +154,7 @@ const Terms = () => {
         前の画面に戻る
       </Button>
 </div>
+    </ThemeProvider>
   );
 };
 

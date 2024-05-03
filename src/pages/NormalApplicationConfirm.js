@@ -163,7 +163,7 @@ export default function NormalApplicationConfirm() {
               <Item style={{textAlign: 'left'}}>メッセージ</Item>
             </Grid>
             <Grid item xs={4}>
-              <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '60px', display: 'flex', gap: '15px'}}>
+              <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '70px', display: 'flex', gap: '15px'}}>
                 <span>
                   <PencilEdit />
                 </span>
@@ -173,7 +173,7 @@ export default function NormalApplicationConfirm() {
           </Grid>
           <Grid container spacing={1} style={{background: '#FFFFFF', border: '1px solid #EEEEEE', borderRadius: '10px', width: '100%', marginLeft: '0', marginBottom: '20px'}}>
             <Grid item xs={4} style={{marginLeft: 'auto'}}>
-              <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '60px', display: 'flex', gap: '15px'}}>
+              <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '70px', display: 'flex', gap: '15px'}}>
                 <span>
                   <PencilEdit />
                 </span>

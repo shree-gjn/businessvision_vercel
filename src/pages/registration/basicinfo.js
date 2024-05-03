@@ -15,11 +15,13 @@ import {
   InputLabel,
   Collapse,
   Typography,
+  styled
 } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AccordianBasicInfo from './components/AccordianBasicInfo';
 import CustomDatePicker from './components/DatePicker';
+import Paper from '@mui/material/Paper';
 
 const BasicInfo = ({ formData, setFormData, handleNext }) => {
   const [name, setName] = useState('');
@@ -242,9 +244,22 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
     handleNext();
   };
 
+  const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    boxShadow: 'none', 
+  }));
+
   return (
     <div>
       <h1>基本情報</h1>
+      {/* <Grid container spacing={1} style={{marginTop: '30px', display: 'flex', gap: '10px', alignItems: 'center', fontWeight: '600', color: '#16375A'}}>
+        <div style={{width: '25px', height: '25px', background: '#16375A', color: '#fff', border: '2px solid #fff', borderRadius: '50%'}}>1</div>
+        <div style={{textAlign: 'left'}}>基本情報</div>
+      </Grid> */}
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2} sx={{ textAlign: 'left', marginTop: '10px' }}>
           <Grid item xs={12}>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import {ReactComponent as BackButton} from '../assets/BackButton.svg';
-import { styled } from '@mui/material/styles';
+import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom'; 
 import {ReactComponent as EmailVerification} from '../assets/EmailVerification.svg';
 import {
@@ -9,6 +9,23 @@ import {
   Typography,
   Button
 } from '@mui/material';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#16375A',
+    },
+    secondary: {
+      main: '#877151',
+    },
+    grey: {
+      main: '#949494', // Change to your desired color
+    },
+    text: {
+      grey: '#ffffff', // Change to your desired text color
+    },
+  },
+});
 
 const BackLink = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
@@ -18,9 +35,10 @@ const BackLink = styled(Link)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: '5px',
-  paddingLeft:'10px',
-  marginTop:'10px',
-  marginBottom:'8px',
+  paddingLeft:'15px', 
+  position: 'absolute',
+  top: '50%',
+  transform: 'translateY(-50%)'
 }));
 
 const ForgetPassword = () => {
@@ -56,43 +74,49 @@ const ForgetPassword = () => {
   };
 
   return (
-    <Box sx={{ width: '100%', typography: 'body1' }}>
-    <div className="PageHeader" style={{marginBottom:'25px'}}>
-      <Box sx={{ display: 'grid', gridTemplateColumns: '30% 40% 30%'}}>
-        <BackLink to="#" sx={{width:'70%'}} onClick={goBack} > <BackButton /> 戻る </BackLink>
-        <p>パスワードの再設定</p>
-        <p> </p>
+    <ThemeProvider theme={theme}>
+      <Box sx={{ width: '100%', typography: 'body1' }}>
+        {/* <div className="PageHeader" style={{marginBottom:'25px'}}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: '30% 40% 30%'}}>
+            <BackLink to="#" sx={{width:'70%'}} onClick={goBack} > <BackButton /> 戻る </BackLink>
+            <p>パスワードの再設定</p>
+            <p> </p>
+          </Box>
+        </div> */}
+        <div className="PageHeader" style={{marginBottom: '30px'}}>
+          <BackLink to="#" onClick={goBack} > <BackButton /> 戻る </BackLink>
+          <p>パスワードを忘れた場合</p>
+        </div>
+        <EmailVerification/>
+        <div style={{textAlign:'left', padding:'20px'}}>
+            <Typography variant="paragraph" gutterBottom sx={{marginTop:'5px'}} >会員情報に登録した、会員ID（Eメールアドレス）を入力してください。ご登録のメールアドレス宛に、パスワード再設定に関する情報をお送りします。​ </Typography> 
+            <form onSubmit={handleSubmit} style={{marginTop:'50px'}}>
+            <Typography variant="body1" gutterBottom sx={{textAlign:'left', marginTop:'5px'}} > 会員ID（Eメールアドレス） </Typography> 
+              <TextField
+                placeholder="登録したメールIDを入力してください"
+                variant="outlined"
+                fullWidth
+                value={email}
+                onChange={handleEmailChange}
+                onBlur={validateEmail}
+                // error={!isValidEmail}
+                // helperText={!isValidEmail ? 'Invalid email format' : ''}
+              />
+              <div style={{display:'flex', margin:'20px auto'}}>
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                // disabled={!isValidEmail}
+                style={{ margin:'0 auto' }}
+              >
+                次へ
+              </Button>
+              </div>
+            </form>
+        </div>
       </Box>
-    </div>
-    <EmailVerification/>
-    <div style={{textAlign:'left', marginTop:'30px', padding:'20px'}}>
-        <Typography variant="paragraph" gutterBottom sx={{marginTop:'5px'}} >会員情報に登録した、会員ID（Eメールアドレス）を入力してください。ご登録のメールアドレス宛に、パスワード再設定に関する情報をお送りします。​ </Typography> 
-        <form onSubmit={handleSubmit} style={{marginTop:'50px'}}>
-        <Typography variant="body1" gutterBottom sx={{textAlign:'left', marginTop:'5px'}} > 会員ID（Eメールアドレス） </Typography> 
-          <TextField
-            placeholder="登録したメールIDを入力してください"
-            variant="outlined"
-            fullWidth
-            value={email}
-            onChange={handleEmailChange}
-            onBlur={validateEmail}
-            // error={!isValidEmail}
-            // helperText={!isValidEmail ? 'Invalid email format' : ''}
-          />
-          <div style={{display:'flex', margin:'10px auto'}}>
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            // disabled={!isValidEmail}
-            style={{ margin:'0 auto' }}
-          >
-            次へ
-          </Button>
-          </div>
-        </form>
-    </div>
-  </Box>
+    </ThemeProvider>
   );
 };
 
