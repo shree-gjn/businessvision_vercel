@@ -76,3 +76,16 @@
   height: 15px;
   display: block;
 }
+
+.required_label{
+  color: red;
+  border: 1px solid red;
+  padding: 3px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.MuiFormLabel-asterisk {
+  display: none;
+}

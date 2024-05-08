@@ -9,7 +9,7 @@ import {
   MenuItem,
 } from '@mui/material';
 
-const DesiredCondition = ({ formData, setFormData, handleNext }) => {
+const DesiredCondition = ({ formData, setFormData, handleNext, handleBack}) => {
   const [selectedOption, setSelectedOption] = useState('');
   const [selectedOptionError, setSelectedOptionError] = useState('');
   const [secondDropdownValue, setSecondDropdownValue] = useState('');
@@ -73,6 +73,10 @@ const DesiredCondition = ({ formData, setFormData, handleNext }) => {
     handleNext();
   };
 
+  const handleBackClick = () => {
+    handleBack(); // Call handleBack function passed as prop
+  };
+
   return (
     <div>
       <h1>希望条件</h1>
@@ -81,7 +85,7 @@ const DesiredCondition = ({ formData, setFormData, handleNext }) => {
        
         <Grid item xs={12}>
           <FormControl fullWidth required error={!!selectedOptionError}>
-            <FormLabel id="demo-radio-buttons-group-label">ご希望の年収を教えてください</FormLabel>
+            <FormLabel id="demo-radio-buttons-group-label" sx={{marginBottom: '10px'}}>ご希望の年収を教えてください<span className='required_label'>必須</span></FormLabel>
             <Select
               value={selectedOption}
               onChange={handleSelectChange}
@@ -107,7 +111,7 @@ const DesiredCondition = ({ formData, setFormData, handleNext }) => {
 
         <Grid item xs={12}>
           <FormControl fullWidth required error={!!secondDropdownError}>
-            <FormLabel id="second-dropdown-label">ご希望の職種を教えてください​</FormLabel>
+            <FormLabel id="second-dropdown-label" sx={{marginBottom: '10px'}}>ご希望の職種を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
               value={secondDropdownValue}
               onChange={handleSecondDropdownChange}
@@ -137,7 +141,7 @@ const DesiredCondition = ({ formData, setFormData, handleNext }) => {
 
         <Grid item xs={12}>
           <FormControl fullWidth required error={!!thirdDropdownError}>
-            <FormLabel id="third-dropdown-label">ご希望の業種を教えてください​</FormLabel>
+            <FormLabel id="third-dropdown-label" sx={{marginBottom: '10px'}}>ご希望の業種を教えてください​<span className='required_label'>必須</span></FormLabel>
             <Select
               value={thirdDropdownValue}
               onChange={handleThirdDropdownChange}
@@ -165,7 +169,7 @@ const DesiredCondition = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12}>
           {/* Fourth Dropdown */}
           <FormControl fullWidth required error={!!dropdown4Error}>
-            <FormLabel id="dropdown4-label">ご希望の役職を教えてください​</FormLabel>
+            <FormLabel id="dropdown4-label" sx={{marginBottom: '10px'}}>ご希望の役職を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
               value={dropdown4Value}
               onChange={handleDropdown4Change}
@@ -191,7 +195,7 @@ const DesiredCondition = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12}>
           {/* Fifth Dropdown */}
           <FormControl fullWidth required error={!!dropdown5Error}>
-            <FormLabel id="dropdown5-label">ご希望の勤務地（都道府県）を教えてください​</FormLabel>
+            <FormLabel id="dropdown5-label" sx={{marginBottom: '10px'}}>ご希望の勤務地（都道府県）を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
               value={dropdown5Value}
               onChange={handleDropdown5Change}
@@ -220,7 +224,7 @@ const DesiredCondition = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12}>
           {/* Sixth Dropdown */}
           <FormControl fullWidth required error={!!dropdown6Error}>
-            <FormLabel id="dropdown6-label">ご希望の企業カテゴリを教えてください​</FormLabel>
+            <FormLabel id="dropdown6-label" sx={{marginBottom: '10px'}}>ご希望の企業カテゴリを教えてください​<span className='required_label'>必須</span></FormLabel>
             <Select
               value={dropdown6Value}
               onChange={handleDropdown6Change}
@@ -244,7 +248,7 @@ const DesiredCondition = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12}>
           {/* 7 Dropdown */}
           <FormControl fullWidth required error={!!dropdown7Error}>
-            <FormLabel id="dropdown7-label">ご希望の従業員規模を教えてください​</FormLabel>
+            <FormLabel id="dropdown7-label" sx={{marginBottom: '10px'}}>ご希望の従業員規模を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
               value={dropdown7Value}
               onChange={handleDropdown7Change}
@@ -266,10 +270,21 @@ const DesiredCondition = ({ formData, setFormData, handleNext }) => {
 
         </Grid>
 
-        <Grid item xs={12} style={{ margin: '10px auto', display: 'grid' }}>
+        {/* <Grid item xs={12} style={{ margin: '10px auto', display: 'grid' }}>
           <Button type="submit" variant="contained" color="primary">
             完了ページに入る
           </Button>
+        </Grid> */}
+
+        <Grid container>
+          <Grid item xs={12} style={{ margin: '10px auto 100px', display: 'flex', paddingTop:'20px', gap: '10px', justifyContent: 'center'}}>
+            <Button onClick={handleBackClick} variant="outlined">
+              戻る
+            </Button>
+            <Button type="submit" variant="contained" color="primary">
+              完了ページに入る
+            </Button>
+          </Grid>
         </Grid>
       </form>
     </div>

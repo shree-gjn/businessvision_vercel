@@ -10,6 +10,8 @@ import {
   Grid,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 const CheckboxAccordion = ({ title, checkboxes }) => {
   const [expanded, setExpanded] = useState(false);
@@ -20,7 +22,10 @@ const CheckboxAccordion = ({ title, checkboxes }) => {
 
   return (
     <Accordion expanded={expanded} onChange={handleChange}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1bh-content">
+      <AccordionSummary
+        expandIcon={expanded ? <RemoveIcon sx={{fontSize: '20px'}} /> : <AddIcon sx={{fontSize: '20px'}} />}
+        aria-controls="panel1bh-content"
+      >
         <Typography>{title}</Typography>
       </AccordionSummary>
       <AccordionDetails>
@@ -62,7 +67,7 @@ const NestedAccordion = ({ title, innerAccordions }) => {
       <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1bh-content">
         <Typography>{title}</Typography>
       </AccordionSummary>
-      <AccordionDetails>
+      <AccordionDetails style={{padding: '0'}}>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           {innerAccordions.map((innerAccordion, index) => (
             <CheckboxAccordion

@@ -301,7 +301,7 @@ export default function WorkHistory() {
           </Grid>
 
           <Button variant="contained" color='primary' sx={{margin: '10px auto',}}>
-             提出する
+            提出する
           </Button>
         </Grid>
       </Box>

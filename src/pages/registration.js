@@ -55,10 +55,16 @@ const RegistrationStepper = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const backButton = (
+    <Button variant='outlined' disabled={activeStep === 0} onClick={handleBack} sx={{marginBottom:'100px'}}>
+      戻る
+    </Button>
+  );
+
   return (
     <ThemeProvider theme={theme}>
       <Container>
-        <Stepper activeStep={activeStep} alternativeLabel sx={{ marginTop: '10px' }}>
+        <Stepper activeStep={activeStep} alternativeLabel sx={{ marginTop: '20px' }}>
           {steps.map((label) => (
             <Step key={label}>
               <StepLabel>{label}</StepLabel>
@@ -67,26 +73,26 @@ const RegistrationStepper = () => {
         </Stepper>
         <div>
           {activeStep === 0 && (
-            <BasicInfo formData={formData} setFormData={setFormData} handleNext={handleNext} />
+            <BasicInfo formData={formData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} />
           )}
           {activeStep === 1 && (
-            <CurrentInfo formData={formData} setFormData={setFormData} handleNext={handleNext} />
+            <CurrentInfo formData={formData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} />
           )}
           {activeStep === 2 && (
-            <DesiredCondition formData={formData} setFormData={setFormData} handleNext={handleNext} />
+            <DesiredCondition formData={formData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} />
           )}
           {activeStep === 3 && (
-            <Completion formData={formData} setFormData={setFormData} handleNext={handleNext} />
+            <Completion formData={formData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} />
           )}
 
-          <div>
-            <Button disabled={activeStep === 0} onClick={handleBack} sx={{marginBottom:'100px'}}>
+          {/* <div>
+            <Button variant='outlined' disabled={activeStep === 0} onClick={handleBack} sx={{marginBottom:'100px'}}>
               戻る
             </Button>
-            {/* <Button variant="contained" color="primary" onClick={handleNext}>
+            <Button variant="contained" color="primary" onClick={handleNext}>
               {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-            </Button> */}
-          </div>
+            </Button>
+          </div> */}
         </div>
       </Container>
     </ThemeProvider>

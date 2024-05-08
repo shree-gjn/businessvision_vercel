@@ -14,10 +14,12 @@ const Completion = ({ handleNext }) => {
       <h1>完了</h1>
       <h3> マイページが完成しました </h3>
       <p> 専用のページより求人を見たり検索を することができます。 </p>
-      <Grid item xs={12} style={{ margin: '10px auto', display: 'grid'}}>
+      <Grid container>
+      <Grid item xs={4} style={{ margin: '10px auto', display: 'grid'}}>
         <Button type="submit" variant="contained" color="primary" onClick={handleButtonClick}>
         マイページへ
         </Button>
+      </Grid>
       </Grid>
     </div>
   );

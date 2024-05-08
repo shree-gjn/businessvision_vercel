@@ -1,15 +1,15 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect} from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import Typography from '@mui/material/Typography';
 import { ReactComponent as BackButton } from '../assets/BackButton.svg';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation} from 'react-router-dom';
 import { ReactComponent as AuthenticationCode } from '../assets/AuthenticationCode.svg';
 import { ReactComponent as Key } from '../assets/Key.svg';
 import { TextField } from '@mui/material';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
-
+ 
 const theme = createTheme({
   palette: {
     primary: {
@@ -26,7 +26,7 @@ const theme = createTheme({
     },
   },
 });
-
+ 
 const BackLink = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
   color: '#16375A',
@@ -35,13 +35,13 @@ const BackLink = styled(Link)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: '5px',
-  paddingLeft:'15px', 
+  paddingLeft:'15px',
   position: 'absolute',
   top: '50%',
   transform: 'translateY(-50%)'
 }));
-
-const ConfirmationModal = ({ open, onClose }) => {
+ 
+const ConfirmationModal = ({ open, onClose, message}) => {
   return (
     <Dialog open={open} onClose={onClose}>
       <Box
@@ -56,7 +56,7 @@ const ConfirmationModal = ({ open, onClose }) => {
       >
         <Key sx={{ fontSize: '48px' }} />
         <Typography variant="body1" sx={{ marginY: '20px' }}>
-        新しいコードがご登録のメールアドレス に再送信されました
+         {message}
         </Typography>
         <Button variant="contained" color="primary" onClick={onClose}>
             近い
@@ -65,75 +65,117 @@ const ConfirmationModal = ({ open, onClose }) => {
     </Dialog>
   );
 };
-
+ 
 const RegistrationAuth = () => {
   const navigate = useNavigate(); // Get the history object from react-router-dom
-
+  const location = useLocation();
+  const [email, setEmail] = useState('');
+ 
+  useEffect(() => {
+    // Extract email address from URL state
+    if (location.state && location.state.email) {
+      setEmail(location.state.email);
+    }
+  }, [location.state]);
+ 
   const goBack = () => {
     navigate(-1); // Navigate to the previous page
   };
-
+ 
   const [otpDigits, setOtpDigits] = useState(['', '', '', '']);
   const refs = [useRef(), useRef(), useRef(), useRef()]; // Create refs for each TextField
-
+ 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [modalMessage, setModalMessage] = useState('');
+ 
+ 
   const handleOtpChange = (index, event) => {
     const inputValue = event.target.value.replace(/\D/g, ''); // Allow only digits
     const updatedOtpDigits = [...otpDigits];
     updatedOtpDigits[index] = inputValue.slice(0, 1); // Restrict to 1 character
     setOtpDigits(updatedOtpDigits);
-
+ 
     // Move focus to the next block automatically
     if (inputValue !== '' && index < refs.length - 1) {
       refs[index + 1].current.focus();
     }
   };
-
+ 
   const handleConfirmClick = () => {
     // Open the confirmation modal
     setIsModalOpen(true);
   };
-
-  const handleConfirmRegistration = () => {
+ 
+  // const handleConfirmRegistration = () => {
+  //   const isCodeEntered = otpDigits.every((digit) => digit !== '');
+  //     if (isCodeEntered) {
+  //       // Navigate only if the authentication code block is entered and validated
+  //       navigate('/registration');
+  //     } else {
+  //       // Show an alert or any other feedback indicating that the code is not complete
+  //       alert('Please enter the complete authentication code.');
+  //     }
+  //   }
+ 
+  const handleConfirmRegistration = async () => {
     const isCodeEntered = otpDigits.every((digit) => digit !== '');
-      if (isCodeEntered) {
-        // Navigate only if the authentication code block is entered and validated
-        navigate('/registration');
-      } else {
-        // Show an alert or any other feedback indicating that the code is not complete
-        alert('Please enter the complete authentication code.');
-      }
+    if (!email) {
+      console.error('Email address not found in URL');
+      return;
     }
-
+  
+    if (isCodeEntered) {
+      try {
+        const formData = new FormData();
+        formData.append('email_address', email);
+        formData.append('login_code', otpDigits.join(''));
+  
+        const response = await fetch('https://bvhr-api.azurewebsites.net/candidate/verification', {
+          method: 'POST',
+          body: formData,
+        });
+  
+        if (response.status === 204) {
+          setModalMessage('Authentication code verification failed.');
+          setIsModalOpen(true);
+        } else if (response.ok) {
+          navigate('/registration');
+        } else {
+          setModalMessage('Error verifying authentication code. Please try again.');
+          setIsModalOpen(true);
+        }
+      } catch (error) {
+        console.error('Error verifying authentication code:', error);
+        setModalMessage('Error verifying authentication code. Please try again.');
+        setIsModalOpen(true);
+      }
+    } else {
+      setModalMessage('Please enter the complete authentication code.');
+      setIsModalOpen(true);
+    }
+  };
+ 
   const handleCloseModal = () => {
     // Close the confirmation modal
     setIsModalOpen(false);
   };
-
+ 
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ width: '100%', typography: 'body1'}}>
-        {/* <div className="PageHeader" style={{ marginBottom: '25px', textAlign: 'center' }}>
-          <Box sx={{ display: 'grid', gridTemplateColumns: '30% 40% 30%' }}>
-            <BackLink to="#" sx={{ width: '70%' }} onClick={goBack}>
-              {' '}
-              <BackButton /> 戻る{' '}
-            </BackLink>
-            <p style={{ textAlign: 'center' }}>認証コード</p>
-            <p> </p>
-          </Box>
-        </div> */}
         <div className="PageHeader" style={{marginBottom: '30px'}}>
           <BackLink to="#" onClick={goBack} > <BackButton /> 戻る </BackLink>
           <p>求人情報</p>
         </div>
         <AuthenticationCode />
-        <div style={{ textAlign: 'center', padding: '20px' }}>
-          <Typography variant="paragraph" gutterBottom sx={{ marginTop: '5px', color: 'red' }}>
-          新しいコードがご登録のメールアドレス に再送信されました
+        <div style={{ textAlign: 'left', padding: '20px' }}>
+          <Typography gutterBottom sx={{ marginTop: '5px', color: 'red' }}>
+          ⚠会員登録はまだ完了していません。​認証コードを入力してください。
+          </Typography>
+          <Typography variant="paragraph" gutterBottom sx={{ marginTop: '20px', display: 'block'}}>
+          入力いただいたメールアドレスに、認証コードを送信しました。​<br />
+          メールに記載されている認証コードを入力して次へ進んでください。
           </Typography>{' '}
-          <br />
         </div>
         <div style={{ textAlign: 'center', padding: '20px', display: 'flex', justifyContent: 'center' }}>
           {/* Authentication Code Blocks */}
@@ -150,7 +192,7 @@ const RegistrationAuth = () => {
           ))}
         </div>
         <div>
-          <Typography variant="paragraph" sx={{ color: '#085D95', fontWeight: '500', textAlign: 'center' }} onClick={handleConfirmClick}> 
+          <Typography variant="paragraph" sx={{ color: '#085D95', fontWeight: '500', textAlign: 'center' }} onClick={handleConfirmClick}>
             メールリンクより確認後
           </Typography>
           <br />
@@ -164,12 +206,13 @@ const RegistrationAuth = () => {
             確認
           </Button>
         </div>
-
+ 
         {/* Confirmation Modal */}
-        <ConfirmationModal open={isModalOpen} onClose={handleCloseModal} />
+        <ConfirmationModal open={isModalOpen} onClose={handleCloseModal} message={modalMessage} />
+       
       </Box>
     </ThemeProvider>
   );
 };
-
+ 
 export default RegistrationAuth;

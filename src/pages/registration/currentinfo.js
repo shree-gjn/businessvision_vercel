@@ -14,7 +14,7 @@ import {
   MenuItem,
 } from '@mui/material';
 
-const CurrentInfo = ({ formData, setFormData, handleNext }) => {
+const CurrentInfo = ({ formData, setFormData, handleNext, handleBack}) => {
   const [selectedOption, setSelectedOption] = useState('');
   const [selectedOptionError, setSelectedOptionError] = useState('');
   const [secondDropdownValue, setSecondDropdownValue] = useState('');
@@ -79,6 +79,10 @@ const CurrentInfo = ({ formData, setFormData, handleNext }) => {
 
   };
 
+  const handleBackClick = () => {
+    handleBack(); // Call handleBack function passed as prop
+  };
+
   return (
     <div>
       <h1>現職（直近）情報</h1>
@@ -86,7 +90,7 @@ const CurrentInfo = ({ formData, setFormData, handleNext }) => {
         <Grid container spacing={2} sx={{ textAlign: 'left', marginTop: '10px' }}>
         <Grid item xs={12}>
           <FormControl fullWidth required error={!!selectedOptionError}>
-            <FormLabel id="demo-radio-buttons-group-label">現在（直近）の在籍会社での役職を教えてください </FormLabel>
+            <FormLabel id="demo-radio-buttons-group-label" sx={{marginBottom: '10px'}}>現在（直近）の在籍会社での役職を教えてください<span className='required_label'>必須</span></FormLabel>
             <Select
               value={selectedOption}
               onChange={handleSelectChange}
@@ -110,7 +114,7 @@ const CurrentInfo = ({ formData, setFormData, handleNext }) => {
 
         <Grid item xs={12}>
           <FormControl fullWidth required error={!!secondDropdownError}>
-            <FormLabel id="second-dropdown-label">現在（直近）の在籍会社での経験職種を教えてください </FormLabel>
+            <FormLabel id="second-dropdown-label" sx={{marginBottom: '10px'}}>現在（直近）の在籍会社での経験職種を教えてください<span className='required_label'>必須</span></FormLabel>
             <Select
               value={secondDropdownValue}
               onChange={handleSecondDropdownChange}
@@ -140,7 +144,7 @@ const CurrentInfo = ({ formData, setFormData, handleNext }) => {
 
         <Grid item xs={12}>
           <FormControl fullWidth required error={!!thirdDropdownError}>
-            <FormLabel id="third-dropdown-label">現在（直近）の在籍会社の業種を教えてください</FormLabel>
+            <FormLabel id="third-dropdown-label" sx={{marginBottom: '10px'}}>現在（直近）の在籍会社の業種を教えてください<span className='required_label'>必須</span></FormLabel>
             <Select
               value={thirdDropdownValue}
               onChange={handleThirdDropdownChange}
@@ -166,7 +170,7 @@ const CurrentInfo = ({ formData, setFormData, handleNext }) => {
         </Grid>
         <Grid item xs={12}>
           <FormControl component="fieldset" required error={!!newRadioError}>
-            <FormLabel component="legend">マネジメント経験を教えてください</FormLabel>
+            <FormLabel component="legend">マネジメント経験を教えてください<span className='required_label'>必須</span></FormLabel>
             <RadioGroup
               row
               aria-label="newRadio"
@@ -183,7 +187,7 @@ const CurrentInfo = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12}>
           {/* Fourth Dropdown */}
           <FormControl fullWidth required error={!!dropdown4Error}>
-            <FormLabel id="dropdown4-label">経理での経験業務を選択してください​</FormLabel>
+            <FormLabel id="dropdown4-label" sx={{marginBottom: '10px'}}>経理での経験業務を選択してください<span className='required_label'>必須</span>​</FormLabel>
             <Select
               value={dropdown4Value}
               onChange={handleDropdown4Change}
@@ -275,8 +279,8 @@ const CurrentInfo = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12}>
           {/* Fifth Dropdown */}
           <FormControl fullWidth required error={!!dropdown5Error}>
-            <FormLabel id="dropdown5-label">今まで在籍したことのある会社の
-カテゴリを教えてください</FormLabel>
+            <FormLabel id="dropdown5-label" sx={{marginBottom: '10px'}}>今まで在籍したことのある会社の
+カテゴリを教えてください<span className='required_label'>必須</span></FormLabel>
             <Select
               value={dropdown5Value}
               onChange={handleDropdown5Change}
@@ -300,7 +304,7 @@ const CurrentInfo = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12}>
           {/* Sixth Dropdown */}
           <FormControl fullWidth required error={!!dropdown6Error}>
-            <FormLabel id="dropdown6-label">保有資格を教えてください</FormLabel>
+            <FormLabel id="dropdown6-label" sx={{marginBottom: '10px'}}>保有資格を教えてください</FormLabel>
             <Select
               value={dropdown6Value}
               onChange={handleDropdown6Change}
@@ -324,7 +328,7 @@ const CurrentInfo = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12}>
           {/* Seven Dropdown */}
           <FormControl fullWidth required error={!!dropdown7Error}>
-            <FormLabel id="dropdown7-label">使用可能会計ソフトを教えてください​</FormLabel>
+            <FormLabel id="dropdown7-label" sx={{marginBottom: '10px'}}>使用可能会計ソフトを教えてください​</FormLabel>
             <Select
               value={dropdown7Value}
               onChange={handleDropdown7Change}
@@ -352,10 +356,28 @@ const CurrentInfo = ({ formData, setFormData, handleNext }) => {
           </FormControl>
         </Grid>
         </Grid>
-        <Grid item xs={12} style={{ margin: '10px auto', display: 'grid', paddingTop:'20px' }}>
-          <Button type="submit" variant="contained" color="primary">
-          希望条件の入力へ
-          </Button>
+        {/* <Grid container>
+          <Grid item xs={6} style={{ margin: '10px auto', display: 'grid', paddingTop:'20px' }}>
+
+            <Button onClick={handleBackClick} variant="outlined">
+              戻る
+            </Button>
+          </Grid>
+          <Grid item xs={6} style={{ margin: '10px auto', display: 'grid', paddingTop:'20px' }}>
+            <Button type="submit" variant="contained" color="primary">
+            希望条件の入力へ
+            </Button>
+          </Grid>
+        </Grid> */}
+        <Grid container>
+          <Grid item xs={12} style={{ margin: '10px auto 100px', display: 'flex', paddingTop:'20px', gap: '10px', justifyContent: 'center'}}>
+            <Button onClick={handleBackClick} variant="outlined">
+              戻る
+            </Button>
+            <Button type="submit" variant="contained" color="primary">
+            希望条件の入力へ
+            </Button>
+          </Grid>
         </Grid>
       </form>
     </div>

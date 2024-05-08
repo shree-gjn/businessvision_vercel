@@ -22,6 +22,179 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AccordianBasicInfo from './components/AccordianBasicInfo';
 import CustomDatePicker from './components/DatePicker';
 import Paper from '@mui/material/Paper';
+import { boxSizing } from '@mui/system';
+
+const prefecture = [
+  { value: '', label: 'オプションを選んでください', disabled: true },
+  { value: '北海道', label: '北海道' },
+  { value: '青森県', label: '青森県' },
+  { value: '岩手県', label: '岩手県' },
+  { value: '宮城県', label: '宮城県' },
+  { value: '秋田県', label: '秋田県' },
+  { value: '山形県', label: '山形県' },
+  { value: '茨城県', label: '茨城県' },
+  { value: '栃木県', label: '栃木県' },
+  { value: '群馬県', label: '群馬県' },
+  { value: '埼玉県', label: '埼玉県' },
+  { value: '千葉県', label: '千葉県' },
+  { value: '東京都', label: '東京都' },
+  { value: '神奈川県', label: '神奈川県' },
+  { value: '新潟県', label: '新潟県' },
+  { value: '富山県', label: '富山県' },
+  { value: '石川県', label: '石川県' },
+  { value: '福井県', label: '福井県' },
+  { value: '山梨県', label: '山梨県' },
+  { value: '長野県', label: '長野県' },
+  { value: '岐阜県', label: '岐阜県' },
+  { value: '静岡県', label: '静岡県' },
+  { value: '愛知県', label: '愛知県' },
+  { value: '三重県', label: '三重県' },
+  { value: '滋賀県', label: '滋賀県' },
+  { value: '京都府', label: '京都府' },
+  { value: '大阪府', label: '大阪府' },
+  { value: '兵庫県', label: '兵庫県' },
+  { value: '奈良県', label: '奈良県' },
+  { value: '和歌山県', label: '和歌山県' },
+  { value: '鳥取県', label: '鳥取県' },
+  { value: '島根県', label: '島根県' },
+  { value: '岡山県', label: '岡山県' },
+  { value: '広島県', label: '広島県' },
+  { value: '山口県', label: '山口県' },
+  { value: '徳島県', label: '徳島県' },
+  { value: '香川県', label: '香川県' },
+  { value: '愛媛県', label: '愛媛県' },
+  { value: '高知県', label: '高知県' },
+  { value: '福岡県', label: '福岡県' },
+  { value: '佐賀県', label: '佐賀県' },
+  { value: '長崎県', label: '長崎県' },
+  { value: '熊本県', label: '熊本県' },
+  { value: '大分県', label: '大分県' },
+  { value: '宮崎県', label: '宮崎県' },
+  { value: '鹿児島県', label: '鹿児島県' },
+  { value: '沖縄県', label: '沖縄県' },
+  { value: '海外', label: '海外' }
+];
+
+const FinalEducation = [
+  { value: '', label: 'オプションを選んでください', disabled: true },
+  { value: '大学卒', label: '大学卒' },
+  { value: '大学院卒', label: '大学院卒' },
+  { value: '短大卒', label: '短大卒' },
+  { value: '高専卒', label: '高専卒' },
+  { value: '高校卒', label: '高校卒' },
+  { value: '専門学校卒', label: '専門学校卒' },
+];
+
+const JobChange = [
+  { value: '', label: 'オプションを選んでください', disabled: true },
+  { value: '1回', label: '1回' },
+  { value: '2回', label: '2回' },
+  { value: '3回', label: '3回' },
+  { value: '4回', label: '4回' },
+  { value: '5回', label: '5回' },
+  { value: '６回以上', label: '６回以上' },
+];
+
+const JobchangePeriod = [
+  { value: '', label: 'オプションを選んでください', disabled: true },
+  { value: '3カ月以内', label: '3カ月以内' },
+  { value: '6ヶ月以内', label: '6ヶ月以内' },
+  { value: '1年以内', label: '1年以内' },
+  { value: '今は考えていない', label: '今は考えていない' },
+];
+
+const WorkExperience = [
+  { value: '', label: 'オプションを選んでください', disabled: true },
+  { value: '経営・経営企画・事業企画系', label: '経営・経営企画・事業企画系' },
+  { value: '管理部門系', label: '管理部門系' },
+  { value: 'SCM・ロジスティクス・物流・購買・貿易系', label: 'SCM・ロジスティクス・物流・購買・貿易系' },
+  { value: '営業系', label: '営業系' },
+  { value: 'マーケティング・販促企画・商品開発系', label: 'マーケティング・販促企画・商品開発系' },
+  { value: 'コンサルタント系', label: 'コンサルタント系' },
+  { value: '金融系専門職', label: '金融系専門職' },
+  { value: '不動産系専門職', label: '不動産系専門職' },
+  { value: '技術系（IT・Web・通信系）', label: '技術系（IT・Web・通信系）' },
+  { value: '技術系（電気・電子・半導体）', label: '技術系（電気・電子・半導体）' },
+  { value: '技術系（機械・メカトロ・自動車）', label: '技術系（機械・メカトロ・自動車）' },
+  { value: '技術系（化学・素材・食品・衣料）', label: '技術系（化学・素材・食品・衣料）' },
+  { value: '技術系（建築・設備・土木・プラント）', label: '技術系（建築・設備・土木・プラント）' },
+  { value: '技術・専門職系（メディカル）', label: '技術・専門職系（メディカル）' },
+  { value: 'サービス・流通系', label: 'サービス・流通系' },
+  { value: 'クリエイティブ系', label: 'クリエイティブ系' }
+];
+
+const ExperienceinAccounting = [
+  { value: '', label: 'オプションを選んでください', disabled: true },
+  { value: '経験あり', label: '経験あり' },
+  { value: '1年以上', label: '1年以上' },
+  { value: '2年以上', label: '2年以上' },
+  { value: '3年以上', label: '3年以上' },
+  { value: '4年以上', label: '4年以上' },
+  { value: '5年以上', label: '5年以上' },
+  { value: '6年以上', label: '6年以上' },
+  { value: '7年以上', label: '7年以上' },
+  { value: '8年以上', label: '8年以上' },
+  { value: '9年以上', label: '9年以上' },
+  { value: '10年以上', label: '10年以上' },
+  { value: '11年以上', label: '11年以上' },
+  { value: '12年以上', label: '12年以上' },
+  { value: '13年以上', label: '13年以上' },
+  { value: '14年以上', label: '14年以上' },
+  { value: '15年以上', label: '15年以上' },
+  { value: '16年以上', label: '16年以上' },
+  { value: '17年以上', label: '17年以上' },
+  { value: '18年以上', label: '18年以上' },
+  { value: '19年以上', label: '19年以上' },
+  { value: '20年以上', label: '20年以上' },
+];
+
+const EnglishLevel = [
+  { value: '', label: '選択してください', disabled: true },
+  { value: 'ネイティブレベル', label: 'ネイティブレベル' },
+  { value: 'ビジネスレベル', label: 'ビジネスレベル' },
+  { value: '日常会話レベル', label: '日常会話レベル' },
+  { value: '基礎会話レベル', label: '基礎会話レベル' },
+  { value: 'なし', label: 'なし' }
+];
+
+const AddLanguageLevel = [
+  { value: '', label: '選択してください', disabled: true },
+  { value: 'ネイティブレベル', label: 'ネイティブレベル' },
+  { value: 'ビジネスレベル', label: 'ビジネスレベル' },
+  { value: '日常会話レベル', label: '日常会話レベル' },
+  { value: '基礎会話レベル', label: '基礎会話レベル' },
+  { value: 'なし', label: 'なし' }
+];
+
+const AddLanguage = [
+  { value: '', label: '選択してください', disabled: true },
+  { value: '北京語', label: '北京語' },
+  { value: '韓国語', label: '韓国語' },
+  { value: 'アラビア語', label: 'アラビア語' },
+  { value: '広東語', label: '広東語' },
+  { value: 'スペイン語', label: 'スペイン語' },
+  { value: 'フィンランド語', label: 'フィンランド語' },
+  { value: 'スウェーデン語', label: 'スウェーデン語' },
+  { value: 'スペイン語', label: 'スペイン語' },
+  { value: '台湾語', label: '台湾語' },
+  { value: 'フランス語', label: 'フランス語' },
+  { value: 'ドイツ語', label: 'ドイツ語' },
+  { value: 'ヘブライ語', label: 'ヘブライ語' },
+  { value: 'ヒンディー語', label: 'ヒンディー語' },
+  { value: 'インドネシア語', label: 'インドネシア語' },
+  { value: 'イタリア語', label: 'イタリア語' },
+  { value: 'マレーシア語', label: 'マレーシア語' },
+  { value: 'オランダ語', label: 'オランダ語' },
+  { value: 'ノルウェー語', label: 'ノルウェー語' },
+  { value: 'ポルトガル語', label: 'ポルトガル語' },
+  { value: 'ロシア語', label: 'ロシア語' },
+  { value: 'スワヒリ語', label: 'スワヒリ語' },
+  { value: 'タイ語', label: 'タイ語' },
+  { value: 'カダログ語', label: 'カダログ語' },
+  { value: 'ベトナム語', label: 'ベトナム語' },
+];
+
+
 
 const BasicInfo = ({ formData, setFormData, handleNext }) => {
   const [name, setName] = useState('');
@@ -87,18 +260,33 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
   };
 
   const handleSelectChange = (event) => {
-    setSelectedOption(event.target.value);
-    setSelectedOptionError('');
+    const value = event.target.value;
+    setSelectedOption(value);
+    if (value === '') {
+      setSelectedOptionError('必須項目です');
+    } else {
+      setSelectedOptionError('');
+    }
   };
 
   const handleSecondDropdownChange = (event) => {
-    setSecondDropdownValue(event.target.value);
-    setSecondDropdownError('');
+    const value = event.target.value;
+    setSecondDropdownValue(value);
+    if (value === '') {
+      setSecondDropdownError('必須項目です');
+    } else {
+      setSecondDropdownError('');
+    }
   };
 
   const handleThirdDropdownChange = (event) => {
-    setThirdDropdownValue(event.target.value);
-    setThirdDropdownError('');
+    const value = event.target.value;
+    setThirdDropdownValue(value);
+    if (value === '') {
+      setThirdDropdownError('必須項目です');
+    } else {
+      setThirdDropdownError('');
+    }
   };
 
   const handleNewRadioChange = (event) => {
@@ -112,18 +300,33 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
   };
 
   const handleDropdown4Change = (event) => {
-    setDropdown4Value(event.target.value);
-    setDropdown4Error('');
+    const value = event.target.value;
+    setDropdown4Value(value);
+    if (value === '') {
+      setDropdown4Error('必須項目です');
+    } else {
+      setDropdown4Error('');
+    }
   };
 
   const handleDropdown5Change = (event) => {
-    setDropdown5Value(event.target.value);
-    setDropdown5Error('');
+    const value = event.target.value;
+    setDropdown5Value(value);
+    if (value === '') {
+      setDropdown5Error('必須項目です');
+    } else {
+      setDropdown5Error('');
+    }
   };
 
   const handleDropdown6Change = (event) => {
-    setDropdown6Value(event.target.value);
-    setDropdown6Error('');
+    const value = event.target.value;
+    setDropdown6Value(value);
+    if (value === '') {
+      setDropdown6Error('必須項目です');
+    } else {
+      setDropdown6Error('');
+    }
   };
 
   const handleDropdown7Change = (event) => {
@@ -132,8 +335,13 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
   };
 
   const handleDropdown8Change = (event) => {
-    setDropdown8Value(event.target.value);
-    setDropdown8Error('');
+    const value = event.target.value;
+    setDropdown8Value(value);
+    if (value === '') {
+      setDropdown8Error('必須項目です');
+    } else {
+      setDropdown8Error('');
+    }
   };
 
   const handleDropdown9Change = (event) => {
@@ -157,13 +365,13 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
     setSelectedValue(event.target.value);
   };
 
-  const menuItems = [
-    'ネイティブレベル',
-    'ビジネスレベル',
-    '日常会話レベル',
-    '基礎会話レベル',
-    'なし',
-  ];
+  // const menuItems = [
+  //   'ネイティブレベル',
+  //   'ビジネスレベル',
+  //   '日常会話レベル',
+  //   '基礎会話レベル',
+  //   'なし',
+  // ];
 
   const generateValues = (start, end, step) => {
     const values = [];
@@ -255,7 +463,12 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
 
   return (
     <div>
-      <h1>基本情報</h1>
+      <Grid container>
+        <Grid item xs={12}>
+          {/* <span>1</span> */}
+          <h1>基本情報</h1>
+        </Grid>
+      </Grid>
       {/* <Grid container spacing={1} style={{marginTop: '30px', display: 'flex', gap: '10px', alignItems: 'center', fontWeight: '600', color: '#16375A'}}>
         <div style={{width: '25px', height: '25px', background: '#16375A', color: '#fff', border: '2px solid #fff', borderRadius: '50%'}}>1</div>
         <div style={{textAlign: 'left'}}>基本情報</div>
@@ -264,7 +477,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
         <Grid container spacing={2} sx={{ textAlign: 'left', marginTop: '10px' }}>
           <Grid item xs={12}>
           <FormControl component="fieldset" required error={!!genderError}>
-            <FormLabel component="legend">性別を教えてください</FormLabel>
+            <FormLabel component="legend">性別を教えてください<span className='required_label'>必須</span></FormLabel>
             <RadioGroup
               row
               aria-label="gender"
@@ -281,70 +494,25 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12} sx={{padding:'2px'}}>
           {/* Date Picker */}
           <FormControl fullWidth required error={!!dropdown7Error}>
-            <FormLabel id="dropdown7-label">生まれた年を教えてください​</FormLabel>
-            <CustomDatePicker required={false} />
+            <FormLabel id="dropdown7-label" sx={{marginBottom: '10px'}}>生まれた年を教えてください<span className='required_label'>必須</span>​</FormLabel>
+            <CustomDatePicker required={false} style={{padding: '0 10px'}} />
             <FormHelperText style={{ color: 'red' }}>{dropdown7Error}</FormHelperText>
           </FormControl>
           
         </Grid>
         <Grid item xs={12}>
           <FormControl fullWidth required error={!!selectedOptionError}>
-            <FormLabel id="demo-radio-buttons-group-label">お住まいの都道府県を教えてください​</FormLabel>
+            <FormLabel id="demo-radio-buttons-group-label" sx={{marginBottom: '10px'}}>お住まいの都道府県を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
               value={selectedOption}
               onChange={handleSelectChange}
               displayEmpty
             >
-              <MenuItem value="" disabled>
-              オプションを選んでください
-              </MenuItem>
-              <MenuItem value="北海道">北海道</MenuItem>
-              <MenuItem value="青森県">青森県</MenuItem>
-              <MenuItem value="岩手県​">岩手県​</MenuItem>
-              <MenuItem value="宮城県">宮城県</MenuItem>
-              <MenuItem value="秋田県">秋田県</MenuItem>
-              <MenuItem value="山形県">山形県</MenuItem>
-              <MenuItem value="茨城県">茨城県</MenuItem>
-              <MenuItem value="栃木県">栃木県</MenuItem>
-              <MenuItem value="群馬県">群馬県</MenuItem>
-              <MenuItem value="埼玉県">埼玉県</MenuItem>
-              <MenuItem value="千葉県">千葉県</MenuItem>
-              <MenuItem value="東京都">東京都</MenuItem>
-              <MenuItem value="神奈川県">神奈川県</MenuItem>
-              <MenuItem value="新潟県">新潟県</MenuItem>
-              <MenuItem value="富山県">富山県</MenuItem>
-              <MenuItem value="石川県">石川県</MenuItem>
-              <MenuItem value="福井県">福井県</MenuItem>
-              <MenuItem value="山梨県">山梨県</MenuItem>
-              <MenuItem value="長野県">長野県</MenuItem>
-              <MenuItem value="岐阜県">岐阜県</MenuItem>
-              <MenuItem value="静岡県">静岡県</MenuItem>
-              <MenuItem value="愛知県">愛知県</MenuItem>
-              <MenuItem value="三重県">三重県</MenuItem>
-              <MenuItem value="滋賀県">滋賀県</MenuItem>
-              <MenuItem value="京都府">京都府</MenuItem>
-              <MenuItem value="大阪府">大阪府</MenuItem>
-              <MenuItem value="兵庫県">兵庫県</MenuItem>
-              <MenuItem value="奈良県">奈良県</MenuItem>
-              <MenuItem value="和歌山県">和歌山県</MenuItem>
-              <MenuItem value="鳥取県">鳥取県</MenuItem>
-              <MenuItem value="島根県">島根県</MenuItem>
-              <MenuItem value="岡山県">岡山県</MenuItem>
-              <MenuItem value="広島県">広島県</MenuItem>
-              <MenuItem value="山口県">山口県</MenuItem>
-              <MenuItem value="徳島県">徳島県</MenuItem>
-              <MenuItem value="香川県">香川県</MenuItem>
-              <MenuItem value="愛媛県">愛媛県</MenuItem>
-              <MenuItem value="高知県">高知県</MenuItem>
-              <MenuItem value="福岡県">福岡県</MenuItem>
-              <MenuItem value="佐賀県">佐賀県</MenuItem>
-              <MenuItem value="長崎県">長崎県</MenuItem>
-              <MenuItem value="熊本県">熊本県</MenuItem>
-              <MenuItem value="大分県">大分県</MenuItem>
-              <MenuItem value="宮崎県">宮崎県</MenuItem>
-              <MenuItem value="鹿児島県">鹿児島県</MenuItem>
-              <MenuItem value="沖縄県">沖縄県</MenuItem>
-              <MenuItem value="海外">海外</MenuItem>
+              {prefecture.map((option, index) => (
+                <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                  {option.label}
+                </MenuItem>
+              ))}
             </Select>
             <FormHelperText style={{ color: 'red' }}>{selectedOptionError}</FormHelperText>
           </FormControl>
@@ -352,21 +520,16 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
 
         <Grid item xs={12}>
           <FormControl fullWidth required error={!!secondDropdownError}>
-            <FormLabel id="second-dropdown-label">最終学歴を教えてください​</FormLabel>
+            <FormLabel id="second-dropdown-label" sx={{marginBottom: '10px'}}>最終学歴を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
               value={secondDropdownValue}
               onChange={handleSecondDropdownChange}
-              displayEmpty
-            >
-              <MenuItem value="" disabled>
-              オプションを選んでください
-              </MenuItem>
-              <MenuItem value="大学卒">大学卒</MenuItem>
-              <MenuItem value="大学院卒">大学院卒</MenuItem>
-              <MenuItem value="短大卒">短大卒</MenuItem>
-              <MenuItem value="高専卒">高専卒</MenuItem>
-              <MenuItem value="高校卒">高校卒</MenuItem>
-              <MenuItem value="専門学校卒">専門学校卒</MenuItem>
+              displayEmpty>
+              {FinalEducation.map((option, index) => (
+                <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                  {option.label}
+                </MenuItem>
+              ))}
             </Select>
             <FormHelperText style={{ color: 'red' }}>{secondDropdownError}</FormHelperText>
           </FormControl>
@@ -374,28 +537,24 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
 
         <Grid item xs={12}>
           <FormControl fullWidth required error={!!thirdDropdownError}>
-            <FormLabel id="third-dropdown-label">転職回数を教えてください</FormLabel>
+            <FormLabel id="third-dropdown-label" sx={{marginBottom: '10px'}}>転職回数を教えてください<span className='required_label'>必須</span></FormLabel>
             <Select
               value={thirdDropdownValue}
               onChange={handleThirdDropdownChange}
               displayEmpty
-            >
-              <MenuItem value="" disabled>
-              オプションを選んでください
-              </MenuItem>
-              <MenuItem value="1回">1回</MenuItem>
-              <MenuItem value="2回">2回</MenuItem>
-              <MenuItem value="3回">3回</MenuItem>
-              <MenuItem value="4回">4回</MenuItem>
-              <MenuItem value="5回">5回</MenuItem>
-              <MenuItem value="６回以上">６回以上</MenuItem>
+            > 
+             {JobChange.map((option, index) => (
+                <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                  {option.label}
+                </MenuItem>
+              ))}
             </Select>
             <FormHelperText style={{ color: 'red' }}>{thirdDropdownError}</FormHelperText>
           </FormControl>
         </Grid>
         <Grid item xs={12}>
           <FormControl component="fieldset" required error={!!newRadioError}>
-            <FormLabel component="legend">現在の就業状況を教えてください</FormLabel>
+            <FormLabel component="legend" sx={{marginBottom: '10px'}}>現在の就業状況を教えてください<span className='required_label'>必須</span></FormLabel>
             <RadioGroup
               row
               aria-label="newRadio"
@@ -412,19 +571,17 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12}>
           {/* Fourth Dropdown */}
           <FormControl fullWidth required error={!!dropdown4Error}>
-            <FormLabel id="dropdown4-label">転職希望時期を教えてください</FormLabel>
+            <FormLabel id="dropdown4-label" sx={{marginBottom: '10px'}}>転職希望時期を教えてください<span className='required_label'>必須</span></FormLabel>
             <Select
               value={dropdown4Value}
               onChange={handleDropdown4Change}
               displayEmpty
-            >
-              <MenuItem value="" disabled>
-              オプションを選んでください
-              </MenuItem>
-              <MenuItem value="3カ月以内">3カ月以内</MenuItem>
-              <MenuItem value="6ヶ月以内">6ヶ月以内</MenuItem>
-              <MenuItem value="1年以内">1年以内</MenuItem>
-              <MenuItem value="今は考えていない">今は考えていない</MenuItem>
+            > 
+              {JobchangePeriod.map((option, index) => (
+                <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                  {option.label}
+                </MenuItem>
+              ))}
             </Select>
             <FormHelperText style={{ color: 'red' }}>{dropdown4Error}</FormHelperText>
           </FormControl>
@@ -433,7 +590,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12}>
       {/* Fifth Dropdown */}
       <FormControl fullWidth required error={!!dropdown5Error}>
-        <FormLabel id="dropdown5-label">現在年収を教えてください</FormLabel>
+        <FormLabel id="dropdown5-label" sx={{marginBottom: '10px'}}>現在年収を教えてください<span className='required_label'>必須</span></FormLabel>
         <Select
           value={dropdown5Value}
           onChange={handleDropdown5Change}
@@ -461,31 +618,17 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12}>
           {/* Sixth Dropdown */}
           <FormControl fullWidth required error={!!dropdown6Error}>
-            <FormLabel id="dropdown6-label">経験した職種を教えてください（複数選択可）</FormLabel>
+            <FormLabel id="dropdown6-label" sx={{marginBottom: '10px'}}>経験した職種を教えてください <br />（複数選択可）<span className='required_label'>必須</span></FormLabel>
             <Select
               value={dropdown6Value}
               onChange={handleDropdown6Change}
               displayEmpty
-            >
-              <MenuItem value="" disabled>
-              オプションを選んでください
-              </MenuItem>
-              <MenuItem value="経営・経営企画・事業企画系">経営・経営企画・事業企画系</MenuItem>
-              <MenuItem value="管理部門系">管理部門系</MenuItem>
-              <MenuItem value="SCM・ロジスティクス・物流・購買・貿易系">SCM・ロジスティクス・物流・購買・貿易系</MenuItem>
-              <MenuItem value="営業系">営業系</MenuItem>
-              <MenuItem value="マーケティング・販促企画・商品開発系">マーケティング・販促企画・商品開発系</MenuItem>
-              <MenuItem value="コンサルタント系">コンサルタント系</MenuItem>
-              <MenuItem value="金融系専門職">金融系専門職</MenuItem>
-              <MenuItem value="不動産系専門職">不動産系専門職</MenuItem>
-              <MenuItem value="技術系（IT・Web・通信系）">技術系（IT・Web・通信系）</MenuItem>
-              <MenuItem value="技術系（電気・電子・半導体）">技術系（電気・電子・半導体）</MenuItem>
-              <MenuItem value="技術系（機械・メカトロ・自動車）">技術系（機械・メカトロ・自動車）</MenuItem>
-              <MenuItem value="技術系（化学・素材・食品・衣料）">技術系（化学・素材・食品・衣料）</MenuItem>
-              <MenuItem value="技術系（建築・設備・土木・プラント）">技術系（建築・設備・土木・プラント）</MenuItem>
-              <MenuItem value="技術・専門職系（メディカル）">技術・専門職系（メディカル）</MenuItem>
-              <MenuItem value="サービス・流通系">サービス・流通系</MenuItem>
-              <MenuItem value="クリエイティブ系">クリエイティブ系</MenuItem>
+            > 
+              {WorkExperience.map((option, index) => (
+                <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                  {option.label}
+                </MenuItem>
+              ))}
             </Select>
             <FormHelperText style={{ color: 'red' }}>{dropdown6Error}</FormHelperText>
           </FormControl>
@@ -494,7 +637,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12}>
           {/* Seven Dropdown */}
           <FormControl fullWidth required error={!!dropdown7Error}>
-            <FormLabel id="dropdown7-label">これまでのキャリアで経験した業種を教えてください <br />（複数選択可）​</FormLabel>
+            <FormLabel id="dropdown7-label" sx={{marginBottom: '10px'}}>これまでのキャリアで経験した業種を教えてください（複数選択可）<span className='required_label'>必須</span>​</FormLabel>
             <AccordianBasicInfo required={false} />
             <FormHelperText style={{ color: 'red' }}>{dropdown7Error}</FormHelperText> 
           </FormControl>
@@ -503,51 +646,34 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12}>
           {/* Eight Dropdown */}
           <FormControl fullWidth required error={!!dropdown8Error}>
-            <FormLabel id="dropdown5-label">経理の経験年数を教えてください​</FormLabel>
+            <FormLabel id="dropdown5-label" sx={{marginBottom: '10px'}}>経理の経験年数を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
               value={dropdown8Value}
               onChange={handleDropdown8Change}
               displayEmpty
-            >
-              <MenuItem value="" disabled>
-              オプションを選んでください
-              </MenuItem>
-              <MenuItem value="経験あり">経験あり</MenuItem>
-              <MenuItem value="1年以上">1年以上</MenuItem>
-              <MenuItem value="2年以上">2年以上</MenuItem>
-              <MenuItem value="3年以上">3年以上</MenuItem>
-              <MenuItem value="4年以上">4年以上</MenuItem>
-              <MenuItem value="5年以上">5年以上</MenuItem>
-              <MenuItem value="6年以上">6年以上</MenuItem>
-              <MenuItem value="7年以上">7年以上</MenuItem>
-              <MenuItem value="8年以上">8年以上</MenuItem>
-              <MenuItem value="9年以上">9年以上</MenuItem>
-              <MenuItem value="10年以上">10年以上</MenuItem>
-              <MenuItem value="11年以上">11年以上</MenuItem>
-              <MenuItem value="12年以上">12年以上</MenuItem>
-              <MenuItem value="13年以上">13年以上</MenuItem>
-              <MenuItem value="14年以上">14年以上</MenuItem>
-              <MenuItem value="15年以上">15年以上</MenuItem>
-              <MenuItem value="16年以上">16年以上</MenuItem>
-              <MenuItem value="17年以上">17年以上</MenuItem>
-              <MenuItem value="18年以上">18年以上</MenuItem>
-              <MenuItem value="19年以上">19年以上</MenuItem>
-              <MenuItem value="20年以上">20年以上</MenuItem>
+            > 
+              {ExperienceinAccounting.map((option, index) => (
+                <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                  {option.label}
+                </MenuItem>
+              ))}
             </Select>
             <FormHelperText style={{ color: 'red' }}>{dropdown8Error}</FormHelperText>
           </FormControl>
         </Grid>
 
         <Grid item xs={12}>
-        <FormLabel id="textfield-label">現在（直近）の在籍会社名を入力してください <br /> (複数登録が可能です。）</FormLabel>
-        <TextField
-          fullWidth
-          placeholder="現在（直近）の在籍会社名を入力してください"
-          variant="outlined"
-          value={currentCompany}
-          onChange={handleCurrentCompanyChange}
-          required
-        />
+        <FormControl fullWidth>
+          <FormLabel id="textfield-label" sx={{marginBottom: '10px'}}>現在（直近）の在籍会社名を入力してください <br /> (複数登録が可能です。）</FormLabel>
+          <TextField
+            fullWidth
+            placeholder="現在（直近）の在籍会社名を入力してください"
+            variant="outlined"
+            value={currentCompany}
+            onChange={handleCurrentCompanyChange}
+            required
+          />
+        </FormControl>
       </Grid>
         
         <Grid item xs={12}>
@@ -566,7 +692,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
 
         <Grid item xs={12}>
           <FormControl component="fieldset" required error={!!new2RadioError}>
-            <FormLabel component="legend">配偶者についてを教えてください​​​</FormLabel>
+            <FormLabel component="legend" sx={{marginBottom: '10px'}}>配偶者についてを教えてください​​<span className='required_label'>必須</span>​</FormLabel>
             <RadioGroup
               row
               aria-label="newRadio"
@@ -582,16 +708,17 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
         </Grid>
 
         <Grid item xs={12}>
-          <FormLabel id="dropdown9-label">扶養される家族数について教えてください​</FormLabel>
-          <TextField
-            fullWidth
-            variant="outlined"
-            type="name"
-            placeholder="扶養される家族数について教えてください​"
-            value={familyMembers}
-            onChange={handleFamilyMembersChange}
-            required
-          />
+          <FormControl fullWidth>
+            <FormLabel id="dropdown9-label" sx={{marginBottom: '10px'}}>扶養される家族数について教えてください​</FormLabel>
+            <TextField
+              variant="outlined"
+              type="name"
+              placeholder="扶養される家族数について教えてください​"
+              value={familyMembers}
+              onChange={handleFamilyMembersChange}
+              required
+            />
+          </FormControl>
         </Grid>
 
         <Grid item xs={12}>
@@ -599,7 +726,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
           </Grid>
 
           <Grid item xs={12}>
-      <FormLabel id="dropdown9-label">英語​</FormLabel>
+      <FormLabel id="dropdown9-label" sx={{marginBottom: '10px', display: 'block'}}>英語​</FormLabel>
       <FormControl fullWidth>
         <Select
           value={selectedValue}
@@ -608,36 +735,24 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
             name: 'level',
             id: 'level-select',
           }}
-          renderValue={(selected) => (selected ? selected : '選択してください')}
+          displayEmpty
+          // renderValue={(selected) => (selected ? selected : '選択してください')}
         >
-          <MenuItem value="" disabled>
-            <em>選択してください</em>
-          </MenuItem>
-          {menuItems.map((item) => (
-            <MenuItem key={item} value={item}>
-              <RadioGroup
-                value={selectedValue}
-                onChange={handleChange}
-                style={{ display: 'flex', flexDirection: 'row' }}
-              >
-                <FormControlLabel
-                  value={item}
-                  control={<Radio />}
-                  label={item}
-                />
-              </RadioGroup>
-            </MenuItem>
-          ))}
+          {EnglishLevel.map((option, index) => (
+              <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                {option.label}
+              </MenuItem>
+            ))}
         </Select>
       </FormControl>
     </Grid>
 
         <Grid item xs={12}>
-        <IconButton onClick={handleExpandToggle}>
-          <ExpandMoreIcon /><Typography variant="h6">TOEICの点数</Typography>
+        <IconButton onClick={handleExpandToggle} sx={{gap: '5px', padding: '0'}}>
+          <ExpandMoreIcon /><Typography variant="h6" sx={{fontSize: '16px'}}>TOEICの点数</Typography>
         </IconButton>
-        <Collapse in={expanded} >
-          <div style={{alignItems:'center', display:'flex', gap:'10px'}}>
+        <Collapse in={expanded}>
+          <div style={{alignItems:'center', display:'flex', gap:'10px', padding: '10px 0'}}>
           <FormLabel id="dropdown5-label">TOEIC </FormLabel>
             <TextField
               label="Your Label"
@@ -651,60 +766,47 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
 
         <Grid item xs={12}>
         <div>
-      <IconButton onClick={handleExpandToggle}>
-        <ExpandMoreIcon />      <Typography variant="h6">言語を追加する</Typography>
+      <IconButton onClick={handleExpandToggle} sx={{gap: '5px', padding: '0'}}>
+        <ExpandMoreIcon />      <Typography variant="h6" sx={{fontSize: '16px'}}>言語を追加する</Typography>
 
       </IconButton>
       <Collapse in={expanded}>
-        <div>
+        <div style={{padding: '10px 0'}}>
           <Select
             value={dropdown1Value}
             onChange={handleDropdown1Change}
-            style={{ marginBottom: '10px', marginRight: '10px', width:'48%' }}
-          >
-            <MenuItem value="北京語">北京語</MenuItem>
-            <MenuItem value="韓国語">韓国語</MenuItem>
-            <MenuItem value="アラビア語">アラビア語</MenuItem>
-            <MenuItem value="広東語">広東語</MenuItem>
-            <MenuItem value="スペイン語">スペイン語</MenuItem>
-            <MenuItem value="フィンランド語">フィンランド語</MenuItem>
-            <MenuItem value="スウェーデン語">スウェーデン語</MenuItem>
-            <MenuItem value="スペイン語">スペイン語</MenuItem>
-            <MenuItem value="台湾語">台湾語</MenuItem>
-            <MenuItem value="フランス語">フランス語</MenuItem>
-            <MenuItem value="ドイツ語">ドイツ語</MenuItem>
-            <MenuItem value="ヘブライ語">ヘブライ語</MenuItem>
-            <MenuItem value="ヒンディー語">ヒンディー語</MenuItem>
-            <MenuItem value="インドネシア語">インドネシア語</MenuItem>
-            <MenuItem value="イタリア語">イタリア語</MenuItem>
-            <MenuItem value="マレーシア語">マレーシア語</MenuItem>
-            <MenuItem value="オランダ語">オランダ語</MenuItem>
-            <MenuItem value="ノルウェー語">ノルウェー語</MenuItem>
-            <MenuItem value="ポルトガル語">ポルトガル語</MenuItem>
-            <MenuItem value="ロシア語">ロシア語</MenuItem>
-            <MenuItem value="スワヒリ語">スワヒリ語</MenuItem>
-            <MenuItem value="タイ語">タイ語</MenuItem>
-            <MenuItem value="カダログ語">カダログ語</MenuItem>
-            <MenuItem value="ベトナム語">ベトナム語</MenuItem>
+            style={{ marginBottom: '10px', marginRight: '10px', width:'48%'}}
+            displayEmpty
+          > 
+            {AddLanguageLevel.map((option, index) => (
+              <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                {option.label}
+              </MenuItem>
+            ))}
           </Select>
           <Select
             value={dropdown2Value}
             onChange={handleDropdown2Change}
             style={{ marginBottom: '10px', width:'48%' }}
+            displayEmpty
           >
-            <MenuItem value="optionA">Option A</MenuItem>
-            <MenuItem value="optionB">Option B</MenuItem>
-            <MenuItem value="optionC">Option C</MenuItem>
+            {AddLanguage.map((option, index) => (
+              <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                {option.label}
+              </MenuItem>
+            ))}
           </Select>
         </div>
       </Collapse>
     </div>
           </Grid>
         </Grid>
-        <Grid item xs={12} style={{ margin: '10px auto', display: 'grid', paddingTop:'30px' }}>
-          <Button type="submit" variant="contained" color="primary">
-          現職・直近情報の入力へ
-          </Button>
+        <Grid container>
+          <Grid item xs={6} style={{ margin: '10px auto', display: 'grid', paddingTop:'30px', marginBottom: '100px'}}>
+            <Button type="submit" variant="contained" color="primary">
+            現職・直近情報の入力へ
+            </Button>
+          </Grid>
         </Grid>
       </form>
     </div>
