@@ -9,6 +9,90 @@ import {
   MenuItem,
 } from '@mui/material';
 
+const DesiredJobType = [
+  { value: '', label: 'オプションを選んでください', disabled: true },
+  { value: '管理部門系全て', label: '管理部門系全て' },
+  { value: '経理​', label: '経理​' },
+  { value: '財務・コントローラー​', label: '財務・コントローラー​' },
+  { value: '会計・税務', label: '会計・税務' },
+  { value: '内部監査​', label: '内部監査​' },
+  { value: '広報・IR​', label: '広報・IR​' },
+  { value: '管理部長', label: '管理部長' },
+  { value: 'CFO（役員）', label: 'CFO（役員）' },
+  { value: '総務', label: '総務' },
+  { value: '人事（採用・労務・教育など）', label: '人事（採用・労務・教育など）' },
+  { value: '人事制度・企画', label: '人事制度・企画' },
+  { value: '法務・コンプライアンス', label: '法務・コンプライアンス' },
+  { value: '特許・知的財産関連', label: '特許・知的財産関連' },
+  { value: 'その他', label: 'その他' }
+];
+
+const DesiredIndustry = [
+  { value: '', label: 'オプションを選んでください', disabled: true },
+  { value: 'IT・インタネット・ゲーム', label: 'IT・インタネット・ゲーム' },
+  { value: 'メーカー​', label: 'メーカー​' },
+  { value: '商社', label: '商社' },
+  { value: '流通・小売・サービス', label: '流通・小売・サービス' },
+  { value: '広告・出版・マスコミ', label: '広告・出版・マスコミ' },
+  { value: 'コンサルティング', label: 'コンサルティング' },
+  { value: '金融', label: '金融' },
+  { value: '建設・不動産', label: '建設・不動産' },
+  { value: 'メディカル', label: 'メディカル' },
+  { value: '物流・運輸', label: '物流・運輸' },
+  { value: 'その他（インフラ・教育・官公庁など）', label: 'その他（インフラ・教育・官公庁など）' }
+];
+
+const DesiredPosition = [
+  { value: '', label: 'オプションを選んでください', disabled: true },
+  { value: '特に希望しない', label: '特に希望しない' },
+  { value: '担当者（スタッフ）', label: '担当者（スタッフ）' },
+  { value: '主任（リーダー）', label: '主任（リーダー）' },
+  { value: '係長（マネージャー候補', label: '係長（マネージャー候補' },
+  { value: '課長（マネージャー）', label: '課長（マネージャー）' },
+  { value: '部長（部門責任者）', label: '部長（部門責任者）' },
+  { value: 'CFO（役員）', label: 'CFO（役員）' },
+  { value: '顧問', label: '顧問' },
+  { value: 'その他', label: 'その他' }
+];
+
+const DesiredWorkLocation = [
+  { value: '', label: 'オプションを選んでください', disabled: true },
+  { value: '東京都', label: '東京都' },
+  { value: '神奈川県​', label: '神奈川県​' },
+  { value: '千葉県​', label: '千葉県​' },
+  { value: '埼玉県​', label: '埼玉県​' },
+  { value: '１都３県全て', label: '１都３県全て' },
+  { value: '北海道・東北​', label: '北海道・東北​' },
+  { value: '北関東', label: '北関東' },
+  { value: '中部', label: '中部' },
+  { value: '近畿', label: '近畿' },
+  { value: '中国・四国', label: '中国・四国' },
+  { value: '九州・沖縄', label: '九州・沖縄' },
+  { value: '海外', label: '海外' }
+];
+
+const DesiredCompanyCategory = [
+  { value: '', label: 'オプションを選んでください', disabled: true },
+  { value: '上場企業', label: '上場企業' },
+  { value: '上場グループ企業', label: '上場グループ企業' },
+  { value: '非上場企業', label: '非上場企業' },
+  { value: '外資系企業​', label: '外資系企業​' },
+  { value: 'ベンチャー企業​', label: 'ベンチャー企業​' },
+  { value: '官公庁', label: '官公庁' },
+  { value: '団体', label: '団体' }
+];
+
+const DesiredNumberOfEmployees = [
+  { value: '', label: 'オプションを選んでください', disabled: true },
+  { value: '10名以下', label: '10名以下' },
+  { value: '11～50名​', label: '11～50名​' },
+  { value: '51～100名​', label: '51～100名​' },
+  { value: '101～500名​', label: '101～500名​' },
+  { value: '501～1000名​', label: '501～1000名​' },
+  { value: '1000名以上​', label: '1000名以上​' }
+];
+
+
 const DesiredCondition = ({ formData, setFormData, handleNext, handleBack}) => {
   const [selectedOption, setSelectedOption] = useState('');
   const [selectedOptionError, setSelectedOptionError] = useState('');
@@ -117,23 +201,11 @@ const DesiredCondition = ({ formData, setFormData, handleNext, handleBack}) => {
               onChange={handleSecondDropdownChange}
               displayEmpty
             >
-              <MenuItem value="" disabled>
-              オプションを選んでください
-              </MenuItem>
-              <MenuItem value="管理部門系全て">管理部門系全て</MenuItem>
-              <MenuItem value="経理​">経理​</MenuItem>
-              <MenuItem value="財務・コントローラー​">財務・コントローラー​</MenuItem>
-              <MenuItem value="会計・税務">会計・税務</MenuItem>
-              <MenuItem value="内部監査​">内部監査​</MenuItem>
-              <MenuItem value="広報・IR​">広報・IR​</MenuItem>
-              <MenuItem value="管理部長">管理部長</MenuItem>
-              <MenuItem value="CFO（役員）">CFO（役員）</MenuItem>
-              <MenuItem value="総務">総務</MenuItem>
-              <MenuItem value="人事（採用・労務・教育など）">人事（採用・労務・教育など）</MenuItem>
-              <MenuItem value="人事制度・企画">人事制度・企画</MenuItem>
-              <MenuItem value="法務・コンプライアンス">法務・コンプライアンス</MenuItem>
-              <MenuItem value="特許・知的財産関連">特許・知的財産関連</MenuItem>
-              <MenuItem value="その他">その他</MenuItem>
+              {DesiredJobType.map((option, index) => (
+                <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                  {option.label}
+                </MenuItem>
+              ))}
             </Select>
             <FormHelperText style={{ color: 'red' }}>{secondDropdownError}</FormHelperText>
           </FormControl>
@@ -147,20 +219,11 @@ const DesiredCondition = ({ formData, setFormData, handleNext, handleBack}) => {
               onChange={handleThirdDropdownChange}
               displayEmpty
             >
-              <MenuItem value="" disabled>
-                オプションを選んでください
-              </MenuItem>
-              <MenuItem value="IT・インタネット・ゲーム">IT・インタネット・ゲーム</MenuItem>
-              <MenuItem value="メーカー​">メーカー​</MenuItem>
-              <MenuItem value="商社">商社</MenuItem>
-              <MenuItem value="流通・小売・サービス">流通・小売・サービス</MenuItem>
-              <MenuItem value="広告・出版・マスコミ">広告・出版・マスコミ</MenuItem>
-              <MenuItem value="コンサルティング">コンサルティング</MenuItem>
-              <MenuItem value="金融">金融</MenuItem>
-              <MenuItem value="建設・不動産">建設・不動産</MenuItem>
-              <MenuItem value="メディカル">メディカル</MenuItem>
-              <MenuItem value="物流・運輸">物流・運輸</MenuItem>
-              <MenuItem value="その他（インフラ・教育・官公庁など）">その他（インフラ・教育・官公庁など）</MenuItem>
+              {DesiredIndustry.map((option, index) => (
+                <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                  {option.label}
+                </MenuItem>
+              ))}
             </Select>
             <FormHelperText style={{ color: 'red' }}>{thirdDropdownError}</FormHelperText>
           </FormControl>
@@ -175,18 +238,11 @@ const DesiredCondition = ({ formData, setFormData, handleNext, handleBack}) => {
               onChange={handleDropdown4Change}
               displayEmpty
             >
-              <MenuItem value="" disabled>
-                オプションを選んでください
-              </MenuItem>
-              <MenuItem value="特に希望しない">特に希望しない</MenuItem>
-              <MenuItem value="担当者（スタッフ）">担当者（スタッフ）</MenuItem>
-              <MenuItem value="主任（リーダー）">主任（リーダー）</MenuItem>
-              <MenuItem value="係長（マネージャー候補">係長（マネージャー候補</MenuItem>
-              <MenuItem value="課長（マネージャー）">課長（マネージャー）</MenuItem>
-              <MenuItem value="部長（部門責任者）">部長（部門責任者）</MenuItem>
-              <MenuItem value="CFO（役員）">CFO（役員）</MenuItem>
-              <MenuItem value="顧問">顧問</MenuItem>
-              <MenuItem value="その他">その他</MenuItem>
+              {DesiredPosition.map((option, index) => (
+                <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                  {option.label}
+                </MenuItem>
+              ))}
             </Select>
             <FormHelperText style={{ color: 'red' }}>{dropdown4Error}</FormHelperText>
           </FormControl>
@@ -201,21 +257,11 @@ const DesiredCondition = ({ formData, setFormData, handleNext, handleBack}) => {
               onChange={handleDropdown5Change}
               displayEmpty
             >
-              <MenuItem value="" disabled>
-                オプションを選んでください
-              </MenuItem>
-              <MenuItem value="東京都">東京都</MenuItem>
-              <MenuItem value="神奈川県​">神奈川県​</MenuItem>
-              <MenuItem value="千葉県​">千葉県​</MenuItem>
-              <MenuItem value="埼玉県​">埼玉県​</MenuItem>
-              <MenuItem value="１都３県全て">１都３県全て</MenuItem>
-              <MenuItem value="北海道・東北​">北海道・東北​</MenuItem>
-              <MenuItem value="北関東">北関東</MenuItem>
-              <MenuItem value="中部">中部</MenuItem>
-              <MenuItem value="近畿">近畿</MenuItem>
-              <MenuItem value="中国・四国">中国・四国</MenuItem>
-              <MenuItem value="九州・沖縄">九州・沖縄</MenuItem>
-              <MenuItem value="海外">海外</MenuItem>
+              {DesiredWorkLocation.map((option, index) => (
+                <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                  {option.label}
+                </MenuItem>
+              ))}
             </Select>
             <FormHelperText style={{ color: 'red' }}>{dropdown5Error}</FormHelperText>
           </FormControl>
@@ -230,16 +276,11 @@ const DesiredCondition = ({ formData, setFormData, handleNext, handleBack}) => {
               onChange={handleDropdown6Change}
               displayEmpty
             >
-              <MenuItem value="" disabled>
-                オプションを選んでください
-              </MenuItem>
-              <MenuItem value="上場企業">上場企業</MenuItem>
-              <MenuItem value="上場グループ企業">上場グループ企業</MenuItem>
-              <MenuItem value="非上場企業">非上場企業</MenuItem>
-              <MenuItem value="外資系企業​">外資系企業​</MenuItem>
-              <MenuItem value="ベンチャー企業​">ベンチャー企業​</MenuItem>
-              <MenuItem value="官公庁">官公庁</MenuItem>
-              <MenuItem value="団体">団体</MenuItem>
+              {DesiredCompanyCategory.map((option, index) => (
+                <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                  {option.label}
+                </MenuItem>
+              ))}
             </Select>
             <FormHelperText style={{ color: 'red' }}>{dropdown6Error}</FormHelperText>
           </FormControl>
@@ -254,15 +295,11 @@ const DesiredCondition = ({ formData, setFormData, handleNext, handleBack}) => {
               onChange={handleDropdown7Change}
               displayEmpty
             >
-              <MenuItem value="" disabled>
-                オプションを選んでください  
-              </MenuItem>
-              <MenuItem value="10名以下">10名以下</MenuItem>
-              <MenuItem value="11～50名​">11～50名​</MenuItem>
-              <MenuItem value="51～100名​">51～100名​</MenuItem>
-              <MenuItem value="101～500名​">101～500名​</MenuItem>
-              <MenuItem value="501～1000名​">501～1000名​</MenuItem>
-              <MenuItem value="1000名以上​">1000名以上​</MenuItem>
+              {DesiredNumberOfEmployees.map((option, index) => (
+                <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                  {option.label}
+                </MenuItem>
+              ))}
             </Select>
             <FormHelperText style={{ color: 'red' }}>{dropdown7Error}</FormHelperText>
           </FormControl>

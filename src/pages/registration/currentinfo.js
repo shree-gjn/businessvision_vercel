@@ -14,6 +14,172 @@ import {
   MenuItem,
 } from '@mui/material';
 
+const CurrentPosition = [
+  { value: '', label: 'オプションを選んでください', disabled: true },
+  { value: 'CFO（役員）', label: 'CFO（役員）' },
+  { value: '部長', label: '部長' },
+  { value: '課長（マネージャー）', label: '課長（マネージャー）' },
+  { value: '係長（マネージャー候補）', label: '係長（マネージャー候補）' },
+  { value: '主任（リーダー）', label: '主任（リーダー）' },
+  { value: '担当（スタッフ）', label: '担当（スタッフ）' },
+  { value: '役職なし', label: '役職なし' },
+  { value: '顧問', label: '顧問' },
+];
+
+const CurrentcompanyExperience = [
+  { value: '', label: 'オプションを選んでください', disabled: true },
+  { value: '管理部門系全て', label: '管理部門系全て' },
+  { value: '経理', label: '経理' },
+  { value: '財務・コントローラー', label: '財務・コントローラー' },
+  { value: '会計・税務', label: '会計・税務' },
+  { value: '内部監査', label: '内部監査' },
+  { value: '広報・IR', label: '広報・IR' },
+  { value: '管理部長', label: '管理部長' },
+  { value: 'CFO（役員）', label: 'CFO（役員）' },
+  { value: '総務', label: '総務' },
+  { value: '人事（採用・労務・教育など）', label: '人事（採用・労務・教育など）' },
+  { value: '人事制度・企画', label: '人事制度・企画' },
+  { value: '法務・コンプライアンス', label: '法務・コンプライアンス' },
+  { value: '特許・知的財産関連', label: '特許・知的財産関連' },
+  { value: 'その他', label: 'その他' }
+];
+
+
+const CurrentcompanyIndustry = [
+  { value: '', label: 'オプションを選んでください', disabled: true },
+  { value: 'IT・インタネット・ゲーム', label: 'IT・インタネット・ゲーム' },
+  { value: 'メーカー​', label: 'メーカー​' },
+  { value: '商社', label: '商社' },
+  { value: '流通・小売・サービス', label: '流通・小売・サービス' },
+  { value: '広告・出版・マスコミ', label: '広告・出版・マスコミ' },
+  { value: 'コンサルティング', label: 'コンサルティング' },
+  { value: '金融', label: '金融' },
+  { value: '建設・不動産', label: '建設・不動産' },
+  { value: 'メディカル', label: 'メディカル' },
+  { value: '物流・運輸', label: '物流・運輸' },
+  { value: 'その他（インフラ・教育・官公庁など）', label: 'その他（インフラ・教育・官公庁など）' },
+];
+
+const AccountingExperience = [
+  { value: '', label: 'オプションを選んでください', disabled: true },
+  { value: '税務申告書作成実務', label: '税務申告書作成実務' },
+  { value: 'アニュアルレポート作成業務', label: 'アニュアルレポート作成業務' },
+  { value: '年次決算', label: '年次決算' },
+  { value: '月次決算', label: '月次決算' },
+  { value: '原価計算実務', label: '原価計算実務' },
+  { value: '固定資産管理', label: '固定資産管理' },
+  { value: '有価証券報告書作成実務', label: '有価証券報告書作成実務' },
+  { value: '取引先の与信管理／残高照会実務', label: '取引先の与信管理／残高照会実務' },
+  { value: '伝票処理', label: '伝票処理' },
+  { value: '内部監査（会計監査）', label: '内部監査（会計監査）' },
+  { value: '国際税務', label: '国際税務' },
+  { value: '税効果会計', label: '税効果会計' },
+  { value: '投資運用管理（証券会社折衝）', label: '投資運用管理（証券会社折衝）' },
+  { value: '資金繰り表作成', label: '資金繰り表作成' },
+  { value: '小口現金管理／請求書発行', label: '小口現金管理／請求書発行' },
+  { value: 'キャッシュ／フロー計算書作成実務', label: 'キャッシュ／フロー計算書作成実務' },
+  { value: '評価制度企画／改定', label: '評価制度企画／改定' },
+  { value: 'グローバル人事制度／改定', label: 'グローバル人事制度／改定' },
+  { value: '中途採用', label: '中途採用' },
+  { value: 'アルバイト／パート採用', label: 'アルバイト／パート採用' },
+  { value: '階層別研修', label: '階層別研修' },
+  { value: 'メンタルヘルス対応／介護休暇制度', label: 'メンタルヘルス対応／介護休暇制度' },
+  { value: '海外人事（ビザ・保険手続き／海外駐在員給与計算）', label: '海外人事（ビザ・保険手続き／海外駐在員給与計算）' },
+  { value: '人事システム導入', label: '人事システム導入' },
+  { value: '工事人事', label: '工事人事' },
+  { value: '株式事務（ストックオプション／持株会等）', label: '株式事務（ストックオプション／持株会等）' },
+  { value: '資産／リース／備品管理', label: '資産／リース／備品管理' },
+  { value: '個人情報保護／プライバシーマーク', label: '個人情報保護／プライバシーマーク' },
+  { value: '契約書ほか各種文書のチェック／作成／管理', label: '契約書ほか各種文書のチェック／作成／管理' },
+  { value: '総会・会社法・株式関連業務', label: '総会・会社法・株式関連業務' },
+  { value: '公認会計士監査対応', label: '公認会計士監査対応' },
+  { value: '開示書類作成', label: '開示書類作成' },
+  { value: '四半期決算', label: '四半期決算' },
+  { value: '連結決算', label: '連結決算' },
+  { value: '管理会計', label: '管理会計' },
+  { value: '会計システム対応', label: '会計システム対応' },
+  { value: '連結財務諸表作成実務', label: '連結財務諸表作成実務' },
+  { value: '予算の策定／実績の把握及び分析', label: '予算の策定／実績の把握及び分析' },
+  { value: '株式公開準備', label: '株式公開準備' },
+  { value: '連結納税', label: '連結納税' },
+  { value: '移転価格', label: '移転価格' },
+  { value: '財務戦略', label: '財務戦略' },
+  { value: '資金調達管理（金融機関折衝）', label: '資金調達管理（金融機関折衝）' },
+  { value: '出納管理', label: '出納管理' },
+  { value: '売掛金／買掛金管理', label: '売掛金／買掛金管理' },
+  { value: '外国為替取引関連', label: '外国為替取引関連' },
+  { value: '賃金制度企画／改定', label: '賃金制度企画／改定' },
+  { value: '人事制度運用', label: '人事制度運用' },
+  { value: '新卒採用', label: '新卒採用' },
+  { value: '新入社員向け研修', label: '新入社員向け研修' },
+  { value: '労働組合対応', label: '労働組合対応' },
+  { value: '給与計算／社会保険', label: '給与計算／社会保険' },
+  { value: '規定／就業規則', label: '規定／就業規則' },
+  { value: '安全衛生', label: '安全衛生' },
+  { value: '取締役会・株主総会運営', label: '取締役会・株主総会運営' },
+  { value: '契約書／文書管理', label: '契約書／文書管理' },
+  { value: 'ファシリティマネジメント（移転／レイアウト変更）', label: 'ファシリティマネジメント（移転／レイアウト変更）' },
+  { value: '全社プロジェクト事務局', label: '全社プロジェクト事務局' },
+  { value: '内部監査（業務監査）', label: '内部監査（業務監査）' },
+  { value: '契約関連業務（交渉・折衝）', label: '契約関連業務（交渉・折衝）' },
+  { value: '契約関連業務（文書作成・チェック）', label: '契約関連業務（文書作成・チェック）' },
+  { value: 'M＆A・合併・提携 関連業務', label: 'M＆A・合併・提携 関連業務' },
+  { value: 'コンプライアンス・SR推進・内部監査', label: 'コンプライアンス・SR推進・内部監査' },
+  { value: '係争・訴訟対応', label: '係争・訴訟対応' },
+  { value: '許認可、免許等取得実務（ISO、Pマーク等）', label: '許認可、免許等取得実務（ISO、Pマーク等）' },
+  { value: '国内特許関連実務', label: '国内特許関連実務' },
+  { value: '国外特許関連実務', label: '国外特許関連実務' },
+  { value: '商標・著作権関連実務', label: '商標・著作権関連実務' },
+  { value: '係争対応', label: '係争対応' },
+  { value: '宣伝計画', label: '宣伝計画' },
+  { value: '広報実務', label: '広報実務' },
+  { value: '宣伝・広報予算管理', label: '宣伝・広報予算管理' },
+  { value: 'ＩＲ', label: 'ＩＲ' },
+  { value: '内部監査（システム監査）', label: '内部監査（システム監査）' },
+  { value: '内部監査（コンプライアンス）', label: '内部監査（コンプライアンス）' },
+];
+
+const CompanypreviouslyWorked = [
+  { value: '', label: 'オプションを選んでください', disabled: true },
+  { value: '上場企業​', label: '上場企業​' },
+  { value: '上場グループ企業​', label: '上場グループ企業​' },
+  { value: '非上場企業​', label: '非上場企業​' },
+  { value: '外資系企業​', label: '外資系企業​' },
+  { value: 'ベンチャー企業​', label: 'ベンチャー企業​' },
+  { value: '官公庁​', label: '官公庁​' },
+  { value: '団体​​', label: '団体​​' }
+];
+
+const CompanypreviouslyHold = [
+  { value: '', label: 'オプションを選んでください', disabled: true },
+  { value: '公認会計士', label: '公認会計士' },
+  { value: 'CPA（米国公認会計士）', label: 'CPA（米国公認会計士）' },
+  { value: '税理士​', label: '税理士​' },
+  { value: '日商簿記検定1級​', label: '日商簿記検定1級​' },
+  { value: '日商簿記検定2級​', label: '日商簿記検定2級​' },
+  { value: '日商簿記検定3級', label: '日商簿記検定3級' },
+  { value: '社会保険労務士', label: '社会保険労務士' }
+];
+
+const AccountingSoftware = [
+  { value: '', label: 'オプションを選んでください', disabled: true },
+  { value: 'MFクラウド会計', label: 'MFクラウド会計' },
+  { value: 'freee', label: 'freee' },
+  { value: 'MJS', label: 'MJS' },
+  { value: 'TKC', label: 'TKC' },
+  { value: 'JDL', label: 'JDL' },
+  { value: 'ICS', label: 'ICS' },
+  { value: '財務応援', label: '財務応援' },
+  { value: '弥生会計', label: '弥生会計' },
+  { value: '勘定奉行', label: '勘定奉行' },
+  { value: 'PCA会計', label: 'PCA会計' },
+  { value: 'SAP', label: 'SAP' },
+  { value: 'ERP', label: 'ERP' },
+  { value: 'Excel', label: 'Excel' },
+  { value: 'Access', label: 'Access' }
+];
+
+
 const CurrentInfo = ({ formData, setFormData, handleNext, handleBack}) => {
   const [selectedOption, setSelectedOption] = useState('');
   const [selectedOptionError, setSelectedOptionError] = useState('');
@@ -95,18 +261,12 @@ const CurrentInfo = ({ formData, setFormData, handleNext, handleBack}) => {
               value={selectedOption}
               onChange={handleSelectChange}
               displayEmpty
-            >
-              <MenuItem value="" disabled>
-              オプションを選んでください
-              </MenuItem>
-              <MenuItem value="CFO（役員）">CFO（役員）</MenuItem>
-              <MenuItem value="部長">部長（部門責任者）​</MenuItem>
-              <MenuItem value="課長（マネージャー）">課長（マネージャー）</MenuItem>
-              <MenuItem value="係長（マネージャー候補）">係長（マネージャー候補）</MenuItem>
-              <MenuItem value="主任（リーダー）">主任（リーダー）</MenuItem>
-              <MenuItem value="担当（スタッフ）">担当（スタッフ）</MenuItem>
-              <MenuItem value="役職なし">役職なし</MenuItem>
-              <MenuItem value="顧問">顧問</MenuItem>
+            > 
+              {CurrentPosition.map((option, index) => (
+                <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                  {option.label}
+                </MenuItem>
+              ))}
             </Select>
             <FormHelperText style={{ color: 'red' }}>{selectedOptionError}</FormHelperText>
           </FormControl>
@@ -119,24 +279,12 @@ const CurrentInfo = ({ formData, setFormData, handleNext, handleBack}) => {
               value={secondDropdownValue}
               onChange={handleSecondDropdownChange}
               displayEmpty
-            >
-              <MenuItem value="" disabled>
-              オプションを選んでください
-              </MenuItem>
-              <MenuItem value="管理部門系全て">管理部門系全て</MenuItem>
-              <MenuItem value="経理">経理</MenuItem>
-              <MenuItem value="財務・コントローラー">財務・コントローラー</MenuItem>
-              <MenuItem value="会計・税務">会計・税務</MenuItem>
-              <MenuItem value="内部監査">内部監査</MenuItem>
-              <MenuItem value="広報・IR">広報・IR</MenuItem>
-              <MenuItem value="管理部長">管理部長</MenuItem>
-              <MenuItem value="CFO（役員）">CFO（役員）</MenuItem>
-              <MenuItem value="総務">総務</MenuItem>
-              <MenuItem value="人事（採用・労務・教育など）">人事（採用・労務・教育など）</MenuItem>
-              <MenuItem value="人事制度・企画">人事制度・企画</MenuItem>
-              <MenuItem value="法務・コンプライアンス">法務・コンプライアンス</MenuItem>
-              <MenuItem value="特許・知的財産関連">特許・知的財産関連</MenuItem>
-              <MenuItem value="その他">その他</MenuItem>
+            > 
+              {CurrentcompanyExperience.map((option, index) => (
+                <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                  {option.label}
+                </MenuItem>
+              ))}
             </Select>
             <FormHelperText style={{ color: 'red' }}>{secondDropdownError}</FormHelperText>
           </FormControl>
@@ -150,20 +298,11 @@ const CurrentInfo = ({ formData, setFormData, handleNext, handleBack}) => {
               onChange={handleThirdDropdownChange}
               displayEmpty
             >
-              <MenuItem value="" disabled>
-                オプションを選んでください
-              </MenuItem>
-              <MenuItem value="IT・インタネット・ゲーム">IT・インタネット・ゲーム</MenuItem>
-              <MenuItem value="メーカー​">メーカー​</MenuItem>
-              <MenuItem value="商社">商社</MenuItem>
-              <MenuItem value="流通・小売・サービス">流通・小売・サービス</MenuItem>
-              <MenuItem value="広告・出版・マスコミ">広告・出版・マスコミ</MenuItem>
-              <MenuItem value="コンサルティング">コンサルティング</MenuItem>
-              <MenuItem value="金融">金融</MenuItem>
-              <MenuItem value="建設・不動産">建設・不動産</MenuItem>
-              <MenuItem value="メディカル">メディカル</MenuItem>
-              <MenuItem value="物流・運輸">物流・運輸</MenuItem>
-              <MenuItem value="その他（インフラ・教育・官公庁など）">その他（インフラ・教育・官公庁など）</MenuItem>
+              {CurrentcompanyIndustry.map((option, index) => (
+                <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                  {option.label}
+                </MenuItem>
+              ))}
             </Select>
             <FormHelperText style={{ color: 'red' }}>{thirdDropdownError}</FormHelperText>
           </FormControl>
@@ -193,84 +332,11 @@ const CurrentInfo = ({ formData, setFormData, handleNext, handleBack}) => {
               onChange={handleDropdown4Change}
               displayEmpty
             >
-              <MenuItem value="" disabled>
-              オプションを選んでください
-              </MenuItem>
-              <MenuItem value="税務申告書作成実務">税務申告書作成実務</MenuItem>
-              <MenuItem value="アニュアルレポート作成業務">アニュアルレポート作成業務</MenuItem>
-              <MenuItem value="年次決算">年次決算</MenuItem>
-              <MenuItem value="月次決算">月次決算</MenuItem>
-              <MenuItem value="原価計算実務">原価計算実務</MenuItem>
-              <MenuItem value="固定資産管理">固定資産管理</MenuItem>
-              <MenuItem value="有価証券報告書作成実務">有価証券報告書作成実務</MenuItem>
-              <MenuItem value="取引先の与信管理／残高照会実務">取引先の与信管理／残高照会実務</MenuItem>
-              <MenuItem value="伝票処理">伝票処理</MenuItem>
-              <MenuItem value="内部監査（会計監査）">内部監査（会計監査）</MenuItem>
-              <MenuItem value="国際税務">国際税務</MenuItem>
-              <MenuItem value="税効果会計">税効果会計</MenuItem>
-              <MenuItem value="投資運用管理（証券会社折衝）">投資運用管理（証券会社折衝）</MenuItem>
-              <MenuItem value="資金繰り表作成">資金繰り表作成</MenuItem>
-              <MenuItem value="小口現金管理／請求書発行">小口現金管理／請求書発行</MenuItem>
-              <MenuItem value="キャッシュ／フロー計算書作成実務">キャッシュ／フロー計算書作成実務</MenuItem>
-              <MenuItem value="評価制度企画／改定">評価制度企画／改定</MenuItem>
-              <MenuItem value="グローバル人事制度／改定">グローバル人事制度／改定</MenuItem>
-              <MenuItem value="中途採用">中途採用</MenuItem>
-              <MenuItem value="アルバイト／パート採用">アルバイト／パート採用</MenuItem>
-              <MenuItem value="階層別研修">階層別研修</MenuItem>
-              <MenuItem value="メンタルヘルス対応／介護休暇制度">メンタルヘルス対応／介護休暇制度</MenuItem>
-              <MenuItem value="海外人事（ビザ・保険手続き／海外駐在員給与計算）">海外人事（ビザ・保険手続き／海外駐在員給与計算）</MenuItem>
-              <MenuItem value="人事システム導入">人事システム導入</MenuItem>
-              <MenuItem value="工事人事">工事人事</MenuItem>
-              <MenuItem value="株式事務（ストックオプション／持株会等）">株式事務（ストックオプション／持株会等）</MenuItem>
-              <MenuItem value="資産／リース／備品管理">資産／リース／備品管理</MenuItem>
-              <MenuItem value="個人情報保護／プライバシーマーク">個人情報保護／プライバシーマーク</MenuItem>
-              <MenuItem value="契約書ほか各種文書のチェック／作成／管理">契約書ほか各種文書のチェック／作成／管理</MenuItem>
-              <MenuItem value="総会・会社法・株式関連業務">総会・会社法・株式関連業務</MenuItem>
-              <MenuItem value="公認会計士監査対応">公認会計士監査対応</MenuItem>
-              <MenuItem value="開示書類作成">開示書類作成</MenuItem>
-              <MenuItem value="四半期決算">四半期決算</MenuItem>
-              <MenuItem value="連結決算">連結決算</MenuItem>
-              <MenuItem value="管理会計">管理会計</MenuItem>
-              <MenuItem value="会計システム対応">会計システム対応</MenuItem>
-              <MenuItem value="連結財務諸表作成実務">連結財務諸表作成実務</MenuItem>
-              <MenuItem value="予算の策定／実績の把握及び分析">予算の策定／実績の把握及び分析</MenuItem>
-              <MenuItem value="株式公開準備">株式公開準備</MenuItem>
-              <MenuItem value="連結納税">連結納税</MenuItem>
-              <MenuItem value="移転価格">移転価格</MenuItem>
-              <MenuItem value="財務戦略">財務戦略</MenuItem>
-              <MenuItem value="資金調達管理（金融機関折衝）">資金調達管理（金融機関折衝）</MenuItem>
-              <MenuItem value="出納管理">出納管理</MenuItem>
-              <MenuItem value="売掛金／買掛金管理">売掛金／買掛金管理</MenuItem>
-              <MenuItem value="外国為替取引関連">外国為替取引関連</MenuItem>
-              <MenuItem value="賃金制度企画／改定">賃金制度企画／改定</MenuItem>
-              <MenuItem value="人事制度運用">人事制度運用</MenuItem>
-              <MenuItem value="新卒採用">新卒採用</MenuItem>
-              <MenuItem value="新入社員向け研修">新入社員向け研修</MenuItem>
-              <MenuItem value="労働組合対応">労働組合対応</MenuItem>
-              <MenuItem value="給与計算／社会保険">給与計算／社会保険</MenuItem>
-              <MenuItem value="規定／就業規則">規定／就業規則</MenuItem>
-              <MenuItem value="安全衛生">安全衛生</MenuItem>
-              <MenuItem value="取締役会・株主総会運営">取締役会・株主総会運営</MenuItem>
-              <MenuItem value="契約書／文書管理">契約書／文書管理</MenuItem>
-              <MenuItem value="ファシリティマネジメント（移転／レイアウト変更）">ファシリティマネジメント（移転／レイアウト変更）</MenuItem>
-              <MenuItem value="全社プロジェクト事務局">全社プロジェクト事務局</MenuItem>
-              <MenuItem value="内部監査（業務監査）">内部監査（業務監査）</MenuItem>
-              <MenuItem value="契約関連業務（交渉・折衝）">契約関連業務（交渉・折衝）</MenuItem>
-              <MenuItem value="契約関連業務（文書作成・チェック）">契約関連業務（文書作成・チェック）</MenuItem>
-              <MenuItem value="M＆A・合併・提携 関連業務">M＆A・合併・提携 関連業務</MenuItem>
-              <MenuItem value="コンプライアンス・SR推進・内部監査">コンプライアンス・SR推進・内部監査</MenuItem>
-              <MenuItem value="係争・訴訟対応">係争・訴訟対応</MenuItem>
-              <MenuItem value="許認可、免許等取得実務（ISO、Pマーク等）">許認可、免許等取得実務（ISO、Pマーク等）</MenuItem>
-              <MenuItem value="国内特許関連実務">国内特許関連実務</MenuItem>
-              <MenuItem value="国外特許関連実務">国外特許関連実務</MenuItem>
-              <MenuItem value="商標・著作権関連実務">商標・著作権関連実務</MenuItem>
-              <MenuItem value="係争対応">係争対応</MenuItem>
-              <MenuItem value="宣伝計画">宣伝計画</MenuItem>
-              <MenuItem value="広報実務">広報実務</MenuItem>
-              <MenuItem value="宣伝・広報予算管理">宣伝・広報予算管理</MenuItem>
-              <MenuItem value="ＩＲ">ＩＲ</MenuItem>
-              <MenuItem value="内部監査（システム監査）">内部監査（システム監査）</MenuItem>
-              <MenuItem value="内部監査（コンプライアンス）">内部監査（コンプライアンス）</MenuItem>
+              {AccountingExperience.map((option, index) => (
+                <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                  {option.label}
+                </MenuItem>
+              ))}
             </Select>
             <FormHelperText style={{ color: 'red' }}>{dropdown4Error}</FormHelperText>
           </FormControl>
@@ -286,16 +352,11 @@ const CurrentInfo = ({ formData, setFormData, handleNext, handleBack}) => {
               onChange={handleDropdown5Change}
               displayEmpty
             >
-              <MenuItem value="" disabled>
-              オプションを選んでください
-              </MenuItem>
-              <MenuItem value="上場企業​">上場企業​</MenuItem>
-              <MenuItem value="上場グループ企業​">上場グループ企業​</MenuItem>
-              <MenuItem value="非上場企業​">非上場企業​</MenuItem>
-              <MenuItem value="外資系企業​">外資系企業​</MenuItem>
-              <MenuItem value="ベンチャー企業​">ベンチャー企業​</MenuItem>
-              <MenuItem value="官公庁​">官公庁​</MenuItem>
-              <MenuItem value="団体​​">団体​​</MenuItem>
+              {CompanypreviouslyWorked.map((option, index) => (
+                <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                  {option.label}
+                </MenuItem>
+              ))}
             </Select>
             <FormHelperText style={{ color: 'red' }}>{dropdown5Error}</FormHelperText>
           </FormControl>
@@ -310,16 +371,11 @@ const CurrentInfo = ({ formData, setFormData, handleNext, handleBack}) => {
               onChange={handleDropdown6Change}
               displayEmpty
             >
-              <MenuItem value="" disabled>
-              オプションを選んでください
-              </MenuItem>
-              <MenuItem value="公認会計士">公認会計士</MenuItem>
-              <MenuItem value="CPA（米国公認会計士）">CPA（米国公認会計士）</MenuItem>
-              <MenuItem value="税理士​">税理士​</MenuItem>
-              <MenuItem value="日商簿記検定1級​">日商簿記検定1級​</MenuItem>
-              <MenuItem value="日商簿記検定2級​">日商簿記検定2級​</MenuItem>
-              <MenuItem value="日商簿記検定3級">日商簿記検定3級</MenuItem>
-              <MenuItem value="社会保険労務士">社会保険労務士</MenuItem>
+              {CompanypreviouslyHold.map((option, index) => (
+                <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                  {option.label}
+                </MenuItem>
+              ))}
             </Select>
             <FormHelperText style={{ color: 'red' }}>{dropdown6Error}</FormHelperText>
           </FormControl>
@@ -334,23 +390,11 @@ const CurrentInfo = ({ formData, setFormData, handleNext, handleBack}) => {
               onChange={handleDropdown7Change}
               displayEmpty
             >
-              <MenuItem value="" disabled>
-              オプションを選んでください              
-              </MenuItem>
-              <MenuItem value="MFクラウド会計">MFクラウド会計</MenuItem>
-              <MenuItem value="freee">freee</MenuItem>
-              <MenuItem value="MJS">MJS</MenuItem>
-              <MenuItem value="TKC">TKC</MenuItem>
-              <MenuItem value="JDL">JDL</MenuItem>
-              <MenuItem value="ICS">ICS</MenuItem>
-              <MenuItem value="財務応援">財務応援</MenuItem>
-              <MenuItem value="弥生会計">弥生会計</MenuItem>
-              <MenuItem value="勘定奉行">勘定奉行</MenuItem>
-              <MenuItem value="PCA会計">PCA会計</MenuItem>
-              <MenuItem value="SAP">SAP</MenuItem>
-              <MenuItem value="ERP">ERP</MenuItem>
-              <MenuItem value="Excel">Excel</MenuItem>
-              <MenuItem value="Access">Access</MenuItem>
+             {AccountingSoftware.map((option, index) => (
+                <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                  {option.label}
+                </MenuItem>
+              ))}
             </Select>
             <FormHelperText style={{ color: 'red' }}>{dropdown7Error}</FormHelperText>
           </FormControl>

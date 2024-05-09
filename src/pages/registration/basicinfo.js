@@ -23,6 +23,7 @@ import AccordianBasicInfo from './components/AccordianBasicInfo';
 import CustomDatePicker from './components/DatePicker';
 import Paper from '@mui/material/Paper';
 import { boxSizing } from '@mui/system';
+import { setDate } from 'date-fns';
 
 const prefecture = [
   { value: '', label: 'オプションを選んでください', disabled: true },
@@ -191,16 +192,33 @@ const AddLanguage = [
   { value: 'スワヒリ語', label: 'スワヒリ語' },
   { value: 'タイ語', label: 'タイ語' },
   { value: 'カダログ語', label: 'カダログ語' },
-  { value: 'ベトナム語', label: 'ベトナム語' },
+  { value: 'ベトナム語', label: 'ベトナム語' }
 ];
-
-
 
 const BasicInfo = ({ formData, setFormData, handleNext }) => {
   const [name, setName] = useState('');
   const [isChecked, setIsChecked] = useState(false);
   const [gender, setGender] = useState('');
   const [genderError, setGenderError] = useState('');
+  const [date, setDate] = useState('');
+  const [dateError, setDateError] = useState('');
+  const [finaleducation, setfinaleducation] = useState('');
+  const [finalEducationError, setFinalEducationError] = useState('');
+  const [jobChange, setJobChange] = useState('');
+  const [jobChangeError, setJobChangeError] = useState('');
+  const [currentEmployment, setCurrentEmployment] = useState('');
+  const [currentEmploymentError, setCurrentEmploymentError] = useState('');
+  const [jobChangePeriod, setJobChangePeriod] = useState('');
+  const [jobChangePeriodError, setJobChangePeriodError] = useState('');
+  const [currentAnnualIncome, setCurrentAnnualIncome] = useState('');
+  const [currentAnnualIncomeError, setCurrentAnnualIncomeError] = useState('');
+  const [workExperience, setWorkExperience] = useState('');
+  const [workExperienceError, setWorkExperienceError] = useState('');
+  const [experienceInAccounting, setExperienceInAccounting] = useState('');
+  const [experienceInAccountingError, setExperienceInAccountingError] = useState('');
+  const [spouse, setSpouse] = useState('');
+  const [spouseError, setSpouseError] = useState('');
+
   const [selectedOption, setSelectedOption] = useState('');
   const [selectedOptionError, setSelectedOptionError] = useState('');
   const [secondDropdownValue, setSecondDropdownValue] = useState('');
@@ -231,6 +249,66 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
   const [familyMembers, setFamilyMembers] = useState('');
   const [currentCompany, setCurrentCompany] = useState('');
 
+
+  const handleGenderChange = (event) => {
+    setGender(event.target.value);
+    setGenderError('');
+  };
+
+  const handleDateChange = (event) => {
+    setDate(event.target.value);
+    setDateError('');
+  };
+
+  const handleSelectChange = (event) => {
+    setSelectedOption(event.target.value);
+    setSelectedOptionError('');
+  };
+
+  const handleFinalEducationChange = (event) => {
+    setfinaleducation(event.target.value);
+    setFinalEducationError('');
+  };
+
+  const handlejobChange = (event) => {
+    setJobChange(event.target.value);
+    setJobChangeError('');
+  };
+
+  const handleCurrentEmployment = (event) => {
+    setCurrentEmployment(event.target.value);
+    setCurrentEmploymentError('');
+  };
+
+  const handleJobChangePeriod = (event) => {
+    setJobChangePeriod(event.target.value);
+    setJobChangePeriodError('');
+  };
+
+  const handleCurrentAnnualIncome = (event) => {
+    setCurrentAnnualIncome(event.target.value);
+    setCurrentAnnualIncomeError('');
+  };
+  
+  const handleWorkExperience = (event) => {
+    setWorkExperience(event.target.value);
+    setWorkExperienceError('');
+  };
+  
+  const handleExperienceInAccounting = (event) => {
+    setExperienceInAccounting(event.target.value);
+    setExperienceInAccountingError('');
+  };
+
+  const handleSpouse = (event) => {
+    setSpouse(event.target.value);
+    setSpouseError('');
+  };
+
+
+
+
+
   const handleFamilyMembersChange = (event) => {
     setFamilyMembers(event.target.value);
   };
@@ -254,20 +332,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
     setOpen(!open);
   };
 
-  const handleGenderChange = (event) => {
-    setGender(event.target.value);
-    setGenderError('');
-  };
-
-  const handleSelectChange = (event) => {
-    const value = event.target.value;
-    setSelectedOption(value);
-    if (value === '') {
-      setSelectedOptionError('必須項目です');
-    } else {
-      setSelectedOptionError('');
-    }
-  };
+ 
 
   const handleSecondDropdownChange = (event) => {
     const value = event.target.value;
@@ -365,14 +430,6 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
     setSelectedValue(event.target.value);
   };
 
-  // const menuItems = [
-  //   'ネイティブレベル',
-  //   'ビジネスレベル',
-  //   '日常会話レベル',
-  //   '基礎会話レベル',
-  //   'なし',
-  // ];
-
   const generateValues = (start, end, step) => {
     const values = [];
     for (let i = start; i <= end; i += step) {
@@ -384,73 +441,78 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // if (name.trim() === '') {
-    //   alert('Name is required.');
-    //   return;
-    // }
+    // Perform validation checks for all fields
+    let errors = {};
 
-    // if (!isChecked) {
-    //   alert('Please agree to the terms and conditions.');
-    //   return;
-    // }
+    // Validate gender
+    if (!gender) {
+      errors.gender = "Please select an option";
+    }
 
-    // if (gender === '') {
-    //   setGenderError('Please select a gender.');
-    //   return;
-    // }
+    if (!date) {
+      errors.date = "Please select an option";
+    }
 
-    // if (selectedOption === '') {
-    //   setSelectedOptionError('Please select an option.');
-    //   return;
-    // }
+    // Validate prefecture
+    if (!selectedOption) {
+      errors.selectedOption = "Please select an option";
+    }
 
-    // if (secondDropdownValue === '') {
-    //   setSecondDropdownError('Please select a value for the second dropdown.');
-    //   return;
-    // }
+    if (!finaleducation) {
+      errors.finaleducation = "Please select an option";
+    }
 
-    // if (thirdDropdownValue === '') {
-    //   setThirdDropdownError('Please select a value for the third dropdown.');
-    //   return;
-    // }
+    if (!jobChange) {
+      errors.jobChange = "Please select an option";
+    }
 
-    // if (newRadioValue === '') {
-    //   setNewRadioError('Please select a value for the new radio button group.');
-    //   return;
-    // }
+    if (!currentEmployment) {
+      errors.currentEmployment = "Please select an option";
+    }
 
-    // if (new2RadioValue === '') {
-    //   setNewRadioError('Please select a value for the new radio button group.');
-    //   return;
-    // }
+    if (!jobChangePeriod) {
+      errors.jobChangePeriod = "Please select an option";
+    }
 
-    // if (dropdown4Value === '') {
-    //   setDropdown4Error('Please select a value for the fourth dropdown.');
-    //   return;
-    // }
+    if (!currentAnnualIncome) {
+      errors.currentAnnualIncome = "Please select an option";
+    }
 
-    // if (dropdown5Value === '') {
-    //   setDropdown5Error('Please select a value for the fifth dropdown.');
-    //   return;
-    // }
+    if (!workExperience) {
+      errors.workExperience = "Please select an option";
+    }
 
-    // if (dropdown6Value === '') {
-    //   setDropdown6Error('Please select a value for the sixth dropdown.');
-    //   return;
-    // }
+    if (!experienceInAccounting) {
+      errors.experienceInAccounting = "Please select an option";
+    }
 
-    // if (dropdown7Value === '') {
-    //   setDropdown7Error('Please select a value for the seventh dropdown.');
-    //   return;
-    // }
+    if (!spouse) {
+      errors.spouse = "Please select an option";
+    }
 
-    // if (dropdown8Value === '') {
-    //   setDropdown8Error('Please select a value for the eighth dropdown.');
-    //   return;
-    // }
+    // Update state with validation errors
+    setGenderError(errors.gender || "");
+    setDateError(errors.date || "");
+    setSelectedOptionError(errors.selectedOption || "");
+    setFinalEducationError(errors.finaleducation || "");
+    setJobChangeError(errors.jobChange || "");
+    setCurrentEmploymentError(errors.currentEmployment || "");
+    setJobChangePeriodError(errors.jobChangePeriod || "");
+    setCurrentAnnualIncomeError(errors.currentAnnualIncome || "");
+    setWorkExperienceError(errors.workExperience || "");
+    setExperienceInAccountingError(errors.experienceInAccounting || "");
+    setSpouseError(errors.spouse || "");
+    
 
-    handleNext();
+    // If there are any validation errors, do not submit the form
+    if (Object.keys(errors).length === 0) {
+      handleNext();
+    }
   };
+ 
+
+
+
 
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -476,7 +538,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2} sx={{ textAlign: 'left', marginTop: '10px' }}>
           <Grid item xs={12}>
-          <FormControl component="fieldset" required error={!!genderError}>
+          <FormControl component="fieldset">
             <FormLabel component="legend">性別を教えてください<span className='required_label'>必須</span></FormLabel>
             <RadioGroup
               row
@@ -484,24 +546,26 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
               name="gender"
               value={gender}
               onChange={handleGenderChange}
+              required
             >
               <FormControlLabel value="男性" control={<Radio />} label="男性" />
               <FormControlLabel value="女性" control={<Radio />} label="女性" />
             </RadioGroup>
-            <FormHelperText style={{ color: 'red' }}>{genderError}</FormHelperText>
+            {genderError && <FormHelperText style={{ color: 'red', margin: '10px 0'}}>{genderError}</FormHelperText>}
           </FormControl>
         </Grid>
         <Grid item xs={12} sx={{padding:'2px'}}>
           {/* Date Picker */}
-          <FormControl fullWidth required error={!!dropdown7Error}>
+          <FormControl fullWidth>
             <FormLabel id="dropdown7-label" sx={{marginBottom: '10px'}}>生まれた年を教えてください<span className='required_label'>必須</span>​</FormLabel>
-            <CustomDatePicker required={false} style={{padding: '0 10px'}} />
-            <FormHelperText style={{ color: 'red' }}>{dropdown7Error}</FormHelperText>
+            <CustomDatePicker required={false} style={{padding: '0 10px'}} value={date}
+              onChange={handleDateChange} />
+           {dateError && <FormHelperText style={{ color: 'red', margin: '10px 0'}}>{dateError}</FormHelperText>} 
           </FormControl>
           
         </Grid>
         <Grid item xs={12}>
-          <FormControl fullWidth required error={!!selectedOptionError}>
+          <FormControl fullWidth>
             <FormLabel id="demo-radio-buttons-group-label" sx={{marginBottom: '10px'}}>お住まいの都道府県を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
               value={selectedOption}
@@ -514,16 +578,16 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
                 </MenuItem>
               ))}
             </Select>
-            <FormHelperText style={{ color: 'red' }}>{selectedOptionError}</FormHelperText>
+            {selectedOptionError && <FormHelperText style={{ color: 'red', margin: '10px 0'}}>{selectedOptionError}</FormHelperText>}
           </FormControl>
         </Grid>
 
         <Grid item xs={12}>
-          <FormControl fullWidth required error={!!secondDropdownError}>
+          <FormControl fullWidth>
             <FormLabel id="second-dropdown-label" sx={{marginBottom: '10px'}}>最終学歴を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
-              value={secondDropdownValue}
-              onChange={handleSecondDropdownChange}
+              value={finaleducation}
+              onChange={handleFinalEducationChange}
               displayEmpty>
               {FinalEducation.map((option, index) => (
                 <MenuItem key={index} value={option.value} disabled={option.disabled}>
@@ -531,16 +595,16 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
                 </MenuItem>
               ))}
             </Select>
-            <FormHelperText style={{ color: 'red' }}>{secondDropdownError}</FormHelperText>
+            {finalEducationError && <FormHelperText style={{ color: 'red', margin: '10px 0'}}>{finalEducationError}</FormHelperText> }
           </FormControl>
         </Grid>
 
         <Grid item xs={12}>
-          <FormControl fullWidth required error={!!thirdDropdownError}>
+          <FormControl fullWidth>
             <FormLabel id="third-dropdown-label" sx={{marginBottom: '10px'}}>転職回数を教えてください<span className='required_label'>必須</span></FormLabel>
             <Select
-              value={thirdDropdownValue}
-              onChange={handleThirdDropdownChange}
+              value={jobChange}
+              onChange={handlejobChange}
               displayEmpty
             > 
              {JobChange.map((option, index) => (
@@ -549,32 +613,32 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
                 </MenuItem>
               ))}
             </Select>
-            <FormHelperText style={{ color: 'red' }}>{thirdDropdownError}</FormHelperText>
+            {jobChangeError && <FormHelperText style={{ color: 'red', margin: '10px 0'}}>{jobChangeError}</FormHelperText>}
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-          <FormControl component="fieldset" required error={!!newRadioError}>
+          <FormControl component="fieldset">
             <FormLabel component="legend" sx={{marginBottom: '10px'}}>現在の就業状況を教えてください<span className='required_label'>必須</span></FormLabel>
             <RadioGroup
               row
               aria-label="newRadio"
               name="newRadio"
-              value={newRadioValue}
-              onChange={handleNewRadioChange}
+              value={currentEmployment}
+              onChange={handleCurrentEmployment}
             >
               <FormControlLabel value="就業している" control={<Radio />} label="就業している" />
               <FormControlLabel value="就業していない" control={<Radio />} label="就業していない" />
             </RadioGroup>
-            <FormHelperText style={{ color: 'red' }}>{newRadioError}</FormHelperText>
+            {currentEmploymentError && <FormHelperText style={{ color: 'red', margin: '10px 0'}}>{currentEmploymentError}</FormHelperText> }
           </FormControl>
         </Grid>
         <Grid item xs={12}>
           {/* Fourth Dropdown */}
-          <FormControl fullWidth required error={!!dropdown4Error}>
+          <FormControl fullWidth>
             <FormLabel id="dropdown4-label" sx={{marginBottom: '10px'}}>転職希望時期を教えてください<span className='required_label'>必須</span></FormLabel>
             <Select
-              value={dropdown4Value}
-              onChange={handleDropdown4Change}
+              value={jobChangePeriod}
+              onChange={handleJobChangePeriod}
               displayEmpty
             > 
               {JobchangePeriod.map((option, index) => (
@@ -583,17 +647,17 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
                 </MenuItem>
               ))}
             </Select>
-            <FormHelperText style={{ color: 'red' }}>{dropdown4Error}</FormHelperText>
+            {jobChangePeriodError && <FormHelperText style={{ color: 'red', margin: '10px 0'}}>{jobChangePeriodError}</FormHelperText>}
           </FormControl>
         </Grid>
 
         <Grid item xs={12}>
       {/* Fifth Dropdown */}
-      <FormControl fullWidth required error={!!dropdown5Error}>
+      <FormControl fullWidth>
         <FormLabel id="dropdown5-label" sx={{marginBottom: '10px'}}>現在年収を教えてください<span className='required_label'>必須</span></FormLabel>
         <Select
-          value={dropdown5Value}
-          onChange={handleDropdown5Change}
+          value={currentAnnualIncome}
+          onChange={handleCurrentAnnualIncome}
           displayEmpty
         >
           <MenuItem value="" disabled>
@@ -611,17 +675,17 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
             </MenuItem>
           ))}
         </Select>
-        <FormHelperText style={{ color: 'red' }}>{dropdown5Error}</FormHelperText>
+        {currentAnnualIncomeError && <FormHelperText style={{ color: 'red', margin: '10px 0'}}>{currentAnnualIncomeError}</FormHelperText> }
       </FormControl>
     </Grid>
 
         <Grid item xs={12}>
           {/* Sixth Dropdown */}
-          <FormControl fullWidth required error={!!dropdown6Error}>
+          <FormControl fullWidth>
             <FormLabel id="dropdown6-label" sx={{marginBottom: '10px'}}>経験した職種を教えてください <br />（複数選択可）<span className='required_label'>必須</span></FormLabel>
             <Select
-              value={dropdown6Value}
-              onChange={handleDropdown6Change}
+              value={workExperience}
+              onChange={handleWorkExperience}
               displayEmpty
             > 
               {WorkExperience.map((option, index) => (
@@ -630,7 +694,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
                 </MenuItem>
               ))}
             </Select>
-            <FormHelperText style={{ color: 'red' }}>{dropdown6Error}</FormHelperText>
+            {workExperienceError && <FormHelperText style={{ color: 'red', margin: '10px 0'}}>{workExperienceError}</FormHelperText>}
           </FormControl>
         </Grid>
           
@@ -645,11 +709,11 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
 
         <Grid item xs={12}>
           {/* Eight Dropdown */}
-          <FormControl fullWidth required error={!!dropdown8Error}>
+          <FormControl fullWidth>
             <FormLabel id="dropdown5-label" sx={{marginBottom: '10px'}}>経理の経験年数を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
-              value={dropdown8Value}
-              onChange={handleDropdown8Change}
+              value={experienceInAccounting}
+              onChange={handleExperienceInAccounting}
               displayEmpty
             > 
               {ExperienceinAccounting.map((option, index) => (
@@ -658,7 +722,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
                 </MenuItem>
               ))}
             </Select>
-            <FormHelperText style={{ color: 'red' }}>{dropdown8Error}</FormHelperText>
+            {experienceInAccountingError && <FormHelperText style={{ color: 'red', margin: '10px 0'}}>{experienceInAccountingError}</FormHelperText> }
           </FormControl>
         </Grid>
 
@@ -691,19 +755,19 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
         </Grid>
 
         <Grid item xs={12}>
-          <FormControl component="fieldset" required error={!!new2RadioError}>
+          <FormControl component="fieldset">
             <FormLabel component="legend" sx={{marginBottom: '10px'}}>配偶者についてを教えてください​​<span className='required_label'>必須</span>​</FormLabel>
             <RadioGroup
               row
               aria-label="newRadio"
               name="newRadio"
-              value={new2RadioValue}
-              onChange={handleNew2RadioChange}
+              value={spouse}
+              onChange={handleSpouse}
             >
               <FormControlLabel value="配偶者あり" control={<Radio />} label="配偶者あり" />
               <FormControlLabel value="配偶者なし" control={<Radio />} label="配偶者なし" />
             </RadioGroup>
-            <FormHelperText style={{ color: 'red' }}>{new2RadioError}</FormHelperText>
+            {spouseError && <FormHelperText style={{ color: 'red', margin: '10px 0'}}>{spouseError}</FormHelperText> }
           </FormControl>
         </Grid>
 
