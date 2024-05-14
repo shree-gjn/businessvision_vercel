@@ -92,8 +92,14 @@
   display: none;
 }
 
-.MuiFormControl-root .css-12qh7pf-MuiFormLabel-root, .MuiFormControl-root .css-cs0us3-MuiFormLabel-root{
+/* .MuiFormControl-root .css-12qh7pf-MuiFormLabel-root, .MuiFormControl-root .css-cs0us3-MuiFormLabel-root{
   line-height: 1.8;
   font-weight: 600;
   color: #000;
+} */
+
+.formfield-label{
+  line-height: 1.8 !important;
+  font-weight: 600 !important;
+  color: #000 !important;
 }

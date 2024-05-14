@@ -578,7 +578,7 @@ const DesiredCondition = ({ formData, setFormData, handleNext, handleBack}) => {
        
         <Grid item xs={12}>
           <FormControl fullWidth error={Boolean(errors.desiredAnnualIncome)} sx={{marginBottom: '10px'}}>
-            <FormLabel id="demo-radio-buttons-group-label" sx={{marginBottom: '10px'}}>ご希望の年収を教えてください<span className='required_label'>必須</span></FormLabel>
+            <FormLabel className='formfield-label' id="demo-radio-buttons-group-label" sx={{marginBottom: '10px'}}>ご希望の年収を教えてください<span className='required_label'>必須</span></FormLabel>
             <Select
               value={formData.desiredAnnualIncome || ''}
               name='desiredAnnualIncome'
@@ -607,7 +607,7 @@ const DesiredCondition = ({ formData, setFormData, handleNext, handleBack}) => {
 
         <Grid item xs={12}>
           <FormControl fullWidth error={Boolean(errors.desiredJobType)} sx={{marginBottom: '10px'}}>
-            <FormLabel id="second-dropdown-label" sx={{marginBottom: '10px'}}>ご希望の職種を教えてください<span className='required_label'>必須</span>​</FormLabel>
+            <FormLabel className='formfield-label' id="second-dropdown-label" sx={{marginBottom: '10px'}}>ご希望の職種を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
               value={formData.desiredJobType || ''}
               name='desiredJobType'
@@ -628,7 +628,7 @@ const DesiredCondition = ({ formData, setFormData, handleNext, handleBack}) => {
 
         <Grid item xs={12}>
           <FormControl fullWidth error={Boolean(errors.desiredIndustry)} sx={{marginBottom: '10px'}}>
-            <FormLabel id="third-dropdown-label" sx={{marginBottom: '10px'}}>ご希望の業種を教えてください​<span className='required_label'>必須</span></FormLabel>
+            <FormLabel className='formfield-label' id="third-dropdown-label" sx={{marginBottom: '10px'}}>ご希望の業種を教えてください​<span className='required_label'>必須</span></FormLabel>
             <Select
               value={formData.desiredIndustry || ''}
               name='desiredIndustry'
@@ -650,7 +650,7 @@ const DesiredCondition = ({ formData, setFormData, handleNext, handleBack}) => {
         <Grid item xs={12}>
           {/* Fourth Dropdown */}
           <FormControl fullWidth error={Boolean(errors.desiredPosition)} sx={{marginBottom: '10px'}}>
-            <FormLabel id="dropdown4-label" sx={{marginBottom: '10px'}}>ご希望の役職を教えてください<span className='required_label'>必須</span>​</FormLabel>
+            <FormLabel className='formfield-label' id="dropdown4-label" sx={{marginBottom: '10px'}}>ご希望の役職を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
               value={formData.desiredPosition || ''}
               name='desiredPosition'
@@ -672,7 +672,7 @@ const DesiredCondition = ({ formData, setFormData, handleNext, handleBack}) => {
         <Grid item xs={12}>
           {/* Fifth Dropdown */}
           <FormControl fullWidth error={Boolean(errors.desiredWorkLocation)} sx={{marginBottom: '10px'}}>
-            <FormLabel id="dropdown5-label" sx={{marginBottom: '10px'}}>ご希望の勤務地（都道府県）を教えてください<span className='required_label'>必須</span>​</FormLabel>
+            <FormLabel className='formfield-label' id="dropdown5-label" sx={{marginBottom: '10px'}}>ご希望の勤務地（都道府県）を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
               value={formData.desiredWorkLocation || ''}
               name='desiredWorkLocation'
@@ -694,7 +694,7 @@ const DesiredCondition = ({ formData, setFormData, handleNext, handleBack}) => {
         <Grid item xs={12}>
           {/* Sixth Dropdown */}
           <FormControl fullWidth error={Boolean(errors.desiredCompanyCategory)} sx={{marginBottom: '10px'}}>
-            <FormLabel id="dropdown6-label" sx={{marginBottom: '10px'}}>ご希望の企業カテゴリを教えてください​<span className='required_label'>必須</span></FormLabel>
+            <FormLabel className='formfield-label' id="dropdown6-label" sx={{marginBottom: '10px'}}>ご希望の企業カテゴリを教えてください​<span className='required_label'>必須</span></FormLabel>
             <Select
               value={formData.desiredCompanyCategory || ''}
               name='desiredCompanyCategory'
@@ -716,7 +716,7 @@ const DesiredCondition = ({ formData, setFormData, handleNext, handleBack}) => {
         <Grid item xs={12}>
           {/* 7 Dropdown */}
           <FormControl fullWidth error={Boolean(errors.desiredEmployees)} sx={{marginBottom: '10px'}}>
-            <FormLabel id="dropdown7-label" sx={{marginBottom: '10px'}}>ご希望の従業員規模を教えてください<span className='required_label'>必須</span>​</FormLabel>
+            <FormLabel className='formfield-label' id="dropdown7-label" sx={{marginBottom: '10px'}}>ご希望の従業員規模を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
               value={formData.desiredEmployees || ''}
               name='desiredEmployees'

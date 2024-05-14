@@ -1318,7 +1318,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
         <Grid container spacing={2} sx={{ textAlign: 'left', marginTop: '10px' }}>
           <Grid item xs={12}>
           <FormControl component="fieldset" error={Boolean(errors.gender)} sx={{marginBottom: '10px'}}>
-            <FormLabel component="legend">性別を教えてください<span className='required_label'>必須</span></FormLabel>
+            <FormLabel className='formfield-label' component="legend">性別を教えてください<span className='required_label'>必須</span></FormLabel>
             <RadioGroup
               row
               aria-label="gender"
@@ -1337,7 +1337,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12} sx={{padding:'2px'}}>
           {/* Date Picker */}
           <FormControl fullWidth error={Boolean(errors.date)} sx={{marginBottom: '10px'}}>
-            <FormLabel id="dropdown7-label" sx={{marginBottom: '10px'}}>生まれた年を教えてください<span className='required_label'>必須</span>​</FormLabel>
+            <FormLabel className='formfield-label' id="dropdown7-label" sx={{marginBottom: '10px'}}>生まれた年を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <CustomDatePicker style={{padding: '0 10px'}} value={formData.date || ''} name='date'
                onChange={handleChange} error={Boolean(errors.date)}
               helperText={errors.date} />
@@ -1346,7 +1346,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
         </Grid>
         <Grid item xs={12}>
           <FormControl fullWidth error={Boolean(errors.selectedOption)} sx={{marginBottom: '10px'}}>
-            <FormLabel id="demo-radio-buttons-group-label" sx={{marginBottom: '10px'}}>お住まいの都道府県を教えてください<span className='required_label'>必須</span>​</FormLabel>
+            <FormLabel className='formfield-label' id="demo-radio-buttons-group-label" sx={{marginBottom: '10px'}}>お住まいの都道府県を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
               value={formData.selectedOption || ''}
               name='selectedOption'
@@ -1366,7 +1366,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
 
         <Grid item xs={12}>
           <FormControl fullWidth error={Boolean(errors.finaleducation)} sx={{marginBottom: '10px'}}>
-            <FormLabel id="second-dropdown-label" sx={{marginBottom: '10px'}}>最終学歴を教えてください<span className='required_label'>必須</span>​</FormLabel>
+            <FormLabel className='formfield-label' id="second-dropdown-label" sx={{marginBottom: '10px'}}>最終学歴を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
               value={formData.finaleducation || ''}
               name='finaleducation'
@@ -1386,7 +1386,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
 
         <Grid item xs={12}>
           <FormControl fullWidth error={Boolean(errors.jobChange)} sx={{marginBottom: '10px'}}>
-            <FormLabel id="third-dropdown-label" sx={{marginBottom: '10px'}}>転職回数を教えてください<span className='required_label'>必須</span></FormLabel>
+            <FormLabel className='formfield-label' id="third-dropdown-label" sx={{marginBottom: '10px'}}>転職回数を教えてください<span className='required_label'>必須</span></FormLabel>
             <Select
               value={formData.jobChange || ''}
               name='jobChange'
@@ -1405,7 +1405,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
         </Grid>
         <Grid item xs={12} >
           <FormControl component="fieldset" error={Boolean(errors.currentEmployment)} sx={{marginBottom: '10px'}}>
-            <FormLabel component="legend" sx={{marginBottom: '10px'}}>現在の就業状況を教えてください<span className='required_label'>必須</span></FormLabel>
+            <FormLabel className='formfield-label' component="legend" sx={{marginBottom: '10px'}}>現在の就業状況を教えてください<span className='required_label'>必須</span></FormLabel>
             <RadioGroup
               row
               aria-label="newRadio"
@@ -1424,7 +1424,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12}>
           {/* Fourth Dropdown */}
           <FormControl fullWidth error={Boolean(errors.jobChangePeriod)} sx={{marginBottom: '10px'}}>
-            <FormLabel id="dropdown4-label" sx={{marginBottom: '10px'}}>転職希望時期を教えてください<span className='required_label'>必須</span></FormLabel>
+            <FormLabel className='formfield-label' id="dropdown4-label" sx={{marginBottom: '10px'}}>転職希望時期を教えてください<span className='required_label'>必須</span></FormLabel>
             <Select
               value={formData.jobChangePeriod || ''}
               name='jobChangePeriod'
@@ -1446,7 +1446,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12}>
       {/* Fifth Dropdown */}
       <FormControl fullWidth error={Boolean(errors.currentAnnualIncome)} sx={{marginBottom: '10px'}}>
-        <FormLabel id="dropdown5-label" sx={{marginBottom: '10px'}}>現在年収を教えてください<span className='required_label'>必須</span></FormLabel>
+        <FormLabel className='formfield-label' id="dropdown5-label" sx={{marginBottom: '10px'}}>現在年収を教えてください<span className='required_label'>必須</span></FormLabel>
         <Select
           value={formData.currentAnnualIncome || ''}
           name='currentAnnualIncome'
@@ -1477,7 +1477,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12}>
           {/* Sixth Dropdown */}
           <FormControl fullWidth error={Boolean(errors.workExperience)} sx={{marginBottom: '10px'}}>
-            <FormLabel id="dropdown6-label" sx={{marginBottom: '10px'}}>経験した職種を教えてください <br />（複数選択可）<span className='required_label'>必須</span></FormLabel>
+            <FormLabel className='formfield-label' id="dropdown6-label" sx={{marginBottom: '10px'}}>経験した職種を教えてください <br />（複数選択可）<span className='required_label'>必須</span></FormLabel>
             <Select
               value={formData.workExperience || ''}
               name='workExperience'
@@ -1506,7 +1506,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
 
         <Grid item xs={12}>
           <FormControl fullWidth sx={{marginBottom: '10px'}}>
-            <FormLabel id="dropdown7-label" sx={{marginBottom: '10px'}}>これまでのキャリアで経験した業種を教えてください（複数選択可）​</FormLabel>
+            <FormLabel className='formfield-label' id="dropdown7-label" sx={{marginBottom: '10px'}}>これまでのキャリアで経験した業種を教えてください（複数選択可）​</FormLabel>
             <AccordianBasicInfo required={false} value={formData.currentCompany} name='currentCompany'/>
           </FormControl>
         </Grid>
@@ -1514,7 +1514,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
         <Grid item xs={12}>
           {/* Eight Dropdown */}
           <FormControl fullWidth error={Boolean(errors.experienceInAccounting)} sx={{marginBottom: '10px'}}>
-            <FormLabel id="dropdown5-label" sx={{marginBottom: '10px'}}>経理の経験年数を教えてください<span className='required_label'>必須</span>​</FormLabel>
+            <FormLabel className='formfield-label' id="dropdown5-label" sx={{marginBottom: '10px'}}>経理の経験年数を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
               value={formData.experienceInAccounting || ''}
               name='experienceInAccounting'
@@ -1535,7 +1535,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
 
         <Grid item xs={12}>
         <FormControl fullWidth>
-          <FormLabel id="textfield-label" sx={{marginBottom: '10px'}}>現在（直近）の在籍会社名を入力してください <br /> (複数登録が可能です。）</FormLabel>
+          <FormLabel className='formfield-label' id="textfield-label" sx={{marginBottom: '10px'}}>現在（直近）の在籍会社名を入力してください <br /> (複数登録が可能です。）</FormLabel>
           <TextField
             fullWidth
             placeholder="現在（直近）の在籍会社名を入力してください"
@@ -1563,7 +1563,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
 
         <Grid item xs={12}>
           <FormControl component="fieldset" error={Boolean(errors.spouse)} sx={{marginBottom: '10px'}}>
-            <FormLabel component="legend" sx={{marginBottom: '10px'}}>配偶者についてを教えてください​​<span className='required_label'>必須</span>​</FormLabel>
+            <FormLabel className='formfield-label' component="legend" sx={{marginBottom: '10px'}}>配偶者についてを教えてください​​<span className='required_label'>必須</span>​</FormLabel>
             <RadioGroup
               row
               aria-label="newRadio"
@@ -1582,7 +1582,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
 
         <Grid item xs={12}>
           <FormControl fullWidth error={Boolean(errors.familyMembers)} sx={{marginBottom: '10px'}}>
-            <FormLabel id="dropdown9-label" sx={{marginBottom: '10px'}}>扶養される家族数について教えてください​<span className='required_label'>必須</span>​</FormLabel>
+            <FormLabel className='formfield-label' id="dropdown9-label" sx={{marginBottom: '10px'}}>扶養される家族数について教えてください​<span className='required_label'>必須</span>​</FormLabel>
             <TextField
               variant="outlined"
               type="name"
@@ -1598,7 +1598,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
         </Grid>
 
         <Grid item xs={12}>
-        <FormLabel id="dropdown9-label" style={{marginBottom:'10px', fontWeight: '600', color: '#000'}}>語学スキルについて教えてください​​</FormLabel>
+        <FormLabel className='formfield-label' id="dropdown9-label" style={{marginBottom:'10px', fontWeight: '600', color: '#000'}}>語学スキルについて教えてください​​</FormLabel>
           </Grid>
 
           <Grid item xs={12}>
