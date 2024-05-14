@@ -63,7 +63,7 @@ const NestedAccordion = ({ title, innerAccordions }) => {
   };
 
   return (
-    <Accordion expanded={expanded} onChange={handleChange}>
+    <Accordion expanded={expanded} onChange={handleChange} sx={{boxShadow: 'none', border: '1px solid rgba(0, 0, 0, 0.23)'}}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1bh-content">
         <Typography>{title}</Typography>
       </AccordionSummary>

@@ -4,6 +4,7 @@ import { AppBar, Toolbar, IconButton, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import bvlogo from '../assets/bvlogo.svg';
+import tennavi from '../assets/tennavi-logo.png'
 
 // Create the functional component for the app bar
 const MyAppBar = () => {
@@ -13,7 +14,7 @@ const MyAppBar = () => {
       <Toolbar>
         {/* Left corner logo/icon */}
         <IconButton edge="start" color="inherit" aria-label="menu">
-          <img src={bvlogo} alt="Logo" style={{ width: '70px', height: '40px', marginLeft: '10px' }} />
+          <img src={tennavi} alt="Logo" style={{ width: 'auto', height: '30px', marginLeft: '10px' }} />
         </IconButton>
         {/* App title */}
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>

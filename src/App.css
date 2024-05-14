@@ -80,12 +80,20 @@
 .required_label{
   color: red;
   border: 1px solid red;
-  padding: 3px 10px;
+  padding: 0 10px;
   border-radius: 5px;
   font-size: 12px;
   margin-left: 10px;
+  display: inline-block;
+  font-weight: 500;
 }
 
 .MuiFormLabel-asterisk {
   display: none;
+}
+
+.MuiFormControl-root .css-12qh7pf-MuiFormLabel-root, .MuiFormControl-root .css-cs0us3-MuiFormLabel-root{
+  line-height: 1.8;
+  font-weight: 600;
+  color: #000;
 }
