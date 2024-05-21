@@ -1094,6 +1094,23 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
   const [selectedValue, setSelectedValue] = useState([]);
   const [open, setOpen] = useState(false);
   const [currentCompany, setCurrentCompany] = useState('');
+  
+  const [selectedCheckboxes, setSelectedCheckboxes] = useState({});
+
+  // Handler function for checkbox changes
+  // const handleCheckboxChange = (accordionIndex, checkboxLabel, isChecked) => {
+  //   console.log("Accordion Index:", accordionIndex);
+  //   console.log("Checkbox Label:", checkboxLabel);
+  //   console.log("Is Checked:", isChecked);
+
+  //   setSelectedCheckboxes(prevState => ({
+  //     ...prevState,
+  //     [accordionIndex]: {
+  //       ...prevState[accordionIndex],
+  //       [checkboxLabel]: isChecked,
+  //     },
+  //   }));
+  // };
 
 
   const handleGenderChange = (event) => {
@@ -1175,10 +1192,10 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
     setFormData({ ...formData, name: event.target.value });
   };
 
-  const handleCheckboxChange = (event) => {
-    setIsChecked(event.target.checked);
-    setFormData({ ...formData, isChecked: event.target.checked });
-  };
+  // const handleCheckboxChange = (event) => {
+  //   setIsChecked(event.target.checked);
+  //   setFormData({ ...formData, isChecked: event.target.checked });
+  // };
 
   const handleToggle = () => {
     setOpen(!open);
@@ -1214,19 +1231,60 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
   // State for errors
   const [errors, setErrors] = useState({});
 
-  const handleChange = (e) => {
-    const { name, value,  type, checked } = e.target;
-    // setFormData({ ...formData, [name]: value });
-    // setErrors({ ...errors, [name]: '' }); // Clear error message for the field
-    // Check the type of the input field
-    if (type === 'checkbox') {
-      // For checkboxes, update the formData with the checked value
-      setFormData({ ...formData, [name]: checked });
+  // const handleCheckboxChange = (checkboxLabel, isChecked) => {
+  //   const updatedtype_of_industries_exp_overall = isChecked
+  //     ? [...(formData.type_of_industries_exp_overall || []), checkboxLabel]
+  //     : (formData.type_of_industries_exp_overall || []).filter((label) => label !== checkboxLabel);
+
+  //   setFormData({ ...formData, type_of_industries_exp_overall: updatedtype_of_industries_exp_overall });
+  //   setErrors({ ...errors, type_of_industries_exp_overall: '' });
+  // };
+
+  const handleCheckboxChange = (checkboxLabel, isChecked) => {
+    let updatedTypeOfIndustries = formData.type_of_industries_exp_overall || [];
+    
+    if (isChecked) {
+      updatedTypeOfIndustries = [...updatedTypeOfIndustries, checkboxLabel];
     } else {
-      // For other input types, update the formData with the value
-      setFormData({ ...formData, [name]: value });
-      setErrors({ ...errors, [name]: '' }); // Clear error message for the field
+      updatedTypeOfIndustries = updatedTypeOfIndustries.filter(label => label !== checkboxLabel);
     }
+  
+    setFormData({ ...formData, type_of_industries_exp_overall: updatedTypeOfIndustries });
+    setErrors({ ...errors, type_of_industries_exp_overall: '' });
+  };
+
+ 
+  // const handleChange = (e) => {
+  //   const { name, value,  type, checked } = e.target;
+  //   // setFormData({ ...formData, [name]: value });
+  //   // setErrors({ ...errors, [name]: '' }); // Clear error message for the field
+  //   // Check the type of the input field
+  //   if (type === 'checkbox') {
+  //     // For checkboxes, update the formData with the checked value
+  //     setFormData({ ...formData, [name]: checked });
+  //   } else {
+  //     // For other input types, update the formData with the value
+  //     setFormData({ ...formData, [name]: value });
+  //     setErrors({ ...errors, [name]: '' }); // Clear error message for the field
+  //   }
+  // };
+
+  // Handle form field changes
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+
+    // For checkboxes
+    if (type === 'checkbox') {
+      const updatedFormData = { ...formData };
+      updatedFormData[name] = checked; // Update the value directly
+      setFormData(updatedFormData);
+    } else {
+      // For other input types (text, select, etc.)
+      // Update the form data with the value
+      setFormData({ ...formData, [name]: value });
+    }
+    // Clear error message for the field
+    setErrors({ ...errors, [name]: '' });
   };
 
   const handleSubmit = (event) => {
@@ -1236,52 +1294,56 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
     const newErrors = {};
   
     // Basic validation for required fields
-    if (!formData.gender) {
-      newErrors.gender = 'Please select your gender';
+    if (!formData.candidate_gender) {
+      newErrors.candidate_gender = 'Please select your gender';
     }
 
-    if (!formData.date) {
-      newErrors.date = 'Please select your date of birth';
+    if (!formData.dob) {
+      newErrors.dob = 'Please select your date of birth';
     }
 
-    if (!formData.selectedOption) {
-      newErrors.selectedOption = 'Please select your date of birth';
+    if (!formData.prefecture_code) {
+      newErrors.prefecture_code = 'Please select an option';
     }
 
-    if (!formData.finaleducation) {
-      newErrors.finaleducation = 'Please select your final education';
+    if (!formData.final_educational) {
+      newErrors.final_educational = 'Please select your final education';
     }
 
-    if (!formData.jobChange) {
-      newErrors.jobChange = 'Please select an option';
+    if (!formData.job_changed_no) {
+      newErrors.job_changed_no = 'Please select an option';
     }
 
-    if (!formData.currentEmployment) {
-      newErrors.currentEmployment = 'Please select an option';
+    if (!formData.current_employment_status) {
+      newErrors.current_employment_status = 'Please select your current employment';
     }
 
-    if (!formData.jobChangePeriod) {
-      newErrors.jobChangePeriod = 'Please select an option';
+    if (!formData.job_change_duration) {
+      newErrors.job_change_duration = 'Please select your jobchange period';
     }
 
-    if (!formData.currentAnnualIncome) {
-      newErrors.currentAnnualIncome = 'Please select an option';
+    if (!formData.current_annual_income) {
+      newErrors.current_annual_income = 'Please select your current annualincome';
     }
 
-    if (!formData.workExperience) {
-      newErrors.workExperience = 'Please select an option';
+    if (!formData.type_of_work_exp_overall) {
+      newErrors.type_of_work_exp_overall = 'Please select your workexperience';
+    }
+    
+    if (!formData.type_of_industries_exp_overall) {
+      newErrors.type_of_industries_exp_overall = 'Please select your experienced industry';
     }
 
-    if (!formData.experienceInAccounting) {
-      newErrors.experienceInAccounting = 'Please select an option';
+    if (!formData.accounting_exp_total_year) {
+      newErrors.accounting_exp_total_year = 'Please select your experience in accounting';
     }
 
-    if (!formData.spouse) {
-      newErrors.spouse = 'Please select an option';
+    if (!formData.marriage_status) {
+      newErrors.marriage_status = 'Please select an option';
     }
 
-    if (!formData.familyMembers) {
-      newErrors.familyMembers = 'Please select an option';
+    if (!formData.family_member_count) {
+      newErrors.family_member_count = 'Please select an option';
     }
 
     setErrors(newErrors);
@@ -1317,121 +1379,121 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2} sx={{ textAlign: 'left', marginTop: '10px' }}>
           <Grid item xs={12}>
-          <FormControl component="fieldset" error={Boolean(errors.gender)} sx={{marginBottom: '10px'}}>
+          <FormControl component="fieldset" error={Boolean(errors.candidate_gender)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' component="legend">性別を教えてください<span className='required_label'>必須</span></FormLabel>
             <RadioGroup
               row
-              aria-label="gender"
-              name="gender"
-              value={formData.gender || ''}
+              aria-label="candidate_gender"
+              name="candidate_gender"
+              value={formData.candidate_gender || ''}
               onChange={handleChange}
-              error={Boolean(errors.gender)}
-              helperText={errors.gender}
+              error={Boolean(errors.candidate_gender)}
+              helperText={errors.candidate_gender}
             >
               <FormControlLabel value="男性" control={<Radio />} label="男性" />
               <FormControlLabel value="女性" control={<Radio />} label="女性" />
             </RadioGroup>
-            {errors.gender && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.gender}</FormHelperText>}
+            {errors.candidate_gender && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.candidate_gender}</FormHelperText>}
           </FormControl>
         </Grid>
         <Grid item xs={12} sx={{padding:'2px'}}>
           {/* Date Picker */}
-          <FormControl fullWidth error={Boolean(errors.date)} sx={{marginBottom: '10px'}}>
+          <FormControl fullWidth error={Boolean(errors.dob)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="dropdown7-label" sx={{marginBottom: '10px'}}>生まれた年を教えてください<span className='required_label'>必須</span>​</FormLabel>
-            <CustomDatePicker style={{padding: '0 10px'}} value={formData.date || ''} name='date'
-               onChange={handleChange} error={Boolean(errors.date)}
-              helperText={errors.date} />
-           {errors.date && <FormHelperText style={{ color: 'red', margin: '10px 0'}}>{errors.date}</FormHelperText>} 
+            <CustomDatePicker style={{padding: '0 10px'}} value={formData.dob || ''} name='dob'
+               onChange={handleChange} error={Boolean(errors.dob)}
+              helperText={errors.dob} />
+           {errors.dob && <FormHelperText style={{ color: 'red', margin: '10px 0'}}>{errors.dob}</FormHelperText>} 
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-          <FormControl fullWidth error={Boolean(errors.selectedOption)} sx={{marginBottom: '10px'}}>
+          <FormControl fullWidth error={Boolean(errors.prefecture_code)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="demo-radio-buttons-group-label" sx={{marginBottom: '10px'}}>お住まいの都道府県を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
-              value={formData.selectedOption || ''}
-              name='selectedOption'
+              value={formData.prefecture_code || ''}
+              name='prefecture_code'
               onChange={handleChange}
               displayEmpty
-              error={Boolean(errors.selectedOption)}
-              helperText={errors.selectedOption}>
+              error={Boolean(errors.prefecture_code)}
+              helperText={errors.prefecture_code}>
               {prefecture.map((option, index) => (
                 <MenuItem key={index} value={option.value} disabled={option.disabled}>
                   {option.label}
                 </MenuItem>
               ))}
             </Select>
-            {errors.selectedOption && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.selectedOption}</FormHelperText>}
+            {errors.prefecture_code && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.prefecture_code}</FormHelperText>}
           </FormControl>
         </Grid>
 
         <Grid item xs={12}>
-          <FormControl fullWidth error={Boolean(errors.finaleducation)} sx={{marginBottom: '10px'}}>
+          <FormControl fullWidth error={Boolean(errors.final_educational)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="second-dropdown-label" sx={{marginBottom: '10px'}}>最終学歴を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
-              value={formData.finaleducation || ''}
-              name='finaleducation'
+              value={formData.final_educational || ''}
+              name='final_educational'
               onChange={handleChange}
               displayEmpty
-              error={Boolean(errors.finaleducation)}
-              helperText={errors.finaleducation}>
+              error={Boolean(errors.final_educational)}
+              helperText={errors.final_educational}>
               {FinalEducation.map((option, index) => (
                 <MenuItem key={index} value={option.value} disabled={option.disabled}>
                   {option.label}
                 </MenuItem>
               ))}
             </Select>
-            {errors.finaleducation && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.finaleducation}</FormHelperText> }
+            {errors.final_educational && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.final_educational}</FormHelperText> }
           </FormControl>
         </Grid>
 
         <Grid item xs={12}>
-          <FormControl fullWidth error={Boolean(errors.jobChange)} sx={{marginBottom: '10px'}}>
+          <FormControl fullWidth error={Boolean(errors.job_changed_no)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="third-dropdown-label" sx={{marginBottom: '10px'}}>転職回数を教えてください<span className='required_label'>必須</span></FormLabel>
             <Select
-              value={formData.jobChange || ''}
-              name='jobChange'
+              value={formData.job_changed_no || ''}
+              name='job_changed_no'
               onChange={handleChange}
               displayEmpty
-              error={Boolean(errors.jobChange)}
-              helperText={errors.jobChange}>
+              error={Boolean(errors.job_changed_no)}
+              helperText={errors.job_changed_no}>
              {JobChange.map((option, index) => (
                 <MenuItem key={index} value={option.value} disabled={option.disabled}>
                   {option.label}
                 </MenuItem>
               ))}
             </Select>
-            {errors.jobChange && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.jobChange }</FormHelperText>}
+            {errors.job_changed_no && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.job_changed_no }</FormHelperText>}
           </FormControl>
         </Grid>
         <Grid item xs={12} >
-          <FormControl component="fieldset" error={Boolean(errors.currentEmployment)} sx={{marginBottom: '10px'}}>
+          <FormControl component="fieldset" error={Boolean(errors.current_employment_status)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' component="legend" sx={{marginBottom: '10px'}}>現在の就業状況を教えてください<span className='required_label'>必須</span></FormLabel>
             <RadioGroup
               row
               aria-label="newRadio"
-              name="currentEmployment"
-              value={formData.currentEmployment || ''}
+              name="current_employment_status"
+              value={formData.current_employment_status || ''}
               onChange={handleChange}
-              error={Boolean(errors.currentEmployment)}
-              helperText={errors.currentEmployment}
+              error={Boolean(errors.current_employment_status)}
+              helperText={errors.current_employment_status}
             >
               <FormControlLabel value="就業している" control={<Radio />} label="就業している" />
               <FormControlLabel value="就業していない" control={<Radio />} label="就業していない" />
             </RadioGroup>
-            {errors.currentEmployment && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.currentEmployment}</FormHelperText> }
+            {errors.current_employment_status && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.current_employment_status}</FormHelperText> }
           </FormControl>
         </Grid>
         <Grid item xs={12}>
           {/* Fourth Dropdown */}
-          <FormControl fullWidth error={Boolean(errors.jobChangePeriod)} sx={{marginBottom: '10px'}}>
+          <FormControl fullWidth error={Boolean(errors.job_change_duration)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="dropdown4-label" sx={{marginBottom: '10px'}}>転職希望時期を教えてください<span className='required_label'>必須</span></FormLabel>
             <Select
-              value={formData.jobChangePeriod || ''}
-              name='jobChangePeriod'
+              value={formData.job_change_duration || ''}
+              name='job_change_duration'
               onChange={handleChange}
               displayEmpty
-              error={Boolean(errors.jobChangePeriod)}
-              helperText={errors.jobChangePeriod}
+              error={Boolean(errors.job_change_duration)}
+              helperText={errors.job_change_duration}
             > 
               {JobchangePeriod.map((option, index) => (
                 <MenuItem key={index} value={option.value} disabled={option.disabled}>
@@ -1439,21 +1501,21 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
                 </MenuItem>
               ))}
             </Select>
-            {errors.jobChangePeriod && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.jobChangePeriod}</FormHelperText>}
+            {errors.job_change_duration && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.job_change_duration}</FormHelperText>}
           </FormControl>
         </Grid>
 
         <Grid item xs={12}>
       {/* Fifth Dropdown */}
-      <FormControl fullWidth error={Boolean(errors.currentAnnualIncome)} sx={{marginBottom: '10px'}}>
+      <FormControl fullWidth error={Boolean(errors.current_annual_income)} sx={{marginBottom: '10px'}}>
         <FormLabel className='formfield-label' id="dropdown5-label" sx={{marginBottom: '10px'}}>現在年収を教えてください<span className='required_label'>必須</span></FormLabel>
         <Select
-          value={formData.currentAnnualIncome || ''}
-          name='currentAnnualIncome'
+          value={formData.current_annual_income || ''}
+          name='current_annual_income'
           onChange={handleChange}
           displayEmpty
-          error={Boolean(errors.currentAnnualIncome)}
-          helperText={errors.currentAnnualIncome}
+          error={Boolean(errors.current_annual_income)}
+          helperText={errors.current_annual_income}
         >
           <MenuItem value="" disabled>
             オプションを選んでください
@@ -1470,21 +1532,21 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
             </MenuItem>
           ))}
         </Select>
-        {errors.currentAnnualIncome && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.currentAnnualIncome}</FormHelperText> }
+        {errors.current_annual_income && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.current_annual_income}</FormHelperText> }
       </FormControl>
     </Grid>
 
         <Grid item xs={12}>
           {/* Sixth Dropdown */}
-          <FormControl fullWidth error={Boolean(errors.workExperience)} sx={{marginBottom: '10px'}}>
+          <FormControl fullWidth error={Boolean(errors.type_of_work_exp_overall)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="dropdown6-label" sx={{marginBottom: '10px'}}>経験した職種を教えてください <br />（複数選択可）<span className='required_label'>必須</span></FormLabel>
             <Select
-              value={formData.workExperience || ''}
-              name='workExperience'
+              value={formData.type_of_work_exp_overall || ''}
+              name='type_of_work_exp_overall'
               onChange={handleChange}
               displayEmpty
-              error={Boolean(errors.workExperience)}
-              helperText={errors.workExperience}
+              error={Boolean(errors.type_of_work_exp_overall)}
+              helperText={errors.type_of_work_exp_overall}
             > 
               {WorkExperience.map((option, index) => (
                 <MenuItem key={index} value={option.value} disabled={option.disabled}>
@@ -1492,36 +1554,44 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
                 </MenuItem>
               ))}
             </Select>
-            {errors.workExperience && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.workExperience}</FormHelperText>}
+            {errors.type_of_work_exp_overall && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.type_of_work_exp_overall}</FormHelperText>}
           </FormControl>
         </Grid>
           
-        {/* <Grid item xs={12}>
-          <FormControl fullWidth error={Boolean(experiencedIndustryError)}>
-            <FormLabel id="dropdown7-label" sx={{marginBottom: '10px'}}>これまでのキャリアで経験した業種を教えてください（複数選択可）<span className='required_label'>必須</span>​</FormLabel>
-            <AccordianBasicInfo required={false} value={experiencedIndustry} onChange={handleExperiencedIndustryChange} sx={{ borderColor: experiencedIndustryError ? 'red' : undefined }} />
-            {experiencedIndustryError && <FormHelperText style={{ color: 'red', margin: '10px 0'}}>{experiencedIndustryError}</FormHelperText> }
-          </FormControl>
-        </Grid> */}
-
         <Grid item xs={12}>
+          <FormControl fullWidth error={Boolean(errors.type_of_industries_exp_overall)}>
+            <FormLabel className='formfield-label' id="dropdown7-label" sx={{marginBottom: '10px'}}>これまでのキャリアで経験した業種を教えてください（複数選択可）<span className='required_label'>必須</span>​</FormLabel>
+            <AccordianBasicInfo 
+              // value={formData.type_of_industries_exp_overall || ''}
+              // name='type_of_industries_exp_overall'
+              // onChange={handleChange}
+              // error={Boolean(errors.type_of_industries_exp_overall)}
+              // helperText={errors.type_of_industries_exp_overall}
+              selectedCheckboxes={formData.type_of_industries_exp_overall || []}
+            onCheckboxChange={handleCheckboxChange}
+            />
+            {errors.type_of_industries_exp_overall && <FormHelperText style={{ color: 'red', margin: '10px 0'}}>{errors.type_of_industries_exp_overall}</FormHelperText> }
+          </FormControl>
+        </Grid>
+
+        {/* <Grid item xs={12}>
           <FormControl fullWidth sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="dropdown7-label" sx={{marginBottom: '10px'}}>これまでのキャリアで経験した業種を教えてください（複数選択可）​</FormLabel>
             <AccordianBasicInfo required={false} value={formData.currentCompany} name='currentCompany'/>
           </FormControl>
-        </Grid>
+        </Grid> */}
 
         <Grid item xs={12}>
           {/* Eight Dropdown */}
-          <FormControl fullWidth error={Boolean(errors.experienceInAccounting)} sx={{marginBottom: '10px'}}>
+          <FormControl fullWidth error={Boolean(errors.accounting_exp_total_year)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="dropdown5-label" sx={{marginBottom: '10px'}}>経理の経験年数を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
-              value={formData.experienceInAccounting || ''}
-              name='experienceInAccounting'
+              value={formData.accounting_exp_total_year || ''}
+              name='accounting_exp_total_year'
               onChange={handleChange}
               displayEmpty
-              error={Boolean(errors.experienceInAccounting)}
-              helperText={errors.experienceInAccounting}
+              error={Boolean(errors.accounting_exp_total_year)}
+              helperText={errors.accounting_exp_total_year}
             > 
               {ExperienceinAccounting.map((option, index) => (
                 <MenuItem key={index} value={option.value} disabled={option.disabled}>
@@ -1529,7 +1599,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
                 </MenuItem>
               ))}
             </Select>
-            {errors.experienceInAccounting && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.experienceInAccounting}</FormHelperText> }
+            {errors.accounting_exp_total_year && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.accounting_exp_total_year}</FormHelperText> }
           </FormControl>
         </Grid>
 
@@ -1540,8 +1610,8 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
             fullWidth
             placeholder="現在（直近）の在籍会社名を入力してください"
             variant="outlined"
-            value={formData.currentCompany || ''}
-            name='currentCompany'
+            value={formData.current_company_name || ''}
+            name='current_company_name'
             onChange={handleChange}
           />
         </FormControl>
@@ -1562,38 +1632,38 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
         </Grid>
 
         <Grid item xs={12}>
-          <FormControl component="fieldset" error={Boolean(errors.spouse)} sx={{marginBottom: '10px'}}>
+          <FormControl component="fieldset" error={Boolean(errors.marriage_status)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' component="legend" sx={{marginBottom: '10px'}}>配偶者についてを教えてください​​<span className='required_label'>必須</span>​</FormLabel>
             <RadioGroup
               row
               aria-label="newRadio"
-              name="spouse"
-              value={formData.spouse || ''}
+              name="marriage_status"
+              value={formData.marriage_status || ''}
               onChange={handleChange}
-              error={Boolean(errors.spouse)}
-              helperText={errors.spouse}
+              error={Boolean(errors.marriage_status)}
+              helperText={errors.marriage_status}
             >
               <FormControlLabel value="配偶者あり" control={<Radio />} label="配偶者あり" />
               <FormControlLabel value="配偶者なし" control={<Radio />} label="配偶者なし" />
             </RadioGroup>
-            {errors.spouse && <FormHelperText style={{ color: 'red', margin: '10px 0'}}>{errors.spouse}</FormHelperText> }
+            {errors.marriage_status && <FormHelperText style={{ color: 'red', margin: '10px 0'}}>{errors.marriage_status}</FormHelperText> }
           </FormControl>
         </Grid>
 
         <Grid item xs={12}>
-          <FormControl fullWidth error={Boolean(errors.familyMembers)} sx={{marginBottom: '10px'}}>
+          <FormControl fullWidth error={Boolean(errors.family_member_count)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="dropdown9-label" sx={{marginBottom: '10px'}}>扶養される家族数について教えてください​<span className='required_label'>必須</span>​</FormLabel>
             <TextField
               variant="outlined"
               type="name"
               placeholder="扶養される家族数について教えてください​"
-              value={formData.familyMembers || ''}
-              name='familyMembers'
+              value={formData.family_member_count || ''}
+              name='family_member_count'
               onChange={handleChange}
-              error={Boolean(errors.familyMembers)}
-              // helperText={errors.familyMembers}
+              error={Boolean(errors.family_member_count)}
+              // helperText={errors.family_member_count}
             />
-            {errors.familyMembers && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.familyMembers}</FormHelperText> }
+            {errors.family_member_count && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.family_member_count}</FormHelperText> }
           </FormControl>
         </Grid>
 

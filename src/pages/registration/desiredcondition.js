@@ -530,32 +530,32 @@ const DesiredCondition = ({ formData, setFormData, handleNext, handleBack}) => {
     const newErrors = {};
   
     // Basic validation for required fields
-    if (!formData.desiredAnnualIncome) {
-      newErrors.desiredAnnualIncome = 'Please select your desired annual income';
+    if (!formData.desired_annual_income) {
+      newErrors.desired_annual_income = 'Please select your desired annual income';
     }
 
-    if (!formData.desiredJobType) {
-      newErrors.desiredJobType = 'Please select your desired Jobtype';
+    if (!formData.desired_job_type) {
+      newErrors.desired_job_type = 'Please select your desired Jobtype';
     }
 
-    if (!formData.desiredIndustry) {
-      newErrors.desiredIndustry = 'Please select your desired industry';
+    if (!formData.desired_industry) {
+      newErrors.desired_industry = 'Please select your desired industry';
     }
 
-    if (!formData.desiredPosition) {
-      newErrors.desiredPosition = 'Please select your desired position';
+    if (!formData.desired_position) {
+      newErrors.desired_position = 'Please select your desired position';
     }
 
-    if (!formData.desiredWorkLocation) {
-      newErrors.desiredWorkLocation = 'Please select your desired worklocation';
+    if (!formData.desired_location) {
+      newErrors.desired_location = 'Please select your desired worklocation';
     }
 
-    if (!formData.desiredCompanyCategory) {
-      newErrors.desiredCompanyCategory = 'Please select your desired company category';
+    if (!formData.desired_company_category) {
+      newErrors.desired_company_category = 'Please select your desired company category';
     }
 
-    if (!formData.desiredEmployees) {
-      newErrors.desiredEmployees = 'Please select your desired number of employees';
+    if (!formData.desired_no_of_employee) {
+      newErrors.desired_no_of_employee = 'Please select your desired number of employees';
     }
 
     setErrors(newErrors);
@@ -577,15 +577,15 @@ const DesiredCondition = ({ formData, setFormData, handleNext, handleBack}) => {
         <Grid container spacing={2} sx={{ textAlign: 'left', marginTop: '10px' }}>
        
         <Grid item xs={12}>
-          <FormControl fullWidth error={Boolean(errors.desiredAnnualIncome)} sx={{marginBottom: '10px'}}>
+          <FormControl fullWidth error={Boolean(errors.desired_annual_income)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="demo-radio-buttons-group-label" sx={{marginBottom: '10px'}}>ご希望の年収を教えてください<span className='required_label'>必須</span></FormLabel>
             <Select
-              value={formData.desiredAnnualIncome || ''}
-              name='desiredAnnualIncome'
+              value={formData.desired_annual_income || ''}
+              name='desired_annual_income'
               onChange={handleChange}
               displayEmpty
-              error={Boolean(errors.desiredAnnualIncome)}
-              helperText={errors.desiredAnnualIncome}
+              error={Boolean(errors.desired_annual_income)}
+              helperText={errors.desired_annual_income}
             >
               <MenuItem value="" disabled>
               オプションを選んでください
@@ -601,20 +601,20 @@ const DesiredCondition = ({ formData, setFormData, handleNext, handleBack}) => {
                 </MenuItem>
               ))}
             </Select>
-            {errors.desiredAnnualIncome && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.desiredAnnualIncome}</FormHelperText>}
+            {errors.desired_annual_income && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.desired_annual_income}</FormHelperText>}
           </FormControl>
         </Grid>
 
         <Grid item xs={12}>
-          <FormControl fullWidth error={Boolean(errors.desiredJobType)} sx={{marginBottom: '10px'}}>
+          <FormControl fullWidth error={Boolean(errors.desired_job_type)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="second-dropdown-label" sx={{marginBottom: '10px'}}>ご希望の職種を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
-              value={formData.desiredJobType || ''}
-              name='desiredJobType'
+              value={formData.desired_job_type || ''}
+              name='desired_job_type'
               onChange={handleChange}
               displayEmpty
-              error={Boolean(errors.desiredJobType)}
-              helperText={errors.desiredJobType}
+              error={Boolean(errors.desired_job_type)}
+              helperText={errors.desired_job_type}
             >
               {DesiredJobType.map((option, index) => (
                 <MenuItem key={index} value={option.value} disabled={option.disabled}>
@@ -622,20 +622,20 @@ const DesiredCondition = ({ formData, setFormData, handleNext, handleBack}) => {
                 </MenuItem>
               ))}
             </Select>
-            {errors.desiredJobType &&<FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.desiredJobType}</FormHelperText>}
+            {errors.desired_job_type &&<FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.desired_job_type}</FormHelperText>}
           </FormControl>
         </Grid>
 
         <Grid item xs={12}>
-          <FormControl fullWidth error={Boolean(errors.desiredIndustry)} sx={{marginBottom: '10px'}}>
+          <FormControl fullWidth error={Boolean(errors.desired_industry)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="third-dropdown-label" sx={{marginBottom: '10px'}}>ご希望の業種を教えてください​<span className='required_label'>必須</span></FormLabel>
             <Select
-              value={formData.desiredIndustry || ''}
-              name='desiredIndustry'
+              value={formData.desired_industry || ''}
+              name='desired_industry'
               onChange={handleChange}
               displayEmpty
-              error={Boolean(errors.desiredIndustry)}
-              helperText={errors.desiredIndustry}
+              error={Boolean(errors.desired_industry)}
+              helperText={errors.desired_industry}
             >
               {DesiredIndustry.map((option, index) => (
                 <MenuItem key={index} value={option.value} disabled={option.disabled}>
@@ -643,21 +643,21 @@ const DesiredCondition = ({ formData, setFormData, handleNext, handleBack}) => {
                 </MenuItem>
               ))}
             </Select>
-            {errors.desiredIndustry && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.desiredIndustry}</FormHelperText>}
+            {errors.desired_industry && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.desired_industry}</FormHelperText>}
           </FormControl>
         </Grid>
 
         <Grid item xs={12}>
           {/* Fourth Dropdown */}
-          <FormControl fullWidth error={Boolean(errors.desiredPosition)} sx={{marginBottom: '10px'}}>
+          <FormControl fullWidth error={Boolean(errors.desired_position)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="dropdown4-label" sx={{marginBottom: '10px'}}>ご希望の役職を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
-              value={formData.desiredPosition || ''}
-              name='desiredPosition'
+              value={formData.desired_position || ''}
+              name='desired_position'
               onChange={handleChange}
               displayEmpty
-              error={Boolean(errors.desiredPosition)}
-              helperText={errors.desiredPosition}
+              error={Boolean(errors.desired_position)}
+              helperText={errors.desired_position}
             >
               {DesiredPosition.map((option, index) => (
                 <MenuItem key={index} value={option.value} disabled={option.disabled}>
@@ -665,21 +665,21 @@ const DesiredCondition = ({ formData, setFormData, handleNext, handleBack}) => {
                 </MenuItem>
               ))}
             </Select>
-            {errors.desiredPosition && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.desiredPosition}</FormHelperText>}
+            {errors.desired_position && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.desired_position}</FormHelperText>}
           </FormControl>
         </Grid>
 
         <Grid item xs={12}>
           {/* Fifth Dropdown */}
-          <FormControl fullWidth error={Boolean(errors.desiredWorkLocation)} sx={{marginBottom: '10px'}}>
+          <FormControl fullWidth error={Boolean(errors.desired_location)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="dropdown5-label" sx={{marginBottom: '10px'}}>ご希望の勤務地（都道府県）を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
-              value={formData.desiredWorkLocation || ''}
-              name='desiredWorkLocation'
+              value={formData.desired_location || ''}
+              name='desired_location'
               onChange={handleChange}
               displayEmpty
-              error={Boolean(errors.desiredWorkLocation)}
-              helperText={errors.desiredWorkLocation}
+              error={Boolean(errors.desired_location)}
+              helperText={errors.desired_location}
             >
               {DesiredWorkLocation.map((option, index) => (
                 <MenuItem key={index} value={option.value} disabled={option.disabled}>
@@ -687,21 +687,21 @@ const DesiredCondition = ({ formData, setFormData, handleNext, handleBack}) => {
                 </MenuItem>
               ))}
             </Select>
-            {errors.desiredWorkLocation && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.desiredWorkLocation}</FormHelperText>}
+            {errors.desired_location && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.desired_location}</FormHelperText>}
           </FormControl>
         </Grid>
 
         <Grid item xs={12}>
           {/* Sixth Dropdown */}
-          <FormControl fullWidth error={Boolean(errors.desiredCompanyCategory)} sx={{marginBottom: '10px'}}>
+          <FormControl fullWidth error={Boolean(errors.desired_company_category)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="dropdown6-label" sx={{marginBottom: '10px'}}>ご希望の企業カテゴリを教えてください​<span className='required_label'>必須</span></FormLabel>
             <Select
-              value={formData.desiredCompanyCategory || ''}
-              name='desiredCompanyCategory'
+              value={formData.desired_company_category || ''}
+              name='desired_company_category'
               onChange={handleChange}
               displayEmpty
-              error={Boolean(errors.desiredCompanyCategory)}
-              helperText={errors.desiredCompanyCategory}
+              error={Boolean(errors.desired_company_category)}
+              helperText={errors.desired_company_category}
             >
               {DesiredCompanyCategory.map((option, index) => (
                 <MenuItem key={index} value={option.value} disabled={option.disabled}>
@@ -709,21 +709,21 @@ const DesiredCondition = ({ formData, setFormData, handleNext, handleBack}) => {
                 </MenuItem>
               ))}
             </Select>
-            {errors.desiredCompanyCategory && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.desiredCompanyCategory}</FormHelperText>}
+            {errors.desired_company_category && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.desired_company_category}</FormHelperText>}
           </FormControl>
         </Grid>
 
         <Grid item xs={12}>
           {/* 7 Dropdown */}
-          <FormControl fullWidth error={Boolean(errors.desiredEmployees)} sx={{marginBottom: '10px'}}>
+          <FormControl fullWidth error={Boolean(errors.desired_no_of_employee)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="dropdown7-label" sx={{marginBottom: '10px'}}>ご希望の従業員規模を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
-              value={formData.desiredEmployees || ''}
-              name='desiredEmployees'
+              value={formData.desired_no_of_employee || ''}
+              name='desired_no_of_employee'
               onChange={handleChange}
               displayEmpty
-              error={Boolean(errors.desiredEmployees)}
-              helperText={errors.desiredEmployees}
+              error={Boolean(errors.desired_no_of_employee)}
+              helperText={errors.desired_no_of_employee}
             >
               {DesiredNumberOfEmployees.map((option, index) => (
                 <MenuItem key={index} value={option.value} disabled={option.disabled}>
@@ -731,7 +731,7 @@ const DesiredCondition = ({ formData, setFormData, handleNext, handleBack}) => {
                 </MenuItem>
               ))}
             </Select>
-            {errors.desiredEmployees && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.desiredEmployees}</FormHelperText>}
+            {errors.desired_no_of_employee && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.desired_no_of_employee}</FormHelperText>}
           </FormControl>
         </Grid>
 

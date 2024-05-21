@@ -18,13 +18,13 @@ const CustomDatePicker = ({ value, onChange, error }) => {
   const handleDateChange = (event) => {
     const formattedDate = event.target.value; // Get the selected date
     setSelectedDate(formattedDate); // Update the state
-    onChange({ target: { name: 'date', value: formattedDate } }); // Pass event object with name and value
+    onChange({ target: { name: 'dob', value: formattedDate } }); // Pass event object with name and value
   };
 
   // Function to format the date as month-date-year
   const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' });
+    const dob = new Date(dateString);
+    return dob.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' });
   };
 
 
