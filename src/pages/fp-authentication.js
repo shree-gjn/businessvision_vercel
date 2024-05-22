@@ -74,15 +74,15 @@ const FPAuthentication = () => {
         </div>
         <FPAuthenticationIcon/>
         <div style={{textAlign:'left', padding:'20px'}}>
-            <Typography variant="paragraph" gutterBottom sx={{marginTop:'5px'}} >メールを送信しました。​ </Typography> 
-            <Typography variant="paragraph" gutterBottom sx={{marginTop:'5px', marginBottom:'10px'}} >ご登録のメールアドレス宛に、パスワードを設定する情報を送信しました。​<br />
-    お送りしたメールは、１時間以内にご覧いただけますようお願いいたします。詳しくはお送りしたメールをご覧ください。​ </Typography> <br/>
+            <Typography variant="paragraph" gutterBottom sx={{marginTop:'5px',marginBottom: '15px', display: 'block', textAlign: 'center'}} >メールを送信しました。​ </Typography> 
+            <Typography variant="paragraph" gutterBottom sx={{marginTop:'5px',marginBottom: '10px', display: 'block'}} >ご登録のメールアドレス宛に、パスワードを設定する情報を送信しました。​<br />
+    お送りしたメールは、１時間以内にご覧いただけますようお願いいたします。詳しくはお送りしたメールをご覧ください。​ </Typography>
             <Typography variant="paragraph" gutterBottom sx={{marginTop:'10px'}} >入力された会員ID（メールアドレス）が登録されていない場合は、メールを送ることができません。弊社よりパスワードのメールが届かない場合は、間違ったメールアドレスで登録された可能性があります。経理エージェント事務局 {' '}
           <Link href={`mailto:${email}`} onClick={handleClick}>
             {email}
           </Link>までお問い合わせください。​​ </Typography> 
         </div>
-        <div>
+        {/* <div>
             <Typography variant="paragraph" sx={{color:'#085D95', fontWeight:'500'}}> メールリンクより確認後 </Typography> <br/>
             <Button
                 variant="contained"
@@ -93,7 +93,7 @@ const FPAuthentication = () => {
               >
                 確認
               </Button>
-        </div>
+        </div> */}
       </Box>
     </ThemeProvider>
   );

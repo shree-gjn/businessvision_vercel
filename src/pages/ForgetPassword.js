@@ -42,32 +42,55 @@ const BackLink = styled(Link)(({ theme }) => ({
 }));
 
 const ForgetPassword = () => {
-  const [email, setEmail] = useState('');
+  const [email_address, setemail_address] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(true);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState('');
 
   const navigate = useNavigate();  // Get the history object from react-router-dom
 
   const handleEmailChange = (event) => {
-    setEmail(event.target.value);
+    setemail_address(event.target.value);
+    setError('');
   };
 
   const validateEmail = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const isValid = emailRegex.test(email);
-
+    const isValid = emailRegex.test(email_address);
     setIsValidEmail(isValid);
+    return isValid;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    if (email_address.trim() === '') {
+      setError('この項目は必須です');
+      return;
+    }
 
-    // Perform any additional logic before submission
-    // (e.g., sending the email to the backend for verification)
+    if (!validateEmail()) {
+      setError('有効なメールアドレスを入力してください');
+      return;
+    }
 
-    if (isValidEmail) {
+    try {
+      const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/forgot_password?email_address=${email_address}`, {
+        method: 'GET',
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server responded with a status of ${response.status}`);
+      }
+
+    const data = await response.json();
+      console.log(data); // Assuming the API returns some data
       navigate('/fpauthentication');
+    } catch (error) {
+      console.error('Error:', error);
+      setError('Something went wrong. Please try again later.');
     }
   };
+
 
   const goBack = () => {
     navigate(-1);  // Navigate to the previous page
@@ -96,11 +119,11 @@ const ForgetPassword = () => {
                 placeholder="登録したメールIDを入力してください"
                 variant="outlined"
                 fullWidth
-                value={email}
+                value={email_address}
                 onChange={handleEmailChange}
                 onBlur={validateEmail}
-                // error={!isValidEmail}
-                // helperText={!isValidEmail ? 'Invalid email format' : ''}
+                error={!isValidEmail || error !== ''}
+                helperText={error}
               />
               <div style={{display:'flex', margin:'20px auto'}}>
               <Button

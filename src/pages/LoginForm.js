@@ -124,13 +124,15 @@ const LoginForm = () => {
           console.error('Login failed:', data);
           setLoading(false);
           // Display an error message to the user
-          alert('Login failed: ' + (data.error.message || 'Unknown error'));
+          // alert('Login failed: ' + (data.error.message || 'Unknown error'));
+          setPasswordError('Please check your password')
         }
       } catch (error) {
         console.error('Error during login:', error);
         setLoading(false);
         // Display a generic error message to the user
         // alert('An error occurred during login. Please try again.');
+        setPasswordError('An error occurred during login. Please try again.'); // Set password error message
       }
     } 
   };

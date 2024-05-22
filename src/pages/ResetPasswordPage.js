@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import Box from '@mui/material/Box';
+import {InputAdornment, IconButton} from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {ReactComponent as BackButton} from '../assets/BackButton.svg';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link, useNavigate } from 'react-router-dom'; 
+import { Link, useNavigate, useLocation} from 'react-router-dom'; 
 import { ReactComponent as ResetPasswordIcon } from '../assets/ResetPasswordIcon.svg';
 import {
   TextField,
@@ -43,14 +45,29 @@ const BackLink = styled(Link)(({ theme }) => ({
 
 const ResetPasswordPage = () => {
   const navigate = useNavigate();  // Get the history object from react-router-dom
+  const location = useLocation();
 
   const goBack = () => {
     navigate(-1);  // Navigate to the previous page
   };
 
   const [password, setPassword] = useState('');
+  const [email_address, setemail_address] = useState('');
+  const [pwd_code, setpwd_code] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [newpassword, setnewpassword] = useState(false);
+  const [confirmpwd, setconfirmpwd] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const email = params.get('email_address');
+    const code = params.get('pwd_code');
+    if (email && code) {
+      setemail_address(email);
+      setpwd_code(code);
+    }
+  }, [location.search]);
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
@@ -60,35 +77,89 @@ const ResetPasswordPage = () => {
     setConfirmPassword(event.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleTogglePasswordVisibility = () => {
+    setnewpassword((prevnewpassword => !prevnewpassword));
+  };
+
+  const handleTogglePasswordVisibilitytwo = () => {
+    setconfirmpwd((prevconfirmpwd) => !prevconfirmpwd);
+  };
+
+  // const handleSubmit = () => {
+  //   // Reset error message
+  //   setError('');
+
+  //   // Password validation
+  //   if (password === '') {
+  //     setError('Password is required');
+  //     return;
+  //   }
+
+  //   // Confirm password validation
+  //   if (confirmPassword === '') {
+  //     setError('Confirm Password is required');
+  //     return;
+  //   }
+
+  //   if (password !== confirmPassword) {
+  //     setError('Passwords do not match');
+  //     return;
+  //   }
+    
+
+  //   // Password reset logic here (send API request, etc.)
+
+  //   // Clear form fields
+  //   setPassword('');
+  //   setConfirmPassword('');
+
+  //   navigate('/login');
+
+  // };
+
+  const handleSubmit = async () => {
     // Reset error message
     setError('');
-
+  
     // Password validation
     if (password === '') {
       setError('Password is required');
       return;
     }
-
+  
     // Confirm password validation
     if (confirmPassword === '') {
       setError('Confirm Password is required');
       return;
     }
-
+  
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
-
-    // Password reset logic here (send API request, etc.)
-
-    // Clear form fields
-    setPassword('');
-    setConfirmPassword('');
-
-    navigate('/login');
+  
+    try {
+      const formData = new FormData();
+      formData.append('email_address', email_address); // Replace with the actual email address
+      formData.append('pwd_code', pwd_code); // Replace with the password code if required
+      formData.append('new_password', password);
+  
+      const response = await fetch('https://bvhr-api.azurewebsites.net/candidate/reset_password', {
+        method: 'POST',
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      navigate('/login'); // Redirect to the login page after successful password reset
+    } catch (error) {
+      console.error('Error:', error);
+      setError('Something went wrong. Please try again later.');
+    }
   };
+  
 
 
   return (
@@ -108,13 +179,13 @@ const ResetPasswordPage = () => {
         <div style={{marginTop:'30px'}}>
         <ResetPasswordIcon/>
         </div>
-        <div style={{textAlign:'left', padding:'20px'}}>
+        {/* <div style={{textAlign:'left', padding:'20px'}}>
             <Typography variant="paragraph" gutterBottom sx={{marginTop:'5px'}} >会員情報に登録した、会員ID（Eメールアドレス）を入力してください。ご登録のメールアドレス宛に、パスワード再設定に関する情報をお送りします。​ </Typography> 
-        </div>
+        </div> */}
         <div style={{padding:'20px', textAlign:'left'}}>
           <Typography variant="paragraph" gutterBottom sx={{marginTop:'5px', textAlign:'left'}} >新しいパスワード​ </Typography> 
           <TextField
-            type="password"
+            type={newpassword ? 'text' : 'password'}
             placeholder="新しいパスワードを入力してください"
             variant="outlined"
             fullWidth
@@ -123,10 +194,19 @@ const ResetPasswordPage = () => {
             onChange={handlePasswordChange}
             error={error !== '' && password === ''}
             helperText={error !== '' && password === '' && error}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={handleTogglePasswordVisibility} edge="end">
+                    {newpassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
           <Typography variant="paragraph" gutterBottom sx={{marginTop:'5px', textAlign:'left'}} >新しいパスワード（再入力） </Typography> 
           <TextField
-            type="password"
+            type={confirmpwd ? 'text' : 'password'}
             placeholder="新しいパスワードを再入力してください"
             variant="outlined"
             fullWidth
@@ -135,6 +215,15 @@ const ResetPasswordPage = () => {
             onChange={handleConfirmPasswordChange}
             error={error !== '' && confirmPassword === ''}
             helperText={error !== '' && confirmPassword === '' && error}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={handleTogglePasswordVisibilitytwo} edge="end">
+                    {confirmpwd ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
           <div style={{margin:'20px auto', textAlign:'center'}}>
           <Button variant="contained" color="primary" onClick={handleSubmit}>

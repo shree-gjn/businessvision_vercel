@@ -1330,9 +1330,9 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
       newErrors.type_of_work_exp_overall = 'Please select your workexperience';
     }
     
-    if (!formData.type_of_industries_exp_overall) {
-      newErrors.type_of_industries_exp_overall = 'Please select your experienced industry';
-    }
+    // if (!formData.type_of_industries_exp_overall) {
+    //   newErrors.type_of_industries_exp_overall = 'Please select your experienced industry';
+    // }
 
     if (!formData.accounting_exp_total_year) {
       newErrors.accounting_exp_total_year = 'Please select your experience in accounting';
@@ -1559,6 +1559,22 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
         </Grid>
           
         <Grid item xs={12}>
+          <FormControl fullWidth>
+            <FormLabel className='formfield-label' id="dropdown7-label" sx={{marginBottom: '10px'}}>これまでのキャリアで経験した業種を教えてください（複数選択可）<span className='required_label'>必須</span>​</FormLabel>
+            <AccordianBasicInfo 
+              // value={formData.type_of_industries_exp_overall || ''}
+              // name='type_of_industries_exp_overall'
+              // onChange={handleChange}
+              // error={Boolean(errors.type_of_industries_exp_overall)}
+              // helperText={errors.type_of_industries_exp_overall}
+              selectedCheckboxes={formData.type_of_industries_exp_overall || []}
+            onCheckboxChange={handleCheckboxChange}
+            />
+            {/* {errors.type_of_industries_exp_overall && <FormHelperText style={{ color: 'red', margin: '10px 0'}}>{errors.type_of_industries_exp_overall}</FormHelperText> } */}
+          </FormControl>
+        </Grid>
+
+        {/* <Grid item xs={12}>
           <FormControl fullWidth error={Boolean(errors.type_of_industries_exp_overall)}>
             <FormLabel className='formfield-label' id="dropdown7-label" sx={{marginBottom: '10px'}}>これまでのキャリアで経験した業種を教えてください（複数選択可）<span className='required_label'>必須</span>​</FormLabel>
             <AccordianBasicInfo 
@@ -1572,7 +1588,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
             />
             {errors.type_of_industries_exp_overall && <FormHelperText style={{ color: 'red', margin: '10px 0'}}>{errors.type_of_industries_exp_overall}</FormHelperText> }
           </FormControl>
-        </Grid>
+        </Grid> */}
 
         {/* <Grid item xs={12}>
           <FormControl fullWidth sx={{marginBottom: '10px'}}>
