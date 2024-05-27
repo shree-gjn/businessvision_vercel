@@ -1,5 +1,5 @@
 // Import necessary React and Material-UI components
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { AppBar, Toolbar, IconButton, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -8,6 +8,19 @@ import tennavi from '../assets/tennavi-logo.png'
 
 // Create the functional component for the app bar
 const MyAppBar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check if the auth key is present in sessionStorage
+    const authKey = sessionStorage.getItem('authKey');
+    console.log('Auth Key:', authKey);  // Debug log
+    if (authKey) {
+      setIsLoggedIn(true);
+      console.log('User is logged in');  // Debug log
+    } else {
+      console.log('User is not logged in');  // Debug log
+    }
+  }, []);
   
   return (
     <AppBar position="static" style={{backgroundColor:'#fff'}}>
@@ -22,12 +35,14 @@ const MyAppBar = () => {
         </Typography>
 
         {/* Right corner icons */}
-        <IconButton color="blue" sx={{display:'block'}} href='/agent'>
-          <AccountCircle />
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize:'12px' }}>
-            エージェント
-          </Typography>
-        </IconButton>
+        {isLoggedIn && (
+          <IconButton color="blue" sx={{display:'block'}} href='/agent'>
+            <AccountCircle />
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize:'12px' }}>
+              エージェント
+            </Typography>
+          </IconButton>
+        )}
       </Toolbar>
     </AppBar>
   );

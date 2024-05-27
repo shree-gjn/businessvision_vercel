@@ -113,6 +113,9 @@ const LoginForm = () => {
         if (response.ok) {
           // Handle successful login here
           console.log('Login successful!', data);
+
+          // Store auth_key in sessionStorage
+          sessionStorage.setItem('authKey', data.auth_key);
   
           // Reset loading state
           setLoading(false);
