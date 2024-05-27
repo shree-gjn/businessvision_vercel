@@ -52,29 +52,42 @@ const ResetPasswordPage = () => {
   };
 
   const [password, setPassword] = useState('');
-  const [email_address, setemail_address] = useState('');
-  const [pwd_code, setpwd_code] = useState('');
+  const [email_address, setemailaddress] = useState('');
+  const [pwd_code, setpwdcode] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
   const [newpassword, setnewpassword] = useState(false);
   const [confirmpwd, setconfirmpwd] = useState(false);
 
   useEffect(() => {
+    console.log('location.search:', location.search); // Debug log
     const params = new URLSearchParams(location.search);
-    const email = params.get('email_address');
+    const email = params.get('e_code');
     const code = params.get('pwd_code');
+    console.log('Extracted email:', email); // Debug log
+    console.log('Extracted pwd_code:', code); // Debug log
     if (email && code) {
-      setemail_address(email);
-      setpwd_code(code);
+      setemailaddress(email);
+      setpwdcode(code);
     }
   }, [location.search]);
 
+  useEffect(() => {
+    console.log('Email:', email_address);
+    console.log('Password Code:', pwd_code);
+  }, [email_address, pwd_code]);
+
+
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
+    if (passwordError) setPasswordError('');
   };
 
   const handleConfirmPasswordChange = (event) => {
     setConfirmPassword(event.target.value);
+    if (confirmPasswordError) setConfirmPasswordError('');
   };
 
   const handleTogglePasswordVisibility = () => {
@@ -120,29 +133,41 @@ const ResetPasswordPage = () => {
   const handleSubmit = async () => {
     // Reset error message
     setError('');
+    setPasswordError('');
+    setConfirmPasswordError('');
+
+    let validationFailed = false;
   
     // Password validation
     if (password === '') {
-      setError('Password is required');
-      return;
+      setPasswordError('Password is required');
+      validationFailed = true;
     }
   
     // Confirm password validation
     if (confirmPassword === '') {
-      setError('Confirm Password is required');
-      return;
+      setConfirmPasswordError('Confirm Password is required');
+      validationFailed = true;
     }
   
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
-      return;
+      setConfirmPasswordError('Passwords do not match');
+      validationFailed = true;
     }
+
+    if (validationFailed) return;
   
     try {
       const formData = new FormData();
       formData.append('email_address', email_address); // Replace with the actual email address
       formData.append('pwd_code', pwd_code); // Replace with the password code if required
       formData.append('new_password', password);
+
+      console.log('Form Data to be submitted:', {
+        email_address: email_address,
+        pwd_code: pwd_code,
+        new_password: password
+      });
   
       const response = await fetch('https://bvhr-api.azurewebsites.net/candidate/reset_password', {
         method: 'POST',
@@ -150,6 +175,8 @@ const ResetPasswordPage = () => {
       });
   
       if (!response.ok) {
+        const responseData = await response.json();
+        console.error('Error response:', responseData);
         throw new Error('Network response was not ok');
       }
   
@@ -192,8 +219,8 @@ const ResetPasswordPage = () => {
             margin="normal"
             value={password}
             onChange={handlePasswordChange}
-            error={error !== '' && password === ''}
-            helperText={error !== '' && password === '' && error}
+            error={passwordError !== ''}
+            helperText={passwordError}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -213,8 +240,8 @@ const ResetPasswordPage = () => {
             margin="normal"
             value={confirmPassword}
             onChange={handleConfirmPasswordChange}
-            error={error !== '' && confirmPassword === ''}
-            helperText={error !== '' && confirmPassword === '' && error}
+            error={confirmPasswordError !== ''}
+            helperText={confirmPasswordError}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
