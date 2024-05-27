@@ -11,15 +11,31 @@ const MyAppBar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    // Check if the auth key is present in sessionStorage
-    const authKey = sessionStorage.getItem('authKey');
-    console.log('Auth Key:', authKey);  // Debug log
-    if (authKey) {
-      setIsLoggedIn(true);
-      console.log('User is logged in');  // Debug log
-    } else {
-      console.log('User is not logged in');  // Debug log
-    }
+    const checkAuth = () => {
+      const authKey = sessionStorage.getItem('authKey');
+      console.log('Auth Key:', authKey);
+      if (authKey) {
+        setIsLoggedIn(true);
+        console.log('User is logged in');
+      } else {
+        console.log('User is not logged in');
+      }
+    };
+
+    // Initial check
+    checkAuth();
+
+    // Listen for custom login success event
+    const handleLoginSuccess = () => {
+      checkAuth();
+    };
+
+    window.addEventListener('loginSuccess', handleLoginSuccess);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener('loginSuccess', handleLoginSuccess);
+    };
   }, []);
   
   return (

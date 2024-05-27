@@ -116,6 +116,10 @@ const LoginForm = () => {
 
           // Store auth_key in sessionStorage
           sessionStorage.setItem('authKey', data.auth_key);
+
+          // Dispatch custom event
+          const loginEvent = new Event('loginSuccess');
+          window.dispatchEvent(loginEvent);
   
           // Reset loading state
           setLoading(false);
@@ -154,7 +158,7 @@ const LoginForm = () => {
         <div>
             <Typography variant="h6" gutterBottom sx={{marginTop:'5px', padding:'20px'}} > ログイン </Typography> 
         </div>
-        <div style={{textAlign:'left'}}>
+        <div style={{textAlign:'left', marginBottom: '20px'}}>
             <Typography variant="paragraph" gutterBottom sx={{marginTop:'5px'}} >あなたの会員ID（メールアドレス）とパスワードを入力し、「ログイン」ボタンを押してください。<br />会員登録がまだの方は, <a href="/" style={{textDecoration: 'none', color: '#16375A', marginRight: '5px'}}>会員登録</a>を行ってください </Typography> 
         </div>
         <Typography variant="body1" gutterBottom sx={{textAlign:'left', marginTop:'5px'}} > 会員ID（メールアドレス） </Typography> 
@@ -168,6 +172,7 @@ const LoginForm = () => {
             onChange={handleChange}
             error={!!emailError}
             helperText={emailError}
+            style={{marginTop: '5px', marginBottom: '10px'}}
           />
           <Typography variant="body1" gutterBottom sx={{textAlign:'left', marginTop:'5px'}} > パスワード </Typography> 
           <TextField
@@ -190,6 +195,7 @@ const LoginForm = () => {
                 </InputAdornment>
               ),
             }}
+            style={{marginTop: '5px'}}
           />
 
         <Typography variant="body1" gutterBottom sx={{textAlign:'left', marginTop:'5px'}} > <a href="/forgetpassword" style={{textDecoration: 'none', color: '#16375A'}}> パスワードをお忘れですか？ </a>    </Typography> 
