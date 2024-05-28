@@ -40,7 +40,7 @@ const CustomDatePicker = ({ value, onChange, error }) => {
         style={{ fontSize: '14px', width: '100%', height: '50px', padding: '0 10px', boxSizing: 'border-box'}}
         // required={required} // Add or remove this line based on the 'required' prop
       />
-      {selectedDate && <p style={{marginTop: '5px'}}>Selected Date: {formatDate(selectedDate)}</p>}
+      {/* {selectedDate && <p style={{marginTop: '5px'}}>Selected Date: {formatDate(selectedDate)}</p>} */}
     </div>
   );
 };

@@ -268,7 +268,7 @@ const ConfirmationModal = ({ open, onClose, message}) => {
          {message}
         </Typography>
         <Button variant="contained" color="primary" onClick={onClose}>
-            近い
+        閉じる 
         </Button>
       </Box>
     </Dialog>
@@ -334,7 +334,7 @@ const RegistrationAuth = () => {
         });
   
         if (response.status === 204) {
-          setModalMessage('Authentication code verification failed.');
+          setModalMessage('確認コードの認証に失敗しました');
           setIsModalOpen(true);
         } else if (response.ok) {
           const responseData = await response.json(); // Assuming the auth key is in the response body
@@ -370,7 +370,7 @@ const RegistrationAuth = () => {
       <Box sx={{ width: '100%', typography: 'body1'}}>
         <div className="PageHeader" style={{marginBottom: '30px'}}>
           <BackLink to="#" onClick={goBack} > <BackButton /> 戻る </BackLink>
-          <p>求人情報</p>
+          <p>会員情報登録</p>
         </div>
         <AuthenticationCode />
         <div style={{ textAlign: 'left', padding: '20px' }}>
@@ -398,7 +398,7 @@ const RegistrationAuth = () => {
         </div>
         <div>
           <Typography variant="paragraph" sx={{ color: '#085D95', fontWeight: '500', textAlign: 'center' }} onClick={handleConfirmClick}>
-            メールリンクより確認後
+          送信されたメールより確認コードを入力
           </Typography>
           <br />
           <Button
