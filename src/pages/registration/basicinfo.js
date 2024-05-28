@@ -1739,27 +1739,27 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
       </IconButton>
       <Collapse in={expanded}>
         <div style={{padding: '10px 0'}}>
-          <Select
-            value={formData.dropdown1Value || ''}
-            name='dropdown1Value'
+        <Select
+            value={formData.dropdown2Value || ''}
+            name='dropdown2Value'
             onChange={handleChange}
-            style={{ marginBottom: '10px', marginRight: '10px', width:'48%'}}
+            style={{ marginBottom: '10px', marginRight: '10px', width:'48%' }}
             displayEmpty
-          > 
-            {AddLanguageLevel.map((option, index) => (
+          >
+            {AddLanguage.map((option, index) => (
               <MenuItem key={index} value={option.value} disabled={option.disabled}>
                 {option.label}
               </MenuItem>
             ))}
           </Select>
           <Select
-            value={formData.dropdown2Value || ''}
-            name='dropdown2Value'
+            value={formData.dropdown1Value || ''}
+            name='dropdown1Value'
             onChange={handleChange}
-            style={{ marginBottom: '10px', width:'48%' }}
+            style={{ marginBottom: '10px', width:'48%'}}
             displayEmpty
-          >
-            {AddLanguage.map((option, index) => (
+          > 
+            {AddLanguageLevel.map((option, index) => (
               <MenuItem key={index} value={option.value} disabled={option.disabled}>
                 {option.label}
               </MenuItem>
