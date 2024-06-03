@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 // import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -58,6 +59,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function RecruitmentInfo() {
   const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true); // State to track loading status
   const [page, setPage] = useState(1);
   const [isAnimating, setIsAnimating] = useState(false);
   const itemsPerPage = 5;
@@ -69,8 +71,11 @@ export default function RecruitmentInfo() {
     // Check if authKey is available
     if (!authKey) {
       console.error('Auth key not found in sessionStorage');
+      setLoading(false); // Set loading to false if authKey is missing
       return;
     }
+
+    setLoading(true); // Set loading to true when starting data fetching
 
     // Make the API request with the authKey
     fetch(`https://bvhr-api.azurewebsites.net/candidate/list_recruitment_info?auth_key=${authKey}`)
@@ -82,9 +87,12 @@ export default function RecruitmentInfo() {
         } else {
           console.error('Fetched data is not an array:', data);
         }
+        setLoading(false); 
       })
       .catch((error) => console.error('Error fetching data:', error));
+      // setLoading(false);
   }, []);
+
 
    const handlePageChange = (event, value) => {
     setIsAnimating(true); // Start animation
@@ -97,9 +105,9 @@ export default function RecruitmentInfo() {
 
   const paginatedJobs = jobs.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
-  const { items } = usePagination({
-    count: 10,
-  });
+  // const { items } = usePagination({
+  //   count: 10,
+  // });
 
 
   return (
@@ -119,8 +127,14 @@ export default function RecruitmentInfo() {
            {jobs.length} 件中 {(page - 1) * itemsPerPage + 1} ～ {Math.min(page * itemsPerPage, jobs.length)} 件
           </Grid>
         </Grid>
-      {paginatedJobs.map((job, index) => (
-        <Card key={index} sx={{ minWidth: 275, marginBottom:'20px', boxShadow: 'none', borderRadius: '5px', border: '1px solid #EEEEEE'}}>
+      {loading ? (
+        // Render loading indicator here
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
+          <CircularProgress />
+        </Box>
+      ) : (  
+      paginatedJobs.map((job, index) => (
+        <Card key={job.cjp_id} sx={{ minWidth: 275, marginBottom:'20px', boxShadow: 'none', borderRadius: '5px', border: '1px solid #EEEEEE'}}>
           <CardContent>
             <Box sx={{ flexGrow: 1, textDecoration:'none' }} component={Link} to={`/recruitment/${job.cjp_id}`}>
             <Grid container spacing={1}>
@@ -171,7 +185,7 @@ export default function RecruitmentInfo() {
                 </Grid>
             </Grid>
             </Box>
-            <Box sx={{ flexGrow: 1, textDecoration:'none' }} component={Link} to={`/recruitment/${job.id}`}>
+            <Box sx={{ flexGrow: 1, textDecoration:'none' }} component={Link} to={`/recruitment/${job.cjp_id}`}>
             <Grid container spacing={1}>
                 <Grid item xs={3} sx={{borderBottom: '1px solid #ccc'}}>
                 <Item sx={{textAlign:'left', fontSize:'12px', display:'grid', background:'#FAFAFA', borderRadius:'5px', gap: '5px', justifyContent: 'center'}}><BagBrownIcon style={{margin:'0 auto'}}/>仕事内容</Item>
@@ -209,7 +223,8 @@ export default function RecruitmentInfo() {
             </Box>
           </CardActions>
         </Card>
-      ))}
+      ))
+    )}
 
     {/* <nav className='pagination' style={{ marginBottom: '100px' }}>
       <List style={{alignItems: 'center'}}>
@@ -267,21 +282,6 @@ export default function RecruitmentInfo() {
                   components={{ previous: ArrowBackIosIcon, next: ArrowForwardIosIcon }}
                   {...item}
                 />
-                // <PaginationItem
-                //   components={{
-                //     previous: () => (
-                //       <Button startIcon={<ArrowBackIosIcon />}>
-                //         前の
-                //       </Button>
-                //     ),
-                //     next: () => (
-                //       <Button endIcon={<ArrowForwardIosIcon />}>
-                //         次
-                //       </Button>
-                //     ),
-                //   }}
-                //   {...item}
-                // />
               )}
             />
           </List>

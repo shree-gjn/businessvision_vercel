@@ -54,7 +54,7 @@ function App() {
           <Route path="/messages" element={<MessageComponent />} />
           <Route path="/inprogress" element={<InProgressComponent />} />
           <Route path="/profile" element={<ProfileComponent />} />
-          <Route path="/recruitment" element={<RecruitmentFullInfo />} />
+          <Route path="/recruitment/:job_id" element={<RecruitmentFullInfo />} />
           <Route path="/occupation" element={<OccupationComponent />} /> 
           <Route path="/industry" element={<IndustryComponent />} />
           <Route path="/income" element={<IncomeComponent />} />

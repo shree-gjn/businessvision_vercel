@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
@@ -7,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Modal from '@mui/material/Modal';
-import { Link, useNavigate } from 'react-router-dom'; 
+import { Link, useNavigate, useParams} from 'react-router-dom'; 
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import {ReactComponent as BackButton} from '../assets/BackButton.svg';
 import {ReactComponent as MoneyIcon} from '../assets/MoneyIcon.svg';
@@ -20,6 +21,9 @@ import {ReactComponent as BigBagIcon}  from '../assets/BigBagIcon.svg';
 import {ReactComponent as CalendarIcon} from '../assets/CalendarIcon.svg';
 import {ReactComponent as WarningIcon} from '../assets/WarningIcon.svg';
 import {ReactComponent as Skill} from '../assets/Skill.svg';
+import {ReactComponent as BasicInformation} from '../assets/BasicInformation.svg';
+import {ReactComponent as ApplicationRequirement} from '../assets/ApplicationRequirement.svg';
+import {ReactComponent as CompanyProfile} from '../assets/CompanyProfile.svg';
 import BottomNav from '../components/BottomNav';
 import { display, width } from '@mui/system';
 import {Table, TableBody, TableCell, TableRow, TableContainer} from '@mui/material';
@@ -65,7 +69,70 @@ const Item = styled(Paper)(({ theme }) => ({
   }));
 
 export default function RecruitmentFullInfo() {
+  const { job_id } = useParams(); // Extract job_id from URL parameters
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [jobpost, setjobpost] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true); // State to track loading status
+
+  useEffect(() => {
+    if (!job_id) {
+      setError('Invalid job ID');
+      return;
+    }
+
+    // Retrieve the auth key from sessionStorage
+    const authKey = sessionStorage.getItem('authKey');
+
+    // Check if authKey is available
+    if (!authKey) {
+      console.error('Auth key not found in sessionStorage');
+      return;
+    }
+
+    // // Make the API request with the authKey
+    // fetch(`https://bvhr-api.azurewebsites.net/candidate/view_recruitment_info?auth_key=${authKey}&job_id=${job_id}`)
+    //   .then((response) => {
+    //     if (!response.ok) {
+    //       throw new Error('Failed to fetch data');
+    //     }
+    //     return response.json();
+    //   })
+    //   .then((data) => {
+    //     console.log('Fetched data:', data);
+    //     if (data.json_data && Array.isArray(data.json_data)) {
+    //       setjobpost(data.json_data);
+    //     } else {
+    //       console.error('Fetched data is not an array:', data);
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     setError(`Error fetching data: ${error.message}`);
+    //   });
+    // }, [job_id]);
+
+    setLoading(true); // Set loading to true when starting data fetching
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/view_recruitment_info?auth_key=${authKey}&job_id=${job_id}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        const data = await response.json();
+        if (data.json_data) {
+          setjobpost(data.json_data);
+        } else {
+          setError('Fetched data is not an object');
+        }
+        setLoading(false); 
+      } catch (error) {
+        setError(`Error fetching data: ${error.message}`);
+      }
+    };
+
+    fetchData();
+  }, [job_id]);
 
   const handleOpenDeleteModal = () => {
     setDeleteModalOpen(true);
@@ -126,50 +193,51 @@ export default function RecruitmentFullInfo() {
     }
   };
 
+
   return (
     <ThemeProvider theme={theme}>
-       <>
+    <>
       <div className="PageHeader">
         <BackLink to="#" onClick={goBack} > <BackButton /> 戻る </BackLink>
         <p>求人情報</p>
       </div>
-      <Box sx={{ flexGrow: 1 , padding:'10px', overflow:'scroll'}}>
+      
+      {loading ? (
+        // Render loading indicator here
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
+          <CircularProgress />
+        </Box>
+      ) : (  
+        <div>
+          <Box sx={{ flexGrow: 1 , padding:'10px', overflow:'scroll'}}>
           <Grid container spacing={1}>
-              <Grid item xs={6}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>求人no: 1691</Item>
-              </Grid>
-              <Grid item xs={2}>
-              <Item sx={{fontSize:'12px'}}>未読​</Item>
-              </Grid>
-              <Grid item xs={4}>
-              <Item sx={{fontSize:'12px'}}>10-08-2023</Item>
-              </Grid>
+            <Grid item xs={6}>
+            <Item sx={{textAlign:'left', fontSize:'12px'}}>求人no: {jobpost.cjp_job_code}</Item>
+            </Grid>
+            <Grid item xs={2}>
+            <Item sx={{fontSize:'12px'}}>未読​</Item>
+            </Grid>
+            <Grid item xs={4}>
+            <Item sx={{fontSize:'12px'}}>10-08-2023</Item>
+            </Grid>
           </Grid>
-          </Box>
+        </Box>
           <Typography variant="h6" component="div" sx={{fontSize:'14px', fontWeight:'700', textAlign:'left', padding:'0px 15px 0px 15px'}}>
-          【渋谷/プライム上場】SaaS/ASPのパイオニア企業での経理マネージャー/リモート有
+           {jobpost.cjp_job_title}
           </Typography>
           <Box sx={{ flexGrow: 1, padding:'0px 10px 0px 15px' }}>
           <Grid container spacing={1}>
-              <Grid item xs={6}>
+              <Grid item xs={5}>
               <Item sx={{textAlign:'left', display:'flex', gap:'5px', marginTop:'5px'}}> 
-              <MoneyIcon /> <Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}> 700万円 ~900万円 </Typography>
+              <div><BuildingIcon /></div><Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}>  {jobpost.cjp_company_name} </Typography>
               </Item>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={5}>
               <Item sx={{textAlign:'left', display:'flex', gap:'5px', marginTop:'5px'}}> 
-                <MapsIcon /> <Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}>東京都</Typography>​</Item>
-              </Grid>
-              <Grid item xs={6}>
-              <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
-                <BuildingIcon /> <Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}> 株式会社ABC </Typography>​</Item>
-              </Grid>
-              <Grid item xs={4} sx={{paddingTop:'0px'}}>
-              <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
-                <BagIcon /> <Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}> 経理マネジャー  </Typography>​​</Item>
+              <div><MapsIcon /> </div><Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}>{jobpost.cjp_work_location}</Typography>​</Item>
               </Grid>
               <Grid item xs={2} sx={{paddingTop:'0px'}}>
-              <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
+              <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'10px', }}> 
                 <TrashIcon onClick={handleOpenDeleteModal} />​</Item>
 
                 <Modal
@@ -197,124 +265,182 @@ export default function RecruitmentFullInfo() {
       <Card sx={{ minWidth: 275, marginBottom:'30px' }}>
         <CardContent>       
           <Box sx={{ flexGrow: 1 }}>
-          <Grid container spacing={1}>
+            <Grid container spacing={1}>
               <Grid item xs={1} sx={{borderBottom: '1px solid #D3B76A'}}>
-              <Item sx={{textAlign:'left'}}><UserFolder style={{margin:'0 auto'}}/></Item>
+              <Item sx={{textAlign:'left'}}><BasicInformation style={{margin:'0 auto'}}/></Item>
               </Grid>
               <Grid item xs={11} sx={{borderBottom: '1px solid #D3B76A'}}>
-              <Item sx={{fontSize:'14px', textAlign:'left', color: '#16375A', fontWeight:'500'}}>基本情報​</Item>
+              <Item sx={{fontSize:'14px', textAlign:'left', color: '#16375A', fontWeight:'500'}}>基本情報</Item>
               </Grid>
               
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務地</Item>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>求人のキャッチコピー</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>東京<br /> 東京都渋谷区 ※最寄駅：渋谷駅​</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_recruitment_catchphrase}​</Item>
+              </Grid>
+              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>求人の特長</Item>
+              </Grid>
+              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_features_of_recruitment}</Item>
+              </Grid>
+              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>募集背景</Item>
+              </Grid>
+              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_recruitment_background} ​</Item>
+              </Grid>
+            </Grid>
+          </Box>
+        </CardContent>
+         <CardContent>       
+          <Box sx={{ flexGrow: 1 }}>
+          <Grid container spacing={1}>
+              <Grid item xs={1} sx={{borderBottom: '1px solid #D3B76A'}}>
+              <Item sx={{textAlign:'left'}}><ApplicationRequirement style={{margin:'0 auto'}}/></Item>
+              </Grid>
+              <Grid item xs={11} sx={{borderBottom: '1px solid #D3B76A'}}>
+              <Item sx={{fontSize:'14px', textAlign:'left', color: '#16375A', fontWeight:'500'}}> 募集要項 </Item>
+              </Grid>
+              
+              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>仕事内容</Item>
+              </Grid>
+              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_job_description}​</Item>
+              </Grid>
+              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>応募条件</Item>
+              </Grid>
+              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_application_conditions}​</Item>
               </Grid>
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
               <Item sx={{textAlign:'left', fontSize:'12px'}}>雇用形態</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>正社員​</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_employment_status}​</Item>
               </Grid>
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>想定年収</Item>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>年収・給与</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>700万円〜900万円<br /> 月給：46.6万円～60万​</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>​{jobpost.cjp_annual_income}</Item>
               </Grid>
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>役職</Item>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務地</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>課長（マネージャー）​</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>​{jobpost.cjp_work_location}</Item>
               </Grid>
-                  <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}></Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>東京都渋谷区にある1991年に設立した企業で、IT環境の大きな変化に柔軟に対応しながら土台を構築し、この10年間で売上規模を約10倍規模の成長を実現されています。過去数年間はSaaS/ASPが主流でしたが、企業や社会が抱える課題に対してIT/IoT/AI/デジタルの面で解決策を提供する事業を展開し、また、M&A等を通じて幅広い事業ポートフォリオを築いております。
-今後の事業拡大に伴い、経理部門強化の採用です。グループ全社の経理機能を担っている経理部において、経理部マネージャー（管理職）として、月次・四半期・年次含むIFRS（国際会計基準）会計関連の業務をご担当いただきます。​</Item>
-              </Grid>
-       
-          </Grid>
-          </Box>
-        </CardContent>
-         <CardContent>       
-          <Box sx={{ flexGrow: 1 }}>
-          <Grid container spacing={1}>
-              <Grid item xs={1} sx={{borderBottom: '1px solid #D3B76A'}}>
-              <Item sx={{textAlign:'left'}}><BigBagIcon style={{margin:'0 auto'}}/></Item>
-              </Grid>
-              <Grid item xs={11} sx={{borderBottom: '1px solid #D3B76A'}}>
-              <Item sx={{fontSize:'14px', textAlign:'left', color: '#16375A', fontWeight:'500'}}> 仕事について </Item>
-              </Grid>
-              
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>業務内容</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>・マネジメント・連結決算取りまとめ（月次・四半期）・決算短信・計算書類等関連・有価証券（四半期）報告書の作成＆チェック・各事業部の会計処理課題解決への取り組み・経営陣向けの報告資料作成・監査法人対応​</Item>
-              </Grid>
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>必要資格</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>​</Item>
-              </Grid>
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>必要経験</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>連結決算（IFRS）の経験マ<br /> ネジメント経験​</Item>
-              </Grid>
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>歓迎スキル</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>​</Item>
-              </Grid>
-          </Grid>
-          </Box>
-        </CardContent>
-         <CardContent>       
-          <Box sx={{ flexGrow: 1 }}>
-          <Grid container spacing={1}>
-              <Grid item xs={1} sx={{borderBottom: '1px solid #D3B76A'}}>
-              <Item sx={{textAlign:'left'}}><CalendarIcon style={{margin:'0 auto'}}/></Item>
-              </Grid>
-              <Grid item xs={11} sx={{borderBottom: '1px solid #D3B76A'}}>
-              <Item sx={{fontSize:'14px', textAlign:'left', color: '#16375A', fontWeight:'500'}}>勤務について</Item>
-              </Grid>
-              
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
               <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務時間</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>9:00～18:00(休憩時間 1時間00分) ※時間外勤務有 有 （平均40H/月）​</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>​{jobpost.cjp_working_hours}</Item>
+              </Grid>
+              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>休日・休暇</Item>
+              </Grid>
+              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>​{jobpost.cjp_holidays_vacations}</Item>
               </Grid>
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
               <Item sx={{textAlign:'left', fontSize:'12px'}}>待遇・福利厚生</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>各種社会保険完備（雇用・労災・健康・厚生年金）■通勤手当 会社規定に基づき支給 月100,000円まで■その他制度 従業員持株会制度(25%の奨励金あり)、住宅手当(条件有)​</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>​{jobpost.cjp_treatment_benefits}</Item>
               </Grid>
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>休日休暇</Item>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>選考プロセス</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>＜年間休日120日＞(内訳)土曜 日曜 祝日 その他(慶弔休暇、赴任休暇等)■有給休暇 入社半年経過後10日~​</Item>
-              </Grid>
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>ワンポイント</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>土日祝完全休暇, 賞与あり, 駅から徒歩5分以内​</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>​{jobpost.cjp_selection_process}</Item>
               </Grid>
           </Grid>
           </Box>
         </CardContent>
-        <CardContent>       
+         <CardContent>       
+          <Box sx={{ flexGrow: 1 }}>
+          <Grid container spacing={1}>
+              <Grid item xs={1} sx={{borderBottom: '1px solid #D3B76A'}}>
+              <Item sx={{textAlign:'left'}}><CompanyProfile style={{margin:'0 auto'}}/></Item>
+              </Grid>
+              <Grid item xs={11} sx={{borderBottom: '1px solid #D3B76A'}}>
+              <Item sx={{fontSize:'14px', textAlign:'left', color: '#16375A', fontWeight:'500'}}>会社概要</Item>
+              </Grid>
+              
+              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>会社名</Item>
+              </Grid>
+              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_company_name}​</Item>
+              </Grid>
+              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>会社URL</Item>
+              </Grid>
+              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}><Link href={jobpost.cjp_company_url} target='_blank'>{jobpost.cjp_company_url}</Link>​</Item>
+              </Grid>
+              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>上場区分</Item>
+              </Grid>
+              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_listing_classification}​</Item>
+              </Grid>
+              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>事業内容</Item>
+              </Grid>
+              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_business_content}​</Item>
+              </Grid>
+              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>会社の特長</Item>
+              </Grid>
+              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_company_features}​</Item>
+              </Grid>
+              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>会社設立日</Item>
+              </Grid>
+              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_company_establishment}​</Item>
+              </Grid>
+              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>代表者名</Item>
+              </Grid>
+              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_representative_name}​</Item>
+              </Grid>
+              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>従業員数</Item>
+              </Grid>
+              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_number_of_employees}​</Item>
+              </Grid>
+              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>資本金</Item>
+              </Grid>
+              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_capital}​</Item>
+              </Grid>
+              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>年商</Item>
+              </Grid>
+              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_annual_sales}​</Item>
+              </Grid>
+              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>本社所在地</Item>
+              </Grid>
+              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_head_office_location}​</Item>
+              </Grid>
+          </Grid>
+          </Box>
+        </CardContent>
+        {/* <CardContent>       
           <Box sx={{ flexGrow: 1, marginBottom:'20px' }}>
           <Grid container spacing={1}>
               <Grid item xs={1} sx={{borderBottom: '1px solid #D3B76A'}}>
@@ -369,7 +495,7 @@ export default function RecruitmentFullInfo() {
        
           </Grid>
           </Box>
-        </CardContent>
+        </CardContent> */}
         <CardContent>       
           <Box sx={{ flexGrow: 1, marginBottom:'100px' }}>
           <Grid container spacing={1}>
@@ -446,9 +572,11 @@ export default function RecruitmentFullInfo() {
         </Grid>
         </Box>
       </Card>
+        </div>    
+      )}
       <BottomNav />
       
-  </>
+    </>
     </ThemeProvider>
   );
 }

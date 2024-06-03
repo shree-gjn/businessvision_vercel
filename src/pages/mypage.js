@@ -32,7 +32,7 @@ const theme = createTheme({
 
 
 const MyPage = ({ handleNext }) => {
-  const [value, setValue] = React.useState('1');
+  const [value, setValue] = React.useState('2');
   const [showJobSearch, setShowJobSearch] = useState(true);
 
   const handleChange = (event, newValue) => {
@@ -66,7 +66,7 @@ const MyPage = ({ handleNext }) => {
 
   const goBack = () => {
     setShowJobSearch(true); // Reset to default state
-    setValue('1'); 
+    setValue('2'); 
   };
 
 
