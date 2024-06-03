@@ -218,7 +218,7 @@ export default function RecruitmentFullInfo() {
             <Item sx={{fontSize:'12px'}}>未読​</Item>
             </Grid>
             <Grid item xs={4}>
-            <Item sx={{fontSize:'12px'}}>10-08-2023</Item>
+            <Item sx={{fontSize:'12px'}}>{jobpost.created_at}</Item>
             </Grid>
           </Grid>
         </Box>
@@ -381,7 +381,7 @@ export default function RecruitmentFullInfo() {
               <Item sx={{textAlign:'left', fontSize:'12px'}}>会社URL</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}><Link href={jobpost.cjp_company_url} target='_blank'>{jobpost.cjp_company_url}</Link>​</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}><Link to={`${jobpost.cjp_company_url}`} target='_blank' rel="noopener noreferrer">{jobpost.cjp_company_url}</Link>​</Item>
               </Grid>
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
               <Item sx={{textAlign:'left', fontSize:'12px'}}>上場区分</Item>
