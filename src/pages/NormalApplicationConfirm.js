@@ -565,7 +565,7 @@ export default function NormalApplicationConfirm() {
           <Grid container spacing={1}>
             <Grid item xs={12} spacing={1}>
               <Item sx={{textAlign: 'center', marginBottom: '10px'}}>
-                応募手続きの準備
+                提出書類の確認をお願いします
               </Item>
             </Grid>
             <Grid item xs={12} spacing={1} sx={{background: '#fff', border: '1px solid #eeeeee', padding: '10px'}}>
@@ -654,6 +654,7 @@ export default function NormalApplicationConfirm() {
                   <Typography variant='paragraph'>編集</Typography>
                 </Item>
               </Grid>
+              <div style={{display: 'flex'}}>
               <Item>
                 <ToggleButtonGroup
                   orientation="vertical"
@@ -701,6 +702,8 @@ export default function NormalApplicationConfirm() {
                   <UploadFileIcon style={{paddingRight: '10px'}} /> 新たに職務経歴書をアップロードする
                 </Button> */}
               </Item>
+              </div>
+              
             </Grid>
 
             <Grid item xs={12} style={{width: '100%', marginBottom: '20px'}}>
