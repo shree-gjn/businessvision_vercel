@@ -1,4 +1,16 @@
 import React, { useState } from 'react';
+import {
+  Checkbox,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  FormControl,
+  FormLabel,
+  FormHelperText,
+  Select,
+  InputLabel,
+  Collapse,
+} from '@mui/material';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -20,6 +32,11 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Divider from '@mui/material/Divider';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import {ReactComponent as ApplicationRequirement} from '../assets/ApplicationRequirement.svg';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+import MenuItem from '@mui/material/MenuItem';
 
 const theme = createTheme({
   palette: {
@@ -63,6 +80,41 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function NormalApplicationConfirm() {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [name, setName] = useState();
+  const [furigana, setFurigana] = useState();
+  const [city, setCity] = useState();
+  const [emailaddress, setEmailAddress] = useState();
+  const [messageTemplate, setMessageTemplate] = useState();
+  const [resumeupload, setResumeUpload] = React.useState('resumelist');
+  const [workhistoryupload, setWorkHistoryUpload] = React.useState('workhistorylist');
+
+  const handleResumeUpload = (event, nextresumeupload) => {
+    setResumeUpload(nextresumeupload);
+  };
+
+  const handleWorkHistoryUpload = (event, nextworkhistoryupload) => {
+    setWorkHistoryUpload(nextworkhistoryupload);
+  };
+
+  const handleMessageTemplateChange = (event) => {
+    setMessageTemplate(event.target.value);
+  };
+
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  }
+
+  const handleFuriganaChange = (event) => {
+    setFurigana(event.target.value);
+  }
+
+  const handleCityChange = (event) => {
+    setCity(event.target.value);
+  }
+
+  const handleEmailChange = (event) => {
+    setEmailAddress(event.target.value);
+  }
 
   const handleOpenDeleteModal = () => {
     setDeleteModalOpen(true);
@@ -143,6 +195,14 @@ export default function NormalApplicationConfirm() {
   replaceAndRemoveRows(27, 28, 28, data);
   replaceAndRemoveRows(29, 30, 30, data);
 
+  const MessageTemplate = [
+    { value: '', label: 'テンプレートの選択', disabled: true },
+    { value: 'create New', label: <Link to="/messagetemplate" style={{textDecoration:'none', color: '#000'}}>Create New</Link>},
+    { value: 'template1', label: 'Template1' },
+    { value: 'template2', label: 'Template2' },
+    { value: 'template3', label: 'Template3' },
+  ]
+
   return (
     <ThemeProvider theme={theme}>
       <>
@@ -150,7 +210,7 @@ export default function NormalApplicationConfirm() {
           <BackLink to="#" onClick={goBack} > <BackButton /> 戻る </BackLink>
           <p>求人情報</p>
         </div>
-        <Box sx={{ width: 'auto', padding: '24px', background: 'rgb(250, 250, 250)', marginBottom: '100px'}}>
+        {/* <Box sx={{ width: 'auto', padding: '24px', background: 'rgb(250, 250, 250)', marginBottom: '100px'}}>
           <Grid container spacing={1}>
             <Grid item xs={12} style={{width: '100%'}}>
               <Item sx={{textAlign: 'center', background: 'transparent'}}>
@@ -499,7 +559,197 @@ export default function NormalApplicationConfirm() {
             <Button onClick={handleOpenDeleteModal} component={Link} to="" variant="contained" color="secondary" sx={{ width: '100%', marginBottom: '20px' }}>書類選考応募</Button>
             </Grid>
           </Grid>
+        </Box> */}
+
+        <Box sx={{ width: 'auto', padding: '24px', background: 'rgb(250, 250, 250)', marginBottom: '100px'}}>
+          <Grid container spacing={1}>
+            <Grid item xs={12} spacing={1}>
+              <Item sx={{textAlign: 'center', marginBottom: '10px'}}>
+                応募手続きの準備
+              </Item>
+            </Grid>
+            <Grid item xs={12} spacing={1} sx={{background: '#fff', border: '1px solid #eeeeee', padding: '10px'}}>
+              <Typography sx={{textAlign: 'center', fontSize: '12px', padding: '12px'}}>基本情報を入力してください</Typography>
+              <Grid item style={{paddingBottom: '10px'}}>
+                <Item style={{marginLeft: 'auto', padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '70px', display: 'flex', gap: '15px'}}>
+                  <span>
+                    <PencilEdit />
+                  </span>
+                  <Typography variant='paragraph'>編集</Typography>
+                </Item>
+              </Grid>
+              <Item sx={{alignItems: 'center', display: 'flex'}}>
+                <FormLabel className='formfield-label' id="name" sx={{marginBottom: '10px', textAlign: 'left', width: '50%', fontSize: '12px'}}>氏名</FormLabel>
+                <FormControl fullWidth sx={{marginBottom: '10px'}}>
+                  <TextField
+                    variant="outlined"
+                    type="text"
+                    placeholder="あなたのフィールドを入力してください"
+                    value={name}
+                    name='name'
+                    onChange={handleNameChange}
+                    size="small"
+                    // helperText={errors.family_member_count}
+                  />
+                  {/* {errors.family_member_count && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.family_member_count}</FormHelperText> } */}
+                </FormControl>
+              </Item>
+              <Item sx={{alignItems: 'center', display: 'flex'}}>
+                <FormLabel className='formfield-label' id="name" sx={{marginBottom: '10px', textAlign: 'left', width: '50%', fontSize: '12px'}}>フリガナ</FormLabel>
+                <FormControl fullWidth sx={{marginBottom: '10px'}}>
+                  <TextField
+                    variant="outlined"
+                    type="text"
+                    placeholder="あなたのフィールドを入力してください"
+                    value={furigana}
+                    name='furigana'
+                    onChange={handleFuriganaChange}
+                    size="small"
+                    // helperText={errors.family_member_count}
+                  />
+                  {/* {errors.family_member_count && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.family_member_count}</FormHelperText> } */}
+                </FormControl>
+              </Item>
+              <Item sx={{alignItems: 'center', display: 'flex'}}>
+                <FormLabel className='formfield-label' id="name" sx={{marginBottom: '10px', textAlign: 'left', width: '50%', fontSize: '12px'}}>住まいの市区町村</FormLabel>
+                <FormControl fullWidth sx={{marginBottom: '10px'}}>
+                  <TextField
+                    variant="outlined"
+                    type="text"
+                    placeholder="あなたのフィールドを入力してください"
+                    value={city}
+                    name='city'
+                    onChange={handleCityChange}
+                    size="small"
+                    // helperText={errors.family_member_count}
+                  />
+                  {/* {errors.family_member_count && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.family_member_count}</FormHelperText> } */}
+                </FormControl>
+              </Item>
+              <Item sx={{alignItems: 'center', display: 'flex'}}>
+                <FormLabel className='formfield-label' id="name" sx={{marginBottom: '10px', textAlign: 'left', width: '50%', fontSize: '12px'}}>メールアドレス</FormLabel>
+                <FormControl fullWidth sx={{marginBottom: '10px'}}>
+                  <TextField
+                    variant="outlined"
+                    type="text"
+                    placeholder="あなたのフィールドを入力してください"
+                    value={emailaddress}
+                    name='emailaddress'
+                    onChange={handleEmailChange}
+                    size="small"
+                    // helperText={errors.family_member_count}
+                  />
+                  {/* {errors.family_member_count && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.family_member_count}</FormHelperText> } */}
+                </FormControl>
+              </Item>
+            </Grid>
+            
+            <Grid item xs={12}>
+              <Typography sx={{padding: '10px', textAlign: 'center', fontSize: '12px'}}>企業へ提出する履歴書と職務経歴書を選んでください</Typography>
+              <Grid item style={{paddingBottom: '10px'}}>
+                <Item style={{marginLeft: 'auto', padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '70px', display: 'flex', gap: '15px'}}>
+                  <span>
+                    <PencilEdit />
+                  </span>
+                  <Typography variant='paragraph'>編集</Typography>
+                </Item>
+              </Grid>
+              <Item>
+                <ToggleButtonGroup
+                  orientation="vertical"
+                  value={resumeupload}
+                  exclusive
+                  onChange={handleResumeUpload}
+                  style={{gap: '10px'}}
+                >
+                  <ToggleButton value="resumelist" aria-label="resumelist">
+                    <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み履歴書1
+                  </ToggleButton>
+                  {/* <ToggleButton value="module" aria-label="module">
+                    <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み履歴書2
+                  </ToggleButton>
+                  <ToggleButton value="quilt" aria-label="quilt">
+                    <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み履歴書3
+                  </ToggleButton> */}
+                </ToggleButtonGroup>
+
+                {/* <Button variant='outlined' sx={{marginTop: '20px'}}>
+                  <UploadFileIcon style={{paddingRight: '10px'}} /> 新たに履歴書をアップロードする
+                </Button> */}
+              </Item>
+
+              <Item sx={{marginBottom: '20px'}}>
+                <ToggleButtonGroup
+                  orientation="vertical"
+                  value={workhistoryupload}
+                  exclusive
+                  onChange={handleWorkHistoryUpload}
+                  style={{gap: '10px'}}
+                >
+                  <ToggleButton value="workhistorylist" aria-label="workhistorylist">
+                    <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み職務経歴1
+                  </ToggleButton>
+                  {/* <ToggleButton value="module" aria-label="module">
+                    <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み職務経歴2
+                  </ToggleButton>
+                  <ToggleButton value="quilt" aria-label="quilt">
+                    <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み職務経歴3
+                  </ToggleButton> */}
+                </ToggleButtonGroup>
+{/* 
+                <Button variant='outlined' sx={{marginTop: '20px'}}>
+                  <UploadFileIcon style={{paddingRight: '10px'}} /> 新たに職務経歴書をアップロードする
+                </Button> */}
+              </Item>
+            </Grid>
+
+            <Grid item xs={12} style={{width: '100%', marginBottom: '20px'}}>
+              <Item style={{textAlign: 'left', padding: '0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px'}}>
+                <Typography gutterBottom>
+                  メッセージを入力
+                </Typography>
+                <Grid item style={{marginLeft: 'auto'}}>
+                  <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '70px', display: 'flex', gap: '15px'}}>
+                    <span>
+                      <PencilEdit />
+                    </span>
+                    <Typography variant='paragraph'>編集</Typography>
+                  </Item>
+                </Grid>
+                {/* <FormControl size="small">
+                  <Select
+                    value={messageTemplate || ''}
+                    name='message_template'
+                    onChange={handleMessageTemplateChange}
+                    displayEmpty
+                    >
+                    
+                    {MessageTemplate.map((option, index) => (
+                      <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl> */}
+              </Item>
+              <TextField style={{}}
+                id="outlined-multiline-static"
+                variant="outlined"
+                fullWidth
+                multiline
+                placeholder="その他の相談事項" 
+                // name="username"
+                rows={4}
+              />
+            </Grid>
+          </Grid>
+          <Grid container>
+           <Grid item xs={12} style={{width: '100%'}}>
+              <Button onClick={handleOpenDeleteModal} component={Link} to="" variant="contained" color="secondary" sx={{ width: '100%', marginBottom: '20px' }}>書類選考応募</Button>
+            </Grid>
+          </Grid>
         </Box>
+
 
         <Modal
               open={isDeleteModalOpen}

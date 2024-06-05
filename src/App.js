@@ -38,6 +38,8 @@ import NormalApplicationConfirm from './pages/NormalApplicationConfirm';
 import ChangePassword from './pages/ChangePassword';
 import SearchInfo from './pages/SearchInfo';
 import WorkHistory from './pages/profile/WorkHistory';
+import MessageTemplate from './pages/MessageTemplate';
+import CreateMessage from './pages/CreatemessageTemplate';
 
 function App() {
   return (
@@ -81,6 +83,8 @@ function App() {
           <Route path="/normalapplicationconfirm" element={<NormalApplicationConfirm />} />SearchInfo
           <Route path="/searchinfo" element={<SearchInfo />} />
           <Route path="/workhistory" element={<WorkHistory />} />
+          <Route path="/messagetemplate" element={<MessageTemplate />} />
+          <Route path="/createmessage" element={<CreateMessage />} />
         </Routes>
       </Router>
     </div>

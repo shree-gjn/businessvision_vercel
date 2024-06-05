@@ -8,6 +8,7 @@ import BottomNav from '../components/BottomNav';
 import CorporateScout from './CorporateScout';
 import SecretEntry from './SecretEntry';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { useSearchParams } from 'react-router-dom';
 
 const theme = createTheme({
   palette: {
@@ -27,11 +28,20 @@ const theme = createTheme({
 });
 
 const MessageComponent = ({ handleNext }) => {
-  const [value, setValue] = React.useState('1');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [value, setValue] = React.useState(searchParams.get('tab') || '1');
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    setSearchParams({ tab: newValue });
   };
+
+  React.useEffect(() => {
+    const currentTab = searchParams.get('tab');
+    if (currentTab && currentTab !== value) {
+      setValue(currentTab);
+    }
+  }, [searchParams, value]);
 
   return (
     <ThemeProvider theme={theme}>

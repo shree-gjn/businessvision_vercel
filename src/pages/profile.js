@@ -8,6 +8,7 @@ import BottomNav from '../components/BottomNav';
 import ResumeTab from './profile/ResumeTab';
 import SettingTab from './profile/SettingTab';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { useSearchParams } from 'react-router-dom';
 
 const theme = createTheme({
   palette: {
@@ -26,12 +27,24 @@ const theme = createTheme({
   },
 });
 
+
 const ProfileComponent = ({ handleNext }) => {
-  const [value, setValue] = React.useState('1');
+  const [searchParams, setSearchParams] = useSearchParams();
+  // const navigate = useNavigate();
+  const [value, setValue] = React.useState(searchParams.get('tab') || '1');
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    setSearchParams({ tab: newValue });
   };
+
+  React.useEffect(() => {
+    const currentTab = searchParams.get('tab');
+    if (currentTab && currentTab !== value) {
+      setValue(currentTab);
+    }
+  }, [searchParams, value]);
+
 
   return (
     <ThemeProvider theme={theme}>

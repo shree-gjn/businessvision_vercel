@@ -1,4 +1,16 @@
 import React, { useState } from 'react';
+import {
+  Checkbox,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  FormControl,
+  FormLabel,
+  FormHelperText,
+  Select,
+  InputLabel,
+  Collapse,
+} from '@mui/material';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -14,6 +26,13 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextF
 import ResumeTab from './profile/ResumeTab';
 import {ReactComponent as BackButton} from '../assets/BackButton.svg';
 import {ReactComponent as PencilEdit} from '../assets/PencilEdit.svg';
+import { flexbox, fontSize } from '@mui/system';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import {ReactComponent as ApplicationRequirement} from '../assets/ApplicationRequirement.svg';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+import MenuItem from '@mui/material/MenuItem';
+import {ReactComponent as Cancel} from '../assets/Cancel.svg';
 
 const theme = createTheme({
   palette: {
@@ -57,6 +76,30 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function NormalApplication() {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [name, setName] = useState();
+  const [furigana, setFurigana] = useState();
+  const [city, setCity] = useState();
+  const [emailaddress, setEmailAddress] = useState();
+  const [messageTemplate, setMessageTemplate] = useState();
+  const [resumeupload, setResumeUpload] = React.useState('resumelist');
+  const [workhistoryupload, setWorkHistoryUpload] = React.useState('workhistorylist');
+  const [selectedFile, setSelectedFile] = React.useState(null);
+
+    // Add a state to store the uploaded file
+  const [uploadedFile, setUploadedFile] = React.useState(null);
+
+  const handleResumeUpload = (event, nextresumeupload) => {
+    setResumeUpload(nextresumeupload);
+  };
+
+  const handleWorkHistoryUpload = (event, nextworkhistoryupload) => {
+    setWorkHistoryUpload(nextworkhistoryupload);
+  };
+
+  const handleMessageTemplateChange = (event) => {
+    setMessageTemplate(event.target.value);
+  };
 
   const handleOpenDeleteModal = () => {
     setDeleteModalOpen(true);
@@ -65,6 +108,22 @@ export default function NormalApplication() {
   const handleCloseDeleteModal = () => {
     setDeleteModalOpen(false);
   };
+
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  }
+
+  const handleFuriganaChange = (event) => {
+    setFurigana(event.target.value);
+  }
+
+  const handleCityChange = (event) => {
+    setCity(event.target.value);
+  }
+
+  const handleEmailChange = (event) => {
+    setEmailAddress(event.target.value);
+  }
 
   const handleDelete = () => {
     // Implement the logic to delete the item
@@ -78,7 +137,7 @@ export default function NormalApplication() {
   const goBack = () => {
     navigate(-1);  // Navigate to the previous page
   };
-
+  
   const data = [
     { id: 1, column1: '性別', column2: '男' },
     { id: 2, column1: '生年', column2: '38歳' },
@@ -137,6 +196,32 @@ export default function NormalApplication() {
   replaceAndRemoveRows(27, 28, 28, data);
   replaceAndRemoveRows(29, 30, 30, data);
 
+  const MessageTemplate = [
+    { value: '', label: 'テンプレートの選択', disabled: true },
+    { value: '新しく作る', label: <Link to="/messagetemplate" style={{textDecoration:'none', color: '#000'}}>新しく作る</Link>},
+    { value: 'テンプレート1', label: 'テンプレート1' },
+    { value: 'テンプレート2', label: 'テンプレート2' },
+    { value: 'テンプレート3', label: 'テンプレート3' },
+  ]
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleFileSelect = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+    setUploadedFile(file);
+  };
+  
+  const handleOpenFileModal = () => {
+    setOpen(true);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <>
@@ -144,7 +229,7 @@ export default function NormalApplication() {
           <BackLink to="#" onClick={goBack} > <BackButton /> 戻る </BackLink>
           <p>求人情報</p>
         </div>
-        <Box sx={{ width: 'auto', padding: '24px', background: 'rgb(250, 250, 250)', marginBottom: '100px'}}>
+        {/* <Box sx={{ width: 'auto', padding: '24px', background: 'rgb(250, 250, 250)', marginBottom: '100px'}}>
           <Grid container spacing={1}>
             <Grid item xs={12} style={{width: '100%'}}>
               <Item sx={{textAlign: 'center'}}>
@@ -186,7 +271,208 @@ export default function NormalApplication() {
             <Button component={Link} to="/normalapplicationconfirm" variant="contained" color="secondary" sx={{ width: '100%', marginBottom: '20px' }}>書類選考応募</Button>
             </Grid>
           </Grid>
+        </Box> */}
+        
+        <Box sx={{ width: 'auto', padding: '24px', background: 'rgb(250, 250, 250)', marginBottom: '100px'}}>
+          <Grid container spacing={1}>
+            <Grid item xs={12} spacing={1}>
+              <Item sx={{textAlign: 'center', marginBottom: '10px'}}>
+                応募手続きの準備
+              </Item>
+            </Grid>
+            <Grid item xs={12} spacing={1} sx={{background: '#fff', border: '1px solid #eeeeee', padding: '10px'}}>
+              <Typography sx={{textAlign: 'center', fontSize: '12px', padding: '12px'}}>基本情報を入力してください</Typography>
+              <Item sx={{alignItems: 'center', display: 'flex'}}>
+                <FormLabel className='formfield-label' id="name" sx={{marginBottom: '10px', textAlign: 'left', width: '50%', fontSize: '12px'}}>氏名</FormLabel>
+                <FormControl fullWidth sx={{marginBottom: '10px'}}>
+                  <TextField
+                    variant="outlined"
+                    type="text"
+                    placeholder="あなたのフィールドを入力してください"
+                    value={name}
+                    name='name'
+                    onChange={handleNameChange}
+                    size="small"
+                    // helperText={errors.family_member_count}
+                  />
+                  {/* {errors.family_member_count && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.family_member_count}</FormHelperText> } */}
+                </FormControl>
+              </Item>
+              <Item sx={{alignItems: 'center', display: 'flex'}}>
+                <FormLabel className='formfield-label' id="name" sx={{marginBottom: '10px', textAlign: 'left', width: '50%', fontSize: '12px'}}>フリガナ</FormLabel>
+                <FormControl fullWidth sx={{marginBottom: '10px'}}>
+                  <TextField
+                    variant="outlined"
+                    type="text"
+                    placeholder="あなたのフィールドを入力してください"
+                    value={furigana}
+                    name='furigana'
+                    onChange={handleFuriganaChange}
+                    size="small"
+                    // helperText={errors.family_member_count}
+                  />
+                  {/* {errors.family_member_count && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.family_member_count}</FormHelperText> } */}
+                </FormControl>
+              </Item>
+              <Item sx={{alignItems: 'center', display: 'flex'}}>
+                <FormLabel className='formfield-label' id="name" sx={{marginBottom: '10px', textAlign: 'left', width: '50%', fontSize: '12px'}}>住まいの市区町村</FormLabel>
+                <FormControl fullWidth sx={{marginBottom: '10px'}}>
+                  <TextField
+                    variant="outlined"
+                    type="text"
+                    placeholder="あなたのフィールドを入力してください"
+                    value={city}
+                    name='city'
+                    onChange={handleCityChange}
+                    size="small"
+                    // helperText={errors.family_member_count}
+                  />
+                  {/* {errors.family_member_count && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.family_member_count}</FormHelperText> } */}
+                </FormControl>
+              </Item>
+              <Item sx={{alignItems: 'center', display: 'flex'}}>
+                <FormLabel className='formfield-label' id="name" sx={{marginBottom: '10px', textAlign: 'left', width: '50%', fontSize: '12px'}}>メールアドレス</FormLabel>
+                <FormControl fullWidth sx={{marginBottom: '10px'}}>
+                  <TextField
+                    variant="outlined"
+                    type="text"
+                    placeholder="あなたのフィールドを入力してください"
+                    value={emailaddress}
+                    name='emailaddress'
+                    onChange={handleEmailChange}
+                    size="small"
+                    // helperText={errors.family_member_count}
+                  />
+                  {/* {errors.family_member_count && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.family_member_count}</FormHelperText> } */}
+                </FormControl>
+              </Item>
+            </Grid>
+            
+            <Grid item xs={12}>
+              <Typography sx={{padding: '10px', textAlign: 'center', fontSize: '12px'}}>企業へ提出する履歴書と職務経歴書を選んでください</Typography>
+              <Item>
+                <ToggleButtonGroup
+                  orientation="vertical"
+                  value={resumeupload}
+                  exclusive
+                  onChange={handleResumeUpload}
+                  style={{gap: '10px'}}
+                >
+                  <ToggleButton value="resumelist" aria-label="resumelist">
+                    <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み履歴書1
+                  </ToggleButton>
+                  <ToggleButton value="module" aria-label="module">
+                    <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み履歴書2
+                  </ToggleButton>
+                  <ToggleButton value="quilt" aria-label="quilt">
+                    <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み履歴書3
+                  </ToggleButton>
+                </ToggleButtonGroup>
+
+                <Button to="/profile" component={Link} variant='outlined' sx={{marginTop: '20px'}}>
+                  <UploadFileIcon style={{paddingRight: '10px'}} /> 新たに履歴書をアップロードする
+                </Button>
+              </Item>
+
+              <Item sx={{marginBottom: '20px'}}>
+                <ToggleButtonGroup
+                  orientation="vertical"
+                  value={workhistoryupload}
+                  exclusive
+                  onChange={handleWorkHistoryUpload}
+                  style={{gap: '10px'}}
+                >
+                  <ToggleButton value="workhistorylist" aria-label="workhistorylist">
+                    <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み職務経歴1
+                  </ToggleButton>
+                  <ToggleButton value="module" aria-label="module">
+                    <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み職務経歴2
+                  </ToggleButton>
+                  <ToggleButton value="quilt" aria-label="quilt">
+                    <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み職務経歴3
+                  </ToggleButton>
+                </ToggleButtonGroup>
+
+                <Button to="/profile" component={Link} variant='outlined' sx={{marginTop: '20px'}}>
+                  <UploadFileIcon style={{paddingRight: '10px'}} /> 新たに職務経歴書をアップロードする
+                </Button>
+              </Item>
+            </Grid>
+
+            <Grid item xs={12} style={{width: '100%', marginBottom: '20px'}}>
+              <Item style={{textAlign: 'left', padding: '0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px'}}>
+                <Typography gutterBottom>
+                  メッセージを入力
+                </Typography>
+                <FormControl size="small">
+                  {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
+                  <Select
+                    value={messageTemplate || ''}
+                    name='message_template'
+                    // label="messageTemplate"
+                    onChange={handleMessageTemplateChange}
+                    displayEmpty
+                    >
+                    
+                    {MessageTemplate.map((option, index) => (
+                      <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                    {/* <MenuItem value={CreateNew}>Create New</MenuItem>
+                    <MenuItem value={template1}>Template 1</MenuItem>
+                    <MenuItem value={template2}>Template 2</MenuItem>
+                    <MenuItem value={template3}>Template 3</MenuItem> */}
+                  </Select>
+                </FormControl>
+              </Item>
+              <TextField style={{}}
+                id="outlined-multiline-static"
+                variant="outlined"
+                fullWidth
+                multiline
+                placeholder="その他の相談事項" 
+                // name="username"
+                rows={4}
+              />
+            </Grid>
+          </Grid>
+          <Grid container>
+           <Grid item xs={12} style={{width: '100%'}}>
+              <Button component={Link} to="/normalapplicationconfirm" variant="contained" color="secondary" sx={{ width: '100%', marginBottom: '20px' }}>書類選考応募</Button>
+            </Grid>
+          </Grid>
         </Box>
+
+        {/* Modal for file selection */}
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 300,
+            bgcolor: 'background.paper',
+            boxShadow: 24,
+            borderRadius: '15px',
+            border: 'none',
+            p: 4,
+          }}>
+            <Typography id="modal-modal-title" variant="h6" component="h2" sx={{marginBottom: '10px'}}>
+              Select File
+            </Typography>
+            <input type="file" onChange={handleFileSelect} />
+            <div style={{position: 'absolute', top: '0', right: '0', padding: '10px'}}>
+              <Cancel onClick={handleClose}  />
+            </div>
+          </Box>
+        </Modal>
+
         <BottomNav />
       </>
     </ThemeProvider>

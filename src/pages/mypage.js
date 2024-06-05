@@ -11,6 +11,7 @@ import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import SearchInfo from './SearchInfo';
 import { Link, useNavigate } from 'react-router-dom';
 import {ReactComponent as BackButton} from '../assets/BackButton.svg';
+import { useSearchParams } from 'react-router-dom';
 
 const theme = createTheme({
   palette: {
@@ -32,12 +33,21 @@ const theme = createTheme({
 
 
 const MyPage = ({ handleNext }) => {
-  const [value, setValue] = React.useState('2');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [value, setValue] = React.useState(searchParams.get('tab') || '2');
   const [showJobSearch, setShowJobSearch] = useState(true);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    setSearchParams({ tab: newValue });
   };
+
+  React.useEffect(() => {
+    const currentTab = searchParams.get('tab');
+    if (currentTab && currentTab !== value) {
+      setValue(currentTab);
+    }
+  }, [searchParams, value]);
 
   // const switchToSearchInfo = () => {
   //   setShowJobSearch(false); // Hide the JobSearch component
