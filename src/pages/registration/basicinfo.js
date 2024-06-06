@@ -475,13 +475,13 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
       newErrors.accounting_exp_total_year = 'Please select your experience in accounting';
     }
 
-    if (!formData.marriage_status) {
-      newErrors.marriage_status = 'Please select an option';
-    }
+    // if (!formData.marriage_status) {
+    //   newErrors.marriage_status = 'Please select an option';
+    // }
 
-    if (!formData.family_member_count) {
-      newErrors.family_member_count = 'Please select an option';
-    }
+    // if (!formData.family_member_count) {
+    //   newErrors.family_member_count = 'Please select an option';
+    // }
 
     setErrors(newErrors);
   
@@ -529,6 +529,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
             >
               <FormControlLabel value="男性" control={<Radio />} label="男性" />
               <FormControlLabel value="女性" control={<Radio />} label="女性" />
+              <FormControlLabel value="性別不記載を希望" control={<Radio />} label="性別不記載を希望" />
             </RadioGroup>
             {errors.candidate_gender && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.candidate_gender}</FormHelperText>}
           </FormControl>
@@ -784,7 +785,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
           />
         </Grid>
 
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <FormControl component="fieldset" error={Boolean(errors.marriage_status)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' component="legend" sx={{marginBottom: '10px'}}>配偶者についてを教えてください​​<span className='required_label'>必須</span>​</FormLabel>
             <RadioGroup
@@ -801,9 +802,9 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
             </RadioGroup>
             {errors.marriage_status && <FormHelperText style={{ color: 'red', margin: '10px 0'}}>{errors.marriage_status}</FormHelperText> }
           </FormControl>
-        </Grid>
+        </Grid> */}
 
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <FormControl fullWidth error={Boolean(errors.family_member_count)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="dropdown9-label" sx={{marginBottom: '10px'}}>扶養される家族数について教えてください​<span className='required_label'>必須</span>​</FormLabel>
             <TextField
@@ -818,7 +819,7 @@ const BasicInfo = ({ formData, setFormData, handleNext }) => {
             />
             {errors.family_member_count && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.family_member_count}</FormHelperText> }
           </FormControl>
-        </Grid>
+        </Grid> */}
 
         <Grid item xs={12}>
         <FormLabel className='formfield-label' id="dropdown9-label" style={{marginBottom:'10px', fontWeight: '600', color: '#000'}}>語学スキルについて教えてください​​</FormLabel>
