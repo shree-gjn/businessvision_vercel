@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; 
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -13,12 +13,58 @@ import {styled} from '@mui/material/styles';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
-import { Box } from '@mui/system';
+import { Box, display } from '@mui/system';
 import {ReactComponent as Cancel} from '../../assets/Cancel.svg';
+import { TextField} from '@mui/material';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import {ReactComponent as ApplicationReqOutline} from '../../assets/ApplicationReqOutline.svg';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function ResumeTab() {
   const [open, setOpen] = React.useState(false);
-  const [selectedFile, setSelectedFile] = React.useState(null);
+  // const [selectedFile, setSelectedFile] = React.useState(null);
+  const [resume, setResume] = useState([]);
+  const [cvs, setCvs] = useState([]);
+  const [selectedResume, setSelectedResume] = useState(null);
+  const [selectedCv, setSelectedCv] = useState(null);
+
+  // const handleResumeChange = (event, setSelectedFile) => {
+  //   setResume(event.target.files[0]);
+  // };
+
+  // const handleCvChange = (event) => {
+  //   setCurriculumvitae(event.target.files[0]);
+  // };
+
+  // const handleResumeSubmit = () => {
+  //   if (resume) {
+  //     console.log('Selected file:', resume);
+  //     // Add your file upload logic here
+  //   }
+  // };
+
+  // const handleCvSubmit = () => {
+  //   if (curriculumvitae) {
+  //     console.log('Selected file:', curriculumvitae);
+  //     // Add your file upload logic here
+  //   }
+  // };
+
+  const handleFileChange = (event, setSelectedFile) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  };
+
+  const handleUpload = (selectedFile, setType, setSelectedFile) => {
+    if (selectedFile) {
+      setType(prev => [...prev, selectedFile]);
+      setSelectedFile(null); // Clear the selected file
+    }
+  };
+
+  const handleDeleteFile = (index, setType) => {
+    setType(prev => prev.filter((_, i) => i !== index));
+  };
 
     // Add a state to store the uploaded file
   const [uploadedFile, setUploadedFile] = React.useState(null);
@@ -31,11 +77,11 @@ export default function ResumeTab() {
     setOpen(false);
   };
 
-  const handleFileSelect = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
-    setUploadedFile(file);
-  };
+  // const handleFileSelect = (event) => {
+  //   const file = event.target.files[0];
+  //   setSelectedFile(file);
+  //   setUploadedFile(file);
+  // };
   
   const handleOpenFileModal = () => {
     setOpen(true);
@@ -52,7 +98,7 @@ export default function ResumeTab() {
 
   return (
     <div style={{background: 'rgb(250, 250, 250)'}}>
-      <Grid container>
+      {/* <Grid container>
         <Grid Item xs={12}>
           <Typography variant="h6" component="h6" sx={{marginBottom:'10px'}}> 履歴書 </Typography>
         </Grid>
@@ -227,25 +273,13 @@ export default function ResumeTab() {
           <Typography sx={{margin: '10px 15px'}}> 項目 </Typography> <Divider />
         </div>
         </AccordionDetails>
-      </Accordion>
+      </Accordion> */}
       
 
-      <Grid container style={{marginTop: '50px'}}>
+      {/* <Grid container style={{marginTop: '50px'}}>
         <Grid Item xs={12}>
           <Typography variant="h6" component="h6" sx={{marginBottom:'10px'}}> 職務経歴書 </Typography>
         </Grid>
-        {/* {selectedFile && (
-          <Typography variant="body1">
-            Selected File: {selectedFile.name}
-          </Typography>
-        )}
-
-        {uploadedFile && (
-          <Typography variant="body1">
-            Uploaded File: {uploadedFile.name}
-          </Typography>
-        )} */}
-  
         <Grid Item xs={6} style={{paddingRight: '10px'}}>
           <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '80px', display: 'flex', gap: '15px', marginLeft: 'auto', marginBottom: '10px'}} component={Link} to="/workhistory">
             <span>
@@ -262,10 +296,9 @@ export default function ResumeTab() {
             <Typography variant='paragraph'>アップロード</Typography>
           </div>
         </Grid>
-      </Grid>
-      {/* <Typography variant="h6" component="h6" sx={{marginTop:'10px', marginBottom:'10px'}}> 職務経歴書 </Typography> */}
+      </Grid> */}
 
-      <Accordion sx={{boxShadow: 'none', background: '#fff'}}>
+      {/* <Accordion sx={{boxShadow: 'none', background: '#fff'}}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -394,10 +427,10 @@ export default function ResumeTab() {
           <Typography sx={{margin: '10px 15px'}}> 項目 </Typography> 
         </div>
         </AccordionDetails>
-      </Accordion>
+      </Accordion> */}
 
       {/* Modal for file selection */}
-      <Modal
+      {/* <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -423,7 +456,160 @@ export default function ResumeTab() {
             <Cancel onClick={handleClose}  />
           </div>
         </Box>
-      </Modal>
+      </Modal> */}
+
+      <Box>
+        <Grid container>
+          <Grid item xs={12}>
+            <Item>
+              <Typography>
+                履歴書
+              </Typography>
+            </Item>
+            <Item sx={{
+              height: 170,
+              border: '2px dashed #ccc',
+              borderRadius: '8px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              gap: '10px',
+              marginBottom: '10px'
+            }}
+            component="label">
+              <CloudUploadIcon sx={{ fontSize: 48, color: '#D6D6D6'}} />
+              <Typography variant="body1" sx={{color: '#16375A'}}>
+                {selectedResume ? selectedResume.name : 'クリックしてファイルを選択します'}
+              </Typography>
+              <input type="file" hidden onChange={(e) => handleFileChange(e, setSelectedResume)} />
+              {selectedResume ? (
+             <Button
+             variant="contained"
+             onClick={() => handleUpload(selectedResume, setResume, setSelectedResume)}
+             sx={{ marginBottom: '10px' }}
+           >
+             ファイルをアップロードする
+           </Button>
+         ) : (
+           <Button
+             variant="contained"
+             disabled // Button is disabled if no file is selected
+             sx={{ marginBottom: '10px' }}
+           >
+             ファイルをアップロードする
+           </Button>
+            )}
+            </Item>
+          </Grid>
+          <Grid xs={12} sx={{marginBottom: '30px'}}>
+            <Item>
+              <Typography sx={{textAlign: 'left'}}>アップロードされた履歴書</Typography>
+            </Item>
+            {resume.map((resume, index) => (
+              <Item
+                key={index}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  borderBottom: '1px solid #EEEEEE',
+                  padding: '15px 0px',
+                  borderRadius: 'none',
+                  boxShadow: 'none'
+                }}
+              >
+                <Typography sx={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#16375A' }}>
+                  <ApplicationReqOutline />{resume.name}
+                </Typography>
+                <DeleteIcon onClick={() => handleDeleteFile(index, setResume)} />
+              </Item>
+            ))}
+            {/* <Item xs={12} sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #EEEEEE', padding: '15px 0px', borderRadius: 'none', boxShadow: 'none'}}>
+              <Typography sx={{display: 'flex', alignItems: 'center', gap: '10px', color: '#16375A'}}><ApplicationReqOutline />保存済み履歴書1</Typography>
+              <DeleteIcon />
+            </Item>
+            <Item xs={12} sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #EEEEEE', padding: '15px 0px', borderRadius: 'none', boxShadow: 'none'}}>
+              <Typography sx={{display: 'flex', alignItems: 'center', gap: '10px', color: '#16375A'}}><ApplicationReqOutline />保存済み履歴書2</Typography>
+              <DeleteIcon />
+            </Item>
+            <Item xs={12} sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #EEEEEE', padding: '15px 0px', borderRadius: 'none', boxShadow: 'none'}}>
+              <Typography sx={{display: 'flex', alignItems: 'center', gap: '10px', color: '#16375A'}}><ApplicationReqOutline />保存済み履歴書3</Typography>
+              <DeleteIcon />
+            </Item> */}
+          </Grid>
+
+          <Grid item xs={12}>
+            <Item>
+              <Typography>
+                職務経歴書
+              </Typography>
+            </Item>
+            <Item sx={{
+              height: 170,
+              border: '2px dashed #ccc',
+              borderRadius: '8px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              gap: '10px',
+              marginBottom: '10px'
+            }}
+            component="label">
+              <CloudUploadIcon sx={{ fontSize: 48, color: '#D6D6D6'}} />
+              <Typography variant="body1" sx={{color: '#16375A'}}>
+                {selectedCv ? selectedCv.name : 'クリックしてファイルを選択します'}
+              </Typography>
+              <input type="file" hidden onChange={(e) => handleFileChange(e, setSelectedCv)} />
+              {selectedCv ? (
+               <Button
+               variant="contained"
+               onClick={() => handleUpload(selectedCv, setCvs, setSelectedCv)}
+               sx={{ marginBottom: '10px' }}
+             >
+               ファイルをアップロードする
+             </Button>
+           ) : (
+             <Button
+               variant="contained"
+               disabled // Button is disabled if no file is selected
+               sx={{ marginBottom: '10px' }}
+             >
+               ファイルをアップロードする
+             </Button>
+            )}
+            </Item>
+          </Grid>
+          <Grid xs={12}>
+            <Item>
+              <Typography sx={{textAlign: 'left'}}>アップロードされた職歴プロフィール</Typography>
+            </Item>
+            {cvs.map((cv, index) => (
+              <Item
+                key={index}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  borderBottom: '1px solid #EEEEEE',
+                  padding: '15px 0px',
+                  borderRadius: 'none',
+                  boxShadow: 'none',
+                  textAlign: 'left',
+                }}
+              >
+                <Typography sx={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#16375A' }}>
+                  <ApplicationReqOutline />{cv.name}
+                </Typography>
+                <DeleteIcon onClick={() => handleDeleteFile(index, setCvs)} />
+              </Item>
+            ))}
+          </Grid>
+        </Grid>
+      </Box>
 
     </div>
   );
