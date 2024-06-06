@@ -152,7 +152,7 @@ export default function MaskingApplication() {
 
   const MessageTemplate = [
     { value: '', label: 'テンプレートの選択', disabled: true },
-    { value: '新しく作る', label: <Link to="/messagetemplate" style={{textDecoration:'none', color: '#000'}}>新しく作る</Link>},
+    { value: '新しく作る', label: '新しく作る', to: '/messagetemplate' },
     { value: 'テンプレート1', label: 'テンプレート1' },
     { value: 'テンプレート2', label: 'テンプレート2' },
     { value: 'テンプレート3', label: 'テンプレート3' },
@@ -221,7 +221,7 @@ export default function MaskingApplication() {
                     >
                     
                     {MessageTemplate.map((option, index) => (
-                      <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                      <MenuItem key={index} value={option.value} disabled={option.disabled} component={option.to ? Link : 'li'} to={option.to}>
                         {option.label}
                       </MenuItem>
                     ))}
