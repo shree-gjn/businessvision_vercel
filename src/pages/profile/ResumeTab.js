@@ -504,8 +504,9 @@ export default function ResumeTab() {
             </Item>
           </Grid>
           <Grid xs={12} sx={{marginBottom: '30px'}}>
-            <Item>
-              <Typography sx={{textAlign: 'left'}}>アップロードされた履歴書</Typography>
+            <Item sx={{textAlign: resume.length > 0 ? 'left' : 'center', }}>
+              {/* <Typography sx={{textAlign: 'left'}}>アップロードされた履歴書</Typography> */}
+              {resume.length > 0 ? 'アップロードされた履歴書' : '履歴書が選択されていません'}
             </Item>
             {resume.map((resume, index) => (
               <Item
@@ -584,8 +585,9 @@ export default function ResumeTab() {
             </Item>
           </Grid>
           <Grid xs={12}>
-            <Item>
-              <Typography sx={{textAlign: 'left'}}>アップロードされた職歴プロフィール</Typography>
+            <Item sx={{textAlign: cvs.length > 0 ? 'left' : 'center', }}>
+              {/* <Typography sx={{textAlign: 'left'}}>アップロードされた職歴プロフィール</Typography> */}
+              {cvs.length > 0 ? 'アップロードされた職歴プロフィール' : '履歴書が選択されていません'}
             </Item>
             {cvs.map((cv, index) => (
               <Item

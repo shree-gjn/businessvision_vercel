@@ -62,7 +62,15 @@ export default function RecruitmentInfo() {
   const [loading, setLoading] = useState(true); // State to track loading status
   const [page, setPage] = useState(1);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [favState, setFavState] = useState(false);
   const itemsPerPage = 5;
+
+  const handleFavClick = (jobId) => {
+    setFavState((prevStates) => ({
+      ...prevStates,
+      [jobId]: !prevStates[jobId],
+    }));
+  };
 
   useEffect(() => {
     // Retrieve the auth key from sessionStorage
@@ -211,10 +219,15 @@ export default function RecruitmentInfo() {
             </Box>
           </CardContent>
           <CardActions>
-          <Box sx={{ flexGrow: 1 , textDecoration:'none'}} component={Link} to={`/recruitment/${job.cjp_id}`}>
+          <Box sx={{ flexGrow: 1 , textDecoration:'none'}}>
             <Grid container spacing={1}>
                 <Grid item xs={6}>
-                  <Button className='favorite_button' component={Link} to="#" variant="contained" color="grey" sx={{width:'90%', marginBottom:'20px', color: '#fff'}}> 気になる済 </Button>
+                  <Button className='favorite_button' onClick={() => handleFavClick(job.cjp_id)}
+            style={{
+              backgroundColor: favState[job.cjp_id] ? '' : theme.palette.grey[500],
+              color: favState[job.cjp_id] ? theme.palette.grey.main : '#fff',
+            }}
+            variant={favState[job.cjp_id] ? 'outlined' : 'contained'} color="grey" sx={{width:'90%', marginBottom:'20px', color: '#fff'}}> 気になる済 </Button>
                 </Grid>
                 <Grid item xs={6}>
                   <Button component={Link} to={`/recruitment/${job.cjp_id}`} variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
