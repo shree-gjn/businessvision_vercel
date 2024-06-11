@@ -114,23 +114,90 @@ export default function RecruitmentInfo() {
   // };
    
   // Initialize favState using useEffect
+  // useEffect(() => {
+  //   const initialFavState = {};
+  //   jobs.forEach(job => {
+  //     initialFavState[job.cjp_id] = job.fav_job_flag === 0 ? false : true;
+  //   });
+  //   setFavState(initialFavState);
+  // }, [jobs]);
+
   useEffect(() => {
-    const initialFavState = {};
-    jobs.forEach(job => {
-      initialFavState[job.cjp_id] = job.fav_job_flag === 0 ? false : true;
-    });
-    setFavState(initialFavState);
-  }, [jobs]);
+    const storedFavState = JSON.parse(sessionStorage.getItem('favState')) || {};
+    setFavState(storedFavState);
+  }, []);
+
+  // const handleFavClick = async (jobId) => {
+  //   try {
+
+  //     // Toggle local state
+  //     setFavState(prevFavState => ({
+  //       ...prevFavState,
+  //       [jobId]: !prevFavState[jobId]
+  //     }));
+
+  //     // Perform API call to update favorite status
+  //     const authKey = sessionStorage.getItem('authKey');
+  //     if (!authKey) {
+  //       console.error('Auth key not found in sessionStorage');
+  //       return;
+  //     }
+  
+  //     const newFavState = !favState[jobId];
+  //     const formData = new FormData();
+  //     formData.append('auth_key', authKey);
+  //     formData.append('job_id', jobId);
+  //     formData.append('company_job_post_id', jobId);
+  //     formData.append('favorite', newFavState);
+  
+  //     const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/add_favourite_job_to_candidate`, {
+  //       method: 'POST',
+  //       headers: {},
+  //       body: formData,
+  //     });
+  
+  //     if (!response.ok) {
+  //       // Revert local state on failure
+  //       setFavState(prevFavState => ({
+  //         ...prevFavState,
+  //         [jobId]: !prevFavState[jobId]
+  //       }));
+  //       throw new Error('Failed to update favorite status');
+  //     }
+  
+  //     // Update favState based on API response
+  //     const data = await response.json();
+  //     setFavState((prevStates) => ({
+  //       ...prevStates,
+  //       [jobId]: newFavState,
+  //     }));
+  
+  //     console.log('Response Data:', data);
+  
+  //     // setFavState((prevStates) => ({
+  //     //   ...prevStates,
+  //     //   [jobId]: data.success, // Update state based on API response
+  //     // }));
+  //   } catch (error) {
+  //     console.error('Error updating favorite status:', error.message);
+  //   }
+  // };
 
   const handleFavClick = async (jobId) => {
     try {
-
       // Toggle local state
-      setFavState(prevFavState => ({
-        ...prevFavState,
-        [jobId]: !prevFavState[jobId]
-      }));
-
+      setFavState(prevFavState => {
+        const newFavState = {
+          ...prevFavState,
+          [jobId]: !prevFavState[jobId]
+        };
+  
+        // Save new state to sessionStorage
+        sessionStorage.setItem('favState', JSON.stringify(newFavState));
+  
+        return newFavState;
+      });
+  
       // Perform API call to update favorite status
       const authKey = sessionStorage.getItem('authKey');
       if (!authKey) {
@@ -153,30 +220,34 @@ export default function RecruitmentInfo() {
   
       if (!response.ok) {
         // Revert local state on failure
-        setFavState(prevFavState => ({
-          ...prevFavState,
-          [jobId]: !prevFavState[jobId]
-        }));
+        setFavState(prevFavState => {
+          const revertedFavState = {
+            ...prevFavState,
+            [jobId]: !prevFavState[jobId]
+          };
+          sessionStorage.setItem('favState', JSON.stringify(revertedFavState));
+          return revertedFavState;
+        });
         throw new Error('Failed to update favorite status');
       }
   
       // Update favState based on API response
       const data = await response.json();
-      setFavState((prevStates) => ({
-        ...prevStates,
-        [jobId]: newFavState,
-      }));
+      setFavState((prevStates) => {
+        const updatedFavState = {
+          ...prevStates,
+          [jobId]: newFavState,
+        };
+        sessionStorage.setItem('favState', JSON.stringify(updatedFavState));
+        return updatedFavState;
+      });
   
       console.log('Response Data:', data);
-  
-      // setFavState((prevStates) => ({
-      //   ...prevStates,
-      //   [jobId]: data.success, // Update state based on API response
-      // }));
     } catch (error) {
       console.error('Error updating favorite status:', error.message);
     }
   };
+
   
   
 
@@ -332,19 +403,6 @@ export default function RecruitmentInfo() {
           <Box sx={{ flexGrow: 1 , textDecoration:'none'}}>
             <Grid container spacing={1}>
                 <Grid item xs={6}>
-                {/* <Button
-                  className='favorite_button'
-                  onClick={() => handleFavClick(job.cjp_id)}
-                  style={{
-                    backgroundColor: favState[job.cjp_id] ? '' : theme.palette.grey[500],
-                    color: favState[job.cjp_id] ? theme.palette.grey.main : '#fff',
-                  }}
-                  variant={favState[job.cjp_id] ? 'outlined' : 'contained'}
-                  color="grey"
-                  sx={{ width: '90%', marginBottom: '20px', color: '#fff' }}
-                >
-                  気になる済
-                </Button> */}
                 <Button
                   className='favorite_button'
                   onClick={() => handleFavClick(job.cjp_id)}

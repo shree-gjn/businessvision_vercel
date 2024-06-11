@@ -77,25 +77,25 @@ export default function RecruitmentFullInfo() {
   const [favState, setFavState] = useState(false);
 
   useEffect(() => {
-    const initialFavState = {};
-    for (const jobId in jobpost) {
-      if (Object.hasOwnProperty.call(jobpost, jobId)) {
-        const job = jobpost[jobId];
-        initialFavState[job.cjp_id] = job.fav_job_flag === 0 ? false : true;
-      }
-    }
-    setFavState(initialFavState);
-  }, [jobpost]);
+    const storedFavState = JSON.parse(sessionStorage.getItem('favState')) || {};
+    setFavState(storedFavState);
+  }, []);
 
   const handleFavClick = async (jobId) => {
     try {
-
       // Toggle local state
-      setFavState(prevFavState => ({
-        ...prevFavState,
-        [jobId]: !prevFavState[jobId]
-      }));
-
+      setFavState(prevFavState => {
+        const newFavState = {
+          ...prevFavState,
+          [jobId]: !prevFavState[jobId]
+        };
+  
+        // Save new state to sessionStorage
+        sessionStorage.setItem('favState', JSON.stringify(newFavState));
+  
+        return newFavState;
+      });
+  
       // Perform API call to update favorite status
       const authKey = sessionStorage.getItem('authKey');
       if (!authKey) {
@@ -118,26 +118,29 @@ export default function RecruitmentFullInfo() {
   
       if (!response.ok) {
         // Revert local state on failure
-        setFavState(prevFavState => ({
-          ...prevFavState,
-          [jobId]: !prevFavState[jobId]
-        }));
+        setFavState(prevFavState => {
+          const revertedFavState = {
+            ...prevFavState,
+            [jobId]: !prevFavState[jobId]
+          };
+          sessionStorage.setItem('favState', JSON.stringify(revertedFavState));
+          return revertedFavState;
+        });
         throw new Error('Failed to update favorite status');
       }
   
       // Update favState based on API response
       const data = await response.json();
-      setFavState((prevStates) => ({
-        ...prevStates,
-        [jobId]: newFavState,
-      }));
+      setFavState((prevStates) => {
+        const updatedFavState = {
+          ...prevStates,
+          [jobId]: newFavState,
+        };
+        sessionStorage.setItem('favState', JSON.stringify(updatedFavState));
+        return updatedFavState;
+      });
   
       console.log('Response Data:', data);
-  
-      // setFavState((prevStates) => ({
-      //   ...prevStates,
-      //   [jobId]: data.success, // Update state based on API response
-      // }));
     } catch (error) {
       console.error('Error updating favorite status:', error.message);
     }
@@ -630,7 +633,20 @@ export default function RecruitmentFullInfo() {
         <Grid container spacing={1} style={{position: 'fixed', bottom: '0', marginBottom: '56px', padding: '15px', background: 'rgb(255 255 255 / 87%)'}}>
             <Grid item xs={4}>
               {/* <Button className='favorite-button' component={Link} to="#" variant="contained" color="grey" sx={{fontSize:'12px', width: '100%', color: '#fff'}}> 気になる済 </Button> */}
-              <Button
+              {/* <Button
+                className='favorite_button'
+                onClick={() => handleFavClick(jobpost.cjp_id)}
+                style={{
+                  backgroundColor: favState ? '' : theme.palette.grey[500],
+                  color: favState ? theme.palette.grey.main : '#fff',
+                }}
+                variant={favState ? 'outlined' : 'contained'}
+                sx={{fontSize: '12px', width: '100%', color: '#fff' }}
+              >
+                {favState ? '気になる済' : '気になる済'}
+              </Button> */}
+
+                <Button
                   className='favorite_button'
                   onClick={() => handleFavClick(jobpost.cjp_id)}
                   style={{
@@ -640,7 +656,7 @@ export default function RecruitmentFullInfo() {
                   variant={favState[jobpost.cjp_id] ? 'outlined' : 'contained'}
                   sx={{fontSize: '12px', width: '100%', color: '#fff' }}
                 >
-                  {favState[jobpost.cjp_id] ? '気になる' : '気になる済'}
+                  {favState[jobpost.cjp_id] ? '気になる済' : '気になる済'}
                 </Button>
             </Grid>
             <Grid item xs={4}>
