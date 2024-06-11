@@ -65,12 +65,121 @@ export default function RecruitmentInfo() {
   const [favState, setFavState] = useState(false);
   const itemsPerPage = 5;
 
-  const handleFavClick = (jobId) => {
-    setFavState((prevStates) => ({
-      ...prevStates,
-      [jobId]: !prevStates[jobId],
-    }));
+  // const handleFavClick = (jobId) => {
+  //   setFavState((prevStates) => ({
+  //     ...prevStates,
+  //     [jobId]: !prevStates[jobId],
+  //   }));
+  // };
+
+  // const handleFavClick = (jobId) => {
+  //   const authKey = sessionStorage.getItem('authKey');
+  //   if (!authKey) {
+  //     console.error('Auth key not found in sessionStorage');
+  //     return;
+  //   }
+
+  //   const newFavState = !favState[jobId];
+  //   const formData = new FormData();
+  //   formData.append('auth_key', authKey);
+  //   formData.append('job_id', jobId);
+  //   formData.append('company_job_post_id', jobId); 
+  //   formData.append('favorite', newFavState);
+
+  //   fetch(`https://bvhr-api.azurewebsites.net/candidate/add_favourite_job_to_candidate`, {
+  //     method: 'POST',
+  //     headers: {
+  //       // 'Content-Type': 'application/json',
+  //     },
+  //     body: formData,
+  //   })
+  //   .then((response) => {
+  //     console.log('Response Status:', response.status);
+  //     return response.json();
+  //   })
+  //   .then((data) => {
+  //     console.log('Response Data:', data);
+  //     if (data.success) {
+  //       setFavState((prevStates) => ({
+  //         ...prevStates,
+  //         [jobId]: newFavState,
+  //       }));
+  //     } else {
+  //       console.error('Failed to update favorite status:', data.message);
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     console.error('Error updating favorite status:', error);
+  //   });
+  // };
+   
+  // Initialize favState using useEffect
+  useEffect(() => {
+    const initialFavState = {};
+    jobs.forEach(job => {
+      initialFavState[job.cjp_id] = job.fav_job_flag === 0 ? false : true;
+    });
+    setFavState(initialFavState);
+  }, [jobs]);
+
+  const handleFavClick = async (jobId) => {
+    try {
+
+      // Toggle local state
+      setFavState(prevFavState => ({
+        ...prevFavState,
+        [jobId]: !prevFavState[jobId]
+      }));
+
+      // Perform API call to update favorite status
+      const authKey = sessionStorage.getItem('authKey');
+      if (!authKey) {
+        console.error('Auth key not found in sessionStorage');
+        return;
+      }
+  
+      const newFavState = !favState[jobId];
+      const formData = new FormData();
+      formData.append('auth_key', authKey);
+      formData.append('job_id', jobId);
+      formData.append('company_job_post_id', jobId);
+      formData.append('favorite', newFavState);
+  
+      const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/add_favourite_job_to_candidate`, {
+        method: 'POST',
+        headers: {},
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        // Revert local state on failure
+        setFavState(prevFavState => ({
+          ...prevFavState,
+          [jobId]: !prevFavState[jobId]
+        }));
+        throw new Error('Failed to update favorite status');
+      }
+  
+      // Update favState based on API response
+      const data = await response.json();
+      setFavState((prevStates) => ({
+        ...prevStates,
+        [jobId]: newFavState,
+      }));
+  
+      console.log('Response Data:', data);
+  
+      // setFavState((prevStates) => ({
+      //   ...prevStates,
+      //   [jobId]: data.success, // Update state based on API response
+      // }));
+    } catch (error) {
+      console.error('Error updating favorite status:', error.message);
+    }
   };
+  
+  
+
 
   useEffect(() => {
     // Retrieve the auth key from sessionStorage
@@ -86,7 +195,8 @@ export default function RecruitmentInfo() {
     setLoading(true); // Set loading to true when starting data fetching
 
     // Make the API request with the authKey
-    fetch(`https://bvhr-api.azurewebsites.net/candidate/list_recruitment_info?auth_key=${authKey}`)
+    // fetch(`https://bvhr-api.azurewebsites.net/candidate/list_recruitment_info?auth_key=${authKey}`)
+       fetch(`https://bvhr-api.azurewebsites.net/candidate/list_recruitment_info?auth_key=${authKey}&page=${page}&limit=${itemsPerPage}`)
       .then((response) => response.json())
       .then((data) => {
         console.log('Fetched data:', data);
@@ -99,7 +209,7 @@ export default function RecruitmentInfo() {
       })
       .catch((error) => console.error('Error fetching data:', error));
       // setLoading(false);
-  }, []);
+  }, [page]);
 
 
    const handlePageChange = (event, value) => {
@@ -222,12 +332,31 @@ export default function RecruitmentInfo() {
           <Box sx={{ flexGrow: 1 , textDecoration:'none'}}>
             <Grid container spacing={1}>
                 <Grid item xs={6}>
-                  <Button className='favorite_button' onClick={() => handleFavClick(job.cjp_id)}
-            style={{
-              backgroundColor: favState[job.cjp_id] ? '' : theme.palette.grey[500],
-              color: favState[job.cjp_id] ? theme.palette.grey.main : '#fff',
-            }}
-            variant={favState[job.cjp_id] ? 'outlined' : 'contained'} color="grey" sx={{width:'90%', marginBottom:'20px', color: '#fff'}}> 気になる済 </Button>
+                {/* <Button
+                  className='favorite_button'
+                  onClick={() => handleFavClick(job.cjp_id)}
+                  style={{
+                    backgroundColor: favState[job.cjp_id] ? '' : theme.palette.grey[500],
+                    color: favState[job.cjp_id] ? theme.palette.grey.main : '#fff',
+                  }}
+                  variant={favState[job.cjp_id] ? 'outlined' : 'contained'}
+                  color="grey"
+                  sx={{ width: '90%', marginBottom: '20px', color: '#fff' }}
+                >
+                  気になる済
+                </Button> */}
+                <Button
+                  className='favorite_button'
+                  onClick={() => handleFavClick(job.cjp_id)}
+                  style={{
+                    backgroundColor: favState[job.cjp_id] ? '' : theme.palette.grey[500],
+                    color: favState[job.cjp_id] ? theme.palette.grey.main : '#fff',
+                  }}
+                  variant={favState[job.cjp_id] ? 'outlined' : 'contained'}
+                  sx={{ width: '90%', marginBottom: '20px', color: '#fff' }}
+                >
+                  {favState[job.cjp_id] ? '気になる済' : '気になる済'}
+                </Button>
                 </Grid>
                 <Grid item xs={6}>
                   <Button component={Link} to={`/recruitment/${job.cjp_id}`} variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
