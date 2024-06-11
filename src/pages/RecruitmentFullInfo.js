@@ -638,7 +638,7 @@ export default function RecruitmentFullInfo() {
                     color: favState[jobpost.cjp_id] ? theme.palette.grey.main : '#fff',
                   }}
                   variant={favState[jobpost.cjp_id] ? 'outlined' : 'contained'}
-                  sx={{ width: '90%', marginBottom: '20px', color: '#fff' }}
+                  sx={{fontSize: '12px', width: '90%', color: '#fff' }}
                 >
                   {favState[jobpost.cjp_id] ? '気になる' : '気になる済'}
                 </Button>
