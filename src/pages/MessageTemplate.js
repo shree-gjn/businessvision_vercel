@@ -5,6 +5,7 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import { Link, useNavigate } from 'react-router-dom';
 import { ReactComponent as BackButton } from '../assets/BackButton.svg';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
@@ -20,6 +21,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {ReactComponent as WarningIcon} from '../assets/WarningIcon.svg';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
+import { display } from '@mui/system';
 
 const theme = createTheme({
   palette: {
@@ -92,6 +94,7 @@ const MessageTemplate = () => {
   const [messageTemplates, setMessageTemplates] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedTemplateId, setSelectedTemplateId] = useState(null);
+  const [loading, setLoading] = useState(true); // State to track loading status
 
   const navigate = useNavigate();
 
@@ -114,12 +117,14 @@ const MessageTemplate = () => {
 
   useEffect(() => {
     const authKey = sessionStorage.getItem('authKey');
+    setLoading(true); // Set loading to true when starting data fetching
     const fetchMessageTemplates = async () => {
       try {
         const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/list_message_template?auth_key=${authKey}`);
         const data = await response.json();
         console.log('Fetched data:', data);
         setMessageTemplates(data.message_template);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching message templates:', error);
       }
@@ -196,7 +201,7 @@ const MessageTemplate = () => {
             </Item>
           </Grid>
           
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{boxShadow: 'none'}}>
             <Table aria-label="customized table">
               <TableHead>
                 <TableRow>
@@ -206,29 +211,14 @@ const MessageTemplate = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {/* <StyledTableRow>
-                  <StyledTableCell width="70%" component="th" scope="row">
-                  会計士のポストにメッセージを申請する
-                  </StyledTableCell>
-                  <StyledTableCell width="15%" align="center"><EditIcon /></StyledTableCell>
-                  <StyledTableCell width="15%" align="center"><DeleteIcon /></StyledTableCell>
-                </StyledTableRow>
-                <StyledTableRow>
-                  <StyledTableCell width="70%" component="th" scope="row">
-                  会計士のポストにメッセージを申請する
-                  </StyledTableCell>
-                  <StyledTableCell width="15%" align="center"><EditIcon /></StyledTableCell>
-                  <StyledTableCell width="15%" align="center"><DeleteIcon /></StyledTableCell>
-                </StyledTableRow>
-                <StyledTableRow>
-                  <StyledTableCell width="70%" component="th" scope="row">
-                  会計士のポストにメッセージを申請する
-                  </StyledTableCell>
-                  <StyledTableCell width="15%" align="center"><EditIcon /></StyledTableCell>
-                  <StyledTableCell width="15%" align="center"><DeleteIcon /></StyledTableCell>
-                </StyledTableRow> */}
 
-                {messageTemplates.map((template) => (
+              {loading ? (
+                // Render loading indicator here
+                <Box sx={{width: '100%', height: '300px', display: 'flex', alignItems: 'center', justifyContent:'center'}}>
+                  <CircularProgress sx={{textAlign: 'center', display: 'block'}} />
+                </Box>
+              ) : (  
+                messageTemplates.map((template) => (
                   <StyledTableRow key={template.message_template_id}>
                     <StyledTableCell width="70%" component="th" scope="row">
                       {template.message_template_name}
@@ -236,7 +226,8 @@ const MessageTemplate = () => {
                     <StyledTableCell width="15%" align="center"><EditIcon  onClick={() => handleEdit(template.message_template_id)} style={{ cursor: 'pointer' }}  /></StyledTableCell>
                     <StyledTableCell onClick={() => handleDelete(template.message_template_id)} startIcon={<DeleteIcon />} width="15%" align="center"><DeleteIcon /></StyledTableCell>
                   </StyledTableRow>
-                ))}
+                ))
+              )}
                
               </TableBody>
             </Table>

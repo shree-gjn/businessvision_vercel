@@ -92,7 +92,7 @@ export default function SecretEntry() {
       ) : (  
       jobpost.map(job => (
         <div key={job.cjp_id} style={{ background: '#FFF', marginBottom: '20px', border: '1px solid #EEEEEE', borderRadius: '10px' }}>
-          <Card sx={{ minWidth: 275, marginBottom: '30px', textDecoration: 'none' }} component={Link} to={`/messages/scout/${job.id}`}>
+          <Card sx={{ minWidth: 275, marginBottom: '30px', textDecoration: 'none' }} component={Link} to={`/recruitment/${job.cjp_id}`}>
             <CardContent>
               <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={1}>
@@ -104,7 +104,7 @@ export default function SecretEntry() {
                 </Grid>
               </Box>
               <Typography variant="h6" component="div" sx={{ fontSize: '14px', fontWeight: '700', textAlign: 'left' }}>
-              ◆今回の募集の理由は、今後の新規事業展開を見据えて次世代の育成を行い、経理部を強化したいという点です
+              {job.cjp_recruitment_catchphrase}
               </Typography>
               <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={1} sx={{ marginTop: '10px' }}>

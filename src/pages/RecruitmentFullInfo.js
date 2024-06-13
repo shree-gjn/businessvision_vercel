@@ -292,8 +292,8 @@ export default function RecruitmentFullInfo() {
             <Grid item xs={2}>
             <Item sx={{fontSize:'12px'}}>未読​</Item>
             </Grid>
-            <Grid item xs={4}>
-            <Item sx={{fontSize:'12px'}}>{jobpost.created_at}</Item>
+            <Grid item xs={4}>  
+            <Item sx={{fontSize:'12px'}}>{jobpost.cjp_created_at}</Item>
             </Grid>
           </Grid>
         </Box>
