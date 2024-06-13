@@ -123,7 +123,7 @@ export default function RecruitmentInfo() {
   // }, [jobs]);
 
   useEffect(() => {
-    const storedFavState = JSON.parse(sessionStorage.getItem('favState')) || {};
+    const storedFavState = JSON.parse(localStorage.getItem('favState')) || {};
     setFavState(storedFavState);
   }, []);
 
@@ -193,13 +193,13 @@ export default function RecruitmentInfo() {
         };
   
         // Save new state to sessionStorage
-        sessionStorage.setItem('favState', JSON.stringify(newFavState));
+        localStorage.setItem('favState', JSON.stringify(newFavState));
   
         return newFavState;
       });
   
       // Perform API call to update favorite status
-      const authKey = sessionStorage.getItem('authKey');
+      const authKey = localStorage.getItem('authKey');
       if (!authKey) {
         console.error('Auth key not found in sessionStorage');
         return;

@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Modal from '@mui/material/Modal';
-import { Link, useNavigate } from 'react-router-dom'; 
+import { Link, useNavigate, useLocation} from 'react-router-dom'; 
 import BottomNav from '../components/BottomNav';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
@@ -58,6 +58,10 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function MaskingApplicationConfirm() {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const location = useLocation();
+  // const message = location.state ? location.state.message : '';
+  const { id, message } = location.state || { id: '', message: '' };
+
 
   const handleOpenDeleteModal = () => {
     setDeleteModalOpen(true);
@@ -138,6 +142,32 @@ export default function MaskingApplicationConfirm() {
   replaceAndRemoveRows(27, 28, 28, data);
   replaceAndRemoveRows(29, 30, 30, data);
 
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    const authKey = sessionStorage.getItem('authKey');
+    const formData = new FormData();
+    formData.append('auth_key', authKey);
+    formData.append('job_id', id);
+    formData.append('message', message);
+
+    try {
+      const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/add_secret_entry`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        // Handle successful response
+        handleOpenDeleteModal();
+      } else {
+        // Handle error response
+        console.error('Error:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <>
@@ -153,25 +183,23 @@ export default function MaskingApplicationConfirm() {
               </Item>
             </Grid>
           </Grid>
-          <Grid container spacing={1} style={{width: '100%', marginBottom: '20px', background: '#FFFFFF', marginLeft: '0', marginTop: '10px', height: '150px', borderRadius: '10px', border: '1px solid #EEEEEE'}}>
-            <Grid item xs={8} style={{width: '100%'}}>
-              <Item style={{textAlign: 'left'}}>メッセージ</Item>
-            </Grid>
-            <Grid item xs={4}>
-              <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '70px', display: 'flex', gap: '15px'}}>
-                <span>
+          <Grid container spacing={1} style={{width: '100%', marginBottom: '20px', background: '#FFFFFF', marginLeft: '0', marginTop: '10px', height: '150px', borderRadius: '10px', border: '1px solid #EEEEEE', overflowY: 'auto'}}>
+            <Grid item xs={12} style={{width: '100%', position: 'relative'}}>
+              <Item>
+                <Typography style={{textAlign: 'left', marginBottom: '20px'}}>メッセージ</Typography>
+                <Typography style={{textAlign: 'left', margin: '10px 0'}}>{message}</Typography>
+                {/* <Typography style={{textAlign: 'left', margin: '10px 0'}}>ID: {id}</Typography> */}
+                <Button component={Link} to={`/maskingapplication/${id}`} state={{ message }} style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '120px', display: 'flex', gap: '15px', position: 'absolute', top: '0', right: '0', margin: '10px 10px 0 0'}}>
                   <PencilEdit />
-                </span>
-                <Typography variant='paragraph'>編集</Typography>
+                  <Typography variant='paragraph'>編集</Typography>
+                </Button>
               </Item>
             </Grid>
           </Grid>
           <Grid container spacing={1} style={{background: '#FFFFFF', border: '1px solid #EEEEEE', borderRadius: '10px', width: '100%', marginLeft: '0', marginBottom: '50px'}}>
             <Grid item xs={4} style={{marginLeft: 'auto'}}>
               <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '70px', display: 'flex', gap: '15px'}}>
-                <span>
                   <PencilEdit />
-                </span>
                 <Typography variant='paragraph'>編集</Typography>
               </Item>
             </Grid>
@@ -194,7 +222,7 @@ export default function MaskingApplicationConfirm() {
           </Grid>
           <Grid container style={{width: '100%'}}>
             <Grid item xs={12} style={{width: '100%'}}>
-            <Button onClick={handleOpenDeleteModal} component={Link} to="" variant="contained" color="primary" sx={{ width: '100%', marginBottom: '20px' }}>匿名エントリー</Button>
+            <Button onClick={handleFormSubmit} variant="contained" color="primary" sx={{ width: '100%', marginBottom: '20px' }}>匿名エントリー</Button>
             </Grid>
           </Grid>
         </Box>

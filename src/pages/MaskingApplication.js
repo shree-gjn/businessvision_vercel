@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import {
   Checkbox,
   FormControlLabel,
@@ -19,7 +19,7 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Modal from '@mui/material/Modal';
-import { Link, useNavigate } from 'react-router-dom'; 
+import { Link, useNavigate, useLocation, useParams} from 'react-router-dom'; 
 import BottomNav from '../components/BottomNav';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
@@ -68,8 +68,10 @@ const Item = styled(Paper)(({ theme }) => ({
   }));
 
 export default function MaskingApplication() {
+  const { id } = useParams();  // Get the ID from the URL
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [messageTemplate, setMessageTemplate] = useState();
+  const [message, setMessage] = useState('');
 
   const handleOpenDeleteModal = () => {
     setDeleteModalOpen(true);
@@ -86,7 +88,15 @@ export default function MaskingApplication() {
     // For now, let's just close the modal
     handleCloseDeleteModal();
   };
+
+  const location = useLocation();
   const navigate = useNavigate();  // Get the history object from react-router-dom
+
+  useEffect(() => {
+    if (location.state && location.state.message) {
+      setMessage(location.state.message);
+    }
+  }, [location]);
 
   const goBack = () => {
     navigate(-1);  // Navigate to the previous page
@@ -240,12 +250,14 @@ export default function MaskingApplication() {
                 placeholder="その他の相談事項" 
                 // name="username"
                 rows={4}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
               />
             </Grid>
           </Grid>
           <Grid container style={{width: '100%'}}>
             <Grid item xs={12} style={{width: '100%'}}>
-            <Button component={Link} to="/maskingapplicationconfirm" variant="contained" color="primary" sx={{ width: '100%', marginBottom: '20px' }}>匿名エントリー</Button>
+            <Button component={Link} to="/maskingapplicationconfirm" state={{ id: id, message: message }} variant="contained" color="primary" sx={{ width: '100%', marginBottom: '20px' }}>匿名エントリー</Button>
             </Grid>
           </Grid>
         </Box>

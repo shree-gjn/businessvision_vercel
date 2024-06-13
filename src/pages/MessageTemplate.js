@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -17,6 +17,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import {ReactComponent as WarningIcon} from '../assets/WarningIcon.svg';
+import Modal from '@mui/material/Modal';
+import Typography from '@mui/material/Typography';
 
 const theme = createTheme({
   palette: {
@@ -86,6 +89,9 @@ const BackLink = styled(Link)(({ theme }) => ({
 const MessageTemplate = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [message, setMessage] = useState('');
+  const [messageTemplates, setMessageTemplates] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedTemplateId, setSelectedTemplateId] = useState(null);
 
   const navigate = useNavigate();
 
@@ -104,6 +110,73 @@ const MessageTemplate = () => {
   const handleSend = () => {
     // Handle the send logic here
     console.log(`Selected Category: ${selectedCategory}, Message: ${message}`);
+  };
+
+  useEffect(() => {
+    const authKey = sessionStorage.getItem('authKey');
+    const fetchMessageTemplates = async () => {
+      try {
+        const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/list_message_template?auth_key=${authKey}`);
+        const data = await response.json();
+        console.log('Fetched data:', data);
+        setMessageTemplates(data.message_template);
+      } catch (error) {
+        console.error('Error fetching message templates:', error);
+      }
+    };
+  
+    fetchMessageTemplates();
+  }, []);
+
+
+  const deleteMessageTemplate = async (messageTemplateId) => {
+    try {
+      const authKey = sessionStorage.getItem('authKey');
+      const formData = new FormData();
+      formData.append('auth_key', authKey);
+      formData.append('message_template_id', messageTemplateId);
+      const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/delete_message_template`, {
+        method: 'POST',
+        body: formData
+      });
+      if (response.ok) {
+        // Delete successful, update state or perform any necessary actions
+        console.log('Message template deleted successfully');
+        // Remove the deleted message template from the UI
+        setMessageTemplates(prevTemplates => prevTemplates.filter(template => template.message_template_id !== messageTemplateId));
+      } else {
+        // Handle error response
+        console.error('Failed to delete message template:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error deleting message template:', error);
+    }
+  };
+
+  const handleDelete = (messageTemplateId) => {
+    // Open modal and set selected template id
+    setSelectedTemplateId(messageTemplateId);
+    setModalOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    // Call deleteMessageTemplate function with the selectedTemplateId
+    deleteMessageTemplate(selectedTemplateId);
+    // Close the modal
+    setModalOpen(false);
+  };
+
+  const handleCancelDelete = () => {
+    // Close the modal
+    setModalOpen(false);
+  };
+
+  const handleEdit = (messageTemplateId) => {
+     if (typeof messageTemplateId === 'number' || typeof messageTemplateId === 'string') {
+      navigate(`/editmessage/${messageTemplateId}`);
+    } else {
+      console.error('Invalid message template ID:', messageTemplateId);
+    }
   };
 
   return (
@@ -133,7 +206,7 @@ const MessageTemplate = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                <StyledTableRow>
+                {/* <StyledTableRow>
                   <StyledTableCell width="70%" component="th" scope="row">
                   会計士のポストにメッセージを申請する
                   </StyledTableCell>
@@ -153,13 +226,53 @@ const MessageTemplate = () => {
                   </StyledTableCell>
                   <StyledTableCell width="15%" align="center"><EditIcon /></StyledTableCell>
                   <StyledTableCell width="15%" align="center"><DeleteIcon /></StyledTableCell>
-                </StyledTableRow>
+                </StyledTableRow> */}
+
+                {messageTemplates.map((template) => (
+                  <StyledTableRow key={template.message_template_id}>
+                    <StyledTableCell width="70%" component="th" scope="row">
+                      {template.message_template_name}
+                    </StyledTableCell>
+                    <StyledTableCell width="15%" align="center"><EditIcon  onClick={() => handleEdit(template.message_template_id)} style={{ cursor: 'pointer' }}  /></StyledTableCell>
+                    <StyledTableCell onClick={() => handleDelete(template.message_template_id)} startIcon={<DeleteIcon />} width="15%" align="center"><DeleteIcon /></StyledTableCell>
+                  </StyledTableRow>
+                ))}
                
               </TableBody>
             </Table>
           </TableContainer>
         </Grid>
       </Box>
+
+      <Modal
+        open={modalOpen}
+        onClose={handleCancelDelete}
+        aria-labelledby="delete-modal-title"
+        aria-describedby="delete-modal-description"
+      >
+        <Box sx={{ 
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 300,
+          bgcolor: 'background.paper',
+          borderRadius: '20px',
+          boxShadow: 24,
+          textAlign: 'center',
+          p: 4,
+        }}>
+          {/* <Typography id="delete-modal-title" variant="h6" component="h2" gutterBottom>
+            消去してもよろしいですか
+          </Typography> */}
+          <WarningIcon sx={{marginBottom: '20px'}} />
+          <Typography id="delete-modal-description" sx={{ marginBottom: 2 , marginTop: 1}}>
+          消去してもよろしいですか
+          </Typography>
+          <Button variant="contained" color='grey' onClick={handleCancelDelete} sx={{color: '#fff'}}>キャンセル</Button>
+          <Button variant="contained" onClick={handleConfirmDelete} sx={{ ml: 2, background: '#F96264'}}>削除する</Button>
+        </Box>
+      </Modal>
     </ThemeProvider>
   );
 };

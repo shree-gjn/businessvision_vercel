@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import {
   Checkbox,
   FormControlLabel,
@@ -19,7 +19,7 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams} from 'react-router-dom';
 import { ReactComponent as BackButton } from '../assets/BackButton.svg';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import AddIcon from '@mui/icons-material/Add';
@@ -88,18 +88,37 @@ const modalStyle = {
   p: 4,
 };
 
-const CreateMessage = () => {
-  const [selectedCategory, setSelectedCategory] = useState('');
+const EditMessage = () => {
+  const [title, setTitle] = useState('');
   const [message, setMessage] = useState('');
-  const [title, setTitle] = useState(''); // Added state for title
-  const [open, setOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
 
   const navigate = useNavigate();
+  const { id } = useParams(); 
+  
+  useEffect(() => {
+    // Fetch template details using the template ID from useParams 
+    const authKey = sessionStorage.getItem('authKey');
+    const fetchTemplateDetails = async () => {
+      try {
+        const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/view_message_template?message_template_id=${id}&auth_key=${authKey}`);
+        if (response.ok) {
+          const data = await response.json();
+          setTitle(data.message_template.message_template_name);
+          setMessage(data.message_template.message);
+        } else {
+          console.error('Failed to fetch template details');
+        }
+      } catch (error) {
+        console.error('Error fetching template details:', error);
+      }
+    };
 
-  const goBack = () => {
-    navigate(-1);
-  };
+    if (id) {
+      fetchTemplateDetails();
+    }
+  }, [id]); // Include id in the dependency array
 
   const handleMessageChange = (event) => {
     setMessage(event.target.value);
@@ -113,32 +132,36 @@ const CreateMessage = () => {
     const authKey = sessionStorage.getItem('authKey');
     const formData = new FormData();
     formData.append('auth_key', authKey);
+    formData.append('message_template_id', id);
     formData.append('message_template_name', title);
     formData.append('message', message);
 
     try {
-      const response = await fetch('https://bvhr-api.azurewebsites.net/candidate/add_candidate_message_template', {
+      const response = await fetch('https://bvhr-api.azurewebsites.net/candidate/edit_candidate_message_template', {
         method: 'POST',
         body: formData,
       });
 
       if (response.ok) {
-        setModalMessage('メッセージテンプレートが正常に作成されました');
-        setOpen(true);
+        setModalMessage('メッセージテンプレートが正常に更新されました');
       } else {
-        setModalMessage('メッセージテンプレートの作成に失敗しました');
-        setOpen(true);
+        setModalMessage('メッセージテンプレートの更新に失敗しました');
       }
+      setModalOpen(true);
     } catch (error) {
       setModalMessage('Error: ' + error.message);
-      setOpen(true);
+      setModalOpen(true);
     }
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setModalOpen(false);
+    navigate(-1); // Redirect to the list page after closing modal
   };
 
+  const goBack = () => {
+    navigate(-1);
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -182,29 +205,39 @@ const CreateMessage = () => {
             </FormControl>
           </Grid>
           <Grid item xs={12}>
-            <Button onClick={handleSend} component={Link} variant="contained">作成する</Button>
+            <Button onClick={handleSend} variant="contained">変更内容を保存</Button>
           </Grid>
         </Grid>
       </Box>
 
       <Modal
-        open={open}
+        open={modalOpen}
         onClose={handleClose}
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
       >
-        <Box sx={modalStyle}>
-          <Cancel onClick={handleClose} style={{position: 'absolute', right: '0', top: '0', padding: '10px'}} />
-          <SuccessMsg style={{marginBottom: '10px'}} />
+        <Box sx={{ 
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 300,
+          bgcolor: 'background.paper',
+          borderRadius: '20px',
+          boxShadow: 24,
+          textAlign: 'center',
+          p: 4,
+        }}>
+          <Cancel onClick={handleClose} style={{ position: 'absolute', right: '0', top: '0', padding: '10px' }} />
+          <SuccessMsg style={{ marginBottom: '10px' }} />
           <Typography id="modal-description" >
             {modalMessage}
           </Typography>
         </Box>
       </Modal>
 
-
     </ThemeProvider>
   );
 };
 
-export default CreateMessage;
+export default EditMessage;

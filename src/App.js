@@ -40,6 +40,7 @@ import SearchInfo from './pages/SearchInfo';
 import WorkHistory from './pages/profile/WorkHistory';
 import MessageTemplate from './pages/MessageTemplate';
 import CreateMessage from './pages/CreatemessageTemplate';
+import EditMessage from './pages/EditmessageTemplate';
 
 function App() {
   return (
@@ -77,7 +78,7 @@ function App() {
           <Route path="/changepassword" element={<ChangePassword />} />
           <Route path="/registrationauth" element={<RegistrationAuth />} />
           <Route path="/normalresume" element={<NormalResume />} />
-          <Route path="/maskingapplication" element={<MaskingApplication />} />
+          <Route path="/maskingapplication/:id" element={<MaskingApplication />} />
           <Route path="/maskingapplicationconfirm" element={<MaskingApplicationConfirm />} />
           <Route path="/normalapplication" element={<NormalApplication />} />
           <Route path="/normalapplicationconfirm" element={<NormalApplicationConfirm />} />SearchInfo
@@ -85,6 +86,7 @@ function App() {
           <Route path="/workhistory" element={<WorkHistory />} />
           <Route path="/messagetemplate" element={<MessageTemplate />} />
           <Route path="/createmessage" element={<CreateMessage />} />
+          <Route path="/editmessage/:id" element={<EditMessage />} />
         </Routes>
       </Router>
     </div>

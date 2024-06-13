@@ -77,7 +77,7 @@ export default function RecruitmentFullInfo() {
   const [favState, setFavState] = useState(false);
 
   useEffect(() => {
-    const storedFavState = JSON.parse(sessionStorage.getItem('favState')) || {};
+    const storedFavState = JSON.parse(localStorage.getItem('favState')) || {};
     setFavState(storedFavState);
   }, []);
 
@@ -91,15 +91,15 @@ export default function RecruitmentFullInfo() {
         };
   
         // Save new state to sessionStorage
-        sessionStorage.setItem('favState', JSON.stringify(newFavState));
+        localStorage.setItem('favState', JSON.stringify(newFavState));
   
         return newFavState;
       });
   
       // Perform API call to update favorite status
-      const authKey = sessionStorage.getItem('authKey');
+      const authKey = localStorage.getItem('authKey');
       if (!authKey) {
-        console.error('Auth key not found in sessionStorage');
+        console.error('Auth key not found in localStorage');
         return;
       }
   
@@ -263,6 +263,10 @@ export default function RecruitmentFullInfo() {
         return 'inherit';
     }
   };
+
+  // const handleMaskingapplication = () => {
+  //   navigate('/maskingapplication', { state: { job_id } });
+  // };
 
 
   return (
@@ -660,7 +664,7 @@ export default function RecruitmentFullInfo() {
                 </Button>
             </Grid>
             <Grid item xs={4}>
-              <Button component={Link} to="/maskingapplication" variant="contained" color="primary" sx={{fontSize: '12px', width: '100%'}}> 匿名エントリー </Button>
+              <Button component={Link} to={`/maskingapplication/${jobpost.cjp_id}`} variant="contained" color="primary" sx={{fontSize: '12px', width: '100%'}}> 匿名エントリー </Button>
             </Grid>
             <Grid item xs={4}>
               <Button component={Link} to="/normalapplication" variant="contained" color="secondary" sx={{fontSize: '12px', width: '100%'}}> 書類選考応募 </Button>
