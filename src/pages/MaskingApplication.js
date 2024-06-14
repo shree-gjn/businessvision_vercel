@@ -72,6 +72,7 @@ export default function MaskingApplication() {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [messageTemplate, setMessageTemplate] = useState();
   const [message, setMessage] = useState('');
+  const [templates, setTemplates] = useState([]); // State to store message templates
 
   const handleOpenDeleteModal = () => {
     setDeleteModalOpen(true);
@@ -168,9 +169,39 @@ export default function MaskingApplication() {
     { value: 'テンプレート3', label: 'テンプレート3' },
   ]
 
+  useEffect(() => {
+    const authKey = sessionStorage.getItem('authKey');
+    // setLoading(true); // Set loading to true when starting data fetching
+    const fetchMessageTemplates = async () => {
+      try {
+        const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/list_message_template?auth_key=${authKey}`);
+        const data = await response.json();
+        console.log('Fetched data:', data);
+        setTemplates(data.message_template);
+        // setLoading(false);
+      } catch (error) {
+        console.error('Error fetching message templates:', error);
+      }
+    };
+  
+    fetchMessageTemplates();
+  }, []);
+
+  // const handleMessageTemplateChange = (event) => {
+  //   setMessageTemplate(event.target.value);
+  // };
+  
   const handleMessageTemplateChange = (event) => {
-    setMessageTemplate(event.target.value);
+    const selectedTemplate = event.target.value;
+    setMessageTemplate(selectedTemplate);
+
+    // Find the selected template and set the message
+    const template = templates.find(t => t.message_template_name === selectedTemplate);
+    if (template) {
+      setMessage(template.message);
+    }
   };
+
 
 
   return (
@@ -229,12 +260,19 @@ export default function MaskingApplication() {
                     onChange={handleMessageTemplateChange}
                     displayEmpty
                     >
-                    
-                    {MessageTemplate.map((option, index) => (
-                      <MenuItem key={index} value={option.value} disabled={option.disabled} component={option.to ? Link : 'li'} to={option.to}>
-                        {option.label}
+                    <MenuItem value="" disabled>
+                      テンプレートの選択
+                    </MenuItem>
+                    {templates.map((template, index) => (
+                      <MenuItem key={index} value={template.message_template_name}>
+                        {template.message_template_name}
                       </MenuItem>
                     ))}
+                    {/* {MessageTemplate.map((option, index) => (
+                      <MenuItem key={index} value={option.value} disabled={option.disabled} component={option.to ? Link : 'li'} to={option.to}>
+                        {option.title}
+                      </MenuItem>
+                    ))} */}
                     {/* <MenuItem value={CreateNew}>Create New</MenuItem>
                     <MenuItem value={template1}>Template 1</MenuItem>
                     <MenuItem value={template2}>Template 2</MenuItem>
