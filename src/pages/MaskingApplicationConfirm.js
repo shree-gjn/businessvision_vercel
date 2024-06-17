@@ -15,6 +15,8 @@ import {ReactComponent as BackButton} from '../assets/BackButton.svg';
 import {ReactComponent as PencilEdit} from '../assets/PencilEdit.svg';
 import {ReactComponent as SuccessMsg} from '../assets/SuccessMsg.svg';
 import {ReactComponent as Cancel} from '../assets/Cancel.svg';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
 
 const theme = createTheme({
   palette: {
@@ -189,23 +191,29 @@ export default function MaskingApplicationConfirm() {
                 <Typography style={{textAlign: 'left', marginBottom: '20px'}}>メッセージ</Typography>
                 <Typography style={{textAlign: 'left', margin: '10px 0'}}>{message}</Typography>
                 {/* <Typography style={{textAlign: 'left', margin: '10px 0'}}>ID: {id}</Typography> */}
-                <Button component={Link} to={`/maskingapplication/${id}`} state={{ message }} style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '120px', display: 'flex', gap: '15px', position: 'absolute', top: '0', right: '0', margin: '10px 10px 0 0'}}>
+                {/* <Button component={Link} to={`/maskingapplication/${id}`} state={{ message }} style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '120px', display: 'flex', gap: '15px', position: 'absolute', top: '0', right: '0', margin: '10px 10px 0 0'}}>
                   <PencilEdit />
                   <Typography variant='paragraph'>編集</Typography>
-                </Button>
+                </Button> */}
+                <IconButton component={Link} to={`/maskingapplication/${id}`} state={{ message }} aria-label="edit" size="small" sx={{position: 'absolute', top: '0', right: '0', margin: '10px 10px 0 0'}}>
+                  <EditIcon fontSize="small" />
+                </IconButton>
               </Item>
             </Grid>
           </Grid>
-          <Grid container spacing={1} style={{background: '#FFFFFF', border: '1px solid #EEEEEE', borderRadius: '10px', width: '100%', marginLeft: '0', marginBottom: '50px'}}>
-            <Grid item xs={4} style={{marginLeft: 'auto'}}>
+          <Grid container spacing={1} style={{background: '#FFFFFF', border: '1px solid #EEEEEE', borderRadius: '10px', width: '100%', marginLeft: '0', marginBottom: '20px', position: 'relative'}}>
+            {/* <Grid item xs={4} style={{marginLeft: 'auto'}}>
               <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '70px', display: 'flex', gap: '15px'}}>
                   <PencilEdit />
                 <Typography variant='paragraph'>編集</Typography>
               </Item>
-            </Grid>
-            <Grid item xs={12} style={{width: '100%', height: '150px', overflowY: 'auto'}}>
-              <Item xs={{border: '1px solid #EEEEEE', height: '150px'}}>
-              <TableContainer component={Paper} sx={{boxShadow: 'none', height: '150px'}}>
+            </Grid> */}
+            <IconButton component={Link} to="/maskingresume" state={{ message }} aria-label="edit" size="small" sx={{position: 'absolute', top: '0', right: '0', margin: '10px 10px 0 0'}}>
+              <EditIcon fontSize="small" />
+            </IconButton>
+            <Grid item xs={12} style={{width: '100%', height: '250px', overflowY: 'auto'}}>
+              <Item xs={{border: '1px solid #EEEEEE'}}>
+              <TableContainer component={Paper} sx={{boxShadow: 'none', height: '250px'}}>
                 <Table>
                   <TableBody>
                     {data.map((row) => (
@@ -238,7 +246,7 @@ export default function MaskingApplicationConfirm() {
                   top: '50%',
                   left: '50%',
                   transform: 'translate(-50%, -50%)',
-                  width: 300,
+                  width: 250 ,
                   bgcolor: 'background.paper',
                   borderRadius: '20px',
                   boxShadow: 24,

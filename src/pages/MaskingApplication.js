@@ -26,6 +26,8 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextF
 import {ReactComponent as BackButton} from '../assets/BackButton.svg';
 import {ReactComponent as PencilEdit} from '../assets/PencilEdit.svg';
 import MenuItem from '@mui/material/MenuItem';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
 
 const theme = createTheme({
   palette: {
@@ -191,14 +193,48 @@ export default function MaskingApplication() {
   //   setMessageTemplate(event.target.value);
   // };
   
+  // const handleMessageTemplateChange = (event) => {
+  //   const selectedTemplate = event.target.value;
+  //   setMessageTemplate(selectedTemplate);
+
+  //   // Find the selected template and set the message
+  //   const template = templates.find(t => t.message_template_name === selectedTemplate);
+  //   if (template) {
+  //     setMessage(template.message);
+  //   } else {
+  //     setMessage(''); // Clear the message if no template is found
+  //   }
+
+  //   // Check if selectedTemplate is empty, and clear templates array accordingly
+  //   if (!selectedTemplate) {
+  //     setTemplates([]); // Set templates to empty array
+  //   }
+  // };
+
+  // const handleMessageTemplateChange = (event) => {
+  //   const selectedTemplate = event.target.value;
+  //   setMessageTemplate(selectedTemplate);
+  
+  //   if (selectedTemplate === '新しく作る') {
+  //     setMessage(''); // Clear the message when selecting '新しく作る'
+  //   } else {
+  //     // Find the selected template and set the message
+  //     const selectedTemplateData = templates.find(t => t.message_template_name === selectedTemplate);
+  //     setMessage(selectedTemplateData ? selectedTemplateData.message : '');
+  //   }
+  // };
+
   const handleMessageTemplateChange = (event) => {
     const selectedTemplate = event.target.value;
     setMessageTemplate(selectedTemplate);
-
-    // Find the selected template and set the message
-    const template = templates.find(t => t.message_template_name === selectedTemplate);
-    if (template) {
-      setMessage(template.message);
+  
+    if (selectedTemplate === '新しく作る') {
+      setMessage(''); // Clear the message when selecting '新しく作る'
+      navigate('/messagetemplate');
+    } else {
+      // Find the selected template and set the message
+      const selectedTemplateData = templates.find(t => t.message_template_name === selectedTemplate);
+      setMessage(selectedTemplateData ? selectedTemplateData.message : '');
     }
   };
 
@@ -220,14 +256,17 @@ export default function MaskingApplication() {
             </Grid>
           </Grid>
           <Grid container style={{marginBottom: '50px'}}>
-            <Grid item xs={4} style={{marginBottom: '10px', marginLeft: 'auto'}}>
+            {/* <Grid item xs={12} style={{marginBottom: '10px', marginLeft: 'auto'}}>
               <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '70px', display: 'flex', gap: '15px', marginLeft: 'auto'}}>
                 <span>
                   <PencilEdit />
                 </span>
                 <Typography variant='paragraph'>編集</Typography>
               </Item>
-            </Grid>
+            </Grid> */}
+            <IconButton aria-label="edit" size="small" sx={{marginLeft: 'auto', marginBottom: "10px"}}>
+              <EditIcon fontSize="small" />
+            </IconButton>
             <Grid item xs={12} style={{width: '100%', height: '200px'}}>
               <Item sx={{border: '1px solid #EEEEEE', height: '200px'}}>
               <TableContainer component={Paper} sx={{boxShadow: 'none', height: '200px'}}>
@@ -260,23 +299,52 @@ export default function MaskingApplication() {
                     onChange={handleMessageTemplateChange}
                     displayEmpty
                     >
-                    <MenuItem value="" disabled>
+                    {/* <MenuItem value="" disabled>
                       テンプレートの選択
+                    </MenuItem>
+                    <MenuItem
+                      component={Link}
+                      to="/messagetemplate"
+                      onClick={() => setMessageTemplate('新しく作る')} // Set default template value or handle navigation state
+                    >
+                      新しく作る
                     </MenuItem>
                     {templates.map((template, index) => (
                       <MenuItem key={index} value={template.message_template_name}>
                         {template.message_template_name}
                       </MenuItem>
-                    ))}
-                    {/* {MessageTemplate.map((option, index) => (
-                      <MenuItem key={index} value={option.value} disabled={option.disabled} component={option.to ? Link : 'li'} to={option.to}>
-                        {option.title}
-                      </MenuItem>
                     ))} */}
-                    {/* <MenuItem value={CreateNew}>Create New</MenuItem>
-                    <MenuItem value={template1}>Template 1</MenuItem>
-                    <MenuItem value={template2}>Template 2</MenuItem>
-                    <MenuItem value={template3}>Template 3</MenuItem> */}
+
+                   {/* <MenuItem value="" disabled>
+                      テンプレートの選択
+                    </MenuItem>
+                    <MenuItem
+                      component={Link}
+                      to="/messagetemplate"
+                      onClick={() => setMessageTemplate('新しく作る')}
+                    >
+                      新しく作る
+                    </MenuItem>
+                    {Array.isArray(templates) && templates.length > 0 &&
+                      templates.map((template, index) => (
+                        <MenuItem key={index} value={template.message_template_name}>
+                          {template.message_template_name}
+                        </MenuItem>
+                      ))
+                    } */}
+
+                    <MenuItem value="" disabled>
+                      テンプレートの選択
+                    </MenuItem>
+                    <MenuItem value="新しく作る">新しく作る</MenuItem>
+                      {templates ? (
+                        templates.map((template, index) => (
+                          <MenuItem key={index} value={template.message_template_name}>
+                            {template.message_template_name}
+                          </MenuItem>
+                        ))
+                      ) : null}
+                      
                   </Select>
                 </FormControl>
               </Item>

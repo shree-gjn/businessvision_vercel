@@ -123,10 +123,11 @@ const MessageTemplate = () => {
         const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/list_message_template?auth_key=${authKey}`);
         const data = await response.json();
         console.log('Fetched data:', data);
-        setMessageTemplates(data.message_template);
+        setMessageTemplates(data.message_template || []);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching message templates:', error);
+        setLoading(false);
       }
     };
   
@@ -212,7 +213,7 @@ const MessageTemplate = () => {
               </TableHead>
               <TableBody>
 
-              {loading ? (
+              {/* {loading ? (
                 // Render loading indicator here
                 <Box sx={{width: '100%', height: '300px', display: 'flex', alignItems: 'center', justifyContent:'center'}}>
                   <CircularProgress sx={{textAlign: 'center', display: 'block'}} />
@@ -227,7 +228,33 @@ const MessageTemplate = () => {
                     <StyledTableCell onClick={() => handleDelete(template.message_template_id)} startIcon={<DeleteIcon />} width="15%" align="center"><DeleteIcon /></StyledTableCell>
                   </StyledTableRow>
                 ))
-              )}
+              )} */}
+
+                {loading ? (
+                  // Render loading indicator here
+                  <Box sx={{ width: '100%', height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <CircularProgress sx={{ textAlign: 'center', display: 'block' }} />
+                  </Box>
+                ) : (
+                  messageTemplates.length > 0 ? (
+                    messageTemplates.map((template) => (
+                      <StyledTableRow key={template.message_template_id}>
+                        <StyledTableCell width="70%" component="th" scope="row">
+                          {template.message_template_name}
+                        </StyledTableCell>
+                        <StyledTableCell width="15%" align="center"><EditIcon onClick={() => handleEdit(template.message_template_id)} style={{ cursor: 'pointer' }} /></StyledTableCell>
+                        <StyledTableCell onClick={() => handleDelete(template.message_template_id)} startIcon={<DeleteIcon />} width="15%" align="center"><DeleteIcon /></StyledTableCell>
+                      </StyledTableRow>
+                    ))
+                  ) : (
+                    // Render a message when no templates are available
+                    <StyledTableRow>
+                      <StyledTableCell colSpan={3} align="center">
+                        No template has been created.
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  )
+                )}
                
               </TableBody>
             </Table>
@@ -246,7 +273,7 @@ const MessageTemplate = () => {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          width: 300,
+          width: 250,
           bgcolor: 'background.paper',
           borderRadius: '20px',
           boxShadow: 24,

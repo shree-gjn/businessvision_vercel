@@ -80,7 +80,7 @@ const modalStyle = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 300,
+  width: 250,
   bgcolor: 'background.paper',
   borderRadius: '20px',
   boxShadow: 24,
@@ -94,6 +94,7 @@ const CreateMessage = () => {
   const [title, setTitle] = useState(''); // Added state for title
   const [open, setOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
+  const [errors, setErrors] = useState({ title: false });
 
   const navigate = useNavigate();
 
@@ -107,6 +108,9 @@ const CreateMessage = () => {
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value); // Handle title change
+    if (event.target.value) {
+      setErrors((prevErrors) => ({ ...prevErrors, title: false }));
+    }
   };
 
   const handleSend = async () => {
@@ -115,6 +119,11 @@ const CreateMessage = () => {
     formData.append('auth_key', authKey);
     formData.append('message_template_name', title);
     formData.append('message', message);
+
+    if (!title) {
+      setErrors({ title: true });
+      return;
+    }
 
     try {
       const response = await fetch('https://bvhr-api.azurewebsites.net/candidate/add_candidate_message_template', {
@@ -159,9 +168,10 @@ const CreateMessage = () => {
                 value={title}
                 name='message_template_title'
                 onChange={handleTitleChange}
-                // helperText={errors.family_member_count}
+                error={errors.title} // Set error state
+                helperText={errors.title ? 'メッセージテンプレート名は必須です' : ''} // Display helper text
               />
-              {/* {errors.family_member_count && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.family_member_count}</FormHelperText> } */}
+              {/* {errors.title && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.title}</FormHelperText> } */}
             </FormControl>
           </Grid>
           <Grid item xs={12} sx={{marginBottom: '20px'}}>

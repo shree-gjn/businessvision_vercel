@@ -664,10 +664,19 @@ export default function RecruitmentFullInfo() {
                 </Button>
             </Grid>
             <Grid item xs={4}>
-              <Button component={Link} to={`/maskingapplication/${jobpost.cjp_id}`} variant="contained" color="primary" sx={{fontSize: '12px', width: '100%'}}> 匿名エントリー </Button>
+              <Button component={Link} to={`/maskingapplication/${jobpost.cjp_id}`} disabled={jobpost.secret_entry_flag === 1} variant="contained" color="primary"sx={{
+                fontSize: '12px',
+                width: '100%',
+                '&.Mui-disabled': {
+                  opacity: 0.3,
+                  pointerEvents: 'none', // To ensure it's not clickable
+                  backgroundColor: 'primary.main', // To maintain the primary color when disabled
+                  color: '#fff',
+                },
+              }}> 匿名エントリー </Button>
             </Grid>
             <Grid item xs={4}>
-              <Button component={Link} to="/normalapplication" variant="contained" color="secondary" sx={{fontSize: '12px', width: '100%'}}> 書類選考応募 </Button>
+              <Button component={Link} to={`/normalapplication/${jobpost.cjp_id}`} disabled={jobpost.official_application_flag === 1} variant="contained" color="secondary" sx={{fontSize: '12px', width: '100%'}}> 書類選考応募 </Button>
             </Grid>
         </Grid>
         </Box>
