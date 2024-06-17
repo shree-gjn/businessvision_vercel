@@ -46,6 +46,7 @@ export default function CorporateScout() {
   const [jobpost, setjobpost] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true); // State to track loading status
+  const [favState, setFavState] = useState(false);
 
   useEffect(() => {
     // Retrieve the auth key from sessionStorage
@@ -86,6 +87,71 @@ export default function CorporateScout() {
 
     fetchData();
   }, []);
+
+  const handleFavClick = async (jobId) => {
+    try {
+      // Toggle local state
+      setFavState(prevFavState => {
+        const newFavState = {
+          ...prevFavState,
+          [jobId]: !prevFavState[jobId]
+        };
+  
+        // Save new state to sessionStorage
+        localStorage.setItem('favState', JSON.stringify(newFavState));
+  
+        return newFavState;
+      });
+  
+      // Perform API call to update favorite status
+      const authKey = localStorage.getItem('authKey');
+      if (!authKey) {
+        console.error('Auth key not found in sessionStorage');
+        return;
+      }
+  
+      const newFavState = !favState[jobId];
+      const formData = new FormData();
+      formData.append('auth_key', authKey);
+      formData.append('job_id', jobId);
+      formData.append('company_job_post_id', jobId);
+      formData.append('favorite', newFavState);
+  
+      const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/add_favourite_job_to_candidate`, {
+        method: 'POST',
+        headers: {},
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        // Revert local state on failure
+        setFavState(prevFavState => {
+          const revertedFavState = {
+            ...prevFavState,
+            [jobId]: !prevFavState[jobId]
+          };
+          sessionStorage.setItem('favState', JSON.stringify(revertedFavState));
+          return revertedFavState;
+        });
+        throw new Error('Failed to update favorite status');
+      }
+  
+      // Update favState based on API response
+      const data = await response.json();
+      setFavState((prevStates) => {
+        const updatedFavState = {
+          ...prevStates,
+          [jobId]: newFavState,
+        };
+        sessionStorage.setItem('favState', JSON.stringify(updatedFavState));
+        return updatedFavState;
+      });
+  
+      console.log('Response Data:', data);
+    } catch (error) {
+      console.error('Error updating favorite status:', error.message);
+    }
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -163,10 +229,22 @@ export default function CorporateScout() {
             <Box sx={{ flexGrow: 1 }}>
               <Grid container spacing={1}>
                   <Grid item xs={6}>
-                    <Button component={Link} to="#" variant="contained" color="grey" sx={{width:'90%', marginBottom:'20px', color: '#fff'}}> 気になる済 </Button>
+                    {/* <Button component={Link} to="#" variant="contained" color="grey" sx={{width:'90%', marginBottom:'20px', color: '#fff'}}> 気になる済 </Button> */}
+                    <Button
+                      className='favorite_button'
+                      onClick={() => handleFavClick(job.cjp_id)}
+                      style={{
+                        backgroundColor: favState[job.cjp_id] ? '' : theme.palette.grey[500],
+                        color: favState[job.cjp_id] ? theme.palette.grey.main : '#fff',
+                      }}
+                      variant={favState[job.cjp_id] ? 'outlined' : 'contained'}
+                      sx={{ width: '90%', marginBottom: '20px', color: '#fff' }}
+                    >
+                      {favState[job.cjp_id] ? '気になる済' : '気になる済'}
+                    </Button>
                   </Grid>
                   <Grid item xs={6}>
-                    <Button component={Link} to="/messages/scout" variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
+                    <Button component={Link} to={`/recruitment/${job.cjp_id}`} variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
                   </Grid>
               </Grid>
               </Box>

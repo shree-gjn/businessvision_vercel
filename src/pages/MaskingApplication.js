@@ -264,7 +264,7 @@ export default function MaskingApplication() {
                 <Typography variant='paragraph'>編集</Typography>
               </Item>
             </Grid> */}
-            <IconButton aria-label="edit" size="small" sx={{marginLeft: 'auto', marginBottom: "10px"}}>
+            <IconButton component={Link} to="/maskingresume" aria-label="edit" size="small" sx={{marginLeft: 'auto', marginBottom: "10px"}}>
               <EditIcon fontSize="small" />
             </IconButton>
             <Grid item xs={12} style={{width: '100%', height: '200px'}}>
