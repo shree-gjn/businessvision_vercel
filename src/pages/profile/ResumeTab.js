@@ -193,7 +193,8 @@ export default function ResumeTab() {
         }
         const data = await response.json();
         console.log('Fetched data:', data); // Log fetched data to debug
-        setResume(data); // Update state with fetched data
+        setResume(data.candidate_resume); // Update state with fetched data
+        setCvs(data.candidate_Cv); // Update state with fetched data
       } catch (error) {
         console.error('Error fetching resume list:', error);
       }
@@ -201,6 +202,12 @@ export default function ResumeTab() {
     
     fetchData(); 
   }, []);
+
+  // Filter resumes to only include those with resume_type 'normal_resume'
+  const normalResumes = resume.filter(resumeItem => resumeItem.cru_resume_type === 'normal_resume');
+
+  // Filter resumes to only include those with resume_type 'experience_resume'
+  const experienceResume = resume.filter(resumeItem => resumeItem.cru_resume_type === 'experience_resume');
 
   return (
     <div style={{background: 'rgb(250, 250, 250)'}}>
@@ -264,9 +271,9 @@ export default function ResumeTab() {
           <Grid xs={12} sx={{marginBottom: '30px'}}>
             <Item sx={{textAlign: resume.length > 0 ? 'left' : 'center', }}>
               {/* <Typography sx={{textAlign: 'left'}}>アップロードされた履歴書</Typography> */}
-              {resume.length > 0 ? 'アップロードされた履歴書' : '履歴書が選択されていません'}
+              {normalResumes.length > 0 ? 'アップロードされた履歴書' : '履歴書が選択されていません'}
             </Item>
-            {Array.isArray(resume) && resume.map((resumeItem, index) => (
+            {Array.isArray(normalResumes) && normalResumes.map((resumeItem, index) => (
               <Item
                 key={index}
                 sx={{
@@ -343,11 +350,11 @@ export default function ResumeTab() {
             </Item>
           </Grid>
           <Grid xs={12}>
-            <Item sx={{textAlign: cvs.length > 0 ? 'left' : 'center', }}>
+            <Item sx={{textAlign: experienceResume.length > 0 ? 'left' : 'center', }}>
               {/* <Typography sx={{textAlign: 'left'}}>アップロードされた職歴プロフィール</Typography> */}
-              {cvs.length > 0 ? 'アップロードされた職歴プロフィール' : '履歴書が選択されていません'}
+              {experienceResume.length > 0 ? 'アップロードされた職歴プロフィール' : '履歴書が選択されていません'}
             </Item>
-            {cvs.map((cv, index) => (
+            {/* {cvs.map((cv, index) => (
               <Item
                 key={index}
                 sx={{
@@ -365,6 +372,25 @@ export default function ResumeTab() {
                   <ApplicationReqOutline />{cv.name}
                 </Typography>
                 <DeleteIcon onClick={() => handleDeleteFile(index, setCvs)} />
+              </Item>
+            ))} */}
+            {Array.isArray(experienceResume) && experienceResume.map((cv, index) => (
+              <Item
+                key={index}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  borderBottom: '1px solid #EEEEEE',
+                  padding: '15px 0px',
+                  borderRadius: 'none',
+                  boxShadow: 'none'
+                }}
+              >
+                <Typography sx={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#16375A' }}>
+                  <ApplicationReqOutline />{cv.cru_file_name}
+                </Typography>
+                <DeleteIcon onClick={() => handleDeleteFile(index, setResume)} />
               </Item>
             ))}
           </Grid>
