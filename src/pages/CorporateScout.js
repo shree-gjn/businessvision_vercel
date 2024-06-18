@@ -218,7 +218,7 @@ export default function CorporateScout() {
                   <Item sx={{textAlign:'left', display:'grid', background:'#DFD0A7', borderRadius:'5px'}}><ChatIcon style={{marginTop:'10px', marginLeft:'3px'}}/></Item>
                   </Grid>
                   <Grid item xs={11}>
-                  <Item sx={{fontSize:'12px', textAlign:'left', background: 'rgba(223, 208, 167, 0.20)', padding:'13px', fontSize:'8px' }}>【特別スカウト】渋谷/上場企業での経理マネ‐ジャー を募集しております。
+                  <Item sx={{fontSize:'12px', textAlign:'left', background: 'rgba(223, 208, 167, 0.20)', padding:'13px', fontSize:'10px' }}>【特別スカウト】渋谷/上場企業での経理マネ‐ジャー を募集しております。
       今までのご経験をぜひ、弊社で活かしてみませんか？
       ご応募お待ちしております。​</Item>
                   </Grid>

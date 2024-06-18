@@ -339,39 +339,44 @@ export default function RecruitmentInfo() {
             </Grid>
             </Box>
             <Typography variant="h6" component="div" sx={{fontSize:'14px', fontWeight:'700', textAlign:'left', padding: '0 8px'}}>
-            {job.cjp_job_title} 
+            {job.cjp_recruitment_catchphrase} 
             </Typography>
             <Box sx={{ flexGrow: 1, textDecoration:'none' }} component={Link} to={`/recruitment/${job.cjp_id}`}>
             <Grid container spacing={1}>
-                {/* <Grid item xs={6}>
-                <Item sx={{textAlign:'left', display:'flex', gap:'5px', marginTop:'5px'}}> 
-                <div><MoneyIcon /> </div><Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}> {job.salary} </Typography>
-                </Item>
+                <Grid item xs={6}>
+                  <Item sx={{textAlign:'left', display:'flex', gap:'5px', marginTop:'5px'}}> 
+                  <div><MoneyIcon /> </div><Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}> {job.cjp_salary_high_limit} ~ {job.cjp_salary_high_limit}</Typography>
+                  </Item>
                 </Grid>
                 <Grid item xs={6}>
-                <Item sx={{textAlign:'left', display:'flex', gap:'5px', marginTop:'5px'}}> 
-                  <div><MapsIcon /> </div><Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}>  {job.cjp_work_location}</Typography>​</Item>
+                  <Item sx={{textAlign:'left', display:'flex', gap:'5px', marginTop:'5px'}}> 
+                    <div><MapsIcon /> </div><Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}>  {job.cjp_location_city}</Typography>
+                  ​</Item>
                 </Grid>
                 <Grid item xs={6}>
-                <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
-                  <div><BuildingIcon /></div> <Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}> {job.cjp_company_name} </Typography>​</Item>
+                  <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
+                    <div><BuildingIcon /></div> <Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}> {job.cjp_company_name} </Typography>
+                  ​</Item>
                 </Grid>
                 <Grid item xs={6} sx={{paddingTop:'0px'}}>
-                <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
-                  <div><BagIcon /> </div><Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}>  {job.position}  </Typography>​​</Item>
-                </Grid> */}
+                  <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
+                    <div><BagIcon /> </div><Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}>  {job.cjp_job_position}  </Typography>​
+                  ​</Item>
+                </Grid>
 
-                <Grid item xs={6}>
+                {/* <Grid item xs={6}>
                 <Item sx={{textAlign:'left', display:'flex', gap:'5px', marginTop:'5px'}}> 
                 <div><BuildingIcon /> </div><Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}> {job.cjp_company_name} </Typography>
                 </Item>
                 </Grid>
                 <Grid item xs={6}>
-                <Item sx={{textAlign:'left', display:'flex', gap:'5px', marginTop:'5px'}}> 
-                  <div><MapsIcon /> </div><Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}>
-                    {job.cjp_work_location.length > 7 ? `${job.cjp_work_location.slice(0, 7)}` : job.cjp_work_location}
-                    </Typography>​</Item>
-                </Grid>
+                  <Item sx={{textAlign:'left', display:'flex', gap:'5px', marginTop:'5px'}}> 
+                    <div><MapsIcon /> </div>
+                    <Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}>
+                      {job.cjp_work_location.length > 7 ? `${job.cjp_work_location.slice(0, 7)}` : job.cjp_work_location}
+                    </Typography>
+                  ​</Item>
+                </Grid> */}
             </Grid>
             </Box>
             <Box sx={{ flexGrow: 1, textDecoration:'none' }} component={Link} to={`/recruitment/${job.cjp_id}`}>

@@ -298,11 +298,11 @@ export default function RecruitmentFullInfo() {
           </Grid>
         </Box>
           <Typography variant="h6" component="div" sx={{fontSize:'14px', fontWeight:'700', textAlign:'left', padding:'0px 15px 0px 15px'}}>
-           {jobpost.cjp_job_title}
+           {jobpost.cjp_recruitment_catchphrase}
           </Typography>
           <Box sx={{ flexGrow: 1, padding:'0px 10px 0px 15px' }}>
           <Grid container spacing={1}>
-              <Grid item xs={5}>
+              {/* <Grid item xs={5}>
               <Item sx={{textAlign:'left', display:'flex', gap:'5px', marginTop:'5px'}}> 
               <div><BuildingIcon /></div><Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}>  {jobpost.cjp_company_name} </Typography>
               </Item>
@@ -310,11 +310,21 @@ export default function RecruitmentFullInfo() {
               <Grid item xs={5}>
               <Item sx={{textAlign:'left', display:'flex', gap:'5px', marginTop:'5px'}}> 
               <div><MapsIcon /> </div><Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}>{jobpost.cjp_work_location}</Typography>​</Item>
+              </Grid> */}
+
+              <Grid item xs={5}>
+                <Item sx={{textAlign:'left', display:'flex', gap:'5px', marginTop:'5px'}}> 
+                <div><MoneyIcon /> </div><Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}> {jobpost.cjp_salary_high_limit} ~ {jobpost.cjp_salary_high_limit}</Typography>
+                </Item>
+              </Grid>
+              <Grid item xs={5}>
+                <Item sx={{textAlign:'left', display:'flex', gap:'5px', marginTop:'5px'}}> 
+                  <div><MapsIcon /> </div><Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}>  {jobpost.cjp_location_city}</Typography>
+                ​</Item>
               </Grid>
               <Grid item xs={2} sx={{paddingTop:'0px'}}>
               <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'10px', }}> 
                 <TrashIcon onClick={handleOpenDeleteModal} />​</Item>
-
                 <Modal
                   open={isDeleteModalOpen}
                   onClose={handleCloseDeleteModal}
@@ -335,6 +345,17 @@ export default function RecruitmentFullInfo() {
                   </Box>
                 </Modal>
               </Grid>
+              <Grid item xs={5}>
+                <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
+                  <div><BuildingIcon /></div> <Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}> {jobpost.cjp_company_name} </Typography>
+                ​</Item>
+              </Grid>
+              <Grid item xs={5} sx={{paddingTop:'0px'}}>
+                <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
+                  <div><BagIcon /> </div><Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}>  {jobpost.cjp_job_position}  </Typography>​
+                ​</Item>
+              </Grid>
+
           </Grid>
           </Box>
       <Card sx={{ minWidth: 275, marginBottom:'30px' }}>
