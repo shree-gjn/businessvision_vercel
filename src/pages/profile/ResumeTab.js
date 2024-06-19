@@ -16,6 +16,7 @@ import { TextField} from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import {ReactComponent as ApplicationReqOutline} from '../../assets/ApplicationReqOutline.svg';
 import DeleteIcon from '@mui/icons-material/Delete';
+import {ReactComponent as WarningIcon} from '../../assets/WarningIcon.svg';
 
 export default function ResumeTab() {
   const [open, setOpen] = React.useState(false);
@@ -26,6 +27,9 @@ export default function ResumeTab() {
   const [selectedCv, setSelectedCv] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploading, setUploading] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
+  const [isResume, setIsResume] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
 
   // const handleResumeChange = (event, setSelectedFile) => {
   //   setResume(event.target.files[0]);
@@ -85,24 +89,13 @@ export default function ResumeTab() {
           method: 'POST',
           body: formData,
         });
-
-      //   if (response.ok) {
-      //     const result = await response.json();
-      //     setResume(prev => [...prev, { name: selectedResume.name, ...result }]);
-      //     setSelectedResume(null);
-      //   } else {
-      //     console.error('Failed to upload resume', await response.text());
-      //   }
-      // } catch (error) {
-      //   console.error('Error:', error);
-      // }
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         // Process successful upload
         const result = await response.json();
-        setResume(prev => [...prev, { name: selectedResume.name, ...result }]);
+        setResume(prev => [...prev, { cru_file_name: selectedResume.name, ...result }]);
         setSelectedResume(null);
       } catch (error) {
         console.error('Error uploading resume:', error);
@@ -128,15 +121,29 @@ export default function ResumeTab() {
           body: formData,
         });
 
-        if (response.ok) {
-          const result = await response.json();
-          setCvs(prev => [...prev, { name: selectedCv.name, ...result }]);
-          setSelectedCv(null);
-        } else {
-          console.error('Failed to upload CV', await response.text());
+    //     if (response.ok) {
+    //       const result = await response.json();
+    //       setCvs(prev => [...prev, { name: selectedCv.name, ...result }]);
+    //       setSelectedCv(null);
+    //     } else {
+    //       console.error('Failed to upload CV', await response.text());
+    //     }
+    //   } catch (error) {
+    //     console.error('Error:', error);
+    //   }
+    // }
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
+
+        const result = await response.json();
+        setCvs(prev => [...prev, { cru_file_name: selectedCv.name, ...result }]);
+        setSelectedCv(null);
       } catch (error) {
-        console.error('Error:', error);
+        console.error('Error uploading CV:', error);
+      } finally {
+        setUploading(false);
+        setUploadProgress(0);
       }
     }
   };
@@ -148,8 +155,27 @@ export default function ResumeTab() {
     }
   };
 
-  const handleDeleteFile = (index, setType) => {
-    setType(prev => prev.filter((_, i) => i !== index));
+  // const handleDeleteFile = (index, setType) => {
+  //   setType(prev => prev.filter((_, i) => i !== index));
+  // };
+
+  const handleDeleteFile = (index, isResume) => {
+    const list = isResume ? [...resume] : [...cvs]; // Create a copy of the list to avoid mutating state directly
+  
+    // Check if index is valid
+    if (index >= 0 && index < list.length) {
+      setItemToDelete(index);
+      setIsResume(isResume);
+      setModalOpen(true);
+    } else {
+      console.error('Invalid index:', index);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    console.log('Cancel deletion');
+    setModalOpen(false);
+    setItemToDelete(null);
   };
 
     // Add a state to store the uploaded file
@@ -193,21 +219,61 @@ export default function ResumeTab() {
         }
         const data = await response.json();
         console.log('Fetched data:', data); // Log fetched data to debug
-        setResume(data.candidate_resume); // Update state with fetched data
-        setCvs(data.candidate_Cv); // Update state with fetched data
+        setResume(data.candidate_resume || []); // Update state with fetched data
+        setCvs(data.candidate_Cv || []); // Update state with fetched data
       } catch (error) {
         console.error('Error fetching resume list:', error);
       }
     };
     
     fetchData(); 
-  }, []);
+  }, [selectedResume, selectedCv]);
 
   // Filter resumes to only include those with resume_type 'normal_resume'
   const normalResumes = resume.filter(resumeItem => resumeItem.cru_resume_type === 'normal_resume');
 
   // Filter resumes to only include those with resume_type 'experience_resume'
   const experienceResume = resume.filter(resumeItem => resumeItem.cru_resume_type === 'experience_resume');
+
+  const handleConfirmDelete = async (index) => {
+    const authKey = sessionStorage.getItem('authKey');
+    const list = isResume ? [...resume] : [...cvs]; // Create a copy of the list to avoid mutating state directly
+    const item = list[index];
+  
+    if (!item) {
+      console.error('Item to delete is undefined');
+      return;
+    }
+  
+    const formData = new FormData();
+    formData.append('auth_key', authKey);
+    formData.append('cru_id', item.cru_id);
+  
+    try {
+      const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/delete_candidate_resume`, {
+        method: 'POST',
+        body: formData,
+      });
+  
+      if (response.ok) {
+        if (isResume) {
+          setResume(prev => prev.filter((_, idx) => idx !== index));
+        } else {
+          setCvs(prev => prev.filter((_, idx) => idx !== index));
+        }
+      } else {
+        console.error('Failed to delete item', await response.text());
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setModalOpen(false);
+      setItemToDelete(null);
+    }
+  };
+  
+  
+
 
   return (
     <div style={{background: 'rgb(250, 250, 250)'}}>
@@ -289,7 +355,8 @@ export default function ResumeTab() {
                 <Typography sx={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#16375A' }}>
                   <ApplicationReqOutline />{resumeItem.cru_file_name}
                 </Typography>
-                <DeleteIcon onClick={() => handleDeleteFile(index, setResume)} />
+                {/* <DeleteIcon onClick={() => handleDeleteFile(index, setResume)} /> */}
+                <DeleteIcon onClick={() => handleDeleteFile(index, true)} />
               </Item>
             ))}
             {/* <Item xs={12} sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #EEEEEE', padding: '15px 0px', borderRadius: 'none', boxShadow: 'none'}}>
@@ -390,12 +457,44 @@ export default function ResumeTab() {
                 <Typography sx={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#16375A' }}>
                   <ApplicationReqOutline />{cv.cru_file_name}
                 </Typography>
-                <DeleteIcon onClick={() => handleDeleteFile(index, setResume)} />
+                {/* <DeleteIcon onClick={() => handleDeleteFile(index, setResume)} /> */}
+                <DeleteIcon onClick={() => handleDeleteFile(index, true)} />
+                
               </Item>
             ))}
           </Grid>
         </Grid>
       </Box>
+
+      <Modal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        aria-labelledby="delete-modal-title"
+        aria-describedby="delete-modal-description"
+      >
+        <Box sx={{ 
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 250,
+          bgcolor: 'background.paper',
+          borderRadius: '20px',
+          boxShadow: 24,
+          textAlign: 'center',
+          p: 4,
+        }}>
+          {/* <Typography id="delete-modal-title" variant="h6" component="h2" gutterBottom>
+            消去してもよろしいですか
+          </Typography> */}
+          <WarningIcon sx={{marginBottom: '20px'}} />
+          <Typography id="delete-modal-description" sx={{ marginBottom: 2 , marginTop: 1}}>
+          消去してもよろしいですか
+          </Typography>
+          <Button variant="contained" color='grey' onClick={() => setModalOpen(false)} sx={{color: '#fff'}}>キャンセル</Button>
+          <Button variant="contained" onClick={() => handleConfirmDelete(itemToDelete)} sx={{ ml: 2, background: '#F96264'}}>削除する</Button>
+        </Box>
+      </Modal>
 
     </div>
   );

@@ -81,7 +81,7 @@ function App() {
           <Route path="/maskingapplication/:id" element={<MaskingApplication />} />
           <Route path="/maskingapplicationconfirm" element={<MaskingApplicationConfirm />} />
           <Route path="/normalapplication" element={<NormalApplication />} />
-          <Route path="/normalapplicationconfirm" element={<NormalApplicationConfirm />} />SearchInfo
+          <Route path="/normalapplicationconfirm" element={<NormalApplicationConfirm />} />
           <Route path="/searchinfo" element={<SearchInfo />} />
           <Route path="/workhistory" element={<WorkHistory />} />
           <Route path="/messagetemplate" element={<MessageTemplate />} />
