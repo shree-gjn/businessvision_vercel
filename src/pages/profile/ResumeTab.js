@@ -25,8 +25,12 @@ export default function ResumeTab() {
   const [cvs, setCvs] = useState([]);
   const [selectedResume, setSelectedResume] = useState(null);
   const [selectedCv, setSelectedCv] = useState(null);
+  const [resumeUploadProgress, setResumeUploadProgress] = useState(0);
+  const [cvUploadProgress, setCvUploadProgress] = useState(0);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploading, setUploading] = useState(false);
+  const [uploadingResume, setUploadingResume] = useState(false);
+  const [uploadingCv, setUploadingCv] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
   const [isResume, setIsResume] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
@@ -71,80 +75,132 @@ export default function ResumeTab() {
     // setResumeType("normal_resume");
   };
 
-  const handleResumeUpload = async () => {
+  // const handleResumeUpload = async () => {
 
-    const authKey = sessionStorage.getItem('authKey');
+  //   const authKey = sessionStorage.getItem('authKey');
 
-    if (selectedResume) {
-      try {
-        const formData = new FormData();
-        formData.append('auth_key', authKey); // Replace with actual auth_key
-        formData.append('resume_type', 'normal_resume');
-        formData.append('resume_file', selectedResume);
+  //   if (selectedResume) {
+  //     try {
+  //       const formData = new FormData();
+  //       formData.append('auth_key', authKey); // Replace with actual auth_key
+  //       formData.append('resume_type', 'normal_resume');
+  //       formData.append('resume_file', selectedResume);
 
-        setUploading(true);
+  //       setUploading(true);
         
-        // Replace with your actual API endpoint
-        const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/candidate_resume_upload`, {
-          method: 'POST',
-          body: formData,
-        });
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+  //       // Replace with your actual API endpoint
+  //       const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/candidate_resume_upload`, {
+  //         method: 'POST',
+  //         body: formData,
+  //       });
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! Status: ${response.status}`);
+  //       }
 
-        // Process successful upload
-        const result = await response.json();
-        setResume(prev => [...prev, { cru_file_name: selectedResume.name, ...result }]);
-        setSelectedResume(null);
-      } catch (error) {
-        console.error('Error uploading resume:', error);
-      } finally {
-        setUploading(false);
-        setUploadProgress(0); // Reset progress after upload
+  //       // Process successful upload
+  //       const result = await response.json();
+  //       setResume(prev => [...prev, { cru_file_name: selectedResume.name, ...result }]);
+  //       setSelectedResume(null);
+  //     } catch (error) {
+  //       console.error('Error uploading resume:', error);
+  //     } finally {
+  //       setUploading(false);
+  //       setUploadProgress(0); // Reset progress after upload
+  //     }
+  //   }
+  // };
+
+  // const handleCvUpload = async () => {
+  //   const authKey = sessionStorage.getItem('authKey');
+  //   if (selectedCv) {
+  //     try {
+  //       const formData = new FormData();
+  //       formData.append('auth_key', authKey); // Replace with actual auth_key
+  //       formData.append('resume_type', 'experience_resume');
+  //       formData.append('resume_file', selectedCv);
+
+  //       // Replace with your actual API endpoint
+  //       const response = await fetch('https://bvhr-api.azurewebsites.net/candidate/candidate_resume_upload', {
+  //         method: 'POST',
+  //         body: formData,
+  //       });
+
+  //   //     if (response.ok) {
+  //   //       const result = await response.json();
+  //   //       setCvs(prev => [...prev, { name: selectedCv.name, ...result }]);
+  //   //       setSelectedCv(null);
+  //   //     } else {
+  //   //       console.error('Failed to upload CV', await response.text());
+  //   //     }
+  //   //   } catch (error) {
+  //   //     console.error('Error:', error);
+  //   //   }
+  //   // }
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! Status: ${response.status}`);
+  //       }
+
+  //       const result = await response.json();
+  //       setCvs(prev => [...prev, { cru_file_name: selectedCv.name, ...result }]);
+  //       setSelectedCv(null);
+  //     } catch (error) {
+  //       console.error('Error uploading CV:', error);
+  //     } finally {
+  //       setUploading(false);
+  //       setUploadProgress(0);
+  //     }
+  //   }
+  // };
+
+  const uploadFile = (file, type, setState, setProgress, setUploading) => {
+    const authKey = sessionStorage.getItem('authKey');
+    const formData = new FormData();
+    formData.append('auth_key', authKey);
+    formData.append('resume_type', type);
+    formData.append('resume_file', file);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'https://bvhr-api.azurewebsites.net/candidate/candidate_resume_upload', true);
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable) {
+        const percentComplete = (event.loaded / event.total) * 100;
+        setProgress(percentComplete);
       }
+    };
+
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
+        setState((prev) => [...prev, { cru_file_name: file.name, ...response }]);
+      } else {
+        console.error('Upload failed:', xhr.responseText);
+      }
+      setUploading(false);
+      setProgress(0);
+    };
+
+    xhr.onerror = () => {
+      console.error('Upload error:', xhr.responseText);
+      setUploading(false);
+      setProgress(0);
+    };
+
+    setUploading(true);
+    xhr.send(formData);
+  };
+
+  const handleResumeUpload = () => {
+    if (selectedResume) {
+      uploadFile(selectedResume, 'normal_resume', setResume, setResumeUploadProgress, setUploadingResume);
+      setSelectedResume(null);
     }
   };
 
-  const handleCvUpload = async () => {
-    const authKey = sessionStorage.getItem('authKey');
+  const handleCvUpload = () => {
     if (selectedCv) {
-      try {
-        const formData = new FormData();
-        formData.append('auth_key', authKey); // Replace with actual auth_key
-        formData.append('resume_type', 'experience_resume');
-        formData.append('resume_file', selectedCv);
-
-        // Replace with your actual API endpoint
-        const response = await fetch('https://bvhr-api.azurewebsites.net/candidate/candidate_resume_upload', {
-          method: 'POST',
-          body: formData,
-        });
-
-    //     if (response.ok) {
-    //       const result = await response.json();
-    //       setCvs(prev => [...prev, { name: selectedCv.name, ...result }]);
-    //       setSelectedCv(null);
-    //     } else {
-    //       console.error('Failed to upload CV', await response.text());
-    //     }
-    //   } catch (error) {
-    //     console.error('Error:', error);
-    //   }
-    // }
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const result = await response.json();
-        setCvs(prev => [...prev, { cru_file_name: selectedCv.name, ...result }]);
-        setSelectedCv(null);
-      } catch (error) {
-        console.error('Error uploading CV:', error);
-      } finally {
-        setUploading(false);
-        setUploadProgress(0);
-      }
+      uploadFile(selectedCv, 'experience_resume', setCvs, setCvUploadProgress, setUploadingCv);
+      setSelectedCv(null);
     }
   };
 
@@ -304,17 +360,17 @@ export default function ResumeTab() {
                 {selectedResume ? selectedResume.name : 'クリックしてファイルを選択します'}
               </Typography>
               <input type="file" hidden onChange={(e) => handleResumeChange(e, setSelectedResume)} />
-              {uploading && (
-              <LinearProgress
-                variant="determinate"
-                value={uploadProgress}
-                sx={{
-                  position: 'absolute',
-                  width: '100%',
-                  bottom: 0,
-                }}
-              />
-            )}
+              {uploadingResume && (
+                <LinearProgress
+                  variant="determinate"
+                  value={resumeUploadProgress}
+                  sx={{
+                    position: 'absolute',
+                    width: '100%',
+                    bottom: 0,
+                  }}
+                />
+              )}
               {selectedResume ? (
              <Button
              variant="contained"
@@ -389,7 +445,8 @@ export default function ResumeTab() {
               justifyContent: 'center',
               cursor: 'pointer',
               gap: '10px',
-              marginBottom: '10px'
+              marginBottom: '10px',
+              position: 'relative',
             }}
             component="label">
               <CloudUploadIcon sx={{ fontSize: 48, color: '#D6D6D6'}} />
@@ -397,6 +454,17 @@ export default function ResumeTab() {
                 {selectedCv ? selectedCv.name : 'クリックしてファイルを選択します'}
               </Typography>
               <input type="file" hidden onChange={(e) => handleCvChange(e, setSelectedCv)} />
+              {uploadingCv && (
+                <LinearProgress
+                  variant="determinate"
+                  value={cvUploadProgress}
+                  sx={{
+                    position: 'absolute',
+                    width: '100%',
+                    bottom: 0,
+                  }}
+                />
+              )}
               {selectedCv ? (
                <Button
                variant="contained"
