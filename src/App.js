@@ -80,7 +80,7 @@ function App() {
           <Route path="/normalresume" element={<NormalResume />} />
           <Route path="/maskingapplication/:id" element={<MaskingApplication />} />
           <Route path="/maskingapplicationconfirm" element={<MaskingApplicationConfirm />} />
-          <Route path="/normalapplication" element={<NormalApplication />} />
+          <Route path="/normalapplication/:id" element={<NormalApplication />} />
           <Route path="/normalapplicationconfirm" element={<NormalApplicationConfirm />} />
           <Route path="/searchinfo" element={<SearchInfo />} />
           <Route path="/workhistory" element={<WorkHistory />} />

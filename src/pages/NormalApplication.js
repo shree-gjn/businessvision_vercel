@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import {
   Checkbox,
   FormControlLabel,
@@ -19,7 +19,7 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Modal from '@mui/material/Modal';
-import { Link, useNavigate } from 'react-router-dom'; 
+import { Link, useNavigate, useLocation} from 'react-router-dom'; 
 import BottomNav from '../components/BottomNav';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
@@ -82,11 +82,23 @@ export default function NormalApplication() {
   const [city, setCity] = useState();
   const [emailaddress, setEmailAddress] = useState();
   const [messageTemplate, setMessageTemplate] = useState();
+  const [message, setMessage] = useState('');
+  const [templates, setTemplates] = useState([]); // State to store message templates
   const [resumeupload, setResumeUpload] = React.useState('resumelist');
   const [workhistoryupload, setWorkHistoryUpload] = React.useState('workhistorylist');
   const [selectedFile, setSelectedFile] = React.useState(null);
     // Add a state to store the uploaded file
   const [uploadedFile, setUploadedFile] = React.useState(null);
+  const [resumeList, setResumeList] = useState([]);
+  const [workHistoryList, setWorkHistoryList] = useState([]);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state && location.state.message) {
+      setMessage(location.state.message);
+    }
+  }, [location]);
 
   const handleResumeUpload = (event, nextresumeupload) => {
     setResumeUpload(nextresumeupload);
@@ -96,9 +108,9 @@ export default function NormalApplication() {
     setWorkHistoryUpload(nextworkhistoryupload);
   };
 
-  const handleMessageTemplateChange = (event) => {
-    setMessageTemplate(event.target.value);
-  };
+  // const handleMessageTemplateChange = (event) => {
+  //   setMessageTemplate(event.target.value);
+  // };
 
   const handleOpenDeleteModal = () => {
     setDeleteModalOpen(true);
@@ -203,6 +215,38 @@ export default function NormalApplication() {
     { value: 'テンプレート3', label: 'テンプレート3' },
   ]
 
+  useEffect(() => {
+    const authKey = sessionStorage.getItem('authKey');
+    // setLoading(true); // Set loading to true when starting data fetching
+    const fetchMessageTemplates = async () => {
+      try {
+        const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/list_message_template?auth_key=${authKey}`);
+        const data = await response.json();
+        console.log('Fetched data:', data);
+        setTemplates(data.message_template);
+        // setLoading(false);
+      } catch (error) {
+        console.error('Error fetching message templates:', error);
+      }
+    };
+  
+    fetchMessageTemplates();
+  }, []);
+
+  const handleMessageTemplateChange = (event) => {
+    const selectedTemplate = event.target.value;
+    setMessageTemplate(selectedTemplate);
+  
+    if (selectedTemplate === '新しく作る') {
+      setMessage(''); // Clear the message when selecting '新しく作る'
+      navigate('/messagetemplate');
+    } else {
+      // Find the selected template and set the message
+      const selectedTemplateData = templates.find(t => t.message_template_name === selectedTemplate);
+      setMessage(selectedTemplateData ? selectedTemplateData.message : '');
+    }
+  };
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -220,6 +264,48 @@ export default function NormalApplication() {
   const handleOpenFileModal = () => {
     setOpen(true);
   };
+
+  useEffect(() => {
+    const authKey = sessionStorage.getItem('authKey');
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/list_candidate_resume?auth_key=${authKey}`); // Replace with your actual API endpoint
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const responseData = await response.json();
+        console.log('Fetched data:', responseData); // Log fetched data to debug
+        // Categorize data based on cru_file_type
+
+        // Ensure responseData is structured correctly
+        if (!Array.isArray(responseData.candidate_resume)) {
+          throw new Error('Unexpected data format: candidate_resume is not an array');
+        }
+
+        // Extract the array from the object
+        const data = responseData.candidate_resume;
+
+        const categorizedResumeList = [];
+        const categorizedWorkHistoryList = [];
+
+        data.forEach(item => {
+          if (item.cru_resume_type === 'normal_resume') {
+            categorizedResumeList.push(item);
+          } else if (item.cru_resume_type === 'experience_resume') {
+            categorizedWorkHistoryList.push(item);
+          }
+        });
+
+        setResumeList(categorizedResumeList);
+        setWorkHistoryList(categorizedWorkHistoryList);
+      } catch (error) {
+        console.error('Error fetching resume list:', error);
+      }
+    };
+    
+    fetchData(); 
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -357,7 +443,12 @@ export default function NormalApplication() {
                   onChange={handleResumeUpload}
                   style={{gap: '10px'}}
                 >
-                  <ToggleButton value="resumelist" aria-label="resumelist">
+                  {resumeList.map((resume, index) => (
+                    <ToggleButton key={index} value={resume.cru_file_name} aria-label={resume.cru_file_name}>
+                      <ApplicationRequirement style={{paddingRight: '5px'}} /> {resume.cru_file_name}
+                    </ToggleButton>
+                  ))}
+                  {/* <ToggleButton value="resumelist" aria-label="resumelist">
                     <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み履歴書1
                   </ToggleButton>
                   <ToggleButton value="module" aria-label="module">
@@ -365,7 +456,7 @@ export default function NormalApplication() {
                   </ToggleButton>
                   <ToggleButton value="quilt" aria-label="quilt">
                     <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み履歴書3
-                  </ToggleButton>
+                  </ToggleButton> */}
                 </ToggleButtonGroup>
 
                 <Button to="/profile" component={Link} variant='outlined' sx={{marginTop: '20px'}}>
@@ -381,7 +472,12 @@ export default function NormalApplication() {
                   onChange={handleWorkHistoryUpload}
                   style={{gap: '10px'}}
                 >
-                  <ToggleButton value="workhistorylist" aria-label="workhistorylist">
+                  {workHistoryList.map((workHistory, index) => (
+                    <ToggleButton key={index} value={workHistory.cru_file_name} aria-label={workHistory.cru_file_name}>
+                      <ApplicationRequirement style={{paddingRight: '5px'}} /> {workHistory.cru_file_name}
+                    </ToggleButton>
+                  ))}
+                  {/* <ToggleButton value="workhistorylist" aria-label="workhistorylist">
                     <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み職務経歴1
                   </ToggleButton>
                   <ToggleButton value="module" aria-label="module">
@@ -389,7 +485,7 @@ export default function NormalApplication() {
                   </ToggleButton>
                   <ToggleButton value="quilt" aria-label="quilt">
                     <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み職務経歴3
-                  </ToggleButton>
+                  </ToggleButton> */}
                 </ToggleButtonGroup>
 
                 <Button to="/profile" component={Link} variant='outlined' sx={{marginTop: '20px'}}>
@@ -413,11 +509,17 @@ export default function NormalApplication() {
                     displayEmpty
                     >
                     
-                    {MessageTemplate.map((option, index) => (
-                      <MenuItem key={index} value={option.value} disabled={option.disabled} component={option.to ? Link : 'li'} to={option.to}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
+                    <MenuItem value="" disabled>
+                      テンプレートの選択
+                    </MenuItem>
+                    <MenuItem value="新しく作る">新しく作る</MenuItem>
+                      {templates ? (
+                        templates.map((template, index) => (
+                          <MenuItem key={index} value={template.message_template_name}>
+                            {template.message_template_name}
+                          </MenuItem>
+                        ))
+                      ) : null}
                     {/* <MenuItem value={CreateNew}>Create New</MenuItem>
                     <MenuItem value={template1}>Template 1</MenuItem>
                     <MenuItem value={template2}>Template 2</MenuItem>
@@ -433,6 +535,8 @@ export default function NormalApplication() {
                 placeholder="その他の相談事項" 
                 // name="username"
                 rows={4}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
               />
             </Grid>
           </Grid>
