@@ -281,7 +281,7 @@ const ChangePassword = () => {
         }}>
           <Cancel onClick={handleCloseSuccessModal} style={{position: 'absolute', right: '0', top: '0', padding: '10px'}} />
           <SuccessMsg style={{marginBottom: '10px'}} />
-          <Typography variant="h6" id="password-change-success-modal" component="h2" style={{fontSize: '14px'}}>
+          <Typography variant="h6" id="password-change-success-modal" component="h2"style={{fontSize: '14px'}}>
             パスワードが正常に変更されました
           </Typography>
         </Box>
