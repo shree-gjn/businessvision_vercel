@@ -146,6 +146,7 @@ const CreateMessage = () => {
 
   const handleClose = () => {
     setOpen(false);
+    navigate(-1); // Redirect to the list page after closing modal
   };
 
 

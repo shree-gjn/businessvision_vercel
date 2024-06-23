@@ -71,6 +71,7 @@ export default function MaskingApplicationConfirm() {
 
   const handleCloseDeleteModal = () => {
     setDeleteModalOpen(false);
+    navigate("/mypage");
   };
 
   const handleDelete = () => {

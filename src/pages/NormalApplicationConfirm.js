@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import {
   Checkbox,
   FormControlLabel,
@@ -19,7 +19,7 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Modal from '@mui/material/Modal';
-import { Link, useNavigate } from 'react-router-dom'; 
+import { Link, useNavigate, useLocation} from 'react-router-dom'; 
 import BottomNav from '../components/BottomNav';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
@@ -37,6 +37,8 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import {ReactComponent as ApplicationRequirement} from '../assets/ApplicationRequirement.svg';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import MenuItem from '@mui/material/MenuItem';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
 
 const theme = createTheme({
   palette: {
@@ -80,41 +82,12 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function NormalApplicationConfirm() {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [name, setName] = useState();
-  const [furigana, setFurigana] = useState();
-  const [city, setCity] = useState();
-  const [emailaddress, setEmailAddress] = useState();
-  const [messageTemplate, setMessageTemplate] = useState();
-  const [resumeupload, setResumeUpload] = React.useState('resumelist');
-  const [workhistoryupload, setWorkHistoryUpload] = React.useState('workhistorylist');
-
-  const handleResumeUpload = (event, nextresumeupload) => {
-    setResumeUpload(nextresumeupload);
-  };
-
-  const handleWorkHistoryUpload = (event, nextworkhistoryupload) => {
-    setWorkHistoryUpload(nextworkhistoryupload);
-  };
-
-  const handleMessageTemplateChange = (event) => {
-    setMessageTemplate(event.target.value);
-  };
-
-  const handleNameChange = (event) => {
-    setName(event.target.value);
-  }
-
-  const handleFuriganaChange = (event) => {
-    setFurigana(event.target.value);
-  }
-
-  const handleCityChange = (event) => {
-    setCity(event.target.value);
-  }
-
-  const handleEmailChange = (event) => {
-    setEmailAddress(event.target.value);
-  }
+  const [templates, setTemplates] = useState([]);
+  const [resumeList, setResumeList] = useState([]);
+  const [workHistoryList, setWorkHistoryList] = useState([]);
+  const location = useLocation();
+  // const { id, message } = location.state || { id: '', message: '' };
+  const { id, message, name, furigana, city, emailaddress, resumeupload, workhistoryupload, selectedResumeId, selectedWorkHistoryId } = location.state || {};
 
   const handleOpenDeleteModal = () => {
     setDeleteModalOpen(true);
@@ -203,6 +176,96 @@ export default function NormalApplicationConfirm() {
     { value: 'template3', label: 'Template3' },
   ]
 
+  useEffect(() => {
+    const authKey = sessionStorage.getItem('authKey');
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/list_candidate_resume?auth_key=${authKey}`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const responseData = await response.json();
+        
+        if (!Array.isArray(responseData.candidate_resume)) {
+          throw new Error('Unexpected data format: candidate_resume is not an array');
+        }
+
+        const data = responseData.candidate_resume;
+
+        const categorizedResumeList = data.filter(item => item.cru_resume_type === 'normal_resume');
+        const categorizedWorkHistoryList = data.filter(item => item.cru_resume_type === 'experience_resume');
+
+        setResumeList(categorizedResumeList);
+        setWorkHistoryList(categorizedWorkHistoryList);
+
+        // Debugging
+        console.log('Resume List:', categorizedResumeList);
+        console.log('Work History List:', categorizedWorkHistoryList);
+      } catch (error) {
+        console.error('Error fetching resume list:', error);
+      }
+    };
+    
+    fetchData();
+  }, []);
+
+  const getResumeNameById = (id) => {
+    const resume = resumeList.find(item => item.cru_id === id);
+    // console.log('Getting resume name for ID:', id, 'Result:', resume);
+    return resume ? resume.cru_file_name : 'Resume not found';
+  };
+
+  const getWorkHistoryNameById = (id) => {
+    const workHistory = workHistoryList.find(item => item.cru_id === id);
+    // console.log('Getting work history name for ID:', id, 'Result:', workHistory);
+    return workHistory ? workHistory.cru_file_name : 'Work History not found';
+  };
+
+  const getResumeUrlById = (id) => {
+    const resume = resumeList.find(item => item.cru_id === id);
+    return resume ? resume.cru_resume_url : 'Resume URL not found';
+  };
+
+  const getWorkHistoryUrlById = (id) => {
+    const workHistory = workHistoryList.find(item => item.cru_id === id);
+    return workHistory ? workHistory.cru_resume_url : 'Work History URL not found';
+  };
+
+
+  const handleSubmit = async () => {
+    const authKey = sessionStorage.getItem('authKey');
+    const formData = new FormData();
+    formData.append('auth_key', authKey);
+    formData.append('job_id', id);
+    formData.append('full_name', name);
+    formData.append('furigana', furigana);
+    formData.append('city_of_residence', city);
+    formData.append('email_address', emailaddress);
+    formData.append('normal_resume_name', getResumeNameById(selectedResumeId));
+    formData.append('normal_resume_url',getResumeUrlById(selectedResumeId)); // Replace with actual URL
+    formData.append('exp_resume_name', getWorkHistoryNameById(selectedWorkHistoryId));
+    formData.append('exp_resume_url', getWorkHistoryUrlById(selectedWorkHistoryId)); // Replace with actual URL
+    formData.append('message', message);
+
+    try {
+      const response = await fetch('https://bvhr-api.azurewebsites.net/candidate/add_official_application', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      // Handle successful submission
+      handleOpenDeleteModal();
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
+  };
+
+
   return (
     <ThemeProvider theme={theme}>
       <>
@@ -210,356 +273,6 @@ export default function NormalApplicationConfirm() {
           <BackLink to="#" onClick={goBack} > <BackButton /> 戻る </BackLink>
           <p>求人情報</p>
         </div>
-        {/* <Box sx={{ width: 'auto', padding: '24px', background: 'rgb(250, 250, 250)', marginBottom: '100px'}}>
-          <Grid container spacing={1}>
-            <Grid item xs={12} style={{width: '100%'}}>
-              <Item sx={{textAlign: 'center', background: 'transparent'}}>
-              提出書類の確認をお願いします
-              </Item>
-            </Grid>
-          </Grid>
-          <Grid container spacing={1} style={{width: '100%', marginBottom: '20px', background: '#FFFFFF', marginLeft: '0', marginTop: '10px', height: '120px', borderRadius: '10px', border: '1px solid #EEEEEE'}}>
-            <Grid item xs={8} style={{width: '100%'}}>
-              <Item style={{textAlign: 'left'}}>メッセージ</Item>
-            </Grid>
-            <Grid item xs={4}>
-              <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '70px', display: 'flex', gap: '15px'}}>
-                <span>
-                  <PencilEdit />
-                </span>
-                <Typography variant='paragraph'>編集</Typography>
-              </Item>
-            </Grid>
-          </Grid>
-          <Grid container spacing={1} style={{background: '#FFFFFF', border: '1px solid #EEEEEE', borderRadius: '10px', width: '100%', marginLeft: '0', marginBottom: '20px'}}>
-            <Grid item xs={4} style={{marginLeft: 'auto'}}>
-              <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '70px', display: 'flex', gap: '15px'}}>
-                <span>
-                  <PencilEdit />
-                </span>
-                <Typography variant='paragraph'>編集</Typography>
-              </Item>
-            </Grid>
-            <Grid item xs={12} style={{width: '100%', height: '120px', overflowY: 'auto', padding: '0'}}>
-              <Item xs={{border: '1px solid #EEEEEE', height: '120px'}}>
-                <Typography variant="h6" component="h6" sx={{marginBottom:'10px'}}> 履歴書 </Typography>
-                <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
-                    <Typography>基本情報</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails sx={{padding:'0px', textAlign:'left'}}>
-                  <div>
-                    <Divider />
-                    <Typography sx={{margin:'6px'}}> 氏名 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> フリガナ </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 生年月日 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 性別 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 現住所 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 電話番号 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 携帯電話番号 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> メールアドレス </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 連絡先 （現住所以外に連絡を希望する場合のみ記入） </Typography> 
-                  </div>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel2a-content"
-                    id="panel2a-header"
-                  >
-                    <Typography>学歴</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails sx={{padding:'0px', textAlign:'left'}}>
-                  <div>
-                    <Divider />
-                    <Typography sx={{margin:'6px'}}> 学校  1 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 入学年・月 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 卒業年・月 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 学校名 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 学校  2 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 入学年・月 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 卒業年・月 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 学校名 </Typography> <Divider />
-                  </div>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel3a-content"
-                    id="panel3a-header"
-                  >
-                    <Typography>職歴</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails sx={{padding:'0px', textAlign:'left'}}>
-                  <div>
-                    <Divider />
-                    <Typography sx={{margin:'6px'}}> 職歴  1 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 入社年・月 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 退社年・月 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 会社名 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 学校  2 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 入社年・月 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 退社年・月 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 会社名 </Typography> <Divider />
-                  </div>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel4a-content"
-                    id="panel4a-header"
-                  >
-                    <Typography>賞罰</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails sx={{padding:'0px', textAlign:'left'}}>
-                  <div>
-                    <Divider />
-                    <Typography sx={{margin:'6px'}}> 入社年・月 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 項目 </Typography> <Divider />
-                  </div>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel5a-content"
-                    id="panel5a-header"
-                  >
-                    <Typography>免許・資格</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails sx={{padding:'0px', textAlign:'left'}}>
-                  <div>
-                    <Divider />
-                    <Typography sx={{margin:'6px'}}> 入社年・月 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 項目 </Typography> <Divider />
-                  </div>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel2a-content"
-                    id="panel2a-header"
-                  >
-                    <Typography>その他情報</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails sx={{padding:'0px', textAlign:'left'}}>
-                  <div>
-                    <Divider />
-                    <Typography sx={{margin:'6px'}}> 通勤時間 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 最寄り駅 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 扶養家族（配偶者を除く） </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 配偶者 有・無 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 配偶者の扶養義務 有・無 </Typography> <Divider />
-                  </div>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel6a-content"
-                    id="panel6a-header"
-                  >
-                    <Typography>趣味特技</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails sx={{padding:'0px', textAlign:'left'}}>
-                  <div>
-                    <Divider />
-                    <Typography sx={{margin:'6px'}}> 項目 </Typography> <Divider />
-                  </div>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel7a-content"
-                    id="panel7a-header"
-                  >
-                    <Typography>志望の動機・自己PRなど</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails sx={{padding:'0px', textAlign:'left'}}>
-                  <div>
-                    <Divider />
-                    <Typography sx={{margin:'6px'}}> 項目 </Typography> <Divider />
-                  </div>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel8a-content"
-                    id="panel8a-header"
-                  >
-                    <Typography>本人希望記入欄（給与・職種・勤務時間・その他についての希望などがあれば記入）</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails sx={{padding:'0px', textAlign:'left'}}>
-                  <div>
-                    <Divider />
-                    <Typography sx={{margin:'6px'}}> 項目 </Typography> <Divider />
-                  </div>
-                  </AccordionDetails>
-                </Accordion>
-              </Item>
-            </Grid>
-          </Grid>
-          <Grid container spacing={1} style={{background: '#FFFFFF', border: '1px solid #EEEEEE', borderRadius: '10px', width: '100%', marginLeft: '0', marginBottom: '20px'}}>
-            <Grid item xs={4} style={{marginLeft: 'auto'}}>
-              <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '60px', display: 'flex', gap: '15px'}}>
-                <span>
-                  <PencilEdit />
-                </span>
-                <Typography variant='paragraph'>編集</Typography>
-              </Item>
-            </Grid>
-            <Grid item xs={12} style={{width: '100%', height: '120px', overflowY: 'auto', padding: '0'}}>
-              <Item xs={{border: '1px solid #EEEEEE', height: '120px'}}>
-              <Typography variant="h6" component="h6" sx={{marginTop:'10px', marginBottom:'10px'}}> 職務経歴書 </Typography>
-                <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
-                    <Typography>氏名</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails sx={{padding:'0px', textAlign:'left'}}>
-                  <div>
-                    <Divider />
-                    <Typography sx={{margin:'6px'}}> 氏名 </Typography> <Divider />
-                  </div>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel2a-content"
-                    id="panel2a-header"
-                  >
-                    <Typography>職務要約</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails sx={{padding:'0px', textAlign:'left'}}>
-                  <div>
-                    <Divider />
-                    <Typography sx={{margin:'6px'}}> 職務要約 </Typography> <Divider />
-                  </div>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel3a-content"
-                    id="panel3a-header"
-                  >
-                    <Typography>職務経歴</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails sx={{padding:'0px', textAlign:'left'}}>
-                  <div>
-                    <Divider />
-                    <Typography sx={{margin:'6px'}}> 所属期間 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 会社名 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 事業内容 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 資本金 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 売上高 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 従業員数 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 企業カテゴリ </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 業務内容 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 所属部門・ポジション </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 部門・業務別での所属期間 </Typography> <Divider />
-                    <Typography sx={{margin:'6px'}}> 所属部門人数 </Typography> 
-                  </div>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel4a-content"
-                    id="panel4a-header"
-                  >
-                    <Typography>活かせる経験・知識・技術</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails sx={{padding:'0px', textAlign:'left'}}>
-                  <div>
-                    <Divider />
-                    <Typography sx={{margin:'6px'}}> 活かせる経験・知識・技術 </Typography> 
-                  </div>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel5a-content"
-                    id="panel5a-header"
-                  >
-                    <Typography>資格</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails sx={{padding:'0px', textAlign:'left'}}>
-                  <div>
-                    <Divider />
-                    <Typography sx={{margin:'6px'}}> 項目 </Typography> 
-                  </div>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel2a-content"
-                    id="panel2a-header"
-                  >
-                    <Typography>PCスキル</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails sx={{padding:'0px', textAlign:'left'}}>
-                  <div>
-                    <Divider />
-                    <Typography sx={{margin:'6px'}}> 項目 </Typography> 
-                  </div>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel6a-content"
-                    id="panel6a-header"
-                  >
-                    <Typography>使用可能会計ツール</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails sx={{padding:'0px', textAlign:'left'}}>
-                  <div>
-                    <Divider />
-                    <Typography sx={{margin:'6px'}}> 項目 </Typography> 
-                  </div>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel7a-content"
-                    id="panel7a-header"
-                  >
-                    <Typography>自己PR</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails sx={{padding:'0px', textAlign:'left'}}>
-                  <div>
-                    <Divider />
-                    <Typography sx={{margin:'6px'}}> 項目 </Typography> 
-                  </div>
-                  </AccordionDetails>
-                </Accordion>
-              </Item>
-            </Grid>
-          </Grid>
-          <Grid container style={{width: '100%'}}>
-            <Grid item xs={12} style={{width: '100%'}}>
-            <Button onClick={handleOpenDeleteModal} component={Link} to="" variant="contained" color="secondary" sx={{ width: '100%', marginBottom: '20px' }}>書類選考応募</Button>
-            </Grid>
-          </Grid>
-        </Box> */}
 
         <Box sx={{ width: 'auto', padding: '24px', background: 'rgb(250, 250, 250)', marginBottom: '100px'}}>
           <Grid container spacing={1}>
@@ -568,15 +281,12 @@ export default function NormalApplicationConfirm() {
                 提出書類の確認をお願いします
               </Item>
             </Grid>
-            <Grid item xs={12} spacing={1} sx={{background: '#fff', border: '1px solid #eeeeee', padding: '10px'}}>
+            <Grid item xs={12} spacing={1} sx={{background: '#fff', border: '1px solid #eeeeee', padding: '10px', position: 'relative'}}>
               <Typography sx={{textAlign: 'center', fontSize: '12px', padding: '12px'}}>基本情報を入力してください</Typography>
-              <Grid item style={{paddingBottom: '10px'}}>
-                <Item style={{marginLeft: 'auto', padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '70px', display: 'flex', gap: '15px'}}>
-                  <span>
-                    <PencilEdit />
-                  </span>
-                  <Typography variant='paragraph'>編集</Typography>
-                </Item>
+              <Grid item>
+                <IconButton component={Link} to={`/normalapplication/${id}`} state={{id, message, name, furigana, city, emailaddress, resumeupload, workhistoryupload}} aria-label="edit" size="small" sx={{position: 'absolute', top: '0', right: '0', margin: '10px 10px 0 0'}}>
+                  <EditIcon fontSize="small" />
+                </IconButton>
               </Grid>
               <Item sx={{alignItems: 'center', display: 'flex'}}>
                 <FormLabel className='formfield-label' id="name" sx={{marginBottom: '10px', textAlign: 'left', width: '50%', fontSize: '12px'}}>氏名</FormLabel>
@@ -584,10 +294,10 @@ export default function NormalApplicationConfirm() {
                   <TextField
                     variant="outlined"
                     type="text"
-                    placeholder="あなたのフィールドを入力してください"
                     value={name}
-                    name='name'
-                    onChange={handleNameChange}
+                    InputProps={{
+                      readOnly: true,
+                    }}
                     size="small"
                     // helperText={errors.family_member_count}
                   />
@@ -600,10 +310,10 @@ export default function NormalApplicationConfirm() {
                   <TextField
                     variant="outlined"
                     type="text"
-                    placeholder="あなたのフィールドを入力してください"
                     value={furigana}
-                    name='furigana'
-                    onChange={handleFuriganaChange}
+                    InputProps={{
+                      readOnly: true,
+                    }}
                     size="small"
                     // helperText={errors.family_member_count}
                   />
@@ -616,10 +326,10 @@ export default function NormalApplicationConfirm() {
                   <TextField
                     variant="outlined"
                     type="text"
-                    placeholder="あなたのフィールドを入力してください"
                     value={city}
-                    name='city'
-                    onChange={handleCityChange}
+                    InputProps={{
+                      readOnly: true,
+                    }}
                     size="small"
                     // helperText={errors.family_member_count}
                   />
@@ -632,10 +342,10 @@ export default function NormalApplicationConfirm() {
                   <TextField
                     variant="outlined"
                     type="text"
-                    placeholder="あなたのフィールドを入力してください"
                     value={emailaddress}
-                    name='emailaddress'
-                    onChange={handleEmailChange}
+                    InputProps={{
+                      readOnly: true,
+                    }}
                     size="small"
                     // helperText={errors.family_member_count}
                   />
@@ -644,34 +354,25 @@ export default function NormalApplicationConfirm() {
               </Item>
             </Grid>
             
-            <Grid item xs={12}>
+            <Grid item xs={12} style={{position: 'relative'}}>
               <Typography sx={{padding: '10px', textAlign: 'center', fontSize: '12px'}}>企業へ提出する履歴書と職務経歴書を選んでください</Typography>
-              <Grid item style={{paddingBottom: '10px'}}>
-                <Item style={{marginLeft: 'auto', padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '70px', display: 'flex', gap: '15px'}}>
-                  <span>
-                    <PencilEdit />
-                  </span>
-                  <Typography variant='paragraph'>編集</Typography>
-                </Item>
-              </Grid>
-              <div style={{display: 'flex'}}>
+              <Item style={{paddingBottom: '10px'}}>
+                <IconButton component={Link} to={`/normalapplication/${id}`} state={{id, message, name, furigana, city, emailaddress, resumeupload, workhistoryupload}} aria-label="edit" size="small" sx={{position: 'absolute', top: '0', right: '0', margin: '10px 10px 0 0'}}>
+                  <EditIcon fontSize="small" />
+                </IconButton>
+              </Item>
+              <div style={{display: 'flex', flexDirection: 'column'}}>
               <Item>
                 <ToggleButtonGroup
                   orientation="vertical"
                   value={resumeupload}
                   exclusive
-                  onChange={handleResumeUpload}
+                  // onChange={handleResumeUpload}
                   style={{gap: '10px'}}
                 >
                   <ToggleButton value="resumelist" aria-label="resumelist">
-                    <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み履歴書1
+                    <ApplicationRequirement style={{paddingRight: '5px'}} /> {getResumeNameById(selectedResumeId)}
                   </ToggleButton>
-                  {/* <ToggleButton value="module" aria-label="module">
-                    <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み履歴書2
-                  </ToggleButton>
-                  <ToggleButton value="quilt" aria-label="quilt">
-                    <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み履歴書3
-                  </ToggleButton> */}
                 </ToggleButtonGroup>
 
                 {/* <Button variant='outlined' sx={{marginTop: '20px'}}>
@@ -684,11 +385,11 @@ export default function NormalApplicationConfirm() {
                   orientation="vertical"
                   value={workhistoryupload}
                   exclusive
-                  onChange={handleWorkHistoryUpload}
+                  // onChange={handleWorkHistoryUpload}
                   style={{gap: '10px'}}
                 >
                   <ToggleButton value="workhistorylist" aria-label="workhistorylist">
-                    <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み職務経歴1
+                    <ApplicationRequirement style={{paddingRight: '5px'}} /> {getWorkHistoryNameById(selectedWorkHistoryId)}
                   </ToggleButton>
                   {/* <ToggleButton value="module" aria-label="module">
                     <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み職務経歴2
@@ -706,49 +407,38 @@ export default function NormalApplicationConfirm() {
               
             </Grid>
 
-            <Grid item xs={12} style={{width: '100%', marginBottom: '20px'}}>
+            {/* <Grid item xs={12} style={{width: '100%', marginBottom: '20px', position: 'relative'}}>
               <Item style={{textAlign: 'left', padding: '0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px'}}>
                 <Typography gutterBottom>
                   メッセージを入力
                 </Typography>
                 <Grid item style={{marginLeft: 'auto'}}>
-                  <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '70px', display: 'flex', gap: '15px'}}>
-                    <span>
-                      <PencilEdit />
-                    </span>
-                    <Typography variant='paragraph'>編集</Typography>
-                  </Item>
+                  <IconButton component={Link} to={`/normalapplication/${id}`} state={{ message }} aria-label="edit" size="small" sx={{position: 'absolute', top: '0', right: '0', margin: '10px 10px 0 0'}}>
+                    <EditIcon fontSize="small" />
+                  </IconButton>
                 </Grid>
-                {/* <FormControl size="small">
-                  <Select
-                    value={messageTemplate || ''}
-                    name='message_template'
-                    onChange={handleMessageTemplateChange}
-                    displayEmpty
-                    >
-                    
-                    {MessageTemplate.map((option, index) => (
-                      <MenuItem key={index} value={option.value} disabled={option.disabled}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl> */}
               </Item>
-              <TextField style={{}}
-                id="outlined-multiline-static"
-                variant="outlined"
-                fullWidth
-                multiline
-                placeholder="その他の相談事項" 
-                // name="username"
-                rows={4}
-              />
+            </Grid> */}
+            <Grid container spacing={1} style={{width: '100%', marginBottom: '20px', background: '#FFFFFF', marginLeft: '0', marginTop: '10px', height: '150px', borderRadius: '10px', border: '1px solid #EEEEEE', overflowY: 'auto'}}>
+              <Grid item xs={12} style={{width: '100%', position: 'relative'}}>
+                <Item>
+                  <Typography style={{textAlign: 'left', marginBottom: '20px'}}>メッセージ</Typography>
+                  <Typography style={{textAlign: 'left', margin: '10px 0'}}>{message}</Typography>
+                  {/* <Typography style={{textAlign: 'left', margin: '10px 0'}}>ID: {id}</Typography> */}
+                  {/* <Button component={Link} to={`/maskingapplication/${id}`} state={{ message }} style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '120px', display: 'flex', gap: '15px', position: 'absolute', top: '0', right: '0', margin: '10px 10px 0 0'}}>
+                    <PencilEdit />
+                    <Typography variant='paragraph'>編集</Typography>
+                  </Button> */}
+                  <IconButton component={Link} to={`/normalapplication/${id}`} state={{id, message, name, furigana, city, emailaddress, resumeupload, workhistoryupload}} aria-label="edit" size="small" sx={{position: 'absolute', top: '0', right: '0', margin: '10px 10px 0 0'}}>
+                    <EditIcon fontSize="small" />
+                  </IconButton>
+                </Item>
+              </Grid>
             </Grid>
           </Grid>
           <Grid container>
            <Grid item xs={12} style={{width: '100%'}}>
-              <Button onClick={handleOpenDeleteModal} component={Link} to="" variant="contained" color="secondary" sx={{ width: '100%', marginBottom: '20px' }}>書類選考応募</Button>
+              <Button onClick={handleSubmit} component={Link} to="" variant="contained" color="secondary" sx={{ width: '100%', marginBottom: '20px' }}>書類選考応募</Button>
             </Grid>
           </Grid>
         </Box>

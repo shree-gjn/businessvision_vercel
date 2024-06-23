@@ -19,7 +19,7 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Modal from '@mui/material/Modal';
-import { Link, useNavigate, useLocation} from 'react-router-dom'; 
+import { Link, useNavigate, useLocation, useParams} from 'react-router-dom'; 
 import BottomNav from '../components/BottomNav';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
@@ -91,21 +91,36 @@ export default function NormalApplication() {
   const [uploadedFile, setUploadedFile] = React.useState(null);
   const [resumeList, setResumeList] = useState([]);
   const [workHistoryList, setWorkHistoryList] = useState([]);
-
+  const [selectedResumeId, setSelectedResumeId] = useState(null);
+  const [selectedWorkHistoryId, setSelectedWorkHistoryId] = useState(null);
+  const { id } = useParams(); 
+  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    if (location.state && location.state.message) {
-      setMessage(location.state.message);
+    if (location.state) {
+      setName(location.state.name || '');
+      setFurigana(location.state.furigana || '');
+      setCity(location.state.city || '');
+      setEmailAddress(location.state.emailaddress || '');
+      setMessage(location.state.message || '');
+      setResumeUpload(location.state.resumeupload || 'resumelist');
+      setWorkHistoryUpload(location.state.workhistoryupload || 'workhistorylist');
+      setSelectedResumeId(location.state.selectedResumeId || null);
+      setSelectedWorkHistoryId(location.state.selectedWorkHistoryId || null);
     }
   }, [location]);
 
   const handleResumeUpload = (event, nextresumeupload) => {
     setResumeUpload(nextresumeupload);
+    const selectedResume = resumeList.find(resume => resume.cru_file_name === nextresumeupload);
+    setSelectedResumeId(selectedResume ? selectedResume.cru_id : null);
   };
 
   const handleWorkHistoryUpload = (event, nextworkhistoryupload) => {
     setWorkHistoryUpload(nextworkhistoryupload);
+    const selectedWorkHistory = workHistoryList.find(workHistory => workHistory.cru_file_name === nextworkhistoryupload);
+    setSelectedWorkHistoryId(selectedWorkHistory ? selectedWorkHistory.cru_id : null);
   };
 
   // const handleMessageTemplateChange = (event) => {
@@ -136,6 +151,28 @@ export default function NormalApplication() {
     setEmailAddress(event.target.value);
   }
 
+  const handleNormalappConfirm = () => {
+    const selectedResume = resumeList.find(resume => resume.cru_file_name === resumeupload);
+    const selectedWorkHistory = workHistoryList.find(workHistory => workHistory.cru_file_name === workhistoryupload);
+
+    navigate('/normalapplicationconfirm', {
+      state: {
+        id,
+        message,
+        name,
+        furigana,
+        city,
+        emailaddress,
+        resumeupload,
+        workhistoryupload,
+        selectedResumeId: selectedResume ? selectedResume.cru_id : null,
+        selectedResumeName: selectedResume ? selectedResume.cru_file_name : '',
+        selectedWorkHistoryId: selectedWorkHistory ? selectedWorkHistory.cru_id : null,
+        selectedWorkHistoryName: selectedWorkHistory ? selectedWorkHistory.cru_file_name : '',
+      }
+    });
+  };
+
   const handleDelete = () => {
     // Implement the logic to delete the item
     // You can use an API call or other methods to delete the item
@@ -143,7 +180,6 @@ export default function NormalApplication() {
     // For now, let's just close the modal
     handleCloseDeleteModal();
   };
-  const navigate = useNavigate();  // Get the history object from react-router-dom
 
   const goBack = () => {
     navigate(-1);  // Navigate to the previous page
@@ -314,49 +350,6 @@ export default function NormalApplication() {
           <BackLink to="#" onClick={goBack} > <BackButton /> 戻る </BackLink>
           <p>求人情報</p>
         </div>
-        {/* <Box sx={{ width: 'auto', padding: '24px', background: 'rgb(250, 250, 250)', marginBottom: '100px'}}>
-          <Grid container spacing={1}>
-            <Grid item xs={12} style={{width: '100%'}}>
-              <Item sx={{textAlign: 'center'}}>
-              応募情報の確認
-              </Item>
-            </Grid>
-          </Grid>
-          <Grid container style={{}}>
-            <Grid item xs={4} style={{marginBottom: '10px', marginLeft: 'auto'}}>
-              <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '70px', display: 'flex', gap: '15px', marginLeft: 'auto'}}>
-                <span>
-                  <PencilEdit />
-                </span>
-                <Typography variant='paragraph'>編集</Typography>
-              </Item>
-            </Grid>
-            <Grid item xs={12} style={{width: '100%', height: '200px', overflowY: 'auto', border: '1px solid #EEEEEE'}}>
-              <Item sx={{height: '200px'}}>
-              <ResumeTab style={{paddingBottom: '20px'}} />
-              </Item>
-            </Grid>
-          </Grid>
-          <Grid container style={{width: '100%', marginBottom: '20px'}}>
-            <Grid item xs={12} style={{width: '100%'}}>
-              <Item style={{textAlign: 'left'}}>メッセージを入力</Item>
-              <TextField style={{}}
-                id="outlined-multiline-static"
-                variant="outlined"
-                fullWidth
-                multiline
-                placeholder="その他の相談事項" 
-                // name="username"
-                rows={4}
-              />
-            </Grid>
-          </Grid>
-          <Grid container style={{width: '100%'}}>
-            <Grid item xs={12} style={{width: '100%'}}>
-            <Button component={Link} to="/normalapplicationconfirm" variant="contained" color="secondary" sx={{ width: '100%', marginBottom: '20px' }}>書類選考応募</Button>
-            </Grid>
-          </Grid>
-        </Box> */}
         
         <Box sx={{ width: 'auto', padding: '24px', background: 'rgb(250, 250, 250)', marginBottom: '100px'}}>
           <Grid container spacing={1}>
@@ -448,15 +441,6 @@ export default function NormalApplication() {
                       <ApplicationRequirement style={{paddingRight: '5px'}} /> {resume.cru_file_name}
                     </ToggleButton>
                   ))}
-                  {/* <ToggleButton value="resumelist" aria-label="resumelist">
-                    <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み履歴書1
-                  </ToggleButton>
-                  <ToggleButton value="module" aria-label="module">
-                    <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み履歴書2
-                  </ToggleButton>
-                  <ToggleButton value="quilt" aria-label="quilt">
-                    <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み履歴書3
-                  </ToggleButton> */}
                 </ToggleButtonGroup>
 
                 <Button to="/profile" component={Link} variant='outlined' sx={{marginTop: '20px'}}>
@@ -477,15 +461,6 @@ export default function NormalApplication() {
                       <ApplicationRequirement style={{paddingRight: '5px'}} /> {workHistory.cru_file_name}
                     </ToggleButton>
                   ))}
-                  {/* <ToggleButton value="workhistorylist" aria-label="workhistorylist">
-                    <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み職務経歴1
-                  </ToggleButton>
-                  <ToggleButton value="module" aria-label="module">
-                    <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み職務経歴2
-                  </ToggleButton>
-                  <ToggleButton value="quilt" aria-label="quilt">
-                    <ApplicationRequirement style={{paddingRight: '5px'}} /> 保存済み職務経歴3
-                  </ToggleButton> */}
                 </ToggleButtonGroup>
 
                 <Button to="/profile" component={Link} variant='outlined' sx={{marginTop: '20px'}}>
@@ -542,7 +517,8 @@ export default function NormalApplication() {
           </Grid>
           <Grid container>
            <Grid item xs={12} style={{width: '100%'}}>
-              <Button component={Link} to="/normalapplicationconfirm" variant="contained" color="secondary" sx={{ width: '100%', marginBottom: '20px' }}>書類選考応募</Button>
+              {/* <Button component={Link} to="/normalapplicationconfirm" state={{ id: id, message: message }} variant="contained" color="secondary" sx={{ width: '100%', marginBottom: '20px' }}>書類選考応募</Button> */}
+              <Button onClick={handleNormalappConfirm} variant="contained" color="secondary" sx={{ width: '100%', marginBottom: '20px' }}>書類選考応募</Button>
             </Grid>
           </Grid>
         </Box>

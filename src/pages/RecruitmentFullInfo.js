@@ -419,6 +419,12 @@ export default function RecruitmentFullInfo() {
               <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_employment_status}​</Item>
               </Grid>
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>選考プロセス</Item>
+              </Grid>
+              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>​{jobpost.cjp_selection_process}</Item>
+              </Grid>
+              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
               <Item sx={{textAlign:'left', fontSize:'12px'}}>年収・給与</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
@@ -437,22 +443,16 @@ export default function RecruitmentFullInfo() {
               <Item sx={{fontSize:'12px', textAlign:'left'}}>​{jobpost.cjp_working_hours}</Item>
               </Grid>
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>休日・休暇</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>​{jobpost.cjp_holidays_vacations}</Item>
-              </Grid>
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
               <Item sx={{textAlign:'left', fontSize:'12px'}}>待遇・福利厚生</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
               <Item sx={{fontSize:'12px', textAlign:'left'}}>​{jobpost.cjp_treatment_benefits}</Item>
               </Grid>
               <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>選考プロセス</Item>
+              <Item sx={{textAlign:'left', fontSize:'12px'}}>休日・休暇</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>​{jobpost.cjp_selection_process}</Item>
+              <Item sx={{fontSize:'12px', textAlign:'left'}}>​{jobpost.cjp_holidays_vacations}</Item>
               </Grid>
           </Grid>
           </Box>
@@ -503,7 +503,7 @@ export default function RecruitmentFullInfo() {
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
               <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_company_establishment}​</Item>
               </Grid>
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
+              {/* <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
               <Item sx={{textAlign:'left', fontSize:'12px'}}>代表者名</Item>
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
@@ -532,7 +532,7 @@ export default function RecruitmentFullInfo() {
               </Grid>
               <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
               <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_head_office_location}​</Item>
-              </Grid>
+              </Grid> */}
           </Grid>
           </Box>
         </CardContent>
