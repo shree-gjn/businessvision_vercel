@@ -95,6 +95,7 @@ export default function NormalApplicationConfirm() {
 
   const handleCloseDeleteModal = () => {
     setDeleteModalOpen(false);
+    navigate("/mypage");
   };
 
   const handleDelete = () => {

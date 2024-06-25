@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import Box from '@mui/material/Box';
 import { Link, useNavigate } from 'react-router-dom';
 import { Typography, TextField, Button, Modal, IconButton } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import CloseIcon from '@mui/icons-material/Close'; // Import the close icon
 import { ReactComponent as BackButton } from '../assets/BackButton.svg';
+import {ReactComponent as SuccessMsg} from '../assets/SuccessMsg.svg';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme({
@@ -47,16 +48,55 @@ const ChangeMemberID = () => {
     navigate(-1);
   };
 
-  const [openModal, setOpenModal] = React.useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [emailAddress, setEmailAddress] = useState('');
+  const [successModal, setSuccessModal] = useState(false);
 
   const handleConfirm = () => {
-    setOpenModal(true);
-    // Add logic to handle confirmation here
+    const authKey = sessionStorage.getItem('authKey');
+    setOpenModal(false);
+    // Create a FormData object and append the email address and auth key
+    const formData = new FormData();
+    formData.append('auth_key', authKey); // Replace with actual auth key
+    formData.append('email_address', emailAddress);
+
+    // Send the POST request using fetch
+    fetch('https://bvhr-api.azurewebsites.net/candidate/edit_candidate_email', {
+      method: 'POST',
+      body: formData,
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Response:', data); // Log the response for debugging
+
+        // Check the actual structure of the response
+        if (data.message && data.message.trim() === 'Candidate Email Updated Successfully') {
+          setSuccessModal(true);
+        } else {
+          console.error('Failed to update email:', data.message || 'Unknown error');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   };
 
   const handleCloseModal = () => {
     setOpenModal(false);
   };
+
+  const handleCloseSuccessModal = () => {
+    setSuccessModal(false);
+  };
+
+  const handleEmailChange = (event) => {
+    setEmailAddress(event.target.value);
+  };
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -84,49 +124,68 @@ const ChangeMemberID = () => {
           variant="outlined"
           fullWidth
           required
+          value={emailAddress}
+          onChange={handleEmailChange}
+          placeholder="メールアドレスを入力してください"
           sx={{ marginBottom: '16px' }}
         />
         </div>
-        <Button variant="contained" onClick={handleConfirm}>
+        <Button variant="contained" onClick={handleOpenModal}>
         確認する
         </Button>
-        <Modal open={openModal} onClose={handleCloseModal} sx={{}}>
-        <Box sx={{ width: 300, bgcolor: 'background.paper', p: 2, margin: '250px auto', position: 'relative' }}>
+        <Modal open={openModal} onClose={handleCloseModal} sx={{borderRadius: '15px'}}>
+          <Box sx={{ width: 300, bgcolor: 'background.paper', p: 4, margin: '250px auto', position: 'relative', borderRadius: '15px'}}>
             {/* Close button with 'x' icon */}
             <IconButton
               edge="start"
               color="inherit"
               onClick={handleCloseModal}
-              sx={{ position: 'absolute', top: 0, right: 0, display:'contents' }}
+              sx={{ position: 'absolute', top: 0, right: 0, display: 'contents', border: 'none'}}
             >
-              <CloseIcon />
+              <CloseIcon sx={{display: 'Block', marginLeft: 'auto', position: 'absolute', top: '0', right: '0', margin: '15px'}} />
             </IconButton>
-            <Divider />
+            {/* <Divider /> */}
             {/* Modal content */}
-            <Typography variant="h6" >
-            会員ID（E-mailアドレス）設定
+            <Typography variant="h6" sx={{fontSize: '16px', textAlign: 'center', marginTop: '20px'}}>
+              会員ID（E-mailアドレス）設定
             </Typography>
-            <Typography variant="body1" sx={{marginTop:'10px'}}>
-            ご入力された内容をご確認ください。
+            <Typography variant="body1" sx={{ marginTop: '10px', fontSize: '16px', textAlign: 'center'}}>
+              ご入力された内容をご確認ください。
             </Typography>
-            
-            <div style={{marginTop:'40px', width: '100%'}}>
-        <Typography variant="body1" sx={{ marginBottom: '16px', textAlign:'left' }}>
-        会員ID（メールアドレス）
-        </Typography>
-        <TextField
-          // label="Member ID"
-          variant="outlined"
-          fullWidth
-          required
-          sx={{ marginBottom: '16px' }}
-        />
-        </div>
-            <Button onClick={handleCloseModal} sx={{ marginTop: '16px' }}>
-              Close
+            <div style={{ marginTop: '40px', width: '100%' }}>
+              <Typography variant="body1" sx={{ marginBottom: '16px', textAlign: 'center' }}>
+                会員ID（メールアドレス）
+              </Typography>
+              <TextField
+                variant="outlined"
+                fullWidth
+                required
+                value={emailAddress}
+                InputProps={{
+                  readOnly: true,
+                }}
+                sx={{marginBottom: '20px'}}
+              />
+            </div>
+            <Button variant='contained' onClick={handleConfirm} sx={{ marginTop: '16px', display: 'block', margin: '0 auto'}}>
+              確認する
             </Button>
           </Box>
         </Modal>
+
+        {/* Success Modal */}
+        <Modal open={successModal} onClose={handleCloseSuccessModal}>
+          <Box sx={{ width: 300, bgcolor: 'background.paper', p: 4, margin: '250px auto', position: 'relative', borderRadius: '15px'}}>
+            <SuccessMsg style={{marginBottom: '10px', display: 'block', margin: 'auto'}} />
+            <Typography variant="body1" sx={{ marginTop: '10px', textAlign: 'center', fontSize: '14px'}}>
+              登録会員ID(E-mailアドレス)を変更しました。
+            </Typography>
+            <Button onClick={handleCloseSuccessModal} variant="contained" sx={{ marginTop: '16px', display: 'block', marginLeft: 'auto', marginRight: 'auto' }}>
+              閉じる
+            </Button> 
+          </Box>
+        </Modal>
+
       </Box>
     </ThemeProvider>
   );
