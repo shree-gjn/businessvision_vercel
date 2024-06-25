@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React, { useState, useEffect} from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 import Accordion from '@mui/material/Accordion';
-import {FormControlLabel, Checkbox, MenuItem, TextField, Multiline, Button} from '@mui/material'
+import {FormControlLabel, Checkbox, MenuItem, TextField, Multiline, Button, Modal} from '@mui/material'
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import BottomNav from '../components/BottomNav';
@@ -11,6 +11,8 @@ import Chip from '@mui/material/Chip';
 import { Link, useNavigate } from 'react-router-dom'; 
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { borderBottom, padding, textAlign } from '@mui/system';
+import {ReactComponent as SuccessMsg} from '../assets/SuccessMsg.svg';
+import {ReactComponent as Cancel} from '../assets/Cancel.svg';
 import { Typography } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -41,45 +43,40 @@ const AgentPage = () => {
     section4: [],
     section5: [],
   });
+  const [otherConsultationMatters, setOtherConsultationMatters] = React.useState('');
 
   const [checkboxes, setCheckboxes] = React.useState({
-    checkbox1: false,
-    checkbox2: false,
-    checkbox3: false,
-    checkbox4: false,
-    checkbox5: false,
-    checkbox6: false,
-    checkbox7: false,
-    checkbox8: false,
-    checkbox9: false,
-    checkbox10: false,
     checkbox11: false,
     checkbox12: false,
   });
+  const [successModal, setSuccessModal] = useState(false); 
+
+  const handleOtherConsultationChange = (event) => {
+    setOtherConsultationMatters(event.target.value);
+  };
 
   const handleCheckboxChange = (section, chipName) => (event) => {
     const { checked } = event.target;
 
-    if (checked) {
-      setSelectedChips((prevSelectedChips) => ({
-        ...prevSelectedChips,
-        [section]: [...prevSelectedChips[section], chipName],
+    if (section.startsWith('checkbox')) {
+      setCheckboxes((prevCheckboxes) => ({
+        ...prevCheckboxes,
+        [section]: checked,
       }));
     } else {
-      setSelectedChips((prevSelectedChips) => ({
-        ...prevSelectedChips,
-        [section]: prevSelectedChips[section].filter((chip) => chip !== chipName),
-      }));
+      if (checked) {
+        setSelectedChips((prevSelectedChips) => ({
+          ...prevSelectedChips,
+          [section]: [...prevSelectedChips[section], chipName],
+        }));
+      } else {
+        setSelectedChips((prevSelectedChips) => ({
+          ...prevSelectedChips,
+          [section]: prevSelectedChips[section].filter((chip) => chip !== chipName),
+        }));
+      }
     }
   };
-
-  // // Function to add chip to selectedChips
-  // const handleChipAdd = (section, chip) => {
-  //   setSelectedChips((prevSelectedChips) => ({
-  //     ...prevSelectedChips,
-  //     [section]: [...(prevSelectedChips[section] || []), chip], // Ensure array exists before adding chip
-  //   }));
-  // };
 
   const handleDeleteChip = (section, chipToDelete) => {
     setSelectedChips((prevSelectedChips) => ({
@@ -99,6 +96,63 @@ const AgentPage = () => {
       event.target.value = '';
     }
   };
+
+  const handleSubmit = async () => {
+    const authKey = sessionStorage.getItem('authKey');
+    const before_application = selectedChips.section1.join(',');
+    const application_stage = selectedChips.section2.join(',');
+    const interview = selectedChips.section3.join(',');
+    const unofficial_offer = selectedChips.section4.join(',');
+    const join_company = selectedChips.section5.join(',');
+    const answer_email = checkboxes.checkbox11 ? 'メールに回答' : '';
+    const answer_online = checkboxes.checkbox12 ? 'オンラインにて回答  ※10分～最大15分程度' : '';
+
+    const formData = new FormData();
+    formData.append('auth_key', authKey);
+    formData.append('before_application', before_application);
+    formData.append('application_stage', application_stage);
+    formData.append('interview', interview);
+    formData.append('unofficial_offer', unofficial_offer);
+    formData.append('join_company', join_company);
+    formData.append('answer_email', answer_email);
+    formData.append('answer_online', answer_online);
+    formData.append('other_consultation_matters', otherConsultationMatters);
+
+    try {
+      const response = await fetch('https://bvhr-api.azurewebsites.net/candidate/job_change_consultancy', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Success:', result);
+        setSuccessModal(true); // Show success modal on success
+      } else {
+        console.error('Error:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const handleCloseSuccessModal = () => {
+   // Reset form fields here
+   setSelectedChips({
+    section1: [],
+    section2: [],
+    section3: [],
+    section4: [],
+    section5: [],
+  });
+  setOtherConsultationMatters('');
+  setCheckboxes({
+    checkbox11: false,
+    checkbox12: false,
+  });
+    setSuccessModal(false);
+  };
+
 
 
   return (
@@ -352,9 +406,10 @@ const AgentPage = () => {
             fullWidth
             multiline
             placeholder="その他の相談事項" 
-            name="section5"
+            name="message"
+            value={otherConsultationMatters}
+            onChange={handleOtherConsultationChange}
             rows={4}
-            onKeyDown={(e) => handleKeyDown('section5', e)}
           />
           <FormControlLabel fullWidth style={{textAlign: 'left', width: '100%'}}
             control={<Checkbox checked={checkboxes.checkbox11} onChange={handleCheckboxChange('checkbox11')} />}
@@ -364,13 +419,28 @@ const AgentPage = () => {
             control={<Checkbox checked={checkboxes.checkbox12} onChange={handleCheckboxChange('checkbox12')} style={{}} />}
             label="オンラインにて回答  ※10分～最大15分程度"
           />
-          <Button type="submit" variant="contained" color="primary" fullWidth style={{marginBottom: '100px'}}>
+          <Button type="submit" variant="contained" color="primary" onClick={handleSubmit} fullWidth style={{marginBottom: '100px'}}>
           転職相談サービスに申し込む
           </Button>
         </div>
 
         <BottomNav />
       </Box>
+
+      {/* Success Modal */}
+      <Modal open={successModal} onClose={handleCloseSuccessModal}>
+        <Box sx={{ width: 300, bgcolor: 'background.paper', p: 4, margin: '250px auto', position: 'relative', borderRadius: '15px'}}>
+          <SuccessMsg style={{marginBottom: '10px', display: 'block', margin: 'auto'}} />
+          <Typography variant="body1" sx={{ marginTop: '10px', textAlign: 'center', fontSize: '14px'}}>
+            あなたのメッセージは正常に送信されました
+          </Typography>
+          <Cancel onClick={handleCloseSuccessModal} style={{position: 'absolute', right: '0', top: '0', padding: '10px'}} />
+          {/* <Button onClick={handleCloseSuccessModal} variant="contained" sx={{ marginTop: '16px', display: 'block', marginLeft: 'auto', marginRight: 'auto' }}>
+            閉じる
+          </Button>  */}
+        </Box>
+      </Modal>
+
     </ThemeProvider>
   );
 };
