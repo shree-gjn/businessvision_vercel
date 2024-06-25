@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState, useEffect} from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -7,12 +7,14 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import CircularProgress from '@mui/material/CircularProgress';
 import {ReactComponent as BuildingIcon} from '../assets/BuildingIcon.svg';
 import {ReactComponent as BagIcon} from '../assets/BagIcon.svg';
 import {ReactComponent as BuildingMap} from '../assets/BuildingMap.svg';
 import {ReactComponent as ChatBlue} from '../assets/ChatBlue.svg';
 import {ReactComponent as ArrowRight} from '../assets/ArrowRight.svg';
 import {ReactComponent as NoteIcon} from '../assets/NoteIcon.svg';
+import {ReactComponent as MapsIcon} from '../assets/MapsIcon.svg';
 import BottomNav from '../components/BottomNav';
 import { useNavigate } from 'react-router-dom';
 
@@ -44,6 +46,8 @@ const Item = styled(Paper)(({ theme }) => ({
   
 
 export default function ProgressStepTwo() {
+  const [jobData, setJobData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
    const handleCardClick = () => {
@@ -51,10 +55,90 @@ export default function ProgressStepTwo() {
     navigate('/fullprogress');
   };
 
+  useEffect(() => {
+    const fetchJobData = async () => {
+      try {
+        // Retrieve the auth key from sessionStorage
+        const authKey = sessionStorage.getItem('authKey');
+        // Fetch data from the API
+        const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/candidate_chat_list?auth_key=${authKey}`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        console.log('API response data:', data);
+        // Ensure data structure matches your API response
+        const jobs = data?.candidate_chat_list || [];
+        const filteredJobs = jobs.filter(job => job.chat_con_uid === null);
+        setJobData(filteredJobs);
+      } catch (error) {
+        console.error('There was an error fetching the job data!', error);
+      } finally {
+        setLoading(false); // Set loading to false regardless of success or failure
+      }
+    };
+
+    fetchJobData();
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
-      <>
-    <Card sx={{ minWidth: 275, marginBottom:'20px', marginTop:'10px', boxShadow: 'none', border: '1px solid #EEEEEE', borderRadius: '10px'}} onClick={handleCardClick}>
+      {loading ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
+          <CircularProgress />
+        </Box>
+      ) :
+      jobData.length > 0 ? (
+        jobData.map((job, index) => (
+          <Card
+            key={index}
+            sx={{ minWidth: 275, marginBottom: '20px', marginTop: '10px', boxShadow: 'none', border: '1px solid #EEEEEE', borderRadius: '10px' }}
+            onClick={handleCardClick}
+          >
+            <CardContent>
+              <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={1} style={{ marginBottom: '5px' }}>
+                  <Grid item xs={6}>
+                    <Item sx={{ textAlign: 'left', fontSize: '12px' }}>求人no: {job.job_code}</Item>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Item sx={{ fontSize: '12px', border: '1px solid #78D9D3', color: '#78D9D3', marginBottom: '5px' }}>未読​​</Item>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Item sx={{ fontSize: '12px', background: 'rgba(212, 184, 107, 0.54)', marginBottom: '5px' }}>応募書類準備中</Item>
+                  </Grid>
+                </Grid>
+              </Box>
+              <Typography variant="h6" component="div" sx={{ fontSize: '14px', fontWeight: '700', textAlign: 'left', padding: '0 8px' }}>
+                {job.cjp_recruitment_catchphrase}
+              </Typography>
+              <Box sx={{ flexGrow: 1 }} style={{ marginTop: '10px' }}>
+                <Grid container spacing={1} sx={{ marginTop: '10px' }}>
+                  <Grid item xs={6}>
+                    <Item sx={{ textAlign: 'left', display: 'flex', gap: '5px', paddingTop: '0' }}>
+                      <div><BuildingIcon /></div>
+                      <Typography variant="body1" sx={{ fontSize: '12px', color: '#16375A', fontWeight: '500' }}>{job.cjp_company_name}</Typography>
+                    </Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item sx={{ textAlign: 'left', display: 'flex', gap: '5px', paddingTop: '0' }}>
+                      <div><MapsIcon /></div>
+                      <Typography variant="body1" sx={{ fontSize: '12px', color: '#16375A', fontWeight: '500' }}>{job.cjp_location_city}</Typography>
+                    </Item>
+                  </Grid>
+                </Grid>
+              </Box>
+            </CardContent>
+          </Card>
+        ))
+      ) : (
+        <Typography variant="h6" component="div" sx={{ textAlign: 'center', padding: '20px' }}>
+          No posts to show
+        </Typography>
+      )}
+      
+
+    {/* <Card sx={{ minWidth: 275, marginBottom:'20px', marginTop:'10px', boxShadow: 'none', border: '1px solid #EEEEEE', borderRadius: '10px'}} onClick={handleCardClick}>
       <CardContent>
         <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1} style={{marginBottom: '5px'}}>
@@ -106,225 +190,8 @@ export default function ProgressStepTwo() {
         </Grid>
         </Box>
       </CardContent>
-    </Card>
-
-    <Card sx={{ minWidth: 275, marginBottom:'20px', marginTop:'10px', boxShadow: 'none', border: '1px solid #EEEEEE', borderRadius: '10px'}} onClick={handleCardClick}>
-      <CardContent>
-        <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1} style={{marginBottom: '5px'}}>
-            <Grid item xs={6}>
-            </Grid>
-            <Grid item xs={2}>
-            <Item sx={{fontSize:'12px', border:'1px solid #78D9D3', color:'#78D9D3', marginBottom:'5px'}}>未読​</Item>
-            </Grid>
-            <Grid item xs={4}>
-            <Item sx={{fontSize:'12px', background:'#D8DDE3', marginBottom:'5px'}}>内定提示中</Item>
-            </Grid>
-        </Grid>
-        </Box>
-        <Typography variant="h6" component="div" sx={{fontSize:'12px', fontWeight:'700', textAlign:'left'}}>
-        【渋谷/プライム上場】SaaS/ASPのパイオニア企業
-        </Typography>
-        <Box sx={{ flexGrow: 1 }} style={{borderBottom: '1px solid #EEEEEE', marginTop:'10px'}}>
-        <Grid container spacing={1} sx={{marginTop:'10px'}}>
-            <Grid item xs={4}>
-            <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
-              <BagIcon /> <Typography variant="body1" sx={{fontSize:'8px', color:'#16375A', fontWeight:'500'}}> 株式会社ABC </Typography>​</Item>
-            </Grid>
-            <Grid item xs={5} sx={{paddingTop:'0px'}}>
-            <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
-              <NoteIcon /> <Typography variant="body1" sx={{fontSize:'8px', color:'#16375A', fontWeight:'500'}}> 経理マネジャー  </Typography>​​</Item>
-            </Grid>
-        </Grid>
-        </Box>
-        <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1} sx={{marginTop:'10px'}}>
-            <Grid item xs={2}>
-              <BuildingMap /> 
-            </Grid>
-            <Grid item xs={8}>
-              <Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500', textAlign:'left', paddingLeft:'0px'}}> 株式会社ABC </Typography>​
-            </Grid>
-            <Grid item xs={2}>
-              <Typography variant="body1" sx={{fontSize:'8px', color:'#949494', fontWeight:'500'}}> 11月12日 </Typography>​
-            </Grid>
-            <Grid item xs={2}>
-              <ChatBlue /> 
-            </Grid>
-            <Grid item xs={9}>
-              <Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500', textAlign:'left', paddingLeft:'0px'}}> ご応募ありがとうございます。〇〇様。 </Typography>​
-            </Grid>
-            <Grid item xs={1}>
-              <ArrowRight />​
-            </Grid>
-        </Grid>
-        </Box>
-      </CardContent>
-    </Card>
-
-    <Card sx={{ minWidth: 275, marginBottom:'20px', marginTop:'10px', boxShadow: 'none', border: '1px solid #EEEEEE', borderRadius: '10px'}} onClick={handleCardClick}>
-      <CardContent>
-        <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1} style={{marginBottom: '5px'}}>
-            <Grid item xs={6}>
-            </Grid>
-            <Grid item xs={2}>
-            </Grid>
-            <Grid item xs={4}>
-            <Item sx={{fontSize:'12px', background:'rgba(249, 98, 100, 0.30)', marginBottom:'5px'}}>企業よりお断り</Item>
-            </Grid>
-        </Grid>
-        </Box>
-        <Typography variant="h6" component="div" sx={{fontSize:'12px', fontWeight:'700', textAlign:'left'}}>
-        【渋谷/プライム上場】SaaS/ASPのパイオニア企業
-        </Typography>
-        <Box sx={{ flexGrow: 1 }} style={{borderBottom: '1px solid #EEEEEE', marginTop:'10px'}}>
-        <Grid container spacing={1} sx={{marginTop:'10px'}}>
-            <Grid item xs={4}>
-            <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
-              <BagIcon /> <Typography variant="body1" sx={{fontSize:'8px', color:'#16375A', fontWeight:'500'}}> 株式会社ABC </Typography>​</Item>
-            </Grid>
-            <Grid item xs={5} sx={{paddingTop:'0px'}}>
-            <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
-              <NoteIcon /> <Typography variant="body1" sx={{fontSize:'8px', color:'#16375A', fontWeight:'500'}}> 経理マネジャー  </Typography>​​</Item>
-            </Grid>
-        </Grid>
-        </Box>
-        <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1} sx={{marginTop:'10px'}}>
-            <Grid item xs={2}>
-              <BuildingMap /> 
-            </Grid>
-            <Grid item xs={8}>
-              <Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500', textAlign:'left', paddingLeft:'0px'}}> 株式会社ABC </Typography>​
-            </Grid>
-            <Grid item xs={2}>
-              <Typography variant="body1" sx={{fontSize:'8px', color:'#949494', fontWeight:'500'}}> 11月12日 </Typography>​
-            </Grid>
-            <Grid item xs={2}>
-              <ChatBlue /> 
-            </Grid>
-            <Grid item xs={9}>
-              <Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500', textAlign:'left', paddingLeft:'0px'}}> ご応募ありがとうございます。〇〇様。 </Typography>​
-            </Grid>
-            <Grid item xs={1}>
-              <ArrowRight />​
-            </Grid>
-        </Grid>
-        </Box>
-      </CardContent>
-    </Card>
-
-    <Card sx={{ minWidth: 275, marginBottom:'20px', marginTop:'10px', boxShadow: 'none', border: '1px solid #EEEEEE', borderRadius: '10px'}} onClick={handleCardClick}>
-      <CardContent>
-        <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1} style={{marginBottom: '5px'}}>
-            <Grid item xs={6}>
-            </Grid>
-            <Grid item xs={2}>
-            </Grid>
-            <Grid item xs={4}>
-            <Item sx={{fontSize:'12px', background:'rgba(249, 98, 100, 0.30)', marginBottom:'5px'}}>選考辞退</Item>
-            </Grid>
-        </Grid>
-        </Box>
-        <Typography variant="h6" component="div" sx={{fontSize:'12px', fontWeight:'700', textAlign:'left'}}>
-        【渋谷/プライム上場】SaaS/ASPのパイオニア企業
-        </Typography>
-        <Box sx={{ flexGrow: 1 }} style={{borderBottom: '1px solid #EEEEEE', marginTop:'10px'}}>
-        <Grid container spacing={1} sx={{marginTop:'10px'}}>
-            <Grid item xs={4}>
-            <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
-              <BagIcon /> <Typography variant="body1" sx={{fontSize:'8px', color:'#16375A', fontWeight:'500'}}> 株式会社ABC </Typography>​</Item>
-            </Grid>
-            <Grid item xs={5} sx={{paddingTop:'0px'}}>
-            <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
-              <NoteIcon /> <Typography variant="body1" sx={{fontSize:'8px', color:'#16375A', fontWeight:'500'}}> 経理マネジャー  </Typography>​​</Item>
-            </Grid>
-        </Grid>
-        </Box>
-        <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1} sx={{marginTop:'10px'}}>
-            <Grid item xs={2}>
-              <BuildingMap /> 
-            </Grid>
-            <Grid item xs={8}>
-              <Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500', textAlign:'left', paddingLeft:'0px'}}> 株式会社ABC </Typography>​
-            </Grid>
-            <Grid item xs={2}>
-              <Typography variant="body1" sx={{fontSize:'8px', color:'#949494', fontWeight:'500'}}> 11月12日 </Typography>​
-            </Grid>
-            <Grid item xs={2}>
-              <ChatBlue /> 
-            </Grid>
-            <Grid item xs={9}>
-              <Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500', textAlign:'left', paddingLeft:'0px'}}> ご応募ありがとうございます。〇〇様。 </Typography>​
-            </Grid>
-            <Grid item xs={1}>
-              <ArrowRight />​
-            </Grid>
-        </Grid>
-        </Box>
-      </CardContent>
-    </Card>
-
-    <Card sx={{ minWidth: 275, marginBottom:'100px', marginTop:'10px', boxShadow: 'none', border: '1px solid #EEEEEE', borderRadius: '10px'}} onClick={handleCardClick}>
-      <CardContent>
-        <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1} style={{marginBottom: '5px'}}>
-            <Grid item xs={6}>
-            </Grid>
-            <Grid item xs={2}>
-            </Grid>
-            <Grid item xs={4}>
-            <Item sx={{fontSize:'12px', background:'rgba(249, 98, 100, 0.30)', marginBottom:'5px'}}>内定辞退</Item>
-            </Grid>
-        </Grid>
-        </Box>
-        <Typography variant="h6" component="div" sx={{fontSize:'12px', fontWeight:'700', textAlign:'left'}}>
-        【渋谷/プライム上場】SaaS/ASPのパイオニア企業
-        </Typography>
-        <Box sx={{ flexGrow: 1 }} style={{borderBottom: '1px solid #EEEEEE', marginTop:'10px'}}>
-        <Grid container spacing={1} sx={{marginTop:'10px'}}>
-            <Grid item xs={4}>
-            <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
-              <BagIcon /> <Typography variant="body1" sx={{fontSize:'8px', color:'#16375A', fontWeight:'500'}}> 株式会社ABC </Typography>​</Item>
-            </Grid>
-            <Grid item xs={5} sx={{paddingTop:'0px'}}>
-            <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
-              <NoteIcon /> <Typography variant="body1" sx={{fontSize:'8px', color:'#16375A', fontWeight:'500'}}> 経理マネジャー  </Typography>​​</Item>
-            </Grid>
-        </Grid>
-        </Box>
-        <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1} sx={{marginTop:'10px'}}>
-            <Grid item xs={2}>
-              <BuildingMap /> 
-            </Grid>
-            <Grid item xs={8}>
-              <Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500', textAlign:'left', paddingLeft:'0px'}}> 株式会社ABC </Typography>​
-            </Grid>
-            <Grid item xs={2}>
-              <Typography variant="body1" sx={{fontSize:'8px', color:'#949494', fontWeight:'500'}}> 11月12日 </Typography>​
-            </Grid>
-            <Grid item xs={2}>
-              <ChatBlue /> 
-            </Grid>
-            <Grid item xs={9}>
-              <Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500', textAlign:'left', paddingLeft:'0px'}}> ご応募ありがとうございます。〇〇様。 </Typography>​
-            </Grid>
-            <Grid item xs={1}>
-              <ArrowRight />​
-            </Grid>
-        </Grid>
-        </Box>
-      </CardContent>
-    </Card>
-
-    <>
+    </Card> */}
     <BottomNav />
-    </>
-  </>
     </ThemeProvider>
   );
 }
