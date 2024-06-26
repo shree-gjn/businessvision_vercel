@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { Stepper, Step, StepLabel, Container } from '@mui/material';
 import ProgressStepZero from './ProgressStepZero';
 import ProgressStepOne from './ProgressStepOne';
 import ProgressStepTwo from './ProgressStepTwo';
 import ProgressStepThree from './ProgressStepThree';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 
 const theme = createTheme({
   palette: {
@@ -25,22 +26,34 @@ const theme = createTheme({
 
 const InProgressComponent = () => {
   const [completedSteps, setCompletedSteps] = useState([]);
-  const [activeStep, setActiveStep] = useState(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const activeStepFromParams = parseInt(searchParams.get('tab')) || 0;
+  const [activeStep, setActiveStep] = useState(activeStepFromParams);
 
   const steps = ['応募書類準備中', '書類選考', '面接', '内定​'];
 
+  useEffect(() => {
+    setActiveStep(activeStepFromParams);
+  }, [activeStepFromParams]);
+
   const handleStepClick = (step) => {
-    setActiveStep(step - 1);
+    setSearchParams({ tab: step });
+    setActiveStep(step); // Ensure the state is updated immediately
   };
 
   const handleNext = () => {
+    const nextStep = activeStep + 1;
     setCompletedSteps((prevCompletedSteps) => [...prevCompletedSteps, activeStep]);
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setSearchParams({ tab: nextStep });
+    setActiveStep(nextStep);
   };
 
   const handleBack = () => {
+    const prevStep = activeStep - 1;
     setCompletedSteps((prevCompletedSteps) => prevCompletedSteps.filter(step => step !== activeStep));
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setSearchParams({ tab: prevStep });
+    setActiveStep(prevStep);
   };
 
   const renderStepContent = () => {
@@ -54,8 +67,30 @@ const InProgressComponent = () => {
       case 3:
         return <ProgressStepThree handleNext={handleNext} />;
       default:
-        return <ProgressStepThree />;
+        return <ProgressStepZero handleNext={handleNext} />;
     }
+  };
+
+  const CustomStepIcon = (props) => {
+    const { active, completed, icon } = props;
+
+    return (
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: 25,
+          height: 25,
+          borderRadius: '50%',
+          backgroundColor: active ? theme.palette.primary.main : completed ? theme.palette.primary.main : theme.palette.grey.main,
+          color: 'white',
+          fontSize: '12px'
+        }}
+      >
+        {icon - 1}
+      </div>
+    );
   };
 
   return (
@@ -65,10 +100,19 @@ const InProgressComponent = () => {
           <p>進行中</p>
         </div>
         <Container style={{background: 'rgb(250, 250, 250)'}}>
-          <Stepper activeStep={activeStep} alternativeLabel sx={{margin: '20px 0'}}>
+          {/* <Stepper activeStep={activeStep} alternativeLabel sx={{margin: '20px 0'}}>
             {steps.map((label, index) => (
               <Step key={label} completed={completedSteps.includes(index)}>
-                <StepLabel onClick={() => handleStepClick(index + 1)}>{label}</StepLabel>
+                <StepLabel onClick={() => handleStepClick(index)}>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper> */}
+          <Stepper activeStep={activeStep} alternativeLabel sx={{ margin: '20px 0' }}>
+            {steps.map((label, index) => (
+              <Step key={label} completed={completedSteps.includes(index)}>
+                <StepLabel StepIconComponent={CustomStepIcon} onClick={() => handleStepClick(index)}>
+                  {label}
+                </StepLabel>
               </Step>
             ))}
           </Stepper>

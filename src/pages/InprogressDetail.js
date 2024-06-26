@@ -106,7 +106,7 @@ const getItemBackgroundColor = (level) => {
 
 
 
-const FullProgress = ({ handleNext }) => {
+const InprogressDetail = ({ handleNext }) => {
   const { state } = useLocation();
   const { job_id } = useParams(); // Extract job_id from URL parameters
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -225,23 +225,6 @@ const FullProgress = ({ handleNext }) => {
         </Box>
       ) : (  
         <div>
-          <Box>
-            <Grid container spacing={1}>
-              <Grid item xs={12} sx={{margin: '15px'}}>
-                <Typography sx={{fontSize: '14px', textAlign: 'left', marginBottom: '10px'}}>
-                  企業からのコメント
-                </Typography>
-                <Paper sx={{padding: '15px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '10px', background: '#F5F2E9', boxShadow: 'none'}}>
-                  <ModeCommentIcon />
-                  <Typography sx={{fontSize: '12px', textAlign: 'left'}}>
-                  【特別スカウト】渋谷/上場企業での経理マネ‐ジャー を募集しております。
-                    今までのご経験をぜひ、弊社で活かしてみませんか？
-                    ご応募お待ちしております。
-                  </Typography>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Box>
           <Box sx={{ flexGrow: 1 , padding:'10px', overflow:'scroll'}}>
           <Grid container spacing={1}>
             <Grid item xs={6}>
@@ -529,22 +512,11 @@ const FullProgress = ({ handleNext }) => {
       </Card>
         </div>    
       )}
-
-        <Box sx={{ flexGrow: 1 }}>
-          <Grid container spacing={1} style={{position: 'fixed', bottom: '0', marginBottom: '56px', padding: '15px', background: 'rgb(255 255 255 / 87%)'}}>
-            <Grid item xs={6}>
-              <Button component={Link} to={`/normalapplication/${jobpost.cjp_id}`} variant="contained" color="secondary" sx={{fontSize: '12px', width: '100%'}}> 書類選考エントリー </Button>
-            </Grid>
-            <Grid item xs={6}>
-              <Button component={Link} to="" variant="outlined" color="primary" sx={{fontSize: '12px', width: '100%'}}> 辞退する </Button>
-            </Grid>
-          </Grid>
-        </Box>
         <BottomNav />
       </Box>
     </ThemeProvider>
   );
 };
 
-export default FullProgress;
+export default InprogressDetail;
 

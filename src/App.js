@@ -41,6 +41,8 @@ import WorkHistory from './pages/profile/WorkHistory';
 import MessageTemplate from './pages/MessageTemplate';
 import CreateMessage from './pages/CreatemessageTemplate';
 import EditMessage from './pages/EditmessageTemplate';
+import ChatComponent from './pages/chat';
+import InprogressDetail from './pages/InprogressDetail';
 
 function App() {
   return (
@@ -64,7 +66,8 @@ function App() {
           <Route path="/location" element={<LocationComponent />} />
           <Route path="/accountingskill" element={<AccountingSkill />} />
           <Route path="/messages/scout" element={<CorporateFull />} />
-          <Route path="/fullprogress" element={<FullProgress />} />
+          <Route path="/fullprogress/:job_id" element={<FullProgress />} />
+          <Route path="/inprogressdetail/:job_id" element={<InprogressDetail />} />
           <Route path="/maskingresume" element={<MaskingResume />} />
           <Route path="/recommendedjob" element={<RecommendedJobSettings />} />
           <Route path="/recommendedjobform" element={<RecommendedJobForm />} />
@@ -87,6 +90,7 @@ function App() {
           <Route path="/messagetemplate" element={<MessageTemplate />} />
           <Route path="/createmessage" element={<CreateMessage />} />
           <Route path="/editmessage/:id" element={<EditMessage />} />
+          <Route path="/chat/:job_id" element={<ChatComponent />} />
         </Routes>
       </Router>
     </div>

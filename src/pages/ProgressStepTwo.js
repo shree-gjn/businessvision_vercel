@@ -50,11 +50,11 @@ export default function ProgressStepTwo() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-   const handleCardClick = () => {
+  const handleCardClick = (job) => {
     // Navigate to "/hello" on card click
-    navigate('/fullprogress');
+    navigate(`/chat/${job.job_id}`);
   };
-
+ 
   useEffect(() => {
     const fetchJobData = async () => {
       try {
@@ -93,7 +93,7 @@ export default function ProgressStepTwo() {
           <Card
             key={index}
             sx={{ minWidth: 275, marginBottom: '20px', marginTop: '10px', boxShadow: 'none', border: '1px solid #EEEEEE', borderRadius: '10px' }}
-            onClick={handleCardClick}
+            onClick={() => handleCardClick(job)}
           >
             <CardContent>
               <Box sx={{ flexGrow: 1 }}>
@@ -105,14 +105,14 @@ export default function ProgressStepTwo() {
                     <Item sx={{ fontSize: '12px', border: '1px solid #78D9D3', color: '#78D9D3', marginBottom: '5px' }}>未読​​</Item>
                   </Grid>
                   <Grid item xs={4}>
-                    <Item sx={{ fontSize: '12px', background: 'rgba(212, 184, 107, 0.54)', marginBottom: '5px' }}>応募書類準備中</Item>
+                    <Item sx={{ fontSize: '12px', background: 'rgba(216, 221, 227, 0.54)', marginBottom: '5px' }}>書類選考中</Item>
                   </Grid>
                 </Grid>
               </Box>
               <Typography variant="h6" component="div" sx={{ fontSize: '14px', fontWeight: '700', textAlign: 'left', padding: '0 8px' }}>
                 {job.cjp_recruitment_catchphrase}
               </Typography>
-              <Box sx={{ flexGrow: 1 }} style={{ marginTop: '10px' }}>
+              <Box sx={{ flexGrow: 1 }} style={{ marginTop: '10px', borderBottom: '1px solid #EEEEEE'}}>
                 <Grid container spacing={1} sx={{ marginTop: '10px' }}>
                   <Grid item xs={6}>
                     <Item sx={{ textAlign: 'left', display: 'flex', gap: '5px', paddingTop: '0' }}>
@@ -126,6 +126,19 @@ export default function ProgressStepTwo() {
                       <Typography variant="body1" sx={{ fontSize: '12px', color: '#16375A', fontWeight: '500' }}>{job.cjp_location_city}</Typography>
                     </Item>
                   </Grid>
+                </Grid>
+              </Box>
+              <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={1} sx={{marginTop:'10px'}}>
+                    <Grid item xs={2}>
+                      <ChatBlue /> 
+                    </Grid>
+                    <Grid item xs={9}>
+                      <Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500', textAlign:'left', paddingLeft:'0px'}}> ご応募ありがとうございます。〇〇様。 </Typography>​
+                    </Grid>
+                    <Grid item xs={1}>
+                      <ArrowRight />​
+                    </Grid>
                 </Grid>
               </Box>
             </CardContent>
@@ -191,6 +204,9 @@ export default function ProgressStepTwo() {
         </Box>
       </CardContent>
     </Card> */}
+
+    <Grid sx={{marginBottom: '100px'}}>
+    </Grid>  
     <BottomNav />
     </ThemeProvider>
   );

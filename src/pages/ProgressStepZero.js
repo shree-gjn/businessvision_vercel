@@ -76,9 +76,9 @@ export default function ProgressStepZero() {
     fetchJobData();
   }, []);
 
-  const handleCardClick = () => {
+  const handleCardClick = (job) => {
     // navigate('/fullprogress', { state: { hideChatTab: true, showJobDetails: true, isFromProgressStepZero: true } });
-    navigate('/fullprogress');
+    navigate(`/fullprogress/${job.job_id}`);
   };
 
   return (
@@ -94,7 +94,7 @@ export default function ProgressStepZero() {
           <Card
             key={index}
             sx={{ minWidth: 275, marginBottom: '20px', marginTop: '10px', boxShadow: 'none', border: '1px solid #EEEEEE', borderRadius: '10px' }}
-            onClick={handleCardClick}
+            onClick={() => handleCardClick(job)}
           >
             <CardContent>
               <Box sx={{ flexGrow: 1 }}>

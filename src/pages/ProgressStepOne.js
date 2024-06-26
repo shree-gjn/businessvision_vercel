@@ -52,9 +52,9 @@ export default function ProgressStepOne() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const handleCardClick = () => {
+  const handleCardClick = (job) => {
    // Navigate to "/hello" on card click
-   navigate('/fullprogress');
+   navigate(`/chat/${job.job_id}`);
  };
 
  useEffect(() => {
@@ -95,7 +95,7 @@ export default function ProgressStepOne() {
           <Card
             key={index}
             sx={{ minWidth: 275, marginBottom: '20px', marginTop: '10px', boxShadow: 'none', border: '1px solid #EEEEEE', borderRadius: '10px' }}
-            onClick={handleCardClick}
+            onClick={() => handleCardClick(job)}
           >
             <CardContent>
               <Box sx={{ flexGrow: 1 }}>
