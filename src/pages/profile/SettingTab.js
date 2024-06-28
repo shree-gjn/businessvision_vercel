@@ -117,7 +117,7 @@ const SettingTab = () => {
         </Box>
         </Link>
         <Divider />
-        <Link to="#" style={{textDecoration:'none'}}>
+        <Link to="/companyblock" style={{textDecoration:'none'}}>
         <Box sx={{ flexGrow: 1 , padding:'10px'}}>
         <Grid container spacing={1}>
             <Grid item xs={10}>

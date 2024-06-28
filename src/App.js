@@ -43,6 +43,8 @@ import CreateMessage from './pages/CreatemessageTemplate';
 import EditMessage from './pages/EditmessageTemplate';
 import ChatComponent from './pages/chat';
 import InprogressDetail from './pages/InprogressDetail';
+import CompanyBlock from './pages/CompanyBlock';
+import EditMaskingResume from './pages/EditMaskingResume';
 
 function App() {
   return (
@@ -91,6 +93,8 @@ function App() {
           <Route path="/createmessage" element={<CreateMessage />} />
           <Route path="/editmessage/:id" element={<EditMessage />} />
           <Route path="/chat/:job_id" element={<ChatComponent />} />
+          <Route path="/companyblock" element={<CompanyBlock />} />
+          <Route path="/editmaskingresume" element={<EditMaskingResume />} />
         </Routes>
       </Router>
     </div>

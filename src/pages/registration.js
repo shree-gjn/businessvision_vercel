@@ -6,6 +6,7 @@ import CurrentInfo from './registration/currentinfo';
 import DesiredCondition from './registration/desiredcondition';
 import Completion from './registration/completion';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import EditMaskingResume from './EditMaskingResume';
 
 const theme = createTheme({
   palette: {
