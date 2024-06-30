@@ -54,6 +54,7 @@ const BackLink = styled(Link)(({ theme }) => ({
 const CompanyBlock = () => {
   const [companyName, setcompanyName] = useState('');
   const [companyList, setCompanyList] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const goBack = () => {
@@ -89,6 +90,7 @@ const CompanyBlock = () => {
   // }, []);
 
   const fetchCompanyList = useCallback(async () => {
+    setLoading(true);
     const authKey = sessionStorage.getItem('authKey');
     try {
       const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/list_company_block?auth_key=${authKey}`); // Replace with your API endpoint
@@ -103,6 +105,9 @@ const CompanyBlock = () => {
     } catch (error) {
       console.error('Error fetching company list:', error);
       setCompanyList([]);
+    }
+    finally {
+      setLoading(false); // Set loading to false when fetching completes
     }
   }, []);
 
@@ -125,9 +130,10 @@ const CompanyBlock = () => {
       });
 
       const result = await response.json();
-      console.log('API Response:', result);
+      // console.log('API Response:', result);
       if (result.success) {
-        fetchCompanyList(); // Refresh the list
+        // fetchCompanyList(); // Refresh the list
+        setCompanyList((prevList) => [...prevList, companyName]);
         setcompanyName('');
       } else {
         console.error('Error adding company:', result.message);
@@ -175,7 +181,7 @@ const CompanyBlock = () => {
     // }
       const result = await response.json();
       if (response.ok && result.message === 'Company Block List Updated Successfully') {
-        fetchCompanyList(); // Refresh the list
+        setCompanyList((prevList) => prevList.filter(item => item !== company));
       } else {
         console.error('Error deleting company:', result.message);
       }
@@ -215,13 +221,7 @@ const CompanyBlock = () => {
           sx={{ margin: '16px 0'}}
         />
 
-        <Grid container>
-          {/* <Grid item xs={12} sx={{borderBottom: '1px solid #EEEEEE'}}>
-            <Item sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 10px'}}>
-              <Typography>Global japan network</Typography>
-              <CloseIcon style={{fontSize: '20px'}} />
-            </Item>
-          </Grid> */}
+        {/* <Grid container>
           {companyList.map((company, index) => (
             <Grid item xs={12} sx={{ borderBottom: '1px solid #EEEEEE' }} key={index}>
               <Item sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px' }}>
@@ -232,7 +232,23 @@ const CompanyBlock = () => {
               </Item>
             </Grid>
           ))}
-        </Grid>
+        </Grid> */}
+        {loading ? (
+          <Typography>Loading...</Typography>
+        ) : (
+          <Grid container>
+            {companyList.map((company, index) => (
+              <Grid item xs={12} sx={{ borderBottom: '1px solid #EEEEEE' }} key={index}>
+                <Item sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px' }}>
+                  <Typography>{company}</Typography>
+                  <IconButton aria-label="close" size="small" onClick={() => handleDeleteCompany(company)}>
+                    <CloseIcon style={{ fontSize: '20px' }} />
+                  </IconButton>
+                </Item>
+              </Grid>
+            ))}
+          </Grid>
+        )}
 
       </Box>
     </ThemeProvider>

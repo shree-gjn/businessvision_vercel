@@ -109,6 +109,7 @@ const RegistrationStepper = () => {
         body: formDataToSend,
       })
       .then((response) => {
+        console.log('Response Status:', response.status); // Log status for debugging
         if (!response.ok) {
           return response.json().then((data) => {
             throw new Error(data.error.message || `HTTP error! status: ${response.status}`);
