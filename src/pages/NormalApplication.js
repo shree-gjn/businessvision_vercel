@@ -33,6 +33,7 @@ import {ReactComponent as ApplicationRequirement} from '../assets/ApplicationReq
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import MenuItem from '@mui/material/MenuItem';
 import {ReactComponent as Cancel} from '../assets/Cancel.svg';
+import {ReactComponent as WarningIcon} from '../assets/WarningIcon.svg';
 
 const theme = createTheme({
   palette: {
@@ -93,6 +94,8 @@ export default function NormalApplication() {
   const [workHistoryList, setWorkHistoryList] = useState([]);
   const [selectedResumeId, setSelectedResumeId] = useState(null);
   const [selectedWorkHistoryId, setSelectedWorkHistoryId] = useState(null);
+  const [isErrorModalOpen, setErrorModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const { id } = useParams(); 
   const navigate = useNavigate();
   const location = useLocation();
@@ -154,6 +157,12 @@ export default function NormalApplication() {
   const handleNormalappConfirm = () => {
     const selectedResume = resumeList.find(resume => resume.cru_file_name === resumeupload);
     const selectedWorkHistory = workHistoryList.find(workHistory => workHistory.cru_file_name === workhistoryupload);
+
+    if (!selectedResume || !selectedWorkHistory) {
+      setErrorMessage('履歴書と職務経歴書を選択してください'); // Set appropriate error message
+      setErrorModalOpen(true); // Open the error modal
+      return;
+    }
 
     navigate('/normalapplicationconfirm', {
       state: {
@@ -525,8 +534,8 @@ export default function NormalApplication() {
 
         {/* Modal for file selection */}
         <Modal
-          open={open}
-          onClose={handleClose}
+          open={isErrorModalOpen}
+          onClick={() => setErrorModalOpen(false)}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
@@ -540,14 +549,15 @@ export default function NormalApplication() {
             boxShadow: 24,
             borderRadius: '15px',
             border: 'none',
+            textAlign: 'center',
             p: 4,
           }}>
-            <Typography id="modal-modal-title" variant="h6" component="h2" sx={{marginBottom: '10px'}}>
-              Select File
+            <WarningIcon style={{marginBottom: '10px'}} />
+            <Typography id="error-modal-description" variant="h6" component="h2" sx={{marginBottom: '10px'}}>
+              {errorMessage}
             </Typography>
-            <input type="file" onChange={handleFileSelect} />
             <div style={{position: 'absolute', top: '0', right: '0', padding: '10px'}}>
-              <Cancel onClick={handleClose}  />
+              <Cancel onClick={() => setErrorModalOpen(false)}  />
             </div>
           </Box>
         </Modal>
