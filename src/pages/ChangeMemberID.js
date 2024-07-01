@@ -87,6 +87,7 @@ const ChangeMemberID = () => {
 
   const handleCloseSuccessModal = () => {
     setSuccessModal(false);
+    navigate('/login');
   };
 
   const handleEmailChange = (event) => {
@@ -178,7 +179,7 @@ const ChangeMemberID = () => {
           <Box sx={{ width: 300, bgcolor: 'background.paper', p: 4, margin: '250px auto', position: 'relative', borderRadius: '15px'}}>
             <SuccessMsg style={{marginBottom: '10px', display: 'block', margin: 'auto'}} />
             <Typography variant="body1" sx={{ marginTop: '10px', textAlign: 'center', fontSize: '14px'}}>
-              登録会員ID(E-mailアドレス)を変更しました。
+              登録会員ID(E-mailアドレス)を変更しました。もう一度ログインしてください
             </Typography>
             <Button onClick={handleCloseSuccessModal} variant="contained" sx={{ marginTop: '16px', display: 'block', marginLeft: 'auto', marginRight: 'auto' }}>
               閉じる

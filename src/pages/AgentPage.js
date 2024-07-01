@@ -190,6 +190,8 @@ const AgentPage = () => {
                   placeholder="その他の相談事項" 
                   required
                   name="section1"
+                  multiline
+                  rows={4}
                   onKeyDown={handleKeyDown('section1')}
                 />
               </div>
@@ -234,6 +236,8 @@ const AgentPage = () => {
                   placeholder="その他の相談事項" 
                   required
                   name="section2"
+                  multiline
+                  rows={4}
                   onKeyDown={handleKeyDown('section2')}
                 />
               </div>
@@ -282,6 +286,8 @@ const AgentPage = () => {
                   placeholder="その他の相談事項" 
                   required
                   name="section3"
+                  multiline
+                  rows={4}
                   onKeyDown={handleKeyDown('section3')}
                 />
               </div>
@@ -330,6 +336,8 @@ const AgentPage = () => {
                   placeholder="その他の相談事項" 
                   required
                   name="section4"
+                  multiline
+                  rows={4}
                   onKeyDown={handleKeyDown('section4')}
                 />
               </div>
@@ -374,6 +382,8 @@ const AgentPage = () => {
                   fullWidth
                   placeholder="その他の相談事項" 
                   name="username"
+                  multiline
+                  rows={4}
                   onKeyDown={handleKeyDown('section5')}
                 />
               </div>
