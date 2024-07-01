@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
+import CardActions from '@mui/material/CardActions';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -9,8 +9,28 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
 import SecretFilterGrid from '../components/SecretFilterGrid';
+import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import Button from '@mui/material/Button';
 import {ReactComponent as BuildingIcon} from '../assets/BuildingIcon.svg';
 import {ReactComponent as BagIcon} from '../assets/BagIcon.svg';
+import {ReactComponent as ChatIcon} from '../assets/ChatIcon.svg'; 
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#16375A',
+    },
+    secondary: {
+      main: '#877151',
+    },
+    grey: {
+      main: '#949494', // Change to your desired color
+    },
+    text: {
+      grey: '#ffffff', // Change to your desired text color
+    },
+  },
+});
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -27,6 +47,7 @@ export default function SecretEntry() {
   const [jobpost, setjobpost] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true); // State to track loading status
+  const [favState, setFavState] = useState(false);
 
   useEffect(() => {
     // Retrieve the auth key from sessionStorage
@@ -77,10 +98,75 @@ export default function SecretEntry() {
     fetchData();
   }, []);
 
+  const handleFavClick = async (jobId) => {
+    try {
+      // Toggle local state
+      setFavState(prevFavState => {
+        const newFavState = {
+          ...prevFavState,
+          [jobId]: !prevFavState[jobId]
+        };
+  
+        // Save new state to sessionStorage
+        localStorage.setItem('favState', JSON.stringify(newFavState));
+  
+        return newFavState;
+      });
+  
+      // Perform API call to update favorite status
+      const authKey = localStorage.getItem('authKey');
+      if (!authKey) {
+        console.error('Auth key not found in sessionStorage');
+        return;
+      }
+  
+      const newFavState = !favState[jobId];
+      const formData = new FormData();
+      formData.append('auth_key', authKey);
+      formData.append('job_id', jobId);
+      formData.append('company_job_post_id', jobId);
+      formData.append('favorite', newFavState);
+  
+      const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/add_favourite_job_to_candidate`, {
+        method: 'POST',
+        headers: {},
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        // Revert local state on failure
+        setFavState(prevFavState => {
+          const revertedFavState = {
+            ...prevFavState,
+            [jobId]: !prevFavState[jobId]
+          };
+          sessionStorage.setItem('favState', JSON.stringify(revertedFavState));
+          return revertedFavState;
+        });
+        throw new Error('Failed to update favorite status');
+      }
+  
+      // Update favState based on API response
+      const data = await response.json();
+      setFavState((prevStates) => {
+        const updatedFavState = {
+          ...prevStates,
+          [jobId]: newFavState,
+        };
+        sessionStorage.setItem('favState', JSON.stringify(updatedFavState));
+        return updatedFavState;
+      });
+  
+      console.log('Response Data:', data);
+    } catch (error) {
+      console.error('Error updating favorite status:', error.message);
+    }
+  };
+
 
   return (
-    <>
-    <Grid container spacing={2} alignItems="center">
+    <ThemeProvider theme={theme}>
+      <Grid container spacing={2} alignItems="center">
       <Grid item xs={4} sx={{margin:'10px 0px 10px 0px'}}>
         <SecretFilterGrid />
       </Grid>
@@ -146,7 +232,7 @@ export default function SecretEntry() {
       ) : (
         jobpost.map(job => (
           <div key={job.cjp_id} style={{ background: '#FFF', marginBottom: '20px', border: '1px solid #EEEEEE', borderRadius: '10px' }}>
-            <Card sx={{ minWidth: 275, marginBottom: '30px', textDecoration: 'none' }} component={Link} to={`/recruitment/${job.cjp_id}`}>
+            {/* <Card sx={{ minWidth: 275, marginBottom: '30px', textDecoration: 'none' }} component={Link} to={`/recruitment/${job.cjp_id}`}>
               <CardContent>
                 <Box sx={{ flexGrow: 1 }}>
                   <Grid container spacing={1}>
@@ -175,6 +261,75 @@ export default function SecretEntry() {
                   </Grid>
                 </Box>
               </CardContent>
+            </Card> */}
+            <Card sx={{ minWidth: 275, marginBottom:'30px', textDecoration:'none'}} component={Link} to={`/recruitment/${job.cjp_id}`}>
+              <CardContent>
+                <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={1} style={{paddingBottom: '10px'}}>
+                    <Grid item xs={4}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}}>求人no: {job.cjp_job_code}</Item>
+                    </Grid>
+                    <Grid item xs={3} style={{paddingLeft: '0'}}>
+                    <Item sx={{textAlign:'center', fontSize:'11px', backgroundColor: '#E7D8AF'}}>1次面接案内</Item>
+                    </Grid>
+                    <Grid item xs={2}>
+                    <Item sx={{fontSize:'12px'}}></Item>
+                    </Grid>
+                    <Grid item xs={3}>
+                    <Item sx={{fontSize:'11px'}}>{job.cjp_created_at}</Item>
+                    </Grid>
+                </Grid>
+                </Box>
+                <Typography variant="h6" component="div" sx={{fontSize:'14px', fontWeight:'700', textAlign:'left'}}>
+                {job.cjp_recruitment_catchphrase}
+                </Typography>
+                <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={1} sx={{marginTop:'10px'}}>
+                    <Grid item xs={6}>
+                    <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
+                      <span><BuildingIcon /> </span><Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}> {job.cjp_company_name} </Typography>​</Item>
+                    </Grid>
+                    <Grid item xs={6} sx={{paddingTop:'0px'}}>
+                    <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
+                      <span><BagIcon /> </span><Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}>{job.cjp_job_position}</Typography>​​</Item>
+                    </Grid>
+                </Grid>
+                </Box>
+                <Box sx={{ flexGrow: 1 }} style={{background:'#DFD0A7', borderRadius:'5px'}}>
+                <Grid container spacing={1} sx={{paddingTop:'0px', background: '#F9F6ED', alignItems: 'center', width: '100%', margin: '0 auto'}}> 
+                    <Grid item xs={1}>
+                    <Item sx={{textAlign:'left', display:'grid',background: '#F9F6ED', borderRadius:'5px', alignItems: 'center'}}><ChatIcon style={{ marginLeft:'3px', width: '15px', height: '15px'}}/></Item>
+                    </Grid>
+                    <Grid item xs={11}>
+                    <Item sx={{textAlign:'left',background: '#F9F6ED', padding:'13px', fontSize:'10px' }}>{job.cja_message}​</Item>
+                    </Grid>
+                </Grid>
+                </Box>
+              </CardContent>
+              <CardActions>
+              {/* <Box sx={{ flexGrow: 1 }}> */}
+                <Grid container spacing={1}>
+                    <Grid item xs={6}>
+                      {/* <Button component={Link} to="#" variant="contained" color="grey" sx={{width:'90%', marginBottom:'20px', color: '#fff'}}> 気になる済 </Button> */}
+                      <Button
+                        className='favorite_button'
+                        onClick={() => handleFavClick(job.cjp_id)}
+                        style={{
+                          backgroundColor: favState[job.cjp_id] ? '' : theme.palette.grey[500],
+                          color: favState[job.cjp_id] ? theme.palette.grey.main : '#fff',
+                        }}
+                        variant={favState[job.cjp_id] ? 'outlined' : 'contained'}
+                        sx={{ width: '90%', marginBottom: '20px', color: '#fff' }}
+                      >
+                        {favState[job.cjp_id] ? '気になる済' : '気になる済'}
+                      </Button>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Button component={Link} to={`/recruitment/${job.cjp_id}`} variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
+                    </Grid>
+                </Grid>
+              {/* </Box> */}
+              </CardActions>
             </Card>
           </div>
         ))
@@ -347,7 +502,6 @@ export default function SecretEntry() {
       </CardContent>
     </Card>
     </div> */}
-
-  </>
+    </ThemeProvider>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Button,
@@ -36,7 +36,7 @@ const LoginForm = () => {
   const [formData, setFormData] = useState({
     email_address: '',
     password: '',
-    agree: false,
+    rememberMe: false,
   });
 
   const [loading, setLoading] = useState(false);
@@ -46,11 +46,20 @@ const LoginForm = () => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
+  useEffect(() => {
+    // Check for token in localStorage or sessionStorage
+    const authToken = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+    if (authToken) {
+      // Token found, navigate to the desired page
+      navigate('/mypage');
+    }
+  }, [navigate]);
+
   const handleChange = (event) => {
     const { name, value, checked } = event.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: name === 'agree' ? checked : value,
+      [name]: name === 'rememberMe' ? checked : value,
     }));
 
     // Clear validation errors when user starts typing
@@ -81,7 +90,7 @@ const LoginForm = () => {
   }
   
     // Perform validation
-    if (formData.email_address && formData.password && formData.agree && !emailError && !passwordError) {
+    if (formData.email_address && formData.password && !emailError && !passwordError) {
 
       // setEmailError('');
       // setPasswordError('');
@@ -204,9 +213,9 @@ const LoginForm = () => {
             style={{marginBottom: '10px'}}
             control={
               <Checkbox
-                checked={formData.agree}
+                checked={formData.rememberMe}
                 onChange={handleChange}
-                name="agree"
+                name="rememberMe"
                 color="primary"
               />
             }

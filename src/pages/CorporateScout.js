@@ -190,7 +190,7 @@ export default function CorporateScout() {
                   <Item sx={{textAlign:'center', fontSize:'11px', backgroundColor: '#E2EBF2'}}>書類選考案内</Item>
                   </Grid>
                   <Grid item xs={2}>
-                  <Item sx={{fontSize:'12px'}}>未読​</Item>
+                  <Item sx={{fontSize:'12px'}}></Item>
                   </Grid>
                   <Grid item xs={3}>
                   <Item sx={{fontSize:'11px'}}>{job.cjp_created_at}</Item>
@@ -213,16 +213,16 @@ export default function CorporateScout() {
               </Grid>
               </Box>
               <Box sx={{ flexGrow: 1 }} style={{background:'#DFD0A7', borderRadius:'5px', marginTop:'10px'}}>
-              <Grid container spacing={1} sx={{paddingTop:'0px'}}> 
-                  <Grid item xs={1}>
-                  <Item sx={{textAlign:'left', display:'grid', background:'#DFD0A7', borderRadius:'5px'}}><ChatIcon style={{marginTop:'10px', marginLeft:'3px'}}/></Item>
-                  </Grid>
-                  <Grid item xs={11}>
-                  <Item sx={{fontSize:'12px', textAlign:'left', background: 'rgba(223, 208, 167, 0.20)', padding:'13px', fontSize:'10px' }}>【特別スカウト】渋谷/上場企業での経理マネ‐ジャー を募集しております。
-      今までのご経験をぜひ、弊社で活かしてみませんか？
-      ご応募お待ちしております。​</Item>
-                  </Grid>
-              </Grid>
+                <Grid container spacing={1} sx={{paddingTop:'0px', background: '#F9F6ED', borderRadius: '5px', alignItems: 'center'}}> 
+                    <Grid item xs={1}>
+                    <Item sx={{textAlign:'left', display:'grid', background: '#F9F6ED'}}><ChatIcon style={{marginLeft:'3px', width: '15px', height: '15px'}}/></Item>
+                    </Grid>
+                    <Grid item xs={11}>
+                    <Item sx={{fontSize:'12px', textAlign:'left', background: '#F9F6ED', padding:'13px', fontSize:'10px' }}>【特別スカウト】渋谷/上場企業での経理マネ‐ジャー を募集しております。
+        今までのご経験をぜひ、弊社で活かしてみませんか？
+        ご応募お待ちしております。​</Item>
+                    </Grid>
+                </Grid>
               </Box>
             </CardContent>
             <CardActions>
