@@ -33,6 +33,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {ReactComponent as SuccessMsg} from '../assets/SuccessMsg.svg';
 import {ReactComponent as Cancel} from '../assets/Cancel.svg';
+import {ReactComponent as WarningIcon} from '../assets/WarningIcon.svg';
 
 const theme = createTheme({
   palette: {
@@ -95,6 +96,7 @@ const CreateMessage = () => {
   const [open, setOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [errors, setErrors] = useState({ title: false });
+  const [isSuccess, setIsSuccess] = useState(true);
 
   const navigate = useNavigate();
 
@@ -123,16 +125,6 @@ const CreateMessage = () => {
     formData.append('message_template_name', title);
     formData.append('message', message);
 
-    // if (!title) {
-    //   setErrors({ title: true });
-    //   return;
-    // }
-
-    // if (!message) {
-    //   setErrors({ message: true });
-    //   return;
-    // }
-
     let hasError = false;
 
     if (!title) {
@@ -157,20 +149,25 @@ const CreateMessage = () => {
 
       if (response.ok) {
         setModalMessage('メッセージテンプレートが正常に作成されました');
+        setIsSuccess(true); // Set success state
         setOpen(true);
       } else {
-        setModalMessage('メッセージテンプレートの作成に失敗しました');
+        setModalMessage('メッセージテンプレートの作成に失敗しました。メッセージ テンプレート名はすでに存在するため、一意の名前を付けてください');
+        setIsSuccess(false); // Set failure state
         setOpen(true);
       }
     } catch (error) {
       setModalMessage('Error: ' + error.message);
+      setIsSuccess(false); // Set failure state
       setOpen(true);
     }
   };
 
   const handleClose = () => {
     setOpen(false);
-    navigate(-1); // Redirect to the list page after closing modal
+    if (isSuccess) {
+      navigate(-1); // Redirect to the list page if successful
+    }
   };
 
 
@@ -232,7 +229,7 @@ const CreateMessage = () => {
       >
         <Box sx={modalStyle}>
           <Cancel onClick={handleClose} style={{position: 'absolute', right: '0', top: '0', padding: '10px'}} />
-          <SuccessMsg style={{marginBottom: '10px'}} />
+          {isSuccess ? <SuccessMsg style={{marginBottom: '10px'}} /> : <WarningIcon style={{marginBottom: '10px'}} />}
           <Typography id="modal-description" >
             {modalMessage}
           </Typography>

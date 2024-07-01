@@ -33,6 +33,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {ReactComponent as SuccessMsg} from '../assets/SuccessMsg.svg';
 import {ReactComponent as Cancel} from '../assets/Cancel.svg';
+import {ReactComponent as WarningIcon} from '../assets/WarningIcon.svg';
 
 const theme = createTheme({
   palette: {
@@ -94,6 +95,7 @@ const EditMessage = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [errors, setErrors] = useState({ title: false });
+  const [isSuccess, setIsSuccess] = useState(true);
 
   const navigate = useNavigate();
   const { id } = useParams(); 
@@ -167,19 +169,24 @@ const EditMessage = () => {
 
       if (response.ok) {
         setModalMessage('メッセージテンプレートが正常に更新されました');
+        setIsSuccess(true); // Set success state
       } else {
-        setModalMessage('メッセージテンプレートの更新に失敗しました');
+        setModalMessage('メッセージテンプレートの作成に失敗しました。メッセージ テンプレート名はすでに存在するため、一意の名前を付けてください');
+        setIsSuccess(false); // Set failure state
       }
       setModalOpen(true);
     } catch (error) {
       setModalMessage('Error: ' + error.message);
+      setIsSuccess(false); // Set failure state
       setModalOpen(true);
     }
   };
 
   const handleClose = () => {
     setModalOpen(false);
-    navigate(-1); // Redirect to the list page after closing modal
+    if (isSuccess) {
+      navigate(-1); // Redirect to the list page if successful
+    }
   };
 
   const goBack = () => {
@@ -256,7 +263,7 @@ const EditMessage = () => {
           p: 4,
         }}>
           <Cancel onClick={handleClose} style={{ position: 'absolute', right: '0', top: '0', padding: '10px' }} />
-          <SuccessMsg style={{ marginBottom: '10px' }} />
+          {isSuccess ? <SuccessMsg style={{marginBottom: '10px'}} /> : <WarningIcon style={{marginBottom: '10px'}} />}
           <Typography id="modal-description" >
             {modalMessage}
           </Typography>
