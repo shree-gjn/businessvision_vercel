@@ -93,6 +93,7 @@ const EditMessage = () => {
   const [message, setMessage] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
+  const [errors, setErrors] = useState({ title: false });
 
   const navigate = useNavigate();
   const { id } = useParams(); 
@@ -122,10 +123,16 @@ const EditMessage = () => {
 
   const handleMessageChange = (event) => {
     setMessage(event.target.value);
+    if (event.target.value) {
+      setErrors((prevErrors) => ({ ...prevErrors, message: false }));
+    }
   };
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value); // Handle title change
+    if (event.target.value) {
+      setErrors((prevErrors) => ({ ...prevErrors, title: false }));
+    }
   };
 
   const handleSend = async () => {
@@ -135,6 +142,22 @@ const EditMessage = () => {
     formData.append('message_template_id', id);
     formData.append('message_template_name', title);
     formData.append('message', message);
+
+    let hasError = false;
+
+    if (!title) {
+      setErrors((prevErrors) => ({ ...prevErrors, title: true }));
+      hasError = true;
+    }
+
+    if (!message) {
+      setErrors((prevErrors) => ({ ...prevErrors, message: true }));
+      hasError = true;
+    }
+
+    if (hasError) {
+      return;
+    }
 
     try {
       const response = await fetch('https://bvhr-api.azurewebsites.net/candidate/edit_candidate_message_template', {
@@ -182,6 +205,8 @@ const EditMessage = () => {
                 value={title}
                 name='message_template_title'
                 onChange={handleTitleChange}
+                error={errors.title} // Set error state
+                helperText={errors.title ? 'メッセージテンプレート名は必須です' : ''} // Display helper text
                 // helperText={errors.family_member_count}
               />
               {/* {errors.family_member_count && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.family_member_count}</FormHelperText> } */}
@@ -189,7 +214,7 @@ const EditMessage = () => {
           </Grid>
           <Grid item xs={12} sx={{marginBottom: '20px'}}>
             <FormControl fullWidth sx={{marginBottom: '10px'}}>
-              <FormLabel className='formfield-label' id="message" sx={{marginBottom: '10px', textAlign: 'left'}}>メッセージ</FormLabel>
+              <FormLabel className='formfield-label' id="message" sx={{marginBottom: '10px', textAlign: 'left'}}>メッセージ<span className='required_label'>必須</span></FormLabel>
               <TextField
                 variant="outlined"
                 type="text"
@@ -199,6 +224,8 @@ const EditMessage = () => {
                 value={message}
                 name='template_message'
                 onChange={handleMessageChange}
+                error={errors.message} // Set error state
+                helperText={errors.message ? 'メッセージ欄は必須です' : ''} // Display helper text
                 // helperText={errors.family_member_count}
               />
               {/* {errors.family_member_count && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.family_member_count}</FormHelperText> } */}

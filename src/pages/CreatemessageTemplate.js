@@ -104,6 +104,9 @@ const CreateMessage = () => {
 
   const handleMessageChange = (event) => {
     setMessage(event.target.value);
+    if (event.target.value) {
+      setErrors((prevErrors) => ({ ...prevErrors, message: false }));
+    }
   };
 
   const handleTitleChange = (event) => {
@@ -120,8 +123,29 @@ const CreateMessage = () => {
     formData.append('message_template_name', title);
     formData.append('message', message);
 
+    // if (!title) {
+    //   setErrors({ title: true });
+    //   return;
+    // }
+
+    // if (!message) {
+    //   setErrors({ message: true });
+    //   return;
+    // }
+
+    let hasError = false;
+
     if (!title) {
-      setErrors({ title: true });
+      setErrors((prevErrors) => ({ ...prevErrors, title: true }));
+      hasError = true;
+    }
+
+    if (!message) {
+      setErrors((prevErrors) => ({ ...prevErrors, message: true }));
+      hasError = true;
+    }
+
+    if (hasError) {
       return;
     }
 
@@ -177,7 +201,7 @@ const CreateMessage = () => {
           </Grid>
           <Grid item xs={12} sx={{marginBottom: '20px'}}>
             <FormControl fullWidth sx={{marginBottom: '10px'}}>
-              <FormLabel className='formfield-label' id="message" sx={{marginBottom: '10px', textAlign: 'left'}}>メッセージ</FormLabel>
+              <FormLabel className='formfield-label' id="message" sx={{marginBottom: '10px', textAlign: 'left'}}>メッセージ<span className='required_label'>必須</span></FormLabel>
               <TextField
                 variant="outlined"
                 type="text"
@@ -187,6 +211,8 @@ const CreateMessage = () => {
                 value={message}
                 name='template_message'
                 onChange={handleMessageChange}
+                error={errors.message} // Set error state
+                helperText={errors.message ? 'メッセージ欄は必須です' : ''} // Display helper text
                 // helperText={errors.family_member_count}
               />
               {/* {errors.family_member_count && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.family_member_count}</FormHelperText> } */}
