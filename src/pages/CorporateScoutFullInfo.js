@@ -69,7 +69,7 @@ const Item = styled(Paper)(({ theme }) => ({
     transform: 'translateY(-50%)'
   }));
 
-export default function SecretEntryFullInfo() {
+export default function CorporateScoutFullInfo() {
   const { job_id } = useParams(); // Extract job_id from URL parameters
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [jobpost, setjobpost] = useState([]);
@@ -294,7 +294,8 @@ export default function SecretEntryFullInfo() {
                 <Paper sx={{padding: '15px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '10px', background: '#F5F2E9', boxShadow: 'none'}}>
                   <span> <ChatIcon sx={{width: '20px', height: '20px'}} /></span>
                   <Typography sx={{fontSize: '12px', textAlign: 'left'}}>
-                    {jobpost.cja_message}
+                    {/* {jobpost.cja_message} */}
+                    【特別スカウト】渋谷/上場企業での経理マネ‐ジャー を募集しております。 今までのご経験をぜひ、弊社で活かしてみませんか？ ご応募お待ちしております。​
                   </Typography>
                 </Paper>
               </Grid>

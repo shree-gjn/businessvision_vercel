@@ -179,7 +179,7 @@ export default function CorporateScout() {
       ) : (
         jobpost.map(job => (
           <div style={{background:'#FFF', marginBottom:'20px', border: '1px solid #EEEEEE', borderRadius: '10px'}}>
-          <Card sx={{ minWidth: 275, marginBottom:'30px', textDecoration:'none'}} component={Link} to={`/recruitment/${job.cjp_id}`}>
+          <Card sx={{ minWidth: 275, marginBottom:'30px', textDecoration:'none'}} component={Link} to={`/corporatescoutFullInfo/${job.cjp_id}`}>
             <CardContent>
               <Box sx={{ flexGrow: 1 }}>
               <Grid container spacing={1} style={{paddingBottom: '10px'}}>
@@ -218,7 +218,7 @@ export default function CorporateScout() {
                     <Item sx={{textAlign:'left', display:'grid', background: '#F9F6ED'}}><ChatIcon style={{marginLeft:'3px', width: '15px', height: '15px'}}/></Item>
                     </Grid>
                     <Grid item xs={11}>
-                    <Item sx={{fontSize:'12px', textAlign:'left', background: '#F9F6ED', padding:'13px', fontSize:'10px' }}>【特別スカウト】渋谷/上場企業での経理マネ‐ジャー を募集しております。
+                    <Item sx={{textAlign:'left', background: '#F9F6ED', padding:'13px', fontSize:'11px' }}>【特別スカウト】渋谷/上場企業での経理マネ‐ジャー を募集しております。
         今までのご経験をぜひ、弊社で活かしてみませんか？
         ご応募お待ちしております。​</Item>
                     </Grid>

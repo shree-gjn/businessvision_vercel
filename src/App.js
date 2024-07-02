@@ -12,6 +12,7 @@ import InProgressComponent from './pages/inprogress';
 import ProfileComponent from './pages/profile';
 import RecruitmentFullInfo from './pages/RecruitmentFullInfo';
 import SecretEntryFullInfo from './pages/SecretEntryFullInfo';
+import CorporateScoutFullInfo from './pages/CorporateScoutFullInfo';
 import OccupationComponent from './components/occupation';
 import IndustryComponent from './components/industry';
 import IncomeComponent from './components/income';
@@ -64,6 +65,7 @@ function App() {
           <Route path="/profile" element={<ProfileComponent />} />
           <Route path="/recruitment/:job_id" element={<RecruitmentFullInfo />} />
           <Route path="/secretentrydetail/:job_id" element={<SecretEntryFullInfo />} />
+          <Route path="/corporatescoutFullInfo/:job_id" element={<CorporateScoutFullInfo />} />
           <Route path="/occupation" element={<OccupationComponent />} /> 
           <Route path="/industry" element={<IndustryComponent />} />
           <Route path="/income" element={<IncomeComponent />} />

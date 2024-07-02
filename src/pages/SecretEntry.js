@@ -319,7 +319,7 @@ export default function SecretEntry() {
                     </Grid>
                 </Grid>
                 </Box>
-                <Typography variant="h6" component="div" sx={{fontSize:'14px', fontWeight:'700', textAlign:'left'}}>
+                <Typography variant="h6" component="div" sx={{fontSize:'14px', fontWeight:'700', textAlign:'left', textDecoration:'none'}}>
                 {job.cjp_recruitment_catchphrase}
                 </Typography>
                 <Box sx={{ flexGrow: 1, textDecoration:'none'}}  component={Link} to={`/secretentrydetail/${job.cjp_id}`}>
