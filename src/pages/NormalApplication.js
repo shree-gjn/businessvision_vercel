@@ -100,6 +100,8 @@ export default function NormalApplication() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [errors, setErrors] = useState({});
+
   useEffect(() => {
     if (location.state) {
       setName(location.state.name || '');
@@ -118,12 +120,14 @@ export default function NormalApplication() {
     setResumeUpload(nextresumeupload);
     const selectedResume = resumeList.find(resume => resume.cru_file_name === nextresumeupload);
     setSelectedResumeId(selectedResume ? selectedResume.cru_id : null);
+    setErrors((prev) => ({ ...prev, resumeupload: '' }));
   };
 
   const handleWorkHistoryUpload = (event, nextworkhistoryupload) => {
     setWorkHistoryUpload(nextworkhistoryupload);
     const selectedWorkHistory = workHistoryList.find(workHistory => workHistory.cru_file_name === nextworkhistoryupload);
     setSelectedWorkHistoryId(selectedWorkHistory ? selectedWorkHistory.cru_id : null);
+    setErrors((prev) => ({ ...prev, workhistoryupload: '' }));
   };
 
   // const handleMessageTemplateChange = (event) => {
@@ -140,27 +144,48 @@ export default function NormalApplication() {
 
   const handleNameChange = (event) => {
     setName(event.target.value);
+    setErrors((prev) => ({ ...prev, name: '' }));
   }
 
   const handleFuriganaChange = (event) => {
     setFurigana(event.target.value);
+    setErrors((prev) => ({ ...prev, furigana: '' }));
   }
 
   const handleCityChange = (event) => {
     setCity(event.target.value);
+    setErrors((prev) => ({ ...prev, city: '' }));
   }
 
   const handleEmailChange = (event) => {
     setEmailAddress(event.target.value);
+    setErrors((prev) => ({ ...prev, emailaddress: '' }));
   }
 
   const handleNormalappConfirm = () => {
     const selectedResume = resumeList.find(resume => resume.cru_file_name === resumeupload);
     const selectedWorkHistory = workHistoryList.find(workHistory => workHistory.cru_file_name === workhistoryupload);
 
-    if (!selectedResume || !selectedWorkHistory) {
-      setErrorMessage('履歴書と職務経歴書を選択してください'); // Set appropriate error message
-      setErrorModalOpen(true); // Open the error modal
+    // if (!selectedResume || !selectedWorkHistory) {
+    //   setErrorMessage('履歴書と職務経歴書を選択してください'); // Set appropriate error message
+    //   setErrorModalOpen(true); // Open the error modal
+    //   return;
+    // }
+
+    let validationErrors = {};
+
+    if (!name) validationErrors.name = '氏名を入力してください';
+    if (!furigana) validationErrors.furigana = 'フリガナを入力してください';
+    if (!city) validationErrors.city = 'あなたの都市を入力してください';
+    if (!emailaddress) validationErrors.emailaddress = 'メールアドレスを入力してください';
+    if (!selectedResume) validationErrors.resumeupload = '履歴書を選択してください';
+    if (!selectedWorkHistory) validationErrors.workhistoryupload = 'あなたの職歴プロフィールを選択してください';
+
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrorMessage('全ての必須項目を入力してください');
+      setErrorModalOpen(true);
       return;
     }
 
@@ -382,6 +407,7 @@ export default function NormalApplication() {
                     size="small"
                     // helperText={errors.family_member_count}
                   />
+                   {errors.name && <Typography color="error" sx={{fontSize: '12px', marginTop: '10px'}}>{errors.name}</Typography>}
                   {/* {errors.family_member_count && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.family_member_count}</FormHelperText> } */}
                 </FormControl>
               </Item>
@@ -398,6 +424,7 @@ export default function NormalApplication() {
                     size="small"
                     // helperText={errors.family_member_count}
                   />
+                  {errors.furigana && <Typography color="error" sx={{fontSize: '12px', marginTop: '10px'}}>{errors.furigana}</Typography>}
                   {/* {errors.family_member_count && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.family_member_count}</FormHelperText> } */}
                 </FormControl>
               </Item>
@@ -414,6 +441,7 @@ export default function NormalApplication() {
                     size="small"
                     // helperText={errors.family_member_count}
                   />
+                  {errors.city && <Typography color="error" sx={{fontSize: '12px', marginTop: '10px'}}>{errors.city}</Typography>}
                   {/* {errors.family_member_count && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.family_member_count}</FormHelperText> } */}
                 </FormControl>
               </Item>
@@ -430,6 +458,7 @@ export default function NormalApplication() {
                     size="small"
                     // helperText={errors.family_member_count}
                   />
+                  {errors.emailaddress && <Typography color="error" sx={{fontSize: '12px', marginTop: '10px'}}>{errors.emailaddress}</Typography>}
                   {/* {errors.family_member_count && <FormHelperText style={{ color: 'red', margin: '10px 0 0'}}>{errors.family_member_count}</FormHelperText> } */}
                 </FormControl>
               </Item>
@@ -450,6 +479,7 @@ export default function NormalApplication() {
                       <ApplicationRequirement style={{paddingRight: '5px'}} /> {resume.cru_file_name}
                     </ToggleButton>
                   ))}
+                  {errors.resumeupload && <Typography color="error" sx={{fontSize: '12px', marginTop: '10px'}}>{errors.resumeupload}</Typography>}
                 </ToggleButtonGroup>
 
                 <Button to="/profile" component={Link} variant='outlined' sx={{marginTop: '20px'}}>
@@ -470,6 +500,7 @@ export default function NormalApplication() {
                       <ApplicationRequirement style={{paddingRight: '5px'}} /> {workHistory.cru_file_name}
                     </ToggleButton>
                   ))}
+                   {errors.workhistoryupload && <Typography color="error" sx={{fontSize: '12px'}}>{errors.workhistoryupload}</Typography>}
                 </ToggleButtonGroup>
 
                 <Button to="/profile" component={Link} variant='outlined' sx={{marginTop: '20px'}}>
@@ -553,7 +584,7 @@ export default function NormalApplication() {
             p: 4,
           }}>
             <WarningIcon style={{marginBottom: '10px'}} />
-            <Typography id="error-modal-description" variant="h6" component="h2" sx={{marginBottom: '10px'}}>
+            <Typography id="error-modal-description" variant="h6" component="h2" sx={{marginBottom: '10px', fontSize: '16px'}}>
               {errorMessage}
             </Typography>
             <div style={{position: 'absolute', top: '0', right: '0', padding: '10px'}}>
@@ -561,6 +592,8 @@ export default function NormalApplication() {
             </div>
           </Box>
         </Modal>
+
+        {/* <ErrorModal isOpen={isErrorModalOpen} onClose={() => setErrorModalOpen(false)} errorMessage={errorMessage} /> */}
 
         <BottomNav />
       </>
