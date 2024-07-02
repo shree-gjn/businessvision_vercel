@@ -48,6 +48,8 @@ export default function SecretEntry() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true); // State to track loading status
   const [favState, setFavState] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [expandedState, setExpandedState] = useState([]); 
 
   useEffect(() => {
     // Retrieve the auth key from sessionStorage
@@ -83,6 +85,12 @@ export default function SecretEntry() {
       // }
         if (Array.isArray(data.json_data)) {
           setjobpost(data.json_data);
+           // Initialize expandedState with false for each job post
+           setExpandedState(new Array(data.json_data.length).fill(false));
+
+           // Load favState from localStorage
+           const storedFavState = JSON.parse(localStorage.getItem('favState')) || {};
+           setFavState(storedFavState);
         } else {
           setError('Fetched data is not an array');
         }
@@ -97,6 +105,37 @@ export default function SecretEntry() {
 
     fetchData();
   }, []);
+
+  const toggleReadMore = (index) => {
+    setExpandedState(prevState => {
+      const newState = [...prevState];
+      newState[index] = !newState[index];
+      return newState;
+    });
+  };
+
+  const renderMessage = (message, index) => {
+    const isExpanded = expandedState[index];
+    if (message.length <= 45 || isExpanded) {
+      return (
+        <>
+          {message} <br />
+          <Button onClick={() => toggleReadMore(index)} size="small" sx={{ fontSize: '11px', color: '#046EB8', fontWeight: '600', padding: '0', marginTop: '5px' }}>
+            {isExpanded ? '読む量を減らす' : '続きを読む'}
+          </Button>
+        </>
+      );
+    } else {
+      return (
+        <>
+          {message.substring(0, 45)}... <br />
+          <Button onClick={() => toggleReadMore(index)} size="small" sx={{ fontSize: '11px', color: '#046EB8', fontWeight: '600', padding: '0', marginTop: '5px' }}>
+            続きを読む
+          </Button>
+        </>
+      );
+    }
+  };
 
   const handleFavClick = async (jobId) => {
     try {
@@ -230,7 +269,7 @@ export default function SecretEntry() {
           <Typography variant="h6">No posts to show</Typography>
         </Box>
       ) : (
-        jobpost.map(job => (
+        jobpost.map((job, index) => (
           <div key={job.cjp_id} style={{ background: '#FFF', marginBottom: '20px', border: '1px solid #EEEEEE', borderRadius: '10px' }}>
             {/* <Card sx={{ minWidth: 275, marginBottom: '30px', textDecoration: 'none' }} component={Link} to={`/recruitment/${job.cjp_id}`}>
               <CardContent>
@@ -264,7 +303,7 @@ export default function SecretEntry() {
             </Card> */}
             <Card sx={{ minWidth: 275, textDecoration:'none', boxShadow: 'none'}} >
               <CardContent>
-                <Box sx={{ flexGrow: 1, textDecoration:'none'}} component={Link} to={`/recruitment/${job.cjp_id}`}>
+                <Box sx={{ flexGrow: 1, textDecoration:'none'}} component={Link} to={`/secretentrydetail/${job.cjp_id}`}>
                 <Grid container spacing={1} style={{paddingBottom: '10px'}}>
                     <Grid item xs={4}>
                     <Item sx={{textAlign:'left', fontSize:'12px'}}>求人no: {job.cjp_job_code}</Item>
@@ -283,7 +322,7 @@ export default function SecretEntry() {
                 <Typography variant="h6" component="div" sx={{fontSize:'14px', fontWeight:'700', textAlign:'left'}}>
                 {job.cjp_recruitment_catchphrase}
                 </Typography>
-                <Box sx={{ flexGrow: 1, textDecoration:'none'}}  component={Link} to={`/recruitment/${job.cjp_id}`}>
+                <Box sx={{ flexGrow: 1, textDecoration:'none'}}  component={Link} to={`/secretentrydetail/${job.cjp_id}`}>
                 <Grid container spacing={1} sx={{marginTop:'10px'}}>
                     <Grid item xs={6}>
                     <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
@@ -295,13 +334,13 @@ export default function SecretEntry() {
                     </Grid>
                 </Grid>
                 </Box>
-                <Box sx={{ flexGrow: 1,textDecoration:'none'}} style={{background:'#DFD0A7', borderRadius:'5px'}}  component={Link} to={`/recruitment/${job.cjp_id}`}>
+                <Box sx={{ flexGrow: 1,textDecoration:'none'}} style={{background:'#DFD0A7', borderRadius:'5px'}}>
                 <Grid container spacing={1} sx={{paddingTop:'0px', background: '#F9F6ED', alignItems: 'center', width: '100%', margin: '0 auto'}}> 
                     <Grid item xs={1}>
                     <Item sx={{textAlign:'left', display:'grid',background: '#F9F6ED', borderRadius:'5px', alignItems: 'center'}}><ChatIcon style={{ marginLeft:'3px', width: '15px', height: '15px'}}/></Item>
                     </Grid>
                     <Grid item xs={11}>
-                    <Item sx={{textAlign:'left',background: '#F9F6ED', padding:'13px', fontSize:'10px' }}>{job.cja_message}​</Item>
+                    <Item sx={{textAlign:'left',background: '#F9F6ED', padding:'13px', fontSize:'11px', fontWeight: '600' }}> {renderMessage(job.cja_message, index)}​</Item>
                     </Grid>
                 </Grid>
                 </Box>
@@ -325,7 +364,7 @@ export default function SecretEntry() {
                       </Button>
                     </Grid>
                     <Grid item xs={6}>
-                      <Button component={Link} to={`/recruitment/${job.cjp_id}`} variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
+                      <Button component={Link} to={`/secretentrydetail/${job.cjp_id}`} variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
                     </Grid>
                 </Grid>
               {/* </Box> */}
