@@ -262,9 +262,9 @@ export default function SecretEntry() {
                 </Box>
               </CardContent>
             </Card> */}
-            <Card sx={{ minWidth: 275, marginBottom:'30px', textDecoration:'none'}} component={Link} to={`/recruitment/${job.cjp_id}`}>
+            <Card sx={{ minWidth: 275, textDecoration:'none', boxShadow: 'none'}} >
               <CardContent>
-                <Box sx={{ flexGrow: 1 }}>
+                <Box sx={{ flexGrow: 1, textDecoration:'none'}} component={Link} to={`/recruitment/${job.cjp_id}`}>
                 <Grid container spacing={1} style={{paddingBottom: '10px'}}>
                     <Grid item xs={4}>
                     <Item sx={{textAlign:'left', fontSize:'12px'}}>求人no: {job.cjp_job_code}</Item>
@@ -283,7 +283,7 @@ export default function SecretEntry() {
                 <Typography variant="h6" component="div" sx={{fontSize:'14px', fontWeight:'700', textAlign:'left'}}>
                 {job.cjp_recruitment_catchphrase}
                 </Typography>
-                <Box sx={{ flexGrow: 1 }}>
+                <Box sx={{ flexGrow: 1, textDecoration:'none'}}  component={Link} to={`/recruitment/${job.cjp_id}`}>
                 <Grid container spacing={1} sx={{marginTop:'10px'}}>
                     <Grid item xs={6}>
                     <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
@@ -295,7 +295,7 @@ export default function SecretEntry() {
                     </Grid>
                 </Grid>
                 </Box>
-                <Box sx={{ flexGrow: 1 }} style={{background:'#DFD0A7', borderRadius:'5px'}}>
+                <Box sx={{ flexGrow: 1,textDecoration:'none'}} style={{background:'#DFD0A7', borderRadius:'5px'}}  component={Link} to={`/recruitment/${job.cjp_id}`}>
                 <Grid container spacing={1} sx={{paddingTop:'0px', background: '#F9F6ED', alignItems: 'center', width: '100%', margin: '0 auto'}}> 
                     <Grid item xs={1}>
                     <Item sx={{textAlign:'left', display:'grid',background: '#F9F6ED', borderRadius:'5px', alignItems: 'center'}}><ChatIcon style={{ marginLeft:'3px', width: '15px', height: '15px'}}/></Item>
