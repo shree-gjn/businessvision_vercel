@@ -16,6 +16,10 @@ import {ReactComponent as Cancel} from '../assets/Cancel.svg';
 import { Typography } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme({
@@ -50,6 +54,7 @@ const AgentPage = () => {
     checkbox12: false,
   });
   const [successModal, setSuccessModal] = useState(false); 
+  const [selectedAnswerMethod, setSelectedAnswerMethod] = useState('email');
 
   const handleOtherConsultationChange = (event) => {
     setOtherConsultationMatters(event.target.value);
@@ -87,14 +92,30 @@ const AgentPage = () => {
 
   const navigate = useNavigate();  // Get the history object from react-router-dom
   
+  // const handleKeyDown = (section) => (event) => {
+  //   if (event.key === 'Enter' && event.target.value.trim() !== '') {
+  //     setSelectedChips((prevSelectedChips) => ({
+  //       ...prevSelectedChips,
+  //       [section]: [...prevSelectedChips[section], event.target.value.trim()],
+  //     }));
+  //     event.target.value = '';
+  //   }
+  // };
+
   const handleKeyDown = (section) => (event) => {
-    if (event.key === 'Enter' && event.target.value.trim() !== '') {
+    if (event.key === 'Enter' && !event.shiftKey && event.target.value.trim() !== '') {
+      event.preventDefault(); // Prevent default Enter behavior
       setSelectedChips((prevSelectedChips) => ({
         ...prevSelectedChips,
         [section]: [...prevSelectedChips[section], event.target.value.trim()],
       }));
       event.target.value = '';
     }
+    // If Shift + Enter, do nothing special and let the default behavior (adding a new line) happen
+  };
+
+  const handleAnswerMethodChange = (event) => {
+    setSelectedAnswerMethod(event.target.value);
   };
 
   const handleSubmit = async () => {
@@ -104,8 +125,9 @@ const AgentPage = () => {
     const interview = selectedChips.section3.join(',');
     const unofficial_offer = selectedChips.section4.join(',');
     const join_company = selectedChips.section5.join(',');
-    const answer_email = checkboxes.checkbox11 ? 'メールに回答' : '';
-    const answer_online = checkboxes.checkbox12 ? 'オンラインにて回答  ※10分～最大15分程度' : '';
+    const answer_method = selectedAnswerMethod === 'email' ? 'メールに回答' : 'オンラインにて回答  ※10分～最大15分程度';
+    // const answer_email = checkboxes.checkbox11 ? 'メールに回答' : '';
+    // const answer_online = checkboxes.checkbox12 ? 'オンラインにて回答  ※10分～最大15分程度' : '';
 
     const formData = new FormData();
     formData.append('auth_key', authKey);
@@ -114,8 +136,9 @@ const AgentPage = () => {
     formData.append('interview', interview);
     formData.append('unofficial_offer', unofficial_offer);
     formData.append('join_company', join_company);
-    formData.append('answer_email', answer_email);
-    formData.append('answer_online', answer_online);
+    // formData.append('answer_email', answer_email);
+    // formData.append('answer_online', answer_online);
+    formData.append('answer_method', answer_method);
     formData.append('other_consultation_matters', otherConsultationMatters);
 
     try {
@@ -421,14 +444,27 @@ const AgentPage = () => {
             onChange={handleOtherConsultationChange}
             rows={4}
           />
-          <FormControlLabel fullWidth style={{textAlign: 'left', width: '100%'}}
+          {/* <FormControlLabel fullWidth style={{textAlign: 'left', width: '100%'}}
             control={<Checkbox checked={checkboxes.checkbox11} onChange={handleCheckboxChange('checkbox11')} />}
             label="メールに回答"
           />
           <FormControlLabel fullWidth style={{textAlign: 'left', width: '100%', marginBottom: '20px'}}
             control={<Checkbox checked={checkboxes.checkbox12} onChange={handleCheckboxChange('checkbox12')} style={{}} />}
             label="オンラインにて回答  ※10分～最大15分程度"
-          />
+          /> */}
+
+            <FormControl component="fieldset" sx={{marginBottom: '20px'}}>
+              <RadioGroup
+                aria-label="answerMethod"
+                name="answerMethod"
+                value={selectedAnswerMethod}
+                onChange={handleAnswerMethodChange}
+              >
+                <FormControlLabel value="email" control={<Radio />} label="メールに回答" />
+                <FormControlLabel value="online" control={<Radio />} label="オンラインにて回答  ※10分～最大15分程度" />
+              </RadioGroup>
+            </FormControl>
+
           <Button type="submit" variant="contained" color="primary" onClick={handleSubmit} fullWidth style={{marginBottom: '100px'}}>
           転職相談サービスに申し込む
           </Button>
