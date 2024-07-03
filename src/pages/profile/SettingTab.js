@@ -51,6 +51,16 @@ const SettingTab = () => {
         </Box>
         </Link>
         <Divider />
+        <Link to="/messagetemplate" style={{textDecoration:'none'}}>
+        <Box sx={{ flexGrow: 1 , padding:'10px'}}>
+        <Grid container spacing={1}>
+            <Grid item xs={10}>
+              <Item sx={{textAlign:'left', marginLeft:'10px'}}>メッセージテンプレート</Item>
+            </Grid>
+        </Grid>
+        </Box>
+        </Link>
+        <Divider />
         <Link to="#" style={{textDecoration:'none'}}>
         <Box sx={{ flexGrow: 1, padding:'10px'}}>
         <Grid container spacing={1}>
@@ -132,16 +142,6 @@ const SettingTab = () => {
         <Grid container spacing={1}>
             <Grid item xs={10}>
               <Item sx={{textAlign:'left', marginLeft:'10px'}}>パスワードを変更する</Item>
-            </Grid>
-        </Grid>
-        </Box>
-        </Link>
-        <Divider />
-        <Link to="/messagetemplate" style={{textDecoration:'none'}}>
-        <Box sx={{ flexGrow: 1 , padding:'10px'}}>
-        <Grid container spacing={1}>
-            <Grid item xs={10}>
-              <Item sx={{textAlign:'left', marginLeft:'10px'}}>メッセージテンプレート</Item>
             </Grid>
         </Grid>
         </Box>

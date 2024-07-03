@@ -48,7 +48,7 @@ export default function SecretEntry() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true); // State to track loading status
   const [favState, setFavState] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
+  // const [isExpanded, setIsExpanded] = useState(false);
   const [expandedState, setExpandedState] = useState([]); 
 
   useEffect(() => {

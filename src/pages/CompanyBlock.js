@@ -89,6 +89,7 @@ const CompanyBlock = () => {
   //   fetchCompanyList();
   // }, []);
 
+
   const fetchCompanyList = useCallback(async () => {
     setLoading(true);
     const authKey = sessionStorage.getItem('authKey');
@@ -96,7 +97,7 @@ const CompanyBlock = () => {
       const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/list_company_block?auth_key=${authKey}`); // Replace with your API endpoint
       const data = await response.json();
       // Extract the company block list from the response
-      if (data && data.Candidate_profile_details && Array.isArray(data.Candidate_profile_details.company_block_list)) {
+      if (response.ok && data.Candidate_profile_details && Array.isArray(data.Candidate_profile_details.company_block_list)) {
         setCompanyList(data.Candidate_profile_details.company_block_list);
       } else {
         console.error('API response is not in the expected format:', data);
@@ -130,31 +131,17 @@ const CompanyBlock = () => {
       });
 
       const result = await response.json();
-      // console.log('API Response:', result);
-      if (result.success) {
-        // fetchCompanyList(); // Refresh the list
-        setCompanyList((prevList) => [...prevList, companyName]);
+      console.log('Add Company API Response:', result); // Debugging statement
+      
+      if (result.ok && result.message === 'Company Block List Updated Successfully') {
         setcompanyName('');
+        await fetchCompanyList(); 
       } else {
-        console.error('Error adding company:', result.message);
+        console.error('Error adding company:', result.message || 'Unknown error');
       }
     } catch (error) {
       console.error('Error adding company:', error);
     }
-  //   if (response.ok) { // Check if response status is ok (200-299 range)
-  //     // Check if the message indicates success
-  //     if (result.message === 'Company Block List Updated Successfully') {
-  //       setCompanyList((prevList) => [...prevList, companyName]);
-  //       setcompanyName('');
-  //     } else {
-  //       console.error('Error adding company:', result.message);
-  //     }
-  //   } else {
-  //     console.error('Error adding company:', result.message);
-  //   }
-  // } catch (error) {
-  //   console.error('Error adding company:', error);
-  // }
   };
 
   const handleDeleteCompany = async (company) => {
@@ -169,21 +156,12 @@ const CompanyBlock = () => {
         body: formData,
       });
 
-    //   const result = await response.json();
-    //   if (result.success) {
-    //     // setCompanyList((prevList) => [...prevList, companyName]);
-    //     setCompanyList((prevList) => prevList.filter(item => item !== company));
-    //   } else {
-    //     console.error('Error deleting company:', result.message);
-    //   }
-    // } catch (error) {
-    //   console.error('Error deleting company:', error);
-    // }
       const result = await response.json();
-      if (response.ok && result.message === 'Company Block List Updated Successfully') {
-        setCompanyList((prevList) => prevList.filter(item => item !== company));
+      console.log('Delete Company API Response:', result);
+      if (result.ok && result.message === 'Company Block List Updated Successfully') {
+        await fetchCompanyList(); 
       } else {
-        console.error('Error deleting company:', result.message);
+        console.error('Error deleting company:', result.message || 'Unknown error');
       }
     } catch (error) {
       console.error('Error deleting company:', error);

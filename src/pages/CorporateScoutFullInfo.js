@@ -386,24 +386,39 @@ export default function CorporateScoutFullInfo() {
               <Item sx={{fontSize:'14px', textAlign:'left', color: '#16375A', fontWeight:'500'}}>基本情報</Item>
               </Grid>
               
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>求人のキャッチコピー</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_recruitment_catchphrase}​</Item>
-              </Grid>
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>求人の特長</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_features_of_recruitment}</Item>
-              </Grid>
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>募集背景</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_recruitment_background} ​</Item>
-              </Grid>
+              {jobpost.cjp_recruitment_catchphrase && (
+                <>
+                  <Grid item xs={3} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="subtitle2">求人のキャッチコピー</Item>
+                  </Grid>
+                  <Grid item xs={9} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="body2">{jobpost.cjp_recruitment_catchphrase}</Item>
+                  </Grid>
+                </>
+              )}
+
+              {jobpost.cjp_features_of_recruitment && (
+                <>
+                  <Grid item xs={3} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="subtitle2">求人の特長</Item>
+                  </Grid>
+                  <Grid item xs={9} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="body2">{jobpost.cjp_features_of_recruitment}</Item>
+                  </Grid>
+                </>
+              )}
+
+              {jobpost.cjp_recruitment_background && (
+                <>
+                  <Grid item xs={3} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="subtitle2">募集背景</Item>
+                  </Grid>
+                  <Grid item xs={9} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="body2">{jobpost.cjp_recruitment_background}</Item>
+                  </Grid>
+                </>
+              )}
+
             </Grid>
           </Box>
         </CardContent>
@@ -417,60 +432,105 @@ export default function CorporateScoutFullInfo() {
               <Item sx={{fontSize:'14px', textAlign:'left', color: '#16375A', fontWeight:'500'}}> 募集要項 </Item>
               </Grid>
               
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>仕事内容</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_job_description}​</Item>
-              </Grid>
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>応募条件</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_application_conditions}​</Item>
-              </Grid>
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>雇用形態</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_employment_status}​</Item>
-              </Grid>
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>選考プロセス</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>​{jobpost.cjp_selection_process}</Item>
-              </Grid>
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>年収・給与</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>​{jobpost.cjp_annual_income}</Item>
-              </Grid>
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務地</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>​{jobpost.cjp_work_location}</Item>
-              </Grid>
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>勤務時間</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>​{jobpost.cjp_working_hours}</Item>
-              </Grid>
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>待遇・福利厚生</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>​{jobpost.cjp_treatment_benefits}</Item>
-              </Grid>
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>休日・休暇</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>​{jobpost.cjp_holidays_vacations}</Item>
-              </Grid>
+              {jobpost.cjp_job_description && (
+                <>
+                  <Grid item xs={3} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="subtitle2">仕事内容</Item>
+                  </Grid>
+                  <Grid item xs={9} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="body2">{jobpost.cjp_job_description}</Item>
+                  </Grid>
+                </>
+              )}
+      
+              {jobpost.cjp_application_conditions && (
+                <>
+                  <Grid item xs={3} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="subtitle2">応募条件</Item>
+                  </Grid>
+                  <Grid item xs={9} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="body2">{jobpost.cjp_application_conditions}</Item>
+                  </Grid>
+                </>
+              )}
+
+              {jobpost.cjp_employment_status && (
+                <>
+                  <Grid item xs={3} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="subtitle2">雇用形態</Item>
+                  </Grid>
+                  <Grid item xs={9} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="body2">{jobpost.cjp_employment_status}</Item>
+                  </Grid>
+                </>
+              )}
+
+              {jobpost.cjp_selection_process && (
+                <>
+                  <Grid item xs={3} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="subtitle2">選考プロセス</Item>
+                  </Grid>
+                  <Grid item xs={9} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="body2">{jobpost.cjp_selection_process}</Item>
+                  </Grid>
+                </>
+              )}
+
+              {jobpost.cjp_annual_income && (
+                <>
+                  <Grid item xs={3} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="subtitle2">年収・給与</Item>
+                  </Grid>
+                  <Grid item xs={9} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="body2">{jobpost.cjp_annual_income}</Item>
+                  </Grid>
+                </>
+              )}
+
+              {jobpost.cjp_work_location && (
+                <>
+                  <Grid item xs={3} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="subtitle2">勤務地</Item>
+                  </Grid>
+                  <Grid item xs={9} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="body2">{jobpost.cjp_work_location}</Item>
+                  </Grid>
+                </>
+              )}
+
+              {jobpost.cjp_working_hours && (
+                <>
+                  <Grid item xs={3} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="subtitle2">勤務時間</Item>
+                  </Grid>
+                  <Grid item xs={9} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="body2">{jobpost.cjp_working_hours}</Item>
+                  </Grid>
+                </>
+              )}
+
+              {jobpost.cjp_treatment_benefits && (
+                <>
+                  <Grid item xs={3} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="subtitle2">待遇・福利厚生</Item>
+                  </Grid>
+                  <Grid item xs={9} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="body2">{jobpost.cjp_treatment_benefits}</Item>
+                  </Grid>
+                </>
+              )}
+
+              {jobpost.cjp_holidays_vacations && (
+                <>
+                  <Grid item xs={3} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="subtitle2">休日・休暇</Item>
+                  </Grid>
+                  <Grid item xs={9} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="body2">{jobpost.cjp_holidays_vacations}</Item>
+                  </Grid>
+                </>
+              )}
+
           </Grid>
           </Box>
         </CardContent>
@@ -484,42 +544,72 @@ export default function CorporateScoutFullInfo() {
               <Item sx={{fontSize:'14px', textAlign:'left', color: '#16375A', fontWeight:'500'}}>会社概要</Item>
               </Grid>
               
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>会社名</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_company_name}​</Item>
-              </Grid>
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>会社URL</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}><Link to={`${jobpost.cjp_company_url}`} target='_blank' rel="noopener noreferrer">{jobpost.cjp_company_url}</Link>​</Item>
-              </Grid>
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>上場区分</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_listing_classification}​</Item>
-              </Grid>
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>事業内容</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_business_content}​</Item>
-              </Grid>
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>会社の特長</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_company_features}​</Item>
-              </Grid>
-              <Grid item xs={3} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{textAlign:'left', fontSize:'12px'}}>会社設立日</Item>
-              </Grid>
-              <Grid item xs={9} sx={{borderBottom: '1px solid rgba(8, 93, 149, 0.25)'}}>
-              <Item sx={{fontSize:'12px', textAlign:'left'}}>{jobpost.cjp_company_establishment}​</Item>
-              </Grid>
+              {jobpost.cjp_company_name && (
+                <>
+                  <Grid item xs={3} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="subtitle2">会社名</Item>
+                  </Grid>
+                  <Grid item xs={9} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="body2">{jobpost.cjp_company_name}</Item>
+                  </Grid>
+                </>
+              )}
+
+              {jobpost.cjp_company_url && (
+                <>
+                  <Grid item xs={3} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="subtitle2">会社URL</Item>
+                  </Grid>
+                  <Grid item xs={9} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                  <Item sx={{fontSize:'12px', textAlign:'left'}}><Link to={`${jobpost.cjp_company_url}`} target='_blank' rel="noopener noreferrer">{jobpost.cjp_company_url}</Link>​</Item>
+                  </Grid>
+                </>
+              )}
+
+              {jobpost.cjp_listing_classification && (
+                <>
+                  <Grid item xs={3} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="subtitle2">上場区分</Item>
+                  </Grid>
+                  <Grid item xs={9} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="body2">{jobpost.cjp_listing_classification}</Item>
+                  </Grid>
+                </>
+              )}
+              
+              {jobpost.cjp_business_content && (
+                <>
+                  <Grid item xs={3} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="subtitle2">事業内容</Item>
+                  </Grid>
+                  <Grid item xs={9} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="body2">{jobpost.cjp_business_content}</Item>
+                  </Grid>
+                </>
+              )}
+
+              {jobpost.cjp_company_features && (
+                <>
+                  <Grid item xs={3} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="subtitle2">会社の特長</Item>
+                  </Grid>
+                  <Grid item xs={9} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="body2">{jobpost.cjp_company_features}</Item>
+                  </Grid>
+                </>
+              )}
+
+              {jobpost.cjp_company_establishment && (
+                <>
+                  <Grid item xs={3} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="subtitle2">会社設立日</Item>
+                  </Grid>
+                  <Grid item xs={9} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
+                    <Item sx={{textAlign:'left', fontSize:'12px'}} variant="body2">{jobpost.cjp_company_establishment}</Item>
+                  </Grid>
+                </>
+              )}
+              
           </Grid>
           </Box>
         </CardContent>

@@ -47,6 +47,7 @@ export default function CorporateScout() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true); // State to track loading status
   const [favState, setFavState] = useState(false);
+  const [expandedState, setExpandedState] = useState([]); 
 
   useEffect(() => {
     // Retrieve the auth key from sessionStorage
@@ -73,6 +74,12 @@ export default function CorporateScout() {
         console.log('Data fetched:', data); // Debugging log
         if (Array.isArray(data.json_data)) {
           setjobpost(data.json_data);
+            // Initialize expandedState with false for each job post
+            setExpandedState(new Array(data.json_data.length).fill(false));
+
+           // Load favState from localStorage
+           const storedFavState = JSON.parse(localStorage.getItem('favState')) || {};
+           setFavState(storedFavState);
         } else {
           setError('Fetched data is not an array');
         }
@@ -87,6 +94,37 @@ export default function CorporateScout() {
 
     fetchData();
   }, []);
+
+  const toggleReadMore = (index) => {
+    setExpandedState(prevState => {
+      const newState = [...prevState];
+      newState[index] = !newState[index];
+      return newState;
+    });
+  };
+  
+  const renderMessage = (message, index) => {
+    const isExpanded = expandedState[index];
+    if (message.length <= 45 || isExpanded) {
+      return (
+        <>
+          {message} <br />
+          <Button onClick={() => toggleReadMore(index)} size="small" sx={{ fontSize: '11px', color: '#046EB8', fontWeight: '600', padding: '0', marginTop: '5px' }}>
+            {isExpanded ? '読む量を減らす' : '続きを読む'}
+          </Button>
+        </>
+      );
+    } else {
+      return (
+        <>
+          {message.substring(0, 45)}... <br />
+          <Button onClick={() => toggleReadMore(index)} size="small" sx={{ fontSize: '11px', color: '#046EB8', fontWeight: '600', padding: '0', marginTop: '5px' }}>
+            続きを読む
+          </Button>
+        </>
+      );
+    }
+  };
 
   const handleFavClick = async (jobId) => {
     try {
@@ -177,11 +215,11 @@ export default function CorporateScout() {
           <Typography variant="h6">No posts to show</Typography>
         </Box>
       ) : (
-        jobpost.map(job => (
+        jobpost.map((job, index) => (
           <div style={{background:'#FFF', marginBottom:'20px', border: '1px solid #EEEEEE', borderRadius: '10px'}}>
-          <Card sx={{ minWidth: 275, marginBottom:'30px', textDecoration:'none'}} component={Link} to={`/corporatescoutFullInfo/${job.cjp_id}`}>
+          <Card sx={{ minWidth: 275, textDecoration:'none', boxShadow: 'none'}}>
             <CardContent>
-              <Box sx={{ flexGrow: 1 }}>
+              <Box sx={{ flexGrow: 1, textDecoration:'none'}} component={Link} to={`/corporatescoutFullInfo/${job.cjp_id}`}>
               <Grid container spacing={1} style={{paddingBottom: '10px'}}>
                   <Grid item xs={4}>
                   <Item sx={{textAlign:'left', fontSize:'12px'}}>求人no: {job.cjp_job_code}</Item>
@@ -200,7 +238,7 @@ export default function CorporateScout() {
               <Typography variant="h6" component="div" sx={{fontSize:'14px', fontWeight:'700', textAlign:'left'}}>
                {job.cjp_recruitment_background}
               </Typography>
-              <Box sx={{ flexGrow: 1 }}>
+              <Box sx={{ flexGrow: 1, textDecoration: 'none'}} component={Link} to={`/corporatescoutFullInfo/${job.cjp_id}`}>
               <Grid container spacing={1} sx={{marginTop:'10px'}}>
                   <Grid item xs={6}>
                   <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
@@ -218,9 +256,7 @@ export default function CorporateScout() {
                     <Item sx={{textAlign:'left', display:'grid', background: '#F9F6ED'}}><ChatIcon style={{marginLeft:'3px', width: '15px', height: '15px'}}/></Item>
                     </Grid>
                     <Grid item xs={11}>
-                    <Item sx={{textAlign:'left', background: '#F9F6ED', padding:'13px', fontSize:'11px' }}>【特別スカウト】渋谷/上場企業での経理マネ‐ジャー を募集しております。
-        今までのご経験をぜひ、弊社で活かしてみませんか？
-        ご応募お待ちしております。​</Item>
+                    <Item sx={{textAlign:'left', background: '#F9F6ED', padding:'13px', fontSize:'11px' }}>{renderMessage(job.scout_message, index)}​</Item>
                     </Grid>
                 </Grid>
               </Box>
