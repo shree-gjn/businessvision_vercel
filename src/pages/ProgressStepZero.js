@@ -52,6 +52,7 @@ export default function ProgressStepZero() {
   const [jobData, setJobData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [favState, setFavState] = useState(false);
+  const [expandedState, setExpandedState] = useState([]); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -71,6 +72,9 @@ export default function ProgressStepZero() {
         const filteredJobs = jobs.filter(job => job.chat_con_uid === null);
         setJobData(filteredJobs);
 
+        // Initialize expandedState with false for each job post
+        setExpandedState(new Array(data.json_data.length).fill(false));
+
         // // Load favState from localStorage
         // const storedFavState = JSON.parse(localStorage.getItem('favState')) || {};
         // setFavState(storedFavState);
@@ -87,6 +91,37 @@ export default function ProgressStepZero() {
   const handleCardClick = (job) => {
     // navigate('/fullprogress', { state: { hideChatTab: true, showJobDetails: true, isFromProgressStepZero: true } });
     navigate(`/fullprogress/${job.job_id}`);
+  };
+  
+  const toggleReadMore = (index) => {
+    setExpandedState(prevState => {
+      const newState = [...prevState];
+      newState[index] = !newState[index];
+      return newState;
+    });
+  };
+  
+  const renderMessage = (message, index) => {
+    const isExpanded = expandedState[index];
+    if (message.length <= 45 || isExpanded) {
+      return (
+        <>
+          {message} <br />
+          <Button onClick={() => toggleReadMore(index)} size="small" sx={{ fontSize: '11px', color: '#046EB8', fontWeight: '600', padding: '0', marginTop: '5px' }}>
+            {isExpanded ? '読む量を減らす' : '続きを読む'}
+          </Button>
+        </>
+      );
+    } else {
+      return (
+        <>
+          {message.substring(0, 45)}... <br />
+          <Button onClick={() => toggleReadMore(index)} size="small" sx={{ fontSize: '11px', color: '#046EB8', fontWeight: '600', padding: '0', marginTop: '5px' }}>
+            続きを読む
+          </Button>
+        </>
+      );
+    }
   };
 
   const handleFavClick = async (jobId) => {
@@ -169,8 +204,8 @@ export default function ProgressStepZero() {
             key={index}
             sx={{ minWidth: 275, marginBottom: '20px', marginTop: '10px', boxShadow: 'none', border: '1px solid #EEEEEE', borderRadius: '10px' }}
           >
-            <CardContent onClick={() => handleCardClick(job)}>
-              <Box sx={{ flexGrow: 1 }}>
+            <CardContent >
+              <Box sx={{ flexGrow: 1 }} onClick={() => handleCardClick(job)}>
                 <Grid container spacing={1} style={{ marginBottom: '5px' }}>
                   <Grid item xs={6}>
                     <Item sx={{ textAlign: 'left', fontSize: '12px' }}>求人no: {job.job_code}</Item>
@@ -183,10 +218,12 @@ export default function ProgressStepZero() {
                   </Grid>
                 </Grid>
               </Box>
-              <Typography variant="h6" component="div" sx={{ fontSize: '14px', fontWeight: '700', textAlign: 'left', padding: '0 8px' }}>
-                {job.cjp_recruitment_catchphrase}
-              </Typography>
-              <Box sx={{ flexGrow: 1 }} style={{ marginTop: '10px' }}>
+              <Box onClick={() => handleCardClick(job)}>
+                <Typography variant="h6" component="div" sx={{ fontSize: '14px', fontWeight: '700', textAlign: 'left', padding: '0 8px' }}>
+                  {job.cjp_recruitment_catchphrase}
+                </Typography>
+              </Box>
+              <Box sx={{ flexGrow: 1 }} style={{ marginTop: '10px' }} onClick={() => handleCardClick(job)}>
                 <Grid container spacing={1} sx={{ marginTop: '10px' }}>
                   <Grid item xs={6}>
                     <Item sx={{ textAlign: 'left', display: 'flex', gap: '5px', paddingTop: '0' }}>
@@ -208,9 +245,11 @@ export default function ProgressStepZero() {
                     <Item sx={{textAlign:'left', display:'grid', background: '#F9F6ED'}}><ChatIcon style={{marginLeft:'3px', width: '15px', height: '15px'}}/></Item>
                     </Grid>
                     <Grid item xs={11}>
-                    <Item sx={{textAlign:'left', background: '#F9F6ED', padding:'13px', fontSize:'11px' }}>【特別スカウト】渋谷/上場企業での経理マネ‐ジャー を募集しております。
-                    今までのご経験をぜひ、弊社で活かしてみませんか？
-                    ご応募お待ちしております。​</Item>
+                    <Item sx={{textAlign:'left', background: '#F9F6ED', padding:'13px', fontSize:'11px' }}>
+                    {renderMessage(`【特別スカウト】渋谷/上場企業での経理マネ‐ジャー を募集しております。
+                  今までのご経験をぜひ、弊社で活かしてみませんか？
+                  ご応募お待ちしております。​`, index)}
+                    ​</Item>
                     </Grid>
                 </Grid>
               </Box>

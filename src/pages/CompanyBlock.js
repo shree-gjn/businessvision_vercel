@@ -132,7 +132,6 @@ const CompanyBlock = () => {
 
       const result = await response.json();
       console.log('Add Company API Response:', result); // Debugging statement
-      
       if (result.ok && result.message === 'Company Block List Updated Successfully') {
         setcompanyName('');
         await fetchCompanyList(); 
