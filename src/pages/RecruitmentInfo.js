@@ -338,9 +338,11 @@ export default function RecruitmentInfo() {
                 </Grid>
             </Grid>
             </Box>
-            <Typography variant="h6" component="div" sx={{fontSize:'14px', fontWeight:'700', textAlign:'left', padding: '0 8px'}}>
-            {job.cjp_recruitment_catchphrase} 
-            </Typography>
+            <Box sx={{ flexGrow: 1, textDecoration:'none', color: '#000'}} component={Link} to={`/recruitment/${job.cjp_id}`}>
+              <Typography variant="h6" component="div" sx={{fontSize:'14px', fontWeight:'700', textAlign:'left', padding: '0 8px'}}>
+              {job.cjp_recruitment_catchphrase} 
+              </Typography>
+            </Box>
             <Box sx={{ flexGrow: 1, textDecoration:'none' }} component={Link} to={`/recruitment/${job.cjp_id}`}>
             <Grid container spacing={1}>
                 <Grid item xs={6}>
