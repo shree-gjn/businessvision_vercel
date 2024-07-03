@@ -319,9 +319,11 @@ export default function SecretEntry() {
                     </Grid>
                 </Grid>
                 </Box>
-                <Typography variant="h6" component="div" sx={{fontSize:'14px', fontWeight:'700', textAlign:'left', textDecoration:'none'}}>
-                {job.cjp_recruitment_catchphrase}
-                </Typography>
+                <Box sx={{ flexGrow: 1, textDecoration:'none'}} component={Link} to={`/secretentrydetail/${job.cjp_id}`}>
+                  <Typography variant="h6" component="div" sx={{fontSize:'14px', fontWeight:'700', textAlign:'left', textDecoration:'none', color: '#000'}}>
+                  {job.cjp_recruitment_catchphrase}
+                  </Typography>
+                </Box>
                 <Box sx={{ flexGrow: 1, textDecoration:'none'}}  component={Link} to={`/secretentrydetail/${job.cjp_id}`}>
                 <Grid container spacing={1} sx={{marginTop:'10px'}}>
                     <Grid item xs={6}>
@@ -335,14 +337,14 @@ export default function SecretEntry() {
                 </Grid>
                 </Box>
                 <Box sx={{ flexGrow: 1,textDecoration:'none'}} style={{background:'#DFD0A7', borderRadius:'5px'}}>
-                <Grid container spacing={1} sx={{paddingTop:'0px', background: '#F9F6ED', alignItems: 'center', width: '100%', margin: '0 auto'}}> 
-                    <Grid item xs={1}>
-                    <Item sx={{textAlign:'left', display:'grid',background: '#F9F6ED', borderRadius:'5px', alignItems: 'center'}}><ChatIcon style={{ marginLeft:'3px', width: '15px', height: '15px'}}/></Item>
-                    </Grid>
-                    <Grid item xs={11}>
-                    <Item sx={{textAlign:'left',background: '#F9F6ED', padding:'13px', fontSize:'11px', fontWeight: '600' }}> {renderMessage(job.cja_message, index)}​</Item>
-                    </Grid>
-                </Grid>
+                  <Grid container spacing={1} sx={{paddingTop:'0px', background: '#F9F6ED', alignItems: 'center', width: '100%', margin: '0 auto'}}> 
+                      <Grid item xs={1}>
+                      <Item sx={{textAlign:'left', display:'grid',background: '#F9F6ED', borderRadius:'5px', alignItems: 'center'}}><ChatIcon style={{ marginLeft:'3px', width: '15px', height: '15px'}}/></Item>
+                      </Grid>
+                      <Grid item xs={11}>
+                      <Item sx={{textAlign:'left',background: '#F9F6ED', padding:'13px', fontSize:'11px', fontWeight: '600' }}> {renderMessage(job.cja_message, index)}​</Item>
+                      </Grid>
+                  </Grid>
                 </Box>
               </CardContent>
               <CardActions>

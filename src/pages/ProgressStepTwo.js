@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CircularProgress from '@mui/material/CircularProgress';
 import {ReactComponent as BuildingIcon} from '../assets/BuildingIcon.svg';
@@ -17,6 +18,7 @@ import {ReactComponent as NoteIcon} from '../assets/NoteIcon.svg';
 import {ReactComponent as MapsIcon} from '../assets/MapsIcon.svg';
 import BottomNav from '../components/BottomNav';
 import { useNavigate } from 'react-router-dom';
+import { CardActions } from '@mui/material';
 
 const theme = createTheme({
   palette: {
@@ -48,6 +50,7 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function ProgressStepTwo() {
   const [jobData, setJobData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [favState, setFavState] = useState(false);
   const navigate = useNavigate();
 
   const handleCardClick = (job) => {
@@ -81,6 +84,71 @@ export default function ProgressStepTwo() {
     fetchJobData();
   }, []);
 
+  const handleFavClick = async (jobId) => {
+    try {
+      // Toggle local state
+      setFavState(prevFavState => {
+        const newFavState = {
+          ...prevFavState,
+          [jobId]: !prevFavState[jobId]
+        };
+  
+        // Save new state to sessionStorage
+        localStorage.setItem('favState', JSON.stringify(newFavState));
+  
+        return newFavState;
+      });
+  
+      // Perform API call to update favorite status
+      const authKey = localStorage.getItem('authKey');
+      if (!authKey) {
+        console.error('Auth key not found in sessionStorage');
+        return;
+      }
+  
+      const newFavState = !favState[jobId];
+      const formData = new FormData();
+      formData.append('auth_key', authKey);
+      formData.append('job_id', jobId);
+      formData.append('company_job_post_id', jobId);
+      formData.append('favorite', newFavState);
+  
+      const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/add_favourite_job_to_candidate`, {
+        method: 'POST',
+        headers: {},
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        // Revert local state on failure
+        setFavState(prevFavState => {
+          const revertedFavState = {
+            ...prevFavState,
+            [jobId]: !prevFavState[jobId]
+          };
+          sessionStorage.setItem('favState', JSON.stringify(revertedFavState));
+          return revertedFavState;
+        });
+        throw new Error('Failed to update favorite status');
+      }
+  
+      // Update favState based on API response
+      const data = await response.json();
+      setFavState((prevStates) => {
+        const updatedFavState = {
+          ...prevStates,
+          [jobId]: newFavState,
+        };
+        sessionStorage.setItem('favState', JSON.stringify(updatedFavState));
+        return updatedFavState;
+      });
+  
+      console.log('Response Data:', data);
+    } catch (error) {
+      console.error('Error updating favorite status:', error.message);
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
       {loading ? (
@@ -93,9 +161,8 @@ export default function ProgressStepTwo() {
           <Card
             key={index}
             sx={{ minWidth: 275, marginBottom: '20px', marginTop: '10px', boxShadow: 'none', border: '1px solid #EEEEEE', borderRadius: '10px' }}
-            onClick={() => handleCardClick(job)}
           >
-            <CardContent>
+            <CardContent onClick={() => handleCardClick(job)}>
               <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={1} style={{ marginBottom: '5px' }}>
                   <Grid item xs={6}>
@@ -128,7 +195,7 @@ export default function ProgressStepTwo() {
                   </Grid>
                 </Grid>
               </Box>
-              <Box sx={{ flexGrow: 1 }}>
+              {/* <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={1} sx={{marginTop:'10px'}}>
                     <Grid item xs={2}>
                       <ChatBlue /> 
@@ -140,8 +207,44 @@ export default function ProgressStepTwo() {
                       <ArrowRight />​
                     </Grid>
                 </Grid>
+              </Box> */}
+              <Box sx={{ flexGrow: 1 }} style={{background:'#DFD0A7', borderRadius:'5px', marginTop:'10px'}}>
+                <Grid container spacing={1} sx={{paddingTop:'0px', background: '#F9F6ED', borderRadius: '5px', alignItems: 'center', width: '100%', margin: '0 auto'}}> 
+                    <Grid item xs={1}>
+                    <Item sx={{textAlign:'left', display:'grid', background: '#F9F6ED'}}><ChatBlue/></Item>
+                    </Grid>
+                    <Grid item xs={11}>
+                    <Item sx={{textAlign:'left', background: '#F9F6ED', padding:'13px', fontSize:'11px' }}>【特別スカウト】渋谷/上場企業での経理マネ‐ジャー を募集しております。
+                    今までのご経験をぜひ、弊社で活かしてみませんか？
+                    ご応募お待ちしております。​</Item>
+                    </Grid>
+                </Grid>
               </Box>
             </CardContent>
+            <CardActions>
+              <Box sx={{ flexGrow: 1 }}>
+                  <Grid container spacing={1}>
+                      <Grid item xs={6}>
+                        {/* <Button component={Link} to="#" variant="contained" color="grey" sx={{width:'90%', marginBottom:'20px', color: '#fff'}}> 気になる済 </Button> */}
+                        <Button
+                          className='favorite_button'
+                          onClick={() => handleFavClick(job.cjp_id)}
+                          style={{
+                            backgroundColor: favState[job.cjp_id] ? '' : theme.palette.grey[500],
+                            color: favState[job.cjp_id] ? theme.palette.grey.main : '#fff',
+                          }}
+                          variant={favState[job.cjp_id] ? 'outlined' : 'contained'}
+                          sx={{ width: '90%', marginBottom: '20px', color: '#fff' }}
+                        >
+                          {favState[job.cjp_id] ? '気になる済' : '気になる済'}
+                        </Button>
+                      </Grid>
+                      <Grid item xs={6}>
+                        <Button onClick={() => handleCardClick(job)} variant="contained" color="primary" sx={{width:'90%', marginBottom: '20px'}}> 詳細を見る </Button>
+                      </Grid>
+                  </Grid>
+                </Box>
+            </CardActions>
           </Card>
         ))
       ) : (

@@ -235,9 +235,11 @@ export default function CorporateScout() {
                   </Grid>
               </Grid>
               </Box>
-              <Typography variant="h6" component="div" sx={{fontSize:'14px', fontWeight:'700', textAlign:'left'}}>
-               {job.cjp_recruitment_background}
-              </Typography>
+              <Box sx={{ flexGrow: 1, textDecoration:'none', color: '#000'}} component={Link} to={`/corporatescoutFullInfo/${job.cjp_id}`}>
+                <Typography variant="h6" component="div" sx={{fontSize:'14px', fontWeight:'700', textAlign:'left'}}>
+                {job.cjp_recruitment_background}
+                </Typography>
+              </Box>
               <Box sx={{ flexGrow: 1, textDecoration: 'none'}} component={Link} to={`/corporatescoutFullInfo/${job.cjp_id}`}>
               <Grid container spacing={1} sx={{marginTop:'10px'}}>
                   <Grid item xs={6}>
@@ -283,7 +285,7 @@ export default function CorporateScout() {
                     <Button component={Link} to={`/corporatescoutFullInfo/${job.cjp_id}`} variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
                   </Grid>
               </Grid>
-              </Box>
+            </Box>
             </CardActions>
           </Card>
         </div>
