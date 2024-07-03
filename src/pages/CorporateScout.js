@@ -280,7 +280,7 @@ export default function CorporateScout() {
                     </Button>
                   </Grid>
                   <Grid item xs={6}>
-                    <Button component={Link} to={`/recruitment/${job.cjp_id}`} variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
+                    <Button component={Link} to={`/corporatescoutFullInfo/${job.cjp_id}`} variant="contained" color="primary" sx={{width:'90%', marginBottom:'20px'}}> 詳細を見る </Button>
                   </Grid>
               </Grid>
               </Box>
