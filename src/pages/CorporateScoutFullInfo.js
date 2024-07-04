@@ -386,7 +386,7 @@ export default function CorporateScoutFullInfo() {
               <Item sx={{fontSize:'14px', textAlign:'left', color: '#16375A', fontWeight:'500'}}>基本情報</Item>
               </Grid>
               
-              {jobpost.cjp_recruitment_catchphrase && (
+              {/* {jobpost.cjp_recruitment_catchphrase && (
                 <>
                   <Grid item xs={3} sx={{ borderBottom: '1px solid rgba(8, 93, 149, 0.25)' }}>
                     <Item sx={{textAlign:'left', fontSize:'12px'}} variant="subtitle2">求人のキャッチコピー</Item>
@@ -395,7 +395,7 @@ export default function CorporateScoutFullInfo() {
                     <Item sx={{textAlign:'left', fontSize:'12px'}} variant="body2">{jobpost.cjp_recruitment_catchphrase}</Item>
                   </Grid>
                 </>
-              )}
+              )} */}
 
               {jobpost.cjp_features_of_recruitment && (
                 <>
