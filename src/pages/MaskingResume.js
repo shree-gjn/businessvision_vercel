@@ -8,6 +8,7 @@ import { styled } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom'; 
 import Grid from '@mui/material/Grid';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
 
 const BackLink = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
@@ -121,11 +122,11 @@ const MaskingResume = () => {
       <p>マスキング履歴書設定</p>
     </div>
     <TableContainer component={Paper} sx={{marginBottom:'200px', boxShadow: 'none', width: 'auto', padding: '20px'}}>
-      <Grid container style={{}}>
+      <Grid container style={{textDecoration: 'none'}} component={Link} to={'/editmaskingresume'}>
         <Grid item xs={4} style={{marginBottom: '10px', marginLeft: 'auto'}}>
-          <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '70px', display: 'flex', gap: '15px', marginLeft: 'auto'}}>
+          <Item style={{padding: '10px 20px', border: '1px solid #eeeeee', borderRadius: '5px', background: '#fff', maxWidth: '70px', display: 'flex', alignItems: 'center', gap: '15px', marginLeft: 'auto'}}>
             <span>
-              <PencilEdit />
+              <EditIcon />
             </span>
             <Typography variant='paragraph'>編集</Typography>
           </Item>

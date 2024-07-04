@@ -498,7 +498,68 @@ const EditMaskingResume = () => {
     type_of_work_exp_overall: '',
     type_of_industries_exp_overall: [],
     accounting_exp_total_year: '',
+    current_company_name: '',
+    job_position: '',
+    type_of_work_exp_current: '',
+    type_of_industries_exp_current: '',
+    management_exp: '',
+    exp_accounting_field: '',
+    company_categories: '',
+    qualification_certificate: '',
+    accounting_software: '',
+    desired_annual_income: '',
+    desired_job_type: '',
+    desired_industry: '',
+    desired_position: '',
+    desired_location_city: '',
+    desired_location_street: '',
+    desired_company_category: '',
+    desired_no_of_employee: '',
   });
+
+  useEffect(() => {
+    // Mock API call
+
+    const authKey = sessionStorage.getItem('authKey');
+    fetch(`https://bvhr-api.azurewebsites.net/candidate/get_candidate_basic_details?auth_key=${authKey}`)
+      .then(response => response.json())
+      .then(data => {
+        const profile = data.Candidate_profile_details;
+        setFormData({
+          candidate_gender: profile.gender || '',
+          dob: profile.dob || '',
+          prefecture_code: profile.prefecture_code || '',
+          final_educational: profile.final_educational || '',
+          job_changed_no: profile.Job_changed_no || '',
+          current_employment_status: profile.Current_employment_status || '',
+          job_change_duration: profile.job_change_duration || '',
+          current_annual_income: profile.current_annual_income || '',
+          type_of_work_exp_overall: profile.type_of_work_exp_overall || '',
+          type_of_industries_exp_overall: profile.type_of_industries_exp_overall ? profile.type_of_industries_exp_overall.split(',') : [],
+          accounting_exp_total_year: profile.overall_accounting_exp || '',
+          current_company_name: profile.masking_block_company || '',
+          job_position: profile.Post || '',
+          type_of_work_exp_current: profile.type_of_work_exp_current || '',
+          type_of_industries_exp_current: profile.type_of_industries_exp_current || '',
+          management_exp: profile.management_exp || '',
+          exp_accounting_field: profile.accounting_field_exp || '',
+          company_categories: profile.company_categories || '',
+          qualification_certificate: profile.qualification_held || '',
+          accounting_software: profile.accounting_software || '',
+          desired_annual_income: profile.desired_annual_income || '',
+          desired_job_type: profile.desired_job_type || '',
+          desired_industry: profile.desired_industry || '',
+          desired_position: profile.desired_position || '',
+          desired_location_city: profile.desired_location || '',
+          desired_location_street: '', // Assuming this is not part of the API response
+          desired_company_category: profile.desired_company_category || '',
+          desired_no_of_employee: profile.desired_no_of_employee || '',
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching profile data:', error);
+      });
+  }, []);
 
 
   const [expanded, setExpanded] = useState(false);
@@ -543,22 +604,34 @@ const EditMaskingResume = () => {
   };
 
 
-  // Handle form field changes
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+  // // Handle form field changes
+  // const handleChange = (e) => {
+  //   const { name, value, type, checked } = e.target;
 
-    // For checkboxes
-    if (type === 'checkbox') {
-      const updatedFormData = { ...formData };
-      updatedFormData[name] = checked; // Update the value directly
-      setFormData(updatedFormData);
-    } else {
-      // For other input types (text, select, etc.)
-      // Update the form data with the value
-      setFormData({ ...formData, [name]: value });
-    }
-    // Clear error message for the field
-    setErrors({ ...errors, [name]: '' });
+  //   // For checkboxes
+  //   if (type === 'checkbox') {
+  //     const updatedFormData = { ...formData };
+  //     updatedFormData[name] = checked; // Update the value directly
+  //     setFormData(updatedFormData);
+  //   } else {
+  //     // For other input types (text, select, etc.)
+  //     // Update the form data with the value
+  //     setFormData({ ...formData, [name]: value });
+  //   }
+  //   // Clear error message for the field
+  //   setErrors({ ...errors, [name]: '' });
+  // };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+    setErrors(prevErrors => ({
+      ...prevErrors,
+      [name]: '', // Clear error message for the field
+    }));
   };
 
   const handleSubmit = (event) => {
@@ -673,6 +746,55 @@ const EditMaskingResume = () => {
     }
 
     setErrors(newErrors);
+
+    // Check if there are no validation errors
+    if (Object.keys(newErrors).length === 0) {
+
+    // Prepare the FormData object
+    const formDataToSend = new FormData();
+    formDataToSend.append('auth_key', sessionStorage.getItem('authKey'));
+    formDataToSend.append('candidate_gender', formData.candidate_gender);
+    formDataToSend.append('dob', formData.dob);
+    formDataToSend.append('prefecture_code', formData.prefecture_code);
+    formDataToSend.append('final_educational', formData.final_educational);
+    formDataToSend.append('job_changed_no', formData.job_changed_no);
+    formDataToSend.append('current_employment_status', formData.current_employment_status);
+    formDataToSend.append('job_change_duration', formData.job_change_duration);
+    formDataToSend.append('current_annual_income', formData.current_annual_income);
+    formDataToSend.append('type_of_work_exp_overall', formData.type_of_work_exp_overall);
+    formDataToSend.append('type_of_industries_exp_overall', formData.type_of_industries_exp_overall.join(',')); // Convert array to string
+    formDataToSend.append('accounting_exp_total_year', formData.accounting_exp_total_year);
+    formDataToSend.append('job_position', formData.job_position);
+    formDataToSend.append('type_of_work_exp_current', formData.type_of_work_exp_current);
+    formDataToSend.append('type_of_industries_exp_current', formData.type_of_industries_exp_current);
+    formDataToSend.append('management_exp', formData.management_exp);
+    formDataToSend.append('exp_accounting_field', formData.exp_accounting_field);
+    formDataToSend.append('company_categories', formData.company_categories);
+    formDataToSend.append('desired_annual_income', formData.desired_annual_income);
+    formDataToSend.append('desired_job_type', formData.desired_job_type);
+    formDataToSend.append('desired_industry', formData.desired_industry);
+    formDataToSend.append('desired_position', formData.desired_position);
+    formDataToSend.append('desired_location_city', formData.desired_location_city);
+    formDataToSend.append('desired_location_street', formData.desired_location_street);
+    formDataToSend.append('desired_company_category', formData.desired_company_category);
+    formDataToSend.append('desired_no_of_employee', formData.desired_no_of_employee);
+    
+    // Make the API request
+    fetch(`https://bvhr-api.azurewebsites.net/candidate/edit_candidate_profile`, {
+      method: 'POST',
+      body: formDataToSend
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Handle the response data
+      console.log('Success:', data);
+      // You can add more logic here to show a success message or redirect the user
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      // Handle the error
+    });
+  }
     
   };
 
@@ -683,7 +805,7 @@ const EditMaskingResume = () => {
         <p>マスキング履歴書設定</p>
       </div>
       <Box sx={{padding: '24px'}}>
-        <form onSubmit={handleSubmit}>
+        <form onClick={handleSubmit}>
           <Grid container spacing={2} sx={{ textAlign: 'left', marginTop: '10px' }}>
             <Grid item xs={12}>
               <FormControl component="fieldset" error={Boolean(errors.candidate_gender)} sx={{marginBottom: '10px'}}>
@@ -692,7 +814,7 @@ const EditMaskingResume = () => {
                   row
                   aria-label="candidate_gender"
                   name="candidate_gender"
-                  value={formData.candidate_gender || ''}
+                  value={formData.candidate_gender}
                   onChange={handleChange}
                   error={Boolean(errors.candidate_gender)}
                   helperText={errors.candidate_gender}
@@ -718,7 +840,7 @@ const EditMaskingResume = () => {
               <FormControl fullWidth error={Boolean(errors.prefecture_code)} sx={{marginBottom: '10px'}}>
                 <FormLabel className='formfield-label' id="demo-radio-buttons-group-label" sx={{marginBottom: '10px'}}>お住まいの都道府県を教えてください<span className='required_label'>必須</span>​</FormLabel>
                 <Select
-                  value={formData.prefecture_code || ''}
+                  value={formData.prefecture_code}
                   name='prefecture_code'
                   onChange={handleChange}
                   displayEmpty
@@ -738,7 +860,7 @@ const EditMaskingResume = () => {
               <FormControl fullWidth error={Boolean(errors.final_educational)} sx={{marginBottom: '10px'}}>
                 <FormLabel className='formfield-label' id="second-dropdown-label" sx={{marginBottom: '10px'}}>最終学歴を教えてください<span className='required_label'>必須</span>​</FormLabel>
                 <Select
-                  value={formData.final_educational || ''}
+                  value={formData.final_educational}
                   name='final_educational'
                   onChange={handleChange}
                   displayEmpty
@@ -758,7 +880,7 @@ const EditMaskingResume = () => {
               <FormControl fullWidth error={Boolean(errors.job_changed_no)} sx={{marginBottom: '10px'}}>
                 <FormLabel className='formfield-label' id="third-dropdown-label" sx={{marginBottom: '10px'}}>転職回数を教えてください<span className='required_label'>必須</span></FormLabel>
                 <Select
-                  value={formData.job_changed_no || ''}
+                  value={formData.job_changed_no}
                   name='job_changed_no'
                   onChange={handleChange}
                   displayEmpty
@@ -781,7 +903,7 @@ const EditMaskingResume = () => {
                   row
                   aria-label="newRadio"
                   name="current_employment_status"
-                  value={formData.current_employment_status || ''}
+                  value={formData.current_employment_status}
                   onChange={handleChange}
                   error={Boolean(errors.current_employment_status)}
                   helperText={errors.current_employment_status}
@@ -798,7 +920,7 @@ const EditMaskingResume = () => {
               <FormControl fullWidth error={Boolean(errors.job_change_duration)} sx={{marginBottom: '10px'}}>
                 <FormLabel className='formfield-label' id="dropdown4-label" sx={{marginBottom: '10px'}}>転職希望時期を教えてください<span className='required_label'>必須</span></FormLabel>
                 <Select
-                  value={formData.job_change_duration || ''}
+                  value={formData.job_change_duration}
                   name='job_change_duration'
                   onChange={handleChange}
                   displayEmpty
@@ -820,7 +942,7 @@ const EditMaskingResume = () => {
             <FormControl fullWidth error={Boolean(errors.current_annual_income)} sx={{marginBottom: '10px'}}>
               <FormLabel className='formfield-label' id="dropdown5-label" sx={{marginBottom: '10px'}}>現在年収を教えてください<span className='required_label'>必須</span></FormLabel>
               <Select
-                value={formData.current_annual_income || ''}
+                value={formData.current_annual_income}
                 name='current_annual_income'
                 onChange={handleChange}
                 displayEmpty
@@ -851,7 +973,7 @@ const EditMaskingResume = () => {
             <FormControl fullWidth error={Boolean(errors.type_of_work_exp_overall)} sx={{marginBottom: '10px'}}>
               <FormLabel className='formfield-label' id="dropdown6-label" sx={{marginBottom: '10px'}}>経験した職種を教えてください <br />（複数選択可）<span className='required_label'>必須</span></FormLabel>
               <Select
-                value={formData.type_of_work_exp_overall || ''}
+                value={formData.type_of_work_exp_overall}
                 name='type_of_work_exp_overall'
                 onChange={handleChange}
                 displayEmpty
@@ -877,7 +999,7 @@ const EditMaskingResume = () => {
                 // onChange={handleChange}
                 error={Boolean(errors.type_of_industries_exp_overall)}
                 helperText={errors.type_of_industries_exp_overall}
-                selectedCheckboxes={formData.type_of_industries_exp_overall || []}
+                selectedCheckboxes={formData.type_of_industries_exp_overall}
               onCheckboxChange={handleCheckboxChange}
               />
               {errors.type_of_industries_exp_overall && <FormHelperText style={{ color: 'red', margin: '10px 0'}}>{errors.type_of_industries_exp_overall}</FormHelperText> }
@@ -889,7 +1011,7 @@ const EditMaskingResume = () => {
             <FormControl fullWidth error={Boolean(errors.accounting_exp_total_year)} sx={{marginBottom: '10px'}}>
               <FormLabel className='formfield-label' id="dropdown5-label" sx={{marginBottom: '10px'}}>経理の経験年数を教えてください<span className='required_label'>必須</span>​</FormLabel>
               <Select
-                value={formData.accounting_exp_total_year || ''}
+                value={formData.accounting_exp_total_year}
                 name='accounting_exp_total_year'
                 onChange={handleChange}
                 displayEmpty
@@ -913,7 +1035,7 @@ const EditMaskingResume = () => {
               fullWidth
               placeholder="現在（直近）の在籍会社名を入力してください"
               variant="outlined"
-              value={formData.current_company_name || ''}
+              value={formData.current_company_name}
               name='current_company_name'
               onChange={handleChange}
             />
@@ -942,7 +1064,7 @@ const EditMaskingResume = () => {
         <FormLabel id="dropdown9-label" sx={{marginBottom: '10px', display: 'block'}}>英語​</FormLabel>
         <FormControl fullWidth>
           <Select
-            value={formData.selectedValue || ''}
+            value={formData.selectedValue}
             name='selectedValue'
             onChange={handleChange}
             inputProps={{
@@ -972,7 +1094,7 @@ const EditMaskingResume = () => {
                 // label="Your Label"
                 placeholder="あなたのスコア"
                 variant="outlined"
-                value={formData.score || ''}
+                value={formData.score}
                 onChange={handleChange}
                 name='score'
                 // other TextField props can be added here
@@ -991,7 +1113,7 @@ const EditMaskingResume = () => {
                 <Collapse in={expanded}>
                   <div style={{padding: '10px 0'}}>
                   <Select
-                      value={formData.dropdown2Value || ''}
+                      value={formData.dropdown2Value}
                       name='dropdown2Value'
                       onChange={handleChange}
                       style={{ marginBottom: '10px', marginRight: '10px', width:'48%' }}
@@ -1004,7 +1126,7 @@ const EditMaskingResume = () => {
                       ))}
                     </Select>
                     <Select
-                      value={formData.dropdown1Value || ''}
+                      value={formData.dropdown1Value}
                       name='dropdown1Value'
                       onChange={handleChange}
                       style={{ marginBottom: '10px', width:'48%'}}
@@ -1024,7 +1146,7 @@ const EditMaskingResume = () => {
           <FormControl fullWidth error={Boolean(errors.job_position)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="demo-radio-buttons-group-label" sx={{marginBottom: '10px'}}>現在（直近）の在籍会社での役職を教えてください<span className='required_label'>必須</span></FormLabel>
             <Select
-              value={formData.job_position || ''}
+              value={formData.job_position}
               name="job_position"
               onChange={handleChange}
               displayEmpty
@@ -1045,7 +1167,7 @@ const EditMaskingResume = () => {
           <FormControl fullWidth error={Boolean(errors.type_of_work_exp_current)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="second-dropdown-label" sx={{marginBottom: '10px'}}>現在（直近）の在籍会社での経験職種を教えてください<span className='required_label'>必須</span></FormLabel>
             <Select
-              value={formData.type_of_work_exp_current || ''}
+              value={formData.type_of_work_exp_current}
               name='type_of_work_exp_current'
               onChange={handleChange}
               displayEmpty
@@ -1066,7 +1188,7 @@ const EditMaskingResume = () => {
           <FormControl fullWidth error={Boolean(errors.type_of_industries_exp_current)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="third-dropdown-label" sx={{marginBottom: '10px'}}>現在（直近）の在籍会社の業種を教えてください<span className='required_label'>必須</span></FormLabel>
             <Select
-              value={formData.type_of_industries_exp_current || ''}
+              value={formData.type_of_industries_exp_current}
               name='type_of_industries_exp_current'
               onChange={handleChange}
               displayEmpty
@@ -1105,7 +1227,7 @@ const EditMaskingResume = () => {
           <FormControl fullWidth error={Boolean(errors.exp_accounting_field)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="dropdown4-label" sx={{marginBottom: '10px'}}>経理での経験業務を選択してください<span className='required_label'>必須</span>​</FormLabel>
             <Select
-              value={formData.exp_accounting_field || ''}
+              value={formData.exp_accounting_field}
               name='exp_accounting_field'
               onChange={handleChange}
               displayEmpty
@@ -1127,7 +1249,7 @@ const EditMaskingResume = () => {
           <FormControl fullWidth error={Boolean(errors.company_categories)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="dropdown5-label" sx={{marginBottom: '10px'}}>今まで在籍したことのある会社のカテゴリを教えてください<span className='required_label'>必須</span></FormLabel>
             <Select
-              value={formData.company_categories || ''}
+              value={formData.company_categories}
               name='company_categories'
               onChange={handleChange}
               displayEmpty
@@ -1149,7 +1271,7 @@ const EditMaskingResume = () => {
           <FormControl fullWidth sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="dropdown6-label" sx={{marginBottom: '10px'}}>保有資格を教えてください</FormLabel>
             <Select
-              value={formData.qualification_certificate || ''}
+              value={formData.qualification_certificate}
               name='qualification_certificate'
               onChange={handleChange}
               displayEmpty
@@ -1169,7 +1291,7 @@ const EditMaskingResume = () => {
           <FormControl fullWidth sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="dropdown7-label" sx={{marginBottom: '10px'}}>使用可能会計ソフトを教えてください​</FormLabel>
             <Select
-              value={formData.accounting_software || ''}
+              value={formData.accounting_software}
               name='accounting_software'
               onChange={handleChange}
               displayEmpty
@@ -1188,7 +1310,7 @@ const EditMaskingResume = () => {
           <FormControl fullWidth error={Boolean(errors.desired_annual_income)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="demo-radio-buttons-group-label" sx={{marginBottom: '10px'}}>ご希望の年収を教えてください<span className='required_label'>必須</span></FormLabel>
             <Select
-              value={formData.desired_annual_income || ''}
+              value={formData.desired_annual_income}
               name='desired_annual_income'
               onChange={handleChange}
               displayEmpty
@@ -1217,7 +1339,7 @@ const EditMaskingResume = () => {
           <FormControl fullWidth error={Boolean(errors.desired_job_type)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="second-dropdown-label" sx={{marginBottom: '10px'}}>ご希望の職種を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
-              value={formData.desired_job_type || ''}
+              value={formData.desired_job_type}
               name='desired_job_type'
               onChange={handleChange}
               displayEmpty
@@ -1238,7 +1360,7 @@ const EditMaskingResume = () => {
           <FormControl fullWidth error={Boolean(errors.desired_industry)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="third-dropdown-label" sx={{marginBottom: '10px'}}>ご希望の業種を教えてください​<span className='required_label'>必須</span></FormLabel>
             <Select
-              value={formData.desired_industry || ''}
+              value={formData.desired_industry}
               name='desired_industry'
               onChange={handleChange}
               displayEmpty
@@ -1260,7 +1382,7 @@ const EditMaskingResume = () => {
           <FormControl fullWidth error={Boolean(errors.desired_position)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="dropdown4-label" sx={{marginBottom: '10px'}}>ご希望の役職を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
-              value={formData.desired_position || ''}
+              value={formData.desired_position}
               name='desired_position'
               onChange={handleChange}
               displayEmpty
@@ -1288,7 +1410,7 @@ const EditMaskingResume = () => {
                 fullWidth
                 id="desired_location_city"
                 name="desired_location_city"
-                value={formData.desired_location_city || ''}
+                value={formData.desired_location_city}
                 displayEmpty
                 onChange={handleChange}
                 inputProps={{ 'aria-label': 'Without label' }}
@@ -1311,7 +1433,7 @@ const EditMaskingResume = () => {
                 fullWidth
                 id="desired_location_street"
                 name="desired_location_street"
-                value={formData.desired_location_street || ''}
+                value={formData.desired_location_street}
                 displayEmpty
                 onChange={handleChange}
                 inputProps={{ 'aria-label': 'Without label' }}
@@ -1336,7 +1458,7 @@ const EditMaskingResume = () => {
           <FormControl fullWidth error={Boolean(errors.desired_company_category)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="dropdown6-label" sx={{marginBottom: '10px'}}>ご希望の企業カテゴリを教えてください​<span className='required_label'>必須</span></FormLabel>
             <Select
-              value={formData.desired_company_category || ''}
+              value={formData.desired_company_category}
               name='desired_company_category'
               onChange={handleChange}
               displayEmpty
@@ -1358,7 +1480,7 @@ const EditMaskingResume = () => {
           <FormControl fullWidth error={Boolean(errors.desired_no_of_employee)} sx={{marginBottom: '10px'}}>
             <FormLabel className='formfield-label' id="dropdown7-label" sx={{marginBottom: '10px'}}>ご希望の従業員規模を教えてください<span className='required_label'>必須</span>​</FormLabel>
             <Select
-              value={formData.desired_no_of_employee || ''}
+              value={formData.desired_no_of_employee}
               name='desired_no_of_employee'
               onChange={handleChange}
               displayEmpty
