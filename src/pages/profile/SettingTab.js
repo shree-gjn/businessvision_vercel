@@ -166,7 +166,7 @@ const SettingTab = () => {
         </Box>
         </Link>
         <Divider />
-        <Link to="#" style={{textDecoration:'none'}}>
+        <Link to="/login" style={{textDecoration:'none'}}>
         <Box sx={{ flexGrow: 1 , padding:'10px'}} onClick={handleLogout}>
         <Grid container spacing={1}>
             <Grid item xs={10}>
