@@ -53,7 +53,19 @@ const LoginForm = () => {
       // Token found, navigate to the desired page
       navigate('/mypage');
     }
+
+     // Check if "remember me" data exists in localStorage
+     const storedEmail = localStorage.getItem('rememberEmail');
+     const storedPassword = localStorage.getItem('rememberPassword');
+     if (storedEmail && storedPassword) {
+       setFormData({
+         email_address: storedEmail,
+         password: storedPassword,
+         rememberMe: true,
+       });
+     }
   }, [navigate]);
+  
 
   const handleChange = (event) => {
     const { name, value, checked } = event.target;
@@ -71,54 +83,127 @@ const LoginForm = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+
+  //  // Perform validation
+  // if (!formData.email_address.trim()) {
+  //   setEmailError('This field is required');
+  // } else if (!isValidEmail(formData.email_address)) {
+  //   setEmailError('Please enter a valid email address');
+  // } else {
+  //   setEmailError('');
+  // }
+
+  // if (!formData.password.trim()) {
+  //   setPasswordError('This field is required');
+  // } else {
+  //   setPasswordError('');
+  // }
+  
+  //   // Perform validation
+  //   if (formData.email_address && formData.password && !emailError && !passwordError) {
+  //     setLoading(true);
+  
+  //     // Trim any leading or trailing whitespace from email and password
+  //     const trimmedEmail = formData.email_address.trim();
+  //     const trimmedPassword = formData.password.trim();
+  
+  //     // Create FormData object
+  //     const requestBody = new FormData();
+  //     requestBody.append('email_address', trimmedEmail);
+  //     requestBody.append('password', trimmedPassword);
+  
+  //     console.log('Request Body:', requestBody); // Debug log
+  
+  //     try {
+  //       const response = await fetch('https://bvhr-api.azurewebsites.net/candidate/login', {
+  //         method: 'POST',
+  //         body: requestBody,
+  //       });
+  
+  //       console.log('Response Status:', response.status); // Log the response status
+  //       const data = await response.json();
+  //       console.log('Response Data:', data); // Log the response data
+  
+  //       if (response.ok) {
+  //         // Handle successful login here
+  //         console.log('Login successful!', data);
+
+  //         // Store auth_key in sessionStorage
+  //         sessionStorage.setItem('authKey', data.auth_key);
+
+  //         // Dispatch custom event
+  //         const loginEvent = new Event('loginSuccess');
+  //         window.dispatchEvent(loginEvent);
+  
+  //         // Reset loading state
+  //         setLoading(false);
+  
+  //         // Navigate to the registration page
+  //         navigate('/mypage');
+  //       } else {
+  //         // Handle login error
+  //         console.error('Login failed:', data);
+  //         setLoading(false);
+  //         // Display an error message to the user
+  //         // alert('Login failed: ' + (data.error.message || 'Unknown error'));
+  //         setPasswordError('Please check your password')
+  //       }
+  //     } catch (error) {
+  //       console.error('Error during login:', error);
+  //       setLoading(false);
+  //       // Display a generic error message to the user
+  //       // alert('An error occurred during login. Please try again.');
+  //       setPasswordError('An error occurred during login. Please try again.'); // Set password error message
+  //     }
+  //   } 
+  // };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-   // Perform validation
-  if (!formData.email_address.trim()) {
-    setEmailError('This field is required');
-  } else if (!isValidEmail(formData.email_address)) {
-    setEmailError('Please enter a valid email address');
-  } else {
-    setEmailError('');
-  }
+    // Perform validation
+    if (!formData.email_address.trim()) {
+      setEmailError('This field is required');
+    } else if (!isValidEmail(formData.email_address)) {
+      setEmailError('Please enter a valid email address');
+    } else {
+      setEmailError('');
+    }
 
-  if (!formData.password.trim()) {
-    setPasswordError('This field is required');
-  } else {
-    setPasswordError('');
-  }
-  
+    if (!formData.password.trim()) {
+      setPasswordError('This field is required');
+    } else {
+      setPasswordError('');
+    }
+
     // Perform validation
     if (formData.email_address && formData.password && !emailError && !passwordError) {
-
-      // setEmailError('');
-      // setPasswordError('');
-
       // Display loading spinner
       setLoading(true);
-  
+
       // Trim any leading or trailing whitespace from email and password
       const trimmedEmail = formData.email_address.trim();
       const trimmedPassword = formData.password.trim();
-  
+
       // Create FormData object
       const requestBody = new FormData();
       requestBody.append('email_address', trimmedEmail);
       requestBody.append('password', trimmedPassword);
-  
+
       console.log('Request Body:', requestBody); // Debug log
-  
+
       try {
         const response = await fetch('https://bvhr-api.azurewebsites.net/candidate/login', {
           method: 'POST',
           body: requestBody,
         });
-  
+
         console.log('Response Status:', response.status); // Log the response status
         const data = await response.json();
         console.log('Response Data:', data); // Log the response data
-  
+
         if (response.ok) {
           // Handle successful login here
           console.log('Login successful!', data);
@@ -126,13 +211,22 @@ const LoginForm = () => {
           // Store auth_key in sessionStorage
           sessionStorage.setItem('authKey', data.auth_key);
 
+          // Store email and password in localStorage if rememberMe is checked
+          if (formData.rememberMe) {
+            localStorage.setItem('rememberEmail', trimmedEmail);
+            localStorage.setItem('rememberPassword', trimmedPassword);
+          } else {
+            localStorage.removeItem('rememberEmail');
+            localStorage.removeItem('rememberPassword');
+          }
+
           // Dispatch custom event
           const loginEvent = new Event('loginSuccess');
           window.dispatchEvent(loginEvent);
-  
+
           // Reset loading state
           setLoading(false);
-  
+
           // Navigate to the registration page
           navigate('/mypage');
         } else {
@@ -140,17 +234,15 @@ const LoginForm = () => {
           console.error('Login failed:', data);
           setLoading(false);
           // Display an error message to the user
-          // alert('Login failed: ' + (data.error.message || 'Unknown error'));
-          setPasswordError('Please check your password')
+          setPasswordError('Please check your password');
         }
       } catch (error) {
         console.error('Error during login:', error);
         setLoading(false);
         // Display a generic error message to the user
-        // alert('An error occurred during login. Please try again.');
-        setPasswordError('An error occurred during login. Please try again.'); // Set password error message
+        setPasswordError('An error occurred during login. Please try again.');
       }
-    } 
+    }
   };
   
   const isValidEmail = (email) => {
