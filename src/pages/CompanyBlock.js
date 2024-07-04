@@ -116,51 +116,71 @@ const CompanyBlock = () => {
     fetchCompanyList();
   }, [fetchCompanyList]);
 
+
   const handleAddCompany = async () => {
     if (!companyName) return;
-
+  
     const authKey = sessionStorage.getItem('authKey');
     const formData = new FormData();
-    formData.append('auth_key', authKey); 
+    formData.append('auth_key', authKey);
     formData.append('company_block_list', companyName);
-
+  
     try {
       const response = await fetch('https://bvhr-api.azurewebsites.net/candidate/edit_company_block', {
         method: 'POST',
         body: formData,
       });
-
+  
       const result = await response.json();
       console.log('Add Company API Response:', result); // Debugging statement
-      if (result.ok && result.message === 'Company Block List Updated Successfully') {
+  
+      // Log the response to see what it contains
+      console.log('Response Status:', response.status);
+      console.log('Response JSON:', result);
+  
+      // Trim the message to remove leading/trailing whitespace
+      const trimmedMessage = result.message.trim();
+  
+      // Check the trimmed message directly for success
+      if (trimmedMessage === 'Company Block List Updated Successfully') {
         setcompanyName('');
-        await fetchCompanyList(); 
+        setCompanyList((prevList) => [...prevList, companyName]);
       } else {
-        console.error('Error adding company:', result.message || 'Unknown error');
+        console.error('Error adding company:', trimmedMessage || 'Unknown error');
       }
     } catch (error) {
       console.error('Error adding company:', error);
     }
   };
 
+
   const handleDeleteCompany = async (company) => {
     const authKey = sessionStorage.getItem('authKey');
     const formData = new FormData();
     formData.append('auth_key', authKey);
     formData.append('company_block_list', company);
-
+  
     try {
       const response = await fetch('https://bvhr-api.azurewebsites.net/candidate/delete_company_block', {
         method: 'POST',
         body: formData,
       });
-
+  
       const result = await response.json();
-      console.log('Delete Company API Response:', result);
-      if (result.ok && result.message === 'Company Block List Updated Successfully') {
-        await fetchCompanyList(); 
+      console.log('Delete Company API Response:', result); // Debugging statement
+  
+      // Log the response to see what it contains
+      console.log('Response Status:', response.status);
+      console.log('Response JSON:', result);
+  
+      // Trim the message to remove leading/trailing whitespace
+      const trimmedMessage = result.message.trim();
+  
+      // Check the trimmed message directly for success
+      if (trimmedMessage === 'Company Block List Updated Successfully') {
+        setCompanyList((prevList) => prevList.filter((item) => item !== company));
       } else {
-        console.error('Error deleting company:', result.message || 'Unknown error');
+        console.error('Error deleting company:', trimmedMessage || 'Unknown error');
       }
     } catch (error) {
       console.error('Error deleting company:', error);

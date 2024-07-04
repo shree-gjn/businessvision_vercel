@@ -390,7 +390,7 @@ export default function ResumeTab() {
             )}
             </Item>
           </Grid>
-          <Grid xs={12} sx={{marginBottom: '30px'}}>
+          <Grid item xs={12} sx={{marginBottom: '30px'}}>
             <Item sx={{textAlign: resume.length > 0 ? 'left' : 'center', }}>
               {/* <Typography sx={{textAlign: 'left'}}>アップロードされた履歴書</Typography> */}
               {normalResumes.length > 0 ? 'アップロードされた履歴書' : '履歴書が選択されていません'}
@@ -484,7 +484,7 @@ export default function ResumeTab() {
             )}
             </Item>
           </Grid>
-          <Grid xs={12}>
+          <Grid item xs={12}>
             <Item sx={{textAlign: experienceResume.length > 0 ? 'left' : 'center', }}>
               {/* <Typography sx={{textAlign: 'left'}}>アップロードされた職歴プロフィール</Typography> */}
               {experienceResume.length > 0 ? 'アップロードされた職歴プロフィール' : '履歴書が選択されていません'}

@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import { useNavigate } from 'react-router-dom';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
@@ -19,7 +20,25 @@ const Item = styled(Paper)(({ theme }) => ({
     boxShadow: 'none', 
   }));
 
+  
+
 const SettingTab = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    console.log('Logging out...');
+
+    // Clear tokens from localStorage or sessionStorage
+    localStorage.removeItem('rememberEmail');
+    localStorage.removeItem('rememberPassword');
+    sessionStorage.removeItem('authKey');
+
+    console.log('Tokens removed');
+
+    navigate('/login');
+    console.log('Navigating to login page');
+  };
+
   return (
     <>
       
@@ -148,7 +167,7 @@ const SettingTab = () => {
         </Link>
         <Divider />
         <Link to="#" style={{textDecoration:'none'}}>
-        <Box sx={{ flexGrow: 1 , padding:'10px'}}>
+        <Box sx={{ flexGrow: 1 , padding:'10px'}} onClick={handleLogout}>
         <Grid container spacing={1}>
             <Grid item xs={10}>
               <Item sx={{textAlign:'left', marginLeft:'10px'}}>ログアウト</Item>
