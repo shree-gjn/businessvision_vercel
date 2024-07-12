@@ -363,11 +363,10 @@ export default function SecretEntryFullInfo() {
               <Item sx={{textAlign:'left', display:'flex', gap:'5px', marginTop:'5px'}}> 
               <div><MapsIcon /> </div><Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}>{jobpost.cjp_work_location}</Typography>​</Item>
               </Grid> */}
-
               <Grid item xs={5}>
                 <Item sx={{textAlign:'left', display:'flex', gap:'5px', marginTop:'5px'}}> 
-                <div><MoneyIcon /> </div><Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}> {jobpost.cjp_salary_high_limit} ~ {jobpost.cjp_salary_high_limit}</Typography>
-                </Item>
+                  <div><BuildingIcon /></div> <Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}> {jobpost.cjp_company_name} </Typography>
+                ​</Item>
               </Grid>
               <Grid item xs={5}>
                 <Item sx={{textAlign:'left', display:'flex', gap:'5px', marginTop:'5px'}}> 
@@ -399,8 +398,8 @@ export default function SecretEntryFullInfo() {
               </Grid>
               <Grid item xs={5}>
                 <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
-                  <div><BuildingIcon /></div> <Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}> {jobpost.cjp_company_name} </Typography>
-                ​</Item>
+                <div><MoneyIcon /> </div><Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}> {jobpost.cjp_salary_high_limit} ~ {jobpost.cjp_salary_low_limit}</Typography>
+                </Item>
               </Grid>
               <Grid item xs={5} sx={{paddingTop:'0px'}}>
                 <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 

@@ -347,8 +347,8 @@ export default function RecruitmentInfo() {
             <Grid container spacing={1}>
                 <Grid item xs={6}>
                   <Item sx={{textAlign:'left', display:'flex', gap:'5px', marginTop:'5px'}}> 
-                  <div><MoneyIcon /> </div><Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}> {job.cjp_salary_high_limit} ~ {job.cjp_salary_high_limit}</Typography>
-                  </Item>
+                    <div><BuildingIcon /></div> <Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}> {job.cjp_company_name} </Typography>
+                  ​</Item>
                 </Grid>
                 <Grid item xs={6}>
                   <Item sx={{textAlign:'left', display:'flex', gap:'5px', marginTop:'5px'}}> 
@@ -357,8 +357,8 @@ export default function RecruitmentInfo() {
                 </Grid>
                 <Grid item xs={6}>
                   <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
-                    <div><BuildingIcon /></div> <Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}> {job.cjp_company_name} </Typography>
-                  ​</Item>
+                  <div><MoneyIcon /> </div><Typography variant="body1" sx={{fontSize:'12px', color:'#16375A', fontWeight:'500'}}> {job.cjp_salary_high_limit} ~ {job.cjp_salary_low_limit}</Typography>
+                  </Item>
                 </Grid>
                 <Grid item xs={6} sx={{paddingTop:'0px'}}>
                   <Item sx={{textAlign:'left', display:'flex', gap:'5px', paddingTop:'0px'}}> 
