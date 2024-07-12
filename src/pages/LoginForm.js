@@ -47,25 +47,58 @@ const LoginForm = () => {
   const [passwordError, setPasswordError] = useState('');
 
   useEffect(() => {
-    // Check for token in localStorage or sessionStorage
-    const authToken = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
-    if (authToken) {
-      // Token found, navigate to the desired page
-      navigate('/mypage');
-    }
-
      // Check if "remember me" data exists in localStorage
      const storedEmail = localStorage.getItem('rememberEmail');
      const storedPassword = localStorage.getItem('rememberPassword');
+    //  if (storedEmail && storedPassword) {
+    //    setFormData({
+    //      email_address: storedEmail,
+    //      password: storedPassword,
+    //      rememberMe: true,
+    //    });
+    //  }
      if (storedEmail && storedPassword) {
-       setFormData({
-         email_address: storedEmail,
-         password: storedPassword,
-         rememberMe: true,
-       });
-     }
+      // Attempt automatic login
+      handleAutoLogin(storedEmail, storedPassword);
+    }
   }, [navigate]);
-  
+
+  const handleAutoLogin = async (email, password) => {
+    setLoading(true);
+
+    // Create FormData object
+    const requestBody = new FormData();
+    requestBody.append('email_address', email.trim());
+    requestBody.append('password', password.trim());
+
+    try {
+      const response = await fetch('https://bvhr-api.azurewebsites.net/candidate/login', {
+        method: 'POST',
+        body: requestBody,
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Store auth_key in sessionStorage
+        sessionStorage.setItem('authKey', data.auth_key);
+
+        // Dispatch custom event
+        const loginEvent = new Event('loginSuccess');
+        window.dispatchEvent(loginEvent);
+
+        // Navigate to the registration page
+        navigate('/mypage');
+      } else {
+        setLoading(false);
+        console.error('Login failed:', data);
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error('Error during login:', error);
+    }
+  };
+
 
   const handleChange = (event) => {
     const { name, value, checked } = event.target;
@@ -82,83 +115,6 @@ const LoginForm = () => {
   const handleTogglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
-
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-
-  //  // Perform validation
-  // if (!formData.email_address.trim()) {
-  //   setEmailError('This field is required');
-  // } else if (!isValidEmail(formData.email_address)) {
-  //   setEmailError('Please enter a valid email address');
-  // } else {
-  //   setEmailError('');
-  // }
-
-  // if (!formData.password.trim()) {
-  //   setPasswordError('This field is required');
-  // } else {
-  //   setPasswordError('');
-  // }
-  
-  //   // Perform validation
-  //   if (formData.email_address && formData.password && !emailError && !passwordError) {
-  //     setLoading(true);
-  
-  //     // Trim any leading or trailing whitespace from email and password
-  //     const trimmedEmail = formData.email_address.trim();
-  //     const trimmedPassword = formData.password.trim();
-  
-  //     // Create FormData object
-  //     const requestBody = new FormData();
-  //     requestBody.append('email_address', trimmedEmail);
-  //     requestBody.append('password', trimmedPassword);
-  
-  //     console.log('Request Body:', requestBody); // Debug log
-  
-  //     try {
-  //       const response = await fetch('https://bvhr-api.azurewebsites.net/candidate/login', {
-  //         method: 'POST',
-  //         body: requestBody,
-  //       });
-  
-  //       console.log('Response Status:', response.status); // Log the response status
-  //       const data = await response.json();
-  //       console.log('Response Data:', data); // Log the response data
-  
-  //       if (response.ok) {
-  //         // Handle successful login here
-  //         console.log('Login successful!', data);
-
-  //         // Store auth_key in sessionStorage
-  //         sessionStorage.setItem('authKey', data.auth_key);
-
-  //         // Dispatch custom event
-  //         const loginEvent = new Event('loginSuccess');
-  //         window.dispatchEvent(loginEvent);
-  
-  //         // Reset loading state
-  //         setLoading(false);
-  
-  //         // Navigate to the registration page
-  //         navigate('/mypage');
-  //       } else {
-  //         // Handle login error
-  //         console.error('Login failed:', data);
-  //         setLoading(false);
-  //         // Display an error message to the user
-  //         // alert('Login failed: ' + (data.error.message || 'Unknown error'));
-  //         setPasswordError('Please check your password')
-  //       }
-  //     } catch (error) {
-  //       console.error('Error during login:', error);
-  //       setLoading(false);
-  //       // Display a generic error message to the user
-  //       // alert('An error occurred during login. Please try again.');
-  //       setPasswordError('An error occurred during login. Please try again.'); // Set password error message
-  //     }
-  //   } 
-  // };
 
   const handleSubmit = async (event) => {
     event.preventDefault();

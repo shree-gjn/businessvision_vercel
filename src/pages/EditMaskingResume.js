@@ -550,11 +550,12 @@ const EditMaskingResume = () => {
           desired_job_type: profile.desired_job_type || '',
           desired_industry: profile.desired_industry || '',
           desired_position: profile.desired_position || '',
-          desired_location_city: profile.desired_location || '',
-          desired_location_street: '', // Assuming this is not part of the API response
+          desired_location_city: profile.desired_location_city || '',
+          desired_location_street: profile.desired_location_street || '',
           desired_company_category: profile.desired_company_category || '',
           desired_no_of_employee: profile.desired_no_of_employee || '',
         });
+        console.log('updated formdata : setFormData', '51～100名​'=== profile.desired_no_of_employee, '51～100名​', profile.desired_no_of_employee)
       })
       .catch(error => {
         console.error('Error fetching profile data:', error);
@@ -622,17 +623,31 @@ const EditMaskingResume = () => {
   //   setErrors({ ...errors, [name]: '' });
   // };
 
+  // const handleChange = (e) => {
+  //   const { name, value, type, checked} = e.target;
+  //   setFormData(prevFormData => ({
+  //     ...prevFormData,
+  //     [name]: value,
+  //   }));
+  //   setErrors(prevErrors => ({
+  //     ...prevErrors,
+  //     [name]: '', // Clear error message for the field
+  //   }));
+  // };
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setFormData(prevFormData => ({
       ...prevFormData,
-      [name]: value,
+      [name]: type === 'checkbox' ? checked : value,
     }));
     setErrors(prevErrors => ({
       ...prevErrors,
       [name]: '', // Clear error message for the field
     }));
   };
+
+
 
   const handleSubmit = (event) => {
     
@@ -805,7 +820,7 @@ const EditMaskingResume = () => {
         <p>マスキング履歴書設定</p>
       </div>
       <Box sx={{padding: '24px'}}>
-        <form onClick={handleSubmit}>
+        <form >
           <Grid container spacing={2} sx={{ textAlign: 'left', marginTop: '10px' }}>
             <Grid item xs={12}>
               <FormControl component="fieldset" error={Boolean(errors.candidate_gender)} sx={{marginBottom: '10px'}}>
