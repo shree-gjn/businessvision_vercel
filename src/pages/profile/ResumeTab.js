@@ -606,28 +606,42 @@ export default function ResumeTab() {
   const [isResume, setIsResume] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const handleFileChange = (event, setSelectedFile) => {
+  // const handleFileChange = (event, setSelectedFile) => {
+  //   const file = event.target.files[0];
+  //   setSelectedFile(file);
+  // };
+
+  // const handleResumeChange = (event) => {
+  //   const file = event.target.files[0];
+  //   setSelectedResume(file);
+  //   if (file) {
+  //     uploadFile(file, 'normal_resume', setResume, setResumeUploadProgress, setUploadingResume);
+  //   }
+  // };
+
+  // const handleCvChange = (event) => {
+  //   const file = event.target.files[0];
+  //   setSelectedCv(file);
+  //   if (file) {
+  //     uploadFile(file, 'experience_resume', setCvs, setCvUploadProgress, setUploadingCv);
+  //   }
+  // };
+  
+  const handleFileChange = (event, setSelectedFile, type) => {
     const file = event.target.files[0];
     setSelectedFile(file);
-    // setResumeType("normal_resume");
+    if (file) {
+      uploadFile(file, type, type === 'normal_resume' ? setResume : setCvs, type === 'normal_resume' ? setResumeUploadProgress : setCvUploadProgress, type === 'normal_resume' ? setUploadingResume : setUploadingCv);
+    }
   };
 
   const handleResumeChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedResume(file);
-    if (file) {
-      uploadFile(file, 'normal_resume', setResume, setResumeUploadProgress, setUploadingResume);
-    }
+    handleFileChange(event, setSelectedResume, 'normal_resume');
   };
 
   const handleCvChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedCv(file);
-    if (file) {
-      uploadFile(file, 'experience_resume', setCvs, setCvUploadProgress, setUploadingCv);
-    }
+    handleFileChange(event, setSelectedCv, 'experience_resume');
   };
-
   
   const uploadFile = (file, type, setState, setProgress, setUploading) => {
     const authKey = sessionStorage.getItem('authKey');
@@ -635,6 +649,8 @@ export default function ResumeTab() {
     formData.append('auth_key', authKey);
     formData.append('resume_type', type);
     formData.append('resume_file', file);
+
+    console.log(`Uploading file: ${file.name}, type: ${type}`); // Debugging log
 
     const xhr = new XMLHttpRequest();
     xhr.open('POST', 'https://bvhr-api.azurewebsites.net/candidate/candidate_resume_upload', true);
@@ -753,8 +769,8 @@ export default function ResumeTab() {
         }
         const data = await response.json();
         console.log('Fetched data:', data); // Log fetched data to debug
-        setResume(data.candidate_resume || []); // Update state with fetched data
-        setCvs(data.candidate_Cv || []); // Update state with fetched data
+        setResume(data.candidate_resume.filter(item => item.cru_resume_type === 'normal_resume') || []);
+        setCvs(data.candidate_resume.filter(item => item.cru_resume_type === 'experience_resume') || []);
       } catch (error) {
         console.error('Error fetching resume list:', error);
       }
@@ -825,11 +841,11 @@ export default function ResumeTab() {
               <input
                 accept=".pdf,.doc,.docx,.txt"
                 style={{ display: 'none' }}
-                id="file-upload"
+                id="resume-upload"
                 type="file"
                 onChange={handleResumeChange}
               />
-              <label htmlFor="file-upload">
+              <label htmlFor="resume-upload">
                 <Button variant="outlined" component="span" sx={{gap: '10px', width: '100%', marginBottom: '10px'}}>
                   <CloudUploadIcon sx={{ fontSize: 20, color: '#D6D6D6'}} />
                   <Typography>ファイルを選択してアップロード</Typography> 
@@ -846,9 +862,9 @@ export default function ResumeTab() {
           <Grid item xs={12} sx={{marginBottom: '30px'}}>
             <Item sx={{textAlign: resume.length > 0 ? 'left' : 'center', }}>
               {/* <Typography sx={{textAlign: 'left'}}>アップロードされた履歴書</Typography> */}
-              {normalResumes.length > 0 ? 'アップロードされた履歴書' : '履歴書が選択されていません'}
+              {resume.length > 0 ? 'アップロードされた履歴書' : '履歴書が選択されていません'}
             </Item>
-            {Array.isArray(normalResumes) && normalResumes.map((resumeItem, index) => (
+            {resume.map((resumeItem, index) => (
               <Item
                 key={index}
                 sx={{
@@ -892,11 +908,11 @@ export default function ResumeTab() {
               <input
                 accept=".pdf,.doc,.docx,.txt"
                 style={{ display: 'none' }}
-                id="file-upload"
+                id="cv-upload"
                 type="file"
                 onChange={handleCvChange}
               />
-              <label htmlFor="file-upload">
+              <label htmlFor="cv-upload">
                 <Button variant="outlined" component="span" sx={{gap: '10px', width: '100%', marginBottom: '10px'}}>
                   <CloudUploadIcon sx={{ fontSize: 20, color: '#D6D6D6'}} />
                   <Typography>ファイルを選択してアップロード</Typography> 
@@ -911,9 +927,9 @@ export default function ResumeTab() {
             </Item>
           </Grid>
           <Grid item xs={12}>
-            <Item sx={{textAlign: experienceResume.length > 0 ? 'left' : 'center', }}>
+            <Item sx={{textAlign: cvs.length > 0 ? 'left' : 'center', }}>
               {/* <Typography sx={{textAlign: 'left'}}>アップロードされた職歴プロフィール</Typography> */}
-              {experienceResume.length > 0 ? 'アップロードされた職歴プロフィール' : '履歴書が選択されていません'}
+              {cvs.length > 0 ? 'アップロードされた職歴プロフィール' : '履歴書が選択されていません'}
             </Item>
             {/* {cvs.map((cv, index) => (
               <Item
@@ -935,7 +951,7 @@ export default function ResumeTab() {
                 <DeleteIcon onClick={() => handleDeleteFile(index, setCvs)} />
               </Item>
             ))} */}
-            {Array.isArray(experienceResume) && experienceResume.map((cvItem, index) => (
+            {cvs.map((cvItem, index) => (
               <Item
                 key={index}
                 sx={{
@@ -993,3 +1009,5 @@ export default function ResumeTab() {
     </div>
   );
 }
+
+

@@ -64,11 +64,6 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const IndustryComponent = ({ handleNext }) => {
   const [value, setValue] = React.useState('1');
-  // const [checkboxes, setCheckboxes] = React.useState({
-  //   checkbox1: false,
-  //   checkbox2: false,
-  //   checkbox3: false,
-  // });
 
   const [checkboxes, setCheckboxes] = useState({
     checkbox1: localStorage.getItem('checkbox1') === 'true',
