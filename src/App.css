@@ -103,3 +103,7 @@
   font-weight: 600 !important;
   color: #000 !important;
 }
+
+.recommended-setting-child{
+  padding-top: 0 !important;
+}
