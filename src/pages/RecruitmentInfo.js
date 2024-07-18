@@ -303,9 +303,9 @@ export default function RecruitmentInfo() {
     <ThemeProvider theme={theme}>
       <>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={8} sx={{margin:'10px 0px 10px 0px', display: 'flex', justifyContent: 'space-between'}}>
+          <Grid item xs={8} sx={{margin:'10px 0px 10px 0px', display: 'flex', gap: '20px'}}>
             <FilterGrid />
-            <Button component={Link} to="/recommendedjob" variant="contained" style={{background: '#d5dbe1', boxShadow: 'none', color: '#16375A'}}>
+            <Button component={Link} to="/recommendedjob" variant="contained" style={{background: '#d5dbe1', boxShadow: 'none', color: '#16375A', fontSize: '12px'}}>
               おすすめ設定
             </Button>
           </Grid>
