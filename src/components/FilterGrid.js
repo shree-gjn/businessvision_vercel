@@ -209,6 +209,7 @@ const FilterGrid = () => {
             vertical: 'top',
             horizontal: 'center',
           }}
+          sx={{width: '100%'}}
         >
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px' }}>
             <Button onClick={handleClose}>
