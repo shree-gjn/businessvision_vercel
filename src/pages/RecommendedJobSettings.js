@@ -90,6 +90,7 @@ const CustomToggleButton = styled(ToggleButton)(({ theme, selected }) => ({
   '&:hover': {
     backgroundColor: selected ? theme.palette.primary.dark : theme.palette.action.hover,
   },
+  textTransform: 'capitalize'
 }));
 
 const CustomChildToggleButton = styled(ToggleButton)(({ theme, selected }) => ({
@@ -108,8 +109,8 @@ const RecommendedJobSettings = () => {
     return savedSettings
       ? JSON.parse(savedSettings)
       : {
-          recommendedSettings: 'オフ',
-          recommendedDetail: 'オフ',
+          recommendedSettings: 'Off',
+          recommendedDetail: 'Off',
           annualIncome: '希望どおり',
           Worklocation: '希望どおり',
           Industry: '希望どおり',
@@ -131,7 +132,7 @@ const RecommendedJobSettings = () => {
         [key]: newAlignment,
       }));
 
-      if (key === 'recommendedSettings' && newAlignment === 'オフ') {
+      if (key === 'recommendedSettings' && newAlignment === 'Off') {
         setSettings(prevSettings => ({
           ...prevSettings,
           annualIncome: '希望どおり',
@@ -378,12 +379,12 @@ const RecommendedJobSettings = () => {
                 onChange={(event, newAlignment) => handleSettingChange(event, newAlignment, 'recommendedSettings')}
                 aria-label="Platform"
               >
-                <CustomToggleButton sx={{minWidth: '70px', padding: '5px'}} value="オフ">オフ</CustomToggleButton>
-                <CustomToggleButton sx={{minWidth: '70px', padding: '5px'}} value="オン">オン</CustomToggleButton>
+                <CustomToggleButton sx={{minWidth: '70px', padding: '5px'}} value="Off">Off</CustomToggleButton>
+                <CustomToggleButton sx={{minWidth: '70px', padding: '5px'}} value="On">On</CustomToggleButton>
               </ToggleButtonGroup>
             </Item>
           </Grid>
-          {settings.recommendedSettings === 'オン' && toggleItems.map((item, index) => (
+          {settings.recommendedSettings === 'On' && toggleItems.map((item, index) => (
             <Grid className='recommended-setting-child' item xs={12} key={item.key} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '0'}}>
               <Item>
                 <Typography>{item.label}</Typography>
@@ -417,17 +418,17 @@ const RecommendedJobSettings = () => {
                 onChange={(event, newAlignment) => handleSettingChange(event, newAlignment, 'recommendedDetail')}
                 aria-label="Platform"
               >
-                <CustomToggleButton sx={{minWidth: '70px', padding: '5px'}} value="オフ">オフ</CustomToggleButton>
-                <CustomToggleButton sx={{minWidth: '70px', padding: '5px'}} value="オン">オン</CustomToggleButton>
+                <CustomToggleButton sx={{minWidth: '70px', padding: '5px'}} value="Off">Off</CustomToggleButton>
+                <CustomToggleButton sx={{minWidth: '70px', padding: '5px'}} value="On">On</CustomToggleButton>
               </ToggleButtonGroup>
             </Item>
           </Grid>
           
-          {settings.recommendedDetail === 'オン' && (
+          {settings.recommendedDetail === 'On' && (
             <>
             <Grid item xs={12}>
             <Item sx={{display: 'flex', alignItems: 'center', gap: '10px', padding: '0', marginBottom: '10px'}}>
-              <Typography sx={{display: 'flex', alignItems: 'center', gap: '10px'}}>
+              <Typography sx={{display: 'flex', alignItems: 'center', gap: '10px', fontWeight: '600'}}>
                 <span><YenIcon sx={{fontSize: '25px', display: 'block'}} /></span>
                 年収
               </Typography>
@@ -466,8 +467,8 @@ const RecommendedJobSettings = () => {
             </Item>
           </Grid>
           <Grid item xs={12} sx={{marginTop: '20px'}}>
-            <Item sx={{display: 'flex', alignItems: 'center', gap: '10px', padding: '0', marginBottom: '10px'}}>
-              <Typography sx={{display: 'flex', alignItems: 'center', gap: '10px'}}>
+            <Item sx={{display: 'flex', alignItems: 'center', gap: '10px', padding: '0', marginBottom: '10px', }}>
+              <Typography sx={{display: 'flex', alignItems: 'center', gap: '10px', fontWeight: '600'}}>
                 <span><BagIcon sx={{fontSize: '25px', display: 'block'}} /></span>
                 業種
               </Typography>
@@ -510,7 +511,7 @@ const RecommendedJobSettings = () => {
 
           <Grid item xs={12} sx={{marginTop: '20px'}}>
             <Item sx={{display: 'flex', alignItems: 'center', gap: '10px', padding: '0', marginBottom: '10px'}}>
-              <Typography sx={{display: 'flex', alignItems: 'center', gap: '10px'}}>
+              <Typography sx={{display: 'flex', alignItems: 'center', gap: '10px', fontWeight: '600'}}>
                 <span><BuildingIcon sx={{fontSize: '25px', display: 'block'}} /></span>
                 企業カテゴリ
               </Typography>
@@ -530,7 +531,7 @@ const RecommendedJobSettings = () => {
           </Grid>
           <Grid item xs={12} sx={{marginTop: '20px'}}>
             <Item sx={{display: 'flex', alignItems: 'center', gap: '10px', padding: '0', marginBottom: '10px'}}>
-              <Typography sx={{display: 'flex', alignItems: 'center', gap: '10px'}}>
+              <Typography sx={{display: 'flex', alignItems: 'center', gap: '10px', fontWeight: '600'}}>
                 <span><GroupIcon sx={{fontSize: '25px', display: 'block'}} /></span>
                 従業員数
               </Typography>

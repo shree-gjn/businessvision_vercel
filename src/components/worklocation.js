@@ -225,7 +225,7 @@ const WorkLocation = () => {
             
       <Grid item xs={12} sx={{marginTop: '20px'}}>
           <Item sx={{display: 'flex', alignItems: 'center', gap: '10px', padding: '0', marginBottom: '10px'}}>
-            <Typography sx={{display: 'flex', alignItems: 'center', gap: '10px'}}>
+            <Typography sx={{display: 'flex', alignItems: 'center', gap: '10px', fontWeight: '600'}}>
               <span><MapsIcon sx={{fontSize: '25px', width: '30px', display: 'block'}} /></span>
               勤務地
             </Typography>
@@ -233,7 +233,7 @@ const WorkLocation = () => {
           <Item sx={{padding: '0'}}>
             <Accordion style={{ boxShadow: 'none', marginBottom: '5px'}} expanded={expanded.tokyo} onChange={handleAccordionChange('tokyo')}>
               <AccordionSummary
-                style={{ background: 'rgb(22 55 90 / 10%)', borderRadius: '5px' }}
+                style={{border: '1px solid rgba(0, 0, 0, 0.23)',  borderRadius: '5px' }}
                 expandIcon={expanded.tokyo ? <RemoveIcon /> : <AddIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
@@ -242,7 +242,7 @@ const WorkLocation = () => {
               </AccordionSummary>
               <AccordionDetails sx={{ padding: '0px', textAlign: 'left' }}>
                 <div>
-                  <Divider />
+                  {/* <Divider /> */}
                   <Box sx={{ padding: '10px' }}>
                     <FormGroup>
                       <FormControlLabel
@@ -291,7 +291,7 @@ const WorkLocation = () => {
             </Box>
             <Accordion style={{ boxShadow: 'none', marginBottom: '5px' }} expanded={expanded.chiba} onChange={handleAccordionChange('chiba')}>
               <AccordionSummary
-                style={{ background: 'rgb(22 55 90 / 10%)', borderRadius: '5px' }}
+                style={{border: '1px solid rgba(0, 0, 0, 0.23)',  borderRadius: '5px' }}
                 expandIcon={expanded.chiba ? <RemoveIcon /> : <AddIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
@@ -300,7 +300,7 @@ const WorkLocation = () => {
               </AccordionSummary>
               <AccordionDetails sx={{ padding: '0px', textAlign: 'left' }}>
                 <div>
-                  <Divider />
+                  {/* <Divider /> */}
                   <Box sx={{ padding: '10px' }}>
                     <FormGroup>
                       <FormControlLabel
@@ -349,7 +349,7 @@ const WorkLocation = () => {
             </Box>
             <Accordion style={{ boxShadow: 'none', marginBottom: '5px'}} expanded={expanded.kanagawa} onChange={handleAccordionChange('kanagawa')}>
               <AccordionSummary
-                style={{ background: 'rgb(22 55 90 / 10%)', borderRadius: '5px' }}
+                style={{border: '1px solid rgba(0, 0, 0, 0.23)',  borderRadius: '5px' }}
                 expandIcon={expanded.kanagawa ? <RemoveIcon /> : <AddIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
@@ -358,7 +358,7 @@ const WorkLocation = () => {
               </AccordionSummary>
               <AccordionDetails sx={{ padding: '0px', textAlign: 'left' }}>
                 <div>
-                  <Divider />
+                  {/* <Divider /> */}
                   <Box sx={{ padding: '10px' }}>
                     <FormGroup>
                       <FormControlLabel
@@ -407,7 +407,7 @@ const WorkLocation = () => {
             </Box>
             <Accordion style={{ boxShadow: 'none', marginBottom: '5px'}} expanded={expanded.saitama} onChange={handleAccordionChange('saitama')}>
               <AccordionSummary
-                style={{ background: 'rgb(22 55 90 / 10%)', borderRadius: '5px' }}
+                style={{border: '1px solid rgba(0, 0, 0, 0.23)',  borderRadius: '5px' }}
                 expandIcon={expanded.saitama ? <RemoveIcon /> : <AddIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
@@ -416,7 +416,7 @@ const WorkLocation = () => {
               </AccordionSummary>
               <AccordionDetails sx={{ padding: '0px', textAlign: 'left' }}>
                 <div>
-                  <Divider />
+                  {/* <Divider /> */}
                   <Box sx={{ padding: '10px' }}>
                     <FormGroup>
                       <FormControlLabel

@@ -112,7 +112,7 @@ const SkillSearch = () => {
     <ThemeProvider theme={theme}>
       <Grid item xs={12} sx={{marginTop: '20px'}}>
           <Item sx={{display: 'flex', alignItems: 'center', gap: '10px', padding: '0', marginBottom: '10px'}}>
-            <Typography sx={{display: 'flex', alignItems: 'center', gap: '10px'}}>
+            <Typography sx={{display: 'flex', alignItems: 'center', gap: '10px', fontWeight: '600'}}>
               <span><Accounting sx={{fontSize: '25px', display: 'block'}} /></span>
               経理スキル
             </Typography>

@@ -148,7 +148,7 @@ const theme = createTheme({
 
 const CustomToggleButton = styled(ToggleButton)(({ theme, selected }) => ({
   minWidth: '70px',
-  padding: '5px',
+  padding: '2px',
   backgroundColor: selected ? '#16375A !important' : '#fff !important' ,
   color: selected ? '#fff !important' : theme.palette.primary.main,
   '&:hover': {

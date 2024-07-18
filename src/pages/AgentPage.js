@@ -47,6 +47,16 @@ const AgentPage = () => {
     section4: [],
     section5: [],
   });
+
+  const [otherConsultation, setOtherConsultation] = useState({
+    section1: '',
+    section2: '',
+    section3: '',
+    section4: '',
+    section5: '',
+
+  });
+
   const [otherConsultationMatters, setOtherConsultationMatters] = React.useState('');
 
   const [checkboxes, setCheckboxes] = React.useState({
@@ -102,6 +112,14 @@ const AgentPage = () => {
   //   }
   // };
 
+  const handleOtherConsultation = (section) => (event) => {
+    const { value } = event.target;
+    setOtherConsultation((prev) => ({
+      ...prev,
+      [section]: value,
+    }));
+  };
+
   const handleKeyDown = (section) => (event) => {
     if (event.key === 'Enter' && !event.shiftKey && event.target.value.trim() !== '') {
       event.preventDefault(); // Prevent default Enter behavior
@@ -139,6 +157,11 @@ const AgentPage = () => {
     // formData.append('answer_email', answer_email);
     // formData.append('answer_online', answer_online);
     formData.append('answer_method', answer_method);
+    formData.append('other_consultation_before_application', otherConsultation.section1);
+    formData.append('other_consultation_application_stage', otherConsultation.section2);
+    formData.append('other_consultation_interview', otherConsultation.section3);
+    formData.append('other_consultation_unofficial_offer', otherConsultation.section4);
+    formData.append('other_consultation_join_company', otherConsultation.section5);
     formData.append('other_consultation_matters', otherConsultationMatters);
 
     try {
@@ -167,6 +190,13 @@ const AgentPage = () => {
     section3: [],
     section4: [],
     section5: [],
+  });
+  setOtherConsultation({
+    section1: '',
+    section2: '',
+    section3: '',
+    section4: '',
+    section5: '',
   });
   setOtherConsultationMatters('');
   setCheckboxes({
@@ -215,7 +245,9 @@ const AgentPage = () => {
                   name="section1"
                   multiline
                   rows={4}
-                  onKeyDown={handleKeyDown('section1')}
+                  value={otherConsultation.section1}
+                  onChange={handleOtherConsultation('section1')}
+                  // onKeyDown={handleKeyDown('section1')}
                 />
               </div>
             </div>
@@ -261,7 +293,9 @@ const AgentPage = () => {
                   name="section2"
                   multiline
                   rows={4}
-                  onKeyDown={handleKeyDown('section2')}
+                  value={otherConsultation.section2}
+                  onChange={handleOtherConsultation('section2')}
+                  // onKeyDown={handleKeyDown('section2')}
                 />
               </div>
             </div>
@@ -311,7 +345,9 @@ const AgentPage = () => {
                   name="section3"
                   multiline
                   rows={4}
-                  onKeyDown={handleKeyDown('section3')}
+                  value={otherConsultation.section3}
+                  onChange={handleOtherConsultation('section3')}
+                  // onKeyDown={handleKeyDown('section3')}
                 />
               </div>
             </div>
@@ -361,7 +397,9 @@ const AgentPage = () => {
                   name="section4"
                   multiline
                   rows={4}
-                  onKeyDown={handleKeyDown('section4')}
+                  value={otherConsultation.section4}
+                  onChange={handleOtherConsultation('section4')}
+                  // onKeyDown={handleKeyDown('section4')}
                 />
               </div>
             </div>
@@ -407,7 +445,9 @@ const AgentPage = () => {
                   name="username"
                   multiline
                   rows={4}
-                  onKeyDown={handleKeyDown('section5')}
+                  value={otherConsultation.section5}
+                  onChange={handleOtherConsultation('section5')}
+                  // onKeyDown={handleKeyDown('section5')}
                 />
               </div>
             </div>
