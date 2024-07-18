@@ -169,6 +169,7 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)({
     margin: '0px', // Remove default margin
     boxSizing: 'border-box',
   },
+  width: '100%'
 });
 
 const FilterGrid = () => {
@@ -210,49 +211,51 @@ const FilterGrid = () => {
             vertical: 'top',
             horizontal: 'center',
           }}
-          sx={{width: '100% !important'}}
+          style={{width: '100%'}}
         >
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px', width: '100%'}}>
-            <Button onClick={handleClose}>
-              <CloseIcon />
-            </Button>
-          </div>
-          <div style={{ padding: '0px 20px 20px', width: 'auto' }}>
-            <div style={{ marginBottom: '10px' }}>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize: '14px', marginBottom: '10px', color: '#16375A'}}>
-                未読/閲読
-              </Typography>
-              <StyledToggleButtonGroup
-                value={unreadReadValue}
-                exclusive
-                onChange={(e, newValue) => setUnreadReadValue(newValue)}
-                fullWidth
-                sx={{ marginBottom: '10px', gap: '10px'}}
-              >
-                <CustomToggleButton sx={{border: '1px solid #EEEEEE'}} value="未読">未読</CustomToggleButton>
-                <CustomToggleButton sx={{border: '1px solid #EEEEEE'}} value="既読">既読</CustomToggleButton>
-                <CustomToggleButton sx={{border: '1px solid #EEEEEE'}} value="すべて">すべて</CustomToggleButton>
-              </StyledToggleButtonGroup>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize: '14px', marginBottom: '10px', color: '#16375A'}}>
-                その他
-              </Typography>
-              <StyledToggleButtonGroup
-                value={otherValue}
-                exclusive
-                onChange={(e, newValue) => setOtherValue(newValue)}
-                fullWidth
-              >
-                <CustomToggleButton value="気になる">気になる</CustomToggleButton>
-                <CustomToggleButton value="ゴミ箱">ゴミ箱</CustomToggleButton>
-                <CustomToggleButton value="辞退する">辞退する</CustomToggleButton>
-              </StyledToggleButtonGroup>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-              <Button fullWidth variant="outlined" color="primary">
-                この条件で絞り込む
+          <div style={{width: '100%'}}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px', width: '100%'}}>
+              <Button onClick={handleClose}>
+                <CloseIcon />
               </Button>
+            </div>
+            <div style={{ padding: '0px 20px 20px', width: 'auto' }}>
+              <div style={{ marginBottom: '10px' }}>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize: '14px', marginBottom: '10px', color: '#16375A'}}>
+                  未読/閲読
+                </Typography>
+                <StyledToggleButtonGroup
+                  value={unreadReadValue}
+                  exclusive
+                  onChange={(e, newValue) => setUnreadReadValue(newValue)}
+                  fullWidth
+                  sx={{ marginBottom: '10px', gap: '10px'}}
+                >
+                  <CustomToggleButton sx={{border: '1px solid #EEEEEE'}} value="未読">未読</CustomToggleButton>
+                  <CustomToggleButton sx={{border: '1px solid #EEEEEE'}} value="既読">既読</CustomToggleButton>
+                  <CustomToggleButton sx={{border: '1px solid #EEEEEE'}} value="すべて">すべて</CustomToggleButton>
+                </StyledToggleButtonGroup>
+              </div>
+              <div style={{ marginBottom: '10px' }}>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize: '14px', marginBottom: '10px', color: '#16375A'}}>
+                  その他
+                </Typography>
+                <StyledToggleButtonGroup
+                  value={otherValue}
+                  exclusive
+                  onChange={(e, newValue) => setOtherValue(newValue)}
+                  fullWidth
+                >
+                  <CustomToggleButton value="気になる">気になる</CustomToggleButton>
+                  <CustomToggleButton value="ゴミ箱">ゴミ箱</CustomToggleButton>
+                  <CustomToggleButton value="辞退する">辞退する</CustomToggleButton>
+                </StyledToggleButtonGroup>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                <Button fullWidth variant="outlined" color="primary">
+                  この条件で絞り込む
+                </Button>
+              </div>
             </div>
           </div>
         </Popover>
