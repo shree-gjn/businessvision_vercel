@@ -127,6 +127,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Typography, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { width } from '@mui/system';
 
 const theme = createTheme({
   palette: {
@@ -209,9 +210,9 @@ const FilterGrid = () => {
             vertical: 'top',
             horizontal: 'center',
           }}
-          sx={{width: '100%'}}
+          sx={{width: '100% !important'}}
         >
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px', width: '100%'}}>
             <Button onClick={handleClose}>
               <CloseIcon />
             </Button>
