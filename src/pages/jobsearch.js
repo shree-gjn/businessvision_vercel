@@ -401,9 +401,9 @@ const JobSearch = () => {
               <RadioGroup
                   row
                   aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue="female"
+                  defaultValue="希望しない業種"
                   name="radio-buttons-group"
-                  sx={{gap: '20px'}}
+                  sx={{justifyContent: 'space-between'}}
                 >
                 <FormControlLabel sx={{marginRight: '7px'}} value="希望する業種" control={<Radio size="small"  sx={{padding: '0', marginRight: '5px'}} />} label={<Typography style={{fontSize: '12px'}}>希望する業種</Typography>} />
                 <FormControlLabel sx={{marginRight: '7px'}} value="希望しない業種" control={<Radio size="small" sx={{padding: '0', marginRight: '5px'}} />} label={<Typography style={{fontSize: '12px'}}>希望しない業種</Typography>} />

@@ -82,6 +82,26 @@ const toggleItems = [
   { label: '経理スキル', key: 'AccountingSkills' },
 ];
 
+const CustomToggleButton = styled(ToggleButton)(({ theme, selected }) => ({
+  minWidth: '70px',
+  padding: '5px',
+  backgroundColor: selected ? '#16375A !important' : '#fff !important' ,
+  color: selected ? '#fff !important' : theme.palette.primary.main,
+  '&:hover': {
+    backgroundColor: selected ? theme.palette.primary.dark : theme.palette.action.hover,
+  },
+}));
+
+const CustomChildToggleButton = styled(ToggleButton)(({ theme, selected }) => ({
+  minWidth: '70px',
+  padding: '5px',
+  backgroundColor: selected ? '#999 !important' : '#fff !important' ,
+  color: selected ? '#fff !important' : '#999',
+  '&:hover': {
+    backgroundColor: selected ? theme.palette.primary.dark : theme.palette.action.hover,
+  },
+}));
+
 const RecommendedJobSettings = () => {
   const [settings, setSettings] = useState(() => {
     const savedSettings = localStorage.getItem('recommendedJobSettings');
@@ -286,6 +306,7 @@ const RecommendedJobSettings = () => {
       '秩父市', '小鹿野町', '長瀞町', '皆野町', '横瀬町', '本庄市', '美里町'
     ],
   };
+
   
 
   const [upperlimit, setupperlimit] = useState('');
@@ -357,8 +378,8 @@ const RecommendedJobSettings = () => {
                 onChange={(event, newAlignment) => handleSettingChange(event, newAlignment, 'recommendedSettings')}
                 aria-label="Platform"
               >
-                <ToggleButton sx={{minWidth: '70px', padding: '5px'}} value="オフ">オフ</ToggleButton>
-                <ToggleButton sx={{minWidth: '70px', padding: '5px'}} value="オン">オン</ToggleButton>
+                <CustomToggleButton sx={{minWidth: '70px', padding: '5px'}} value="オフ">オフ</CustomToggleButton>
+                <CustomToggleButton sx={{minWidth: '70px', padding: '5px'}} value="オン">オン</CustomToggleButton>
               </ToggleButtonGroup>
             </Item>
           </Grid>
@@ -375,10 +396,10 @@ const RecommendedJobSettings = () => {
                   onChange={(event, newAlignment) => handleSettingChange(event, newAlignment, item.key)}
                   aria-label={item.label}
                 >
-                  <ToggleButton sx={{ minWidth: '100px', padding: '5px'}} value="希望どおり">希望どおり</ToggleButton>
-                  <ToggleButton sx={{ minWidth: '100px', padding: '5px'}} value="こだわらない">
+                  <CustomChildToggleButton sx={{ minWidth: '100px', padding: '5px'}} value="希望どおり">希望どおり</CustomChildToggleButton>
+                  <CustomChildToggleButton sx={{ minWidth: '100px', padding: '5px'}} value="こだわらない">
                     {index === 0 || index === toggleItems.length - 1 ? '少し広め' : 'こだわらない'}
-                  </ToggleButton>
+                  </CustomChildToggleButton>
                 </ToggleButtonGroup>
               </Item>
             </Grid>
@@ -396,25 +417,15 @@ const RecommendedJobSettings = () => {
                 onChange={(event, newAlignment) => handleSettingChange(event, newAlignment, 'recommendedDetail')}
                 aria-label="Platform"
               >
-                <ToggleButton sx={{minWidth: '70px', padding: '5px'}} value="オフ">オフ</ToggleButton>
-                <ToggleButton sx={{minWidth: '70px', padding: '5px'}} value="オン">オン</ToggleButton>
+                <CustomToggleButton sx={{minWidth: '70px', padding: '5px'}} value="オフ">オフ</CustomToggleButton>
+                <CustomToggleButton sx={{minWidth: '70px', padding: '5px'}} value="オン">オン</CustomToggleButton>
               </ToggleButtonGroup>
             </Item>
           </Grid>
-
-          <Grid item xs={12} sx={{display: 'flex', alignItems: 'center', position: 'relative', padding: '0'}}>
-            <TextField
-              label="Search"
-              variant="outlined"
-              size="small"
-              onChange={handleSearch}
-              fullWidth
-            />
-            <IconButton aria-label="search" color="primary" size="small" sx={{width: '30px', height: '30px', background: '#d5dbe1', borderRadius: '5px', position: 'absolute', right: '0', marginRight: '5px'}}>
-              <SearchIcon sx={{fontSize: '20px'}} />
-            </IconButton>
-          </Grid>
-          <Grid item xs={12} sx={{marginTop: '20px'}}>
+          
+          {settings.recommendedDetail === 'オン' && (
+            <>
+            <Grid item xs={12}>
             <Item sx={{display: 'flex', alignItems: 'center', gap: '10px', padding: '0', marginBottom: '10px'}}>
               <Typography sx={{display: 'flex', alignItems: 'center', gap: '10px'}}>
                 <span><YenIcon sx={{fontSize: '25px', display: 'block'}} /></span>
@@ -465,9 +476,9 @@ const RecommendedJobSettings = () => {
               <RadioGroup
                   row
                   aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue="female"
+                  defaultValue="希望しない業種"
                   name="radio-buttons-group"
-                  sx={{gap: '20px'}}
+                  sx={{justifyContent: 'space-between'}}
                 >
                 <FormControlLabel sx={{marginRight: '7px'}} value="希望する業種" control={<Radio size="small"  sx={{padding: '0', marginRight: '5px'}} />} label={<Typography style={{fontSize: '12px'}}>希望する業種</Typography>} />
                 <FormControlLabel sx={{marginRight: '7px'}} value="希望しない業種" control={<Radio size="small" sx={{padding: '0', marginRight: '5px'}} />} label={<Typography style={{fontSize: '12px'}}>希望しない業種</Typography>} />
@@ -547,6 +558,8 @@ const RecommendedJobSettings = () => {
               <Button variant="text">検索条件をリセット</Button>
             </Item>
           </Grid>
+            </>
+          )}
         </Grid>
       </Box>
 

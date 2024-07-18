@@ -110,29 +110,29 @@ const SkillSearch = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid item xs={12} sx={{marginTop: '20px', marginBottom: '20px'}}>
-            <Item sx={{display: 'flex', alignItems: 'center', gap: '10px', padding: '0', marginBottom: '10px'}}>
-              <Typography sx={{display: 'flex', alignItems: 'center', gap: '10px'}}>
-                <span><Accounting sx={{fontSize: '25px', display: 'block'}} /></span>
-                経理スキル
-              </Typography>
-            </Item>
-            <TableContainer sx={{marginBottom: '20px', border: '1px solid rgba(224, 224, 224, 1)'}}>
-              <Table>
-                <TableBody>
-                  {skilllevel.map((item, index) => (
-                    <TableRow key={index}>
-                      <TableCell align="center" sx={{background: '#2F75B5'}}>
-                        <Typography variant="h6" sx={{fontSize: '12px', fontWeight: '600', color: '#fff'}}>{item.level}</Typography>
-                      </TableCell>
-                      <TableCell>
-                        <Typography sx={{fontSize: '12px'}}>{item.description}</Typography>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+      <Grid item xs={12} sx={{marginTop: '20px'}}>
+          <Item sx={{display: 'flex', alignItems: 'center', gap: '10px', padding: '0', marginBottom: '10px'}}>
+            <Typography sx={{display: 'flex', alignItems: 'center', gap: '10px'}}>
+              <span><Accounting sx={{fontSize: '25px', display: 'block'}} /></span>
+              経理スキル
+            </Typography>
+          </Item>
+          <TableContainer sx={{marginBottom: '20px', border: '1px solid rgba(224, 224, 224, 1)'}}>
+            <Table>
+              <TableBody>
+                {skilllevel.map((item, index) => (
+                  <TableRow key={index}>
+                    <TableCell align="center" sx={{background: '#2F75B5', padding: '10px'}}>
+                      <Typography variant="h6" sx={{fontSize: '12px', fontWeight: '600', color: '#fff'}}>{item.level}</Typography>
+                    </TableCell>
+                    <TableCell sx={{padding: '10px'}}>
+                      <Typography sx={{fontSize: '12px'}}>{item.description}</Typography>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
            
           <TableContainer>
             <Table>
