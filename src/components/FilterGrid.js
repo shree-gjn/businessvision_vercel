@@ -211,9 +211,11 @@ const FilterGrid = () => {
             vertical: 'top',
             horizontal: 'center',
           }}
-          style={{width: '100%'}}
+          PaperProps={{
+            sx: { width: '100%' } // Set your desired width here
+          }}
         >
-          <div style={{width: '100%'}}>
+          <div>
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px', width: '100%'}}>
               <Button onClick={handleClose}>
                 <CloseIcon />
