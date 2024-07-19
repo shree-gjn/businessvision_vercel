@@ -92,7 +92,7 @@ const SettingTab = () => {
         </Grid>
         </Box>
         </Link>
-        <Divider />
+        {/* <Divider />
         <Link to="/emaildelivery" style={{textDecoration:'none'}}>
         <Box sx={{ flexGrow: 1 , padding:'10px'}}>
         <Grid container spacing={1}>
@@ -104,7 +104,7 @@ const SettingTab = () => {
             </Grid>
         </Grid>
         </Box>
-        </Link>
+        </Link> */}
         <Divider />
         <Link to="/terms" style={{textDecoration:'none'}}>
         <Box sx={{ flexGrow: 1 , padding:'10px'}}>

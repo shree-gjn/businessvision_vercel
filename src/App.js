@@ -48,6 +48,7 @@ import InprogressDetail from './pages/InprogressDetail';
 import CompanyBlock from './pages/CompanyBlock';
 import EditMaskingResume from './pages/EditMaskingResume';
 import Skillentry from './pages/skillentry';
+import SkillComparison from './components/skillcomparison';
 
 function App() {
   return (
@@ -101,6 +102,7 @@ function App() {
           <Route path="/companyblock" element={<CompanyBlock />} />
           <Route path="/editmaskingresume" element={<EditMaskingResume />} />Skillentry
           <Route path="/skillentry" element={<Skillentry />} />
+          <Route path="/skillcomparison" element={<SkillComparison />} />
         </Routes>
       </Router>
     </div>
