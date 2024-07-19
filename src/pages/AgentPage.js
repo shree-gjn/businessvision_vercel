@@ -65,6 +65,15 @@ const AgentPage = () => {
   });
   const [successModal, setSuccessModal] = useState(false); 
   const [selectedAnswerMethod, setSelectedAnswerMethod] = useState('email');
+  // const [expanded, setExpanded] = useState(false);
+  
+  const [expanded, setExpanded] = useState({
+    panel1: false,
+    panel2: false,
+    panel3: false,
+    panel4: false,
+    panel5: false
+  }); // State to manage accordion expansion
 
   const handleOtherConsultationChange = (event) => {
     setOtherConsultationMatters(event.target.value);
@@ -174,6 +183,7 @@ const AgentPage = () => {
         const result = await response.json();
         console.log('Success:', result);
         setSuccessModal(true); // Show success modal on success
+        setExpanded(false); // Close all accordions
       } else {
         console.error('Error:', response.statusText);
       }
@@ -206,7 +216,16 @@ const AgentPage = () => {
     setSuccessModal(false);
   };
 
+  // const handleAccordionChange = (panel) => (event, isExpanded) => {
+  //   setExpanded(isExpanded ? panel : false);
+  // };
 
+  const handleAccordionChange = (panel) => (event, isExpanded) => {
+    setExpanded((prevExpanded) => ({
+      ...prevExpanded,
+      [panel]: isExpanded
+    }));
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -217,7 +236,7 @@ const AgentPage = () => {
         <div className="" style={{padding: "24px"}}>
           <Typography variant="h6" component="div" sx={{borderBottom: '1px solid #000', padding: '10px 0 10px 0', textAlign: 'left', borderColor: '#D3B76A', fontSize: '16px'}}> 転職相談サービス </Typography>
           <Typography variant="paragraph" component="div" sx={{padding: '10px 0 10px 0', textAlign: 'left'}}> 転職活動前のことや求人応募から 面接から入社まで、皆さまの転職 かつ関する疑問にお答えします。 </Typography>
-          <Accordion sx={{marginBottom: '10px', boxShadow: 'none', background: '#fff'}}>
+          <Accordion expanded={expanded.panel1} onChange={handleAccordionChange('panel1')} sx={{marginBottom: '10px', boxShadow: 'none', background: '#fff'}}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
@@ -265,7 +284,7 @@ const AgentPage = () => {
                 />
               ))}
            </div>
-          <Accordion sx={{marginBottom: '10px', boxShadow: 'none', background: '#fff'}}>
+          <Accordion expanded={expanded.panel2} onChange={handleAccordionChange('panel2')} sx={{marginBottom: '10px', boxShadow: 'none', background: '#fff'}}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
@@ -313,7 +332,7 @@ const AgentPage = () => {
               />
             ))}
           </div>
-          <Accordion sx={{marginBottom: '10px', boxShadow: 'none', background: '#fff'}}>
+          <Accordion expanded={expanded.panel3} onChange={handleAccordionChange('panel3')} sx={{marginBottom: '10px', boxShadow: 'none', background: '#fff'}}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
@@ -365,7 +384,7 @@ const AgentPage = () => {
                 />
             ))}
            </div>
-          <Accordion sx={{marginBottom: '10px', boxShadow: 'none', background: '#fff'}}>
+          <Accordion expanded={expanded.panel4} onChange={handleAccordionChange('panel4')} sx={{marginBottom: '10px', boxShadow: 'none', background: '#fff'}}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
@@ -417,7 +436,7 @@ const AgentPage = () => {
               />
             ))}
           </div>
-          <Accordion sx={{marginBottom: '10px', boxShadow: 'none', background: '#fff'}}>
+          <Accordion expanded={expanded.panel5} onChange={handleAccordionChange('panel5')} sx={{marginBottom: '10px', boxShadow: 'none', background: '#fff'}}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
