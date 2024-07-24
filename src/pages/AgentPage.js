@@ -145,20 +145,20 @@ const AgentPage = () => {
     formData.append('before_application', before_application);
     formData.append('application_stage', application_stage);
     formData.append('interview', interview);
-    formData.append('unofficial_offer', unofficial_offer);
-    formData.append('join_company', join_company);
+    formData.append('job_offer', unofficial_offer);
+    formData.append('joining_company', join_company);
     // formData.append('answer_email', answer_email);
     // formData.append('answer_online', answer_online);
-    formData.append('answer_method', answer_method);
-    formData.append('other_consultation_before_application', otherConsultation.section1);
-    formData.append('other_consultation_application_stage', otherConsultation.section2);
-    formData.append('other_consultation_interview', otherConsultation.section3);
-    formData.append('other_consultation_unofficial_offer', otherConsultation.section4);
-    formData.append('other_consultation_join_company', otherConsultation.section5);
+    formData.append('expected_contact_type', answer_method);
+    formData.append('before_application_other_consultation', otherConsultation.section1);
+    formData.append('application_stage_other_consultation', otherConsultation.section2);
+    formData.append('interview_other_consultation', otherConsultation.section3);
+    formData.append('job_offer_other_consultation', otherConsultation.section4);
+    formData.append('joining_company_other_consultation', otherConsultation.section5);
     formData.append('other_consultation_matters', otherConsultationMatters);
 
     try {
-      const response = await fetch('https://bvhr-api.azurewebsites.net/candidate/job_change_consultancy', {
+      const response = await fetch('https://bvhr-api.azurewebsites.net/candidates/add_job_consultant_request', {
         method: 'POST',
         body: formData,
       });

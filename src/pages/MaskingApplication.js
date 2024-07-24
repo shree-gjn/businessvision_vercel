@@ -160,10 +160,10 @@ export default function MaskingApplication() {
     // setLoading(true); // Set loading to true when starting data fetching
     const fetchMessageTemplates = async () => {
       try {
-        const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/list_message_template?auth_key=${authKey}`);
+        const response = await fetch(`https://bvhr-api.azurewebsites.net/candidates/list_message_templates?auth_key=${authKey}`);
         const data = await response.json();
         console.log('Fetched data:', data);
-        setTemplates(data.message_template);
+        setTemplates(data.message_templates);
         // setLoading(false);
       } catch (error) {
         console.error('Error fetching message templates:', error);
@@ -182,7 +182,7 @@ export default function MaskingApplication() {
   //   setMessageTemplate(selectedTemplate);
 
   //   // Find the selected template and set the message
-  //   const template = templates.find(t => t.message_template_name === selectedTemplate);
+  //   const template = templates.find(t => t.template_name === selectedTemplate);
   //   if (template) {
   //     setMessage(template.message);
   //   } else {
@@ -203,7 +203,7 @@ export default function MaskingApplication() {
   //     setMessage(''); // Clear the message when selecting '新しく作る'
   //   } else {
   //     // Find the selected template and set the message
-  //     const selectedTemplateData = templates.find(t => t.message_template_name === selectedTemplate);
+  //     const selectedTemplateData = templates.find(t => t.template_name === selectedTemplate);
   //     setMessage(selectedTemplateData ? selectedTemplateData.message : '');
   //   }
   // };
@@ -217,8 +217,8 @@ export default function MaskingApplication() {
       navigate('/messagetemplate');
     } else {
       // Find the selected template and set the message
-      const selectedTemplateData = templates.find(t => t.message_template_name === selectedTemplate);
-      setMessage(selectedTemplateData ? selectedTemplateData.message : '');
+      const selectedTemplateData = templates.find(t => t.template_name === selectedTemplate);
+      setMessage(selectedTemplateData ? selectedTemplateData.template_message : '');
     }
   };
 
@@ -294,8 +294,8 @@ export default function MaskingApplication() {
                       新しく作る
                     </MenuItem>
                     {templates.map((template, index) => (
-                      <MenuItem key={index} value={template.message_template_name}>
-                        {template.message_template_name}
+                      <MenuItem key={index} value={template.template_name}>
+                        {template.template_name}
                       </MenuItem>
                     ))} */}
 
@@ -311,8 +311,8 @@ export default function MaskingApplication() {
                     </MenuItem>
                     {Array.isArray(templates) && templates.length > 0 &&
                       templates.map((template, index) => (
-                        <MenuItem key={index} value={template.message_template_name}>
-                          {template.message_template_name}
+                        <MenuItem key={index} value={template.template_name}>
+                          {template.template_name}
                         </MenuItem>
                       ))
                     } */}
@@ -323,8 +323,8 @@ export default function MaskingApplication() {
                     <MenuItem value="新しく作る">新しく作る</MenuItem>
                       {templates ? (
                         templates.map((template, index) => (
-                          <MenuItem key={index} value={template.message_template_name}>
-                            {template.message_template_name}
+                          <MenuItem key={index} value={template.template_name}>
+                            {template.template_name}
                           </MenuItem>
                         ))
                       ) : null}

@@ -18,7 +18,7 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    email_address: '',
+    email: '',
     password: '',
     rememberMe: false,
   });
@@ -36,7 +36,7 @@ const LoginForm = () => {
      const storedPassword = localStorage.getItem('rememberPassword');
     //  if (storedEmail && storedPassword) {
     //    setFormData({
-    //      email_address: storedEmail,
+    //      email: storedEmail,
     //      password: storedPassword,
     //      rememberMe: true,
     //    });
@@ -52,11 +52,11 @@ const LoginForm = () => {
 
     // Create FormData object
     const requestBody = new FormData();
-    requestBody.append('email_address', email.trim());
+    requestBody.append('email', email.trim());
     requestBody.append('password', password.trim());
 
     try {
-      const response = await fetch('https://bvhr-api.azurewebsites.net/candidate/login', {
+      const response = await fetch('https://bvhr-api.azurewebsites.net/candidates/login', {
         method: 'POST',
         body: requestBody,
       });
@@ -92,7 +92,7 @@ const LoginForm = () => {
     }));
 
     // Clear validation errors when user starts typing
-    if (name === 'email_address') setEmailError('');
+    if (name === 'email') setEmailError('');
     if (name === 'password') setPasswordError('');
   };
 
@@ -104,9 +104,9 @@ const LoginForm = () => {
     event.preventDefault();
 
     // Perform validation
-    if (!formData.email_address.trim()) {
+    if (!formData.email.trim()) {
       setEmailError('This field is required');
-    } else if (!isValidEmail(formData.email_address)) {
+    } else if (!isValidEmail(formData.email)) {
       setEmailError('Please enter a valid email address');
     } else {
       setEmailError('');
@@ -119,23 +119,23 @@ const LoginForm = () => {
     }
 
     // Perform validation
-    if (formData.email_address && formData.password && !emailError && !passwordError) {
+    if (formData.email && formData.password && !emailError && !passwordError) {
       // Display loading spinner
       setLoading(true);
 
       // Trim any leading or trailing whitespace from email and password
-      const trimmedEmail = formData.email_address.trim();
+      const trimmedEmail = formData.email.trim();
       const trimmedPassword = formData.password.trim();
 
       // Create FormData object
       const requestBody = new FormData();
-      requestBody.append('email_address', trimmedEmail);
+      requestBody.append('email', trimmedEmail);
       requestBody.append('password', trimmedPassword);
 
       console.log('Request Body:', requestBody); // Debug log
 
       try {
-        const response = await fetch('https://bvhr-api.azurewebsites.net/candidate/login', {
+        const response = await fetch('https://bvhr-api.azurewebsites.net/candidates/login', {
           method: 'POST',
           body: requestBody,
         });
@@ -208,8 +208,8 @@ const LoginForm = () => {
             fullWidth
             margin="normal"
             placeholder="メールアドレス" 
-            name="email_address"
-            value={formData.email_address}
+            name="email"
+            value={formData.email}
             onChange={handleChange}
             error={!!emailError}
             helperText={emailError}

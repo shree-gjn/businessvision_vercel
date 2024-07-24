@@ -104,10 +104,10 @@ const MessageTemplate = () => {
     setLoading(true); // Set loading to true when starting data fetching
     const fetchMessageTemplates = async () => {
       try {
-        const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/list_message_template?auth_key=${authKey}`);
+        const response = await fetch(`https://bvhr-api.azurewebsites.net/candidates/list_message_templates?auth_key=${authKey}`);
         const data = await response.json();
         console.log('Fetched data:', data);
-        setMessageTemplates(data.message_template || []);
+        setMessageTemplates(data.message_templates || []);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching message templates:', error);
@@ -124,8 +124,8 @@ const MessageTemplate = () => {
       const authKey = sessionStorage.getItem('authKey');
       const formData = new FormData();
       formData.append('auth_key', authKey);
-      formData.append('message_template_id', messageTemplateId);
-      const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/delete_message_template`, {
+      formData.append('template_id', messageTemplateId);
+      const response = await fetch(`https://bvhr-api.azurewebsites.net/candidates/delete_message_template`, {
         method: 'POST',
         body: formData
       });
@@ -133,7 +133,7 @@ const MessageTemplate = () => {
         // Delete successful, update state or perform any necessary actions
         console.log('Message template deleted successfully');
         // Remove the deleted message template from the UI
-        setMessageTemplates(prevTemplates => prevTemplates.filter(template => template.message_template_id !== messageTemplateId));
+        setMessageTemplates(prevTemplates => prevTemplates.filter(template => template.template_id !== messageTemplateId));
       } else {
         // Handle error response
         console.error('Failed to delete message template:', response.statusText);
@@ -204,12 +204,12 @@ const MessageTemplate = () => {
                 </Box>
               ) : (  
                 messageTemplates.map((template) => (
-                  <StyledTableRow key={template.message_template_id}>
+                  <StyledTableRow key={template.template_id}>
                     <StyledTableCell width="70%" component="th" scope="row">
-                      {template.message_template_name}
+                      {template.template_name}
                     </StyledTableCell>
-                    <StyledTableCell width="15%" align="center"><EditIcon  onClick={() => handleEdit(template.message_template_id)} style={{ cursor: 'pointer' }}  /></StyledTableCell>
-                    <StyledTableCell onClick={() => handleDelete(template.message_template_id)} startIcon={<DeleteIcon />} width="15%" align="center"><DeleteIcon /></StyledTableCell>
+                    <StyledTableCell width="15%" align="center"><EditIcon  onClick={() => handleEdit(template.template_id)} style={{ cursor: 'pointer' }}  /></StyledTableCell>
+                    <StyledTableCell onClick={() => handleDelete(template.template_id)} startIcon={<DeleteIcon />} width="15%" align="center"><DeleteIcon /></StyledTableCell>
                   </StyledTableRow>
                 ))
               )} */}
@@ -222,12 +222,12 @@ const MessageTemplate = () => {
                 ) : (
                   messageTemplates.length > 0 ? (
                     messageTemplates.map((template) => (
-                      <StyledTableRow key={template.message_template_id}>
+                      <StyledTableRow key={template.template_id}>
                         <StyledTableCell width="70%" component="th" scope="row">
-                          {template.message_template_name}
+                          {template.template_name}
                         </StyledTableCell>
-                        <StyledTableCell width="15%" align="center"><EditIcon onClick={() => handleEdit(template.message_template_id)} style={{ cursor: 'pointer' }} /></StyledTableCell>
-                        <StyledTableCell onClick={() => handleDelete(template.message_template_id)} startIcon={<DeleteIcon />} width="15%" align="center"><DeleteIcon /></StyledTableCell>
+                        <StyledTableCell width="15%" align="center"><EditIcon onClick={() => handleEdit(template.template_id)} style={{ cursor: 'pointer' }} /></StyledTableCell>
+                        <StyledTableCell onClick={() => handleDelete(template.template_id)} startIcon={<DeleteIcon />} width="15%" align="center"><DeleteIcon /></StyledTableCell>
                       </StyledTableRow>
                     ))
                   ) : (

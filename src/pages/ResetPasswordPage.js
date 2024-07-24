@@ -153,7 +153,7 @@ const ResetPasswordPage = () => {
         new_password: password
       });
   
-      const response = await fetch('https://bvhr-api.azurewebsites.net/candidate/reset_password', {
+      const response = await fetch('https://bvhr-api.azurewebsites.net/candidates/reset_password', {
         method: 'POST',
         body: formData,
       });

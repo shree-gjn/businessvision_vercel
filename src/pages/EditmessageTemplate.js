@@ -88,11 +88,11 @@ const EditMessage = () => {
     const authKey = sessionStorage.getItem('authKey');
     const fetchTemplateDetails = async () => {
       try {
-        const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/view_message_template?message_template_id=${id}&auth_key=${authKey}`);
+        const response = await fetch(`https://bvhr-api.azurewebsites.net/candidates/get_message_template?template_id=${id}&auth_key=${authKey}`);
         if (response.ok) {
           const data = await response.json();
-          setTitle(data.message_template.message_template_name);
-          setMessage(data.message_template.message);
+          setTitle(data.message_template_details.template_name);
+          setMessage(data.message_template_details.template_message);
         } else {
           console.error('Failed to fetch template details');
         }
@@ -124,9 +124,9 @@ const EditMessage = () => {
     const authKey = sessionStorage.getItem('authKey');
     const formData = new FormData();
     formData.append('auth_key', authKey);
-    formData.append('message_template_id', id);
-    formData.append('message_template_name', title);
-    formData.append('message', message);
+    formData.append('template_id', id);
+    formData.append('template_name', title);
+    formData.append('template_message', message);
 
     let hasError = false;
 
@@ -145,7 +145,7 @@ const EditMessage = () => {
     }
 
     try {
-      const response = await fetch('https://bvhr-api.azurewebsites.net/candidate/edit_candidate_message_template', {
+      const response = await fetch('https://bvhr-api.azurewebsites.net/candidates/update_message_template', {
         method: 'POST',
         body: formData,
       });
@@ -193,7 +193,7 @@ const EditMessage = () => {
                 type="text"
                 placeholder="タイトルを入力してください"
                 value={title}
-                name='message_template_title'
+                name='template_name'
                 onChange={handleTitleChange}
                 error={errors.title} // Set error state
                 helperText={errors.title ? 'メッセージテンプレート名は必須です' : ''} // Display helper text

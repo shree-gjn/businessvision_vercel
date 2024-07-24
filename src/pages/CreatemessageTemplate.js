@@ -106,7 +106,7 @@ const CreateMessage = () => {
     const authKey = sessionStorage.getItem('authKey');
     const formData = new FormData();
     formData.append('auth_key', authKey);
-    formData.append('message_template_name', title);
+    formData.append('template_name', title);
     formData.append('message', message);
 
     let hasError = false;
@@ -126,7 +126,7 @@ const CreateMessage = () => {
     }
 
     try {
-      const response = await fetch('https://bvhr-api.azurewebsites.net/candidate/add_candidate_message_template', {
+      const response = await fetch('https://bvhr-api.azurewebsites.net/candidates/add_message_template', {
         method: 'POST',
         body: formData,
       });

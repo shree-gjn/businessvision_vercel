@@ -682,9 +682,10 @@ export default function RecruitmentFullInfo() {
                 </Button>
             </Grid>
             <Grid item xs={4}>
-              <Button component={Link} to={`/maskingapplication/${jobpost.cjp_id}`} disabled={jobpost.secret_entry_flag === 1} variant="contained" color="primary"sx={{
+              <Button component={Link} to={`/maskingapplication/${jobpost.cjp_id}`} disabled={jobpost.secret_entry_flag === 1} variant="contained" sx={{
                 fontSize: '12px',
                 width: '100%',
+                backgroundColor: '#16375A',
                 '&.Mui-disabled': {
                   opacity: 0.3,
                   pointerEvents: 'none', // To ensure it's not clickable

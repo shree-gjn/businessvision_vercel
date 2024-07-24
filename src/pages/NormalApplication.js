@@ -102,15 +102,15 @@ export default function NormalApplication() {
 
   const handleResumeUpload = (event, nextresumeupload) => {
     setResumeUpload(nextresumeupload);
-    const selectedResume = resumeList.find(resume => resume.cru_file_name === nextresumeupload);
-    setSelectedResumeId(selectedResume ? selectedResume.cru_id : null);
+    const selectedResume = resumeList.find(resume => resume.file_name === nextresumeupload);
+    setSelectedResumeId(selectedResume ? selectedResume.resume_id : null);
     setErrors((prev) => ({ ...prev, resumeupload: '' }));
   };
 
   const handleWorkHistoryUpload = (event, nextworkhistoryupload) => {
     setWorkHistoryUpload(nextworkhistoryupload);
-    const selectedWorkHistory = workHistoryList.find(workHistory => workHistory.cru_file_name === nextworkhistoryupload);
-    setSelectedWorkHistoryId(selectedWorkHistory ? selectedWorkHistory.cru_id : null);
+    const selectedWorkHistory = workHistoryList.find(workHistory => workHistory.file_name === nextworkhistoryupload);
+    setSelectedWorkHistoryId(selectedWorkHistory ? selectedWorkHistory.resume_id : null);
     setErrors((prev) => ({ ...prev, workhistoryupload: '' }));
   };
 
@@ -147,8 +147,8 @@ export default function NormalApplication() {
   }
 
   const handleNormalappConfirm = () => {
-    const selectedResume = resumeList.find(resume => resume.cru_file_name === resumeupload);
-    const selectedWorkHistory = workHistoryList.find(workHistory => workHistory.cru_file_name === workhistoryupload);
+    const selectedResume = resumeList.find(resume => resume.file_name === resumeupload);
+    const selectedWorkHistory = workHistoryList.find(workHistory => workHistory.file_name === workhistoryupload);
 
     // if (!selectedResume || !selectedWorkHistory) {
     //   setErrorMessage('履歴書と職務経歴書を選択してください'); // Set appropriate error message
@@ -183,10 +183,10 @@ export default function NormalApplication() {
         emailaddress,
         resumeupload,
         workhistoryupload,
-        selectedResumeId: selectedResume ? selectedResume.cru_id : null,
-        selectedResumeName: selectedResume ? selectedResume.cru_file_name : '',
-        selectedWorkHistoryId: selectedWorkHistory ? selectedWorkHistory.cru_id : null,
-        selectedWorkHistoryName: selectedWorkHistory ? selectedWorkHistory.cru_file_name : '',
+        selectedResumeId: selectedResume ? selectedResume.resume_id : null,
+        selectedResumeName: selectedResume ? selectedResume.file_name : '',
+        selectedWorkHistoryId: selectedWorkHistory ? selectedWorkHistory.resume_id : null,
+        selectedWorkHistoryName: selectedWorkHistory ? selectedWorkHistory.file_name : '',
       }
     });
   };
@@ -274,10 +274,10 @@ export default function NormalApplication() {
     // setLoading(true); // Set loading to true when starting data fetching
     const fetchMessageTemplates = async () => {
       try {
-        const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/list_message_template?auth_key=${authKey}`);
+        const response = await fetch(`https://bvhr-api.azurewebsites.net/candidates/list_message_templates?auth_key=${authKey}`);
         const data = await response.json();
         console.log('Fetched data:', data);
-        setTemplates(data.message_template);
+        setTemplates(data.message_templates);
         // setLoading(false);
       } catch (error) {
         console.error('Error fetching message templates:', error);
@@ -296,8 +296,8 @@ export default function NormalApplication() {
       navigate('/messagetemplate');
     } else {
       // Find the selected template and set the message
-      const selectedTemplateData = templates.find(t => t.message_template_name === selectedTemplate);
-      setMessage(selectedTemplateData ? selectedTemplateData.message : '');
+      const selectedTemplateData = templates.find(t => t.template_name === selectedTemplate);
+      setMessage(selectedTemplateData ? selectedTemplateData.template_message : '');
     }
   };
 
@@ -324,7 +324,7 @@ export default function NormalApplication() {
 
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/list_candidate_resume?auth_key=${authKey}`); // Replace with your actual API endpoint
+        const response = await fetch(`https://bvhr-api.azurewebsites.net/candidates/list_all_resumes?auth_key=${authKey}`); // Replace with your actual API endpoint
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -333,20 +333,20 @@ export default function NormalApplication() {
         // Categorize data based on cru_file_type
 
         // Ensure responseData is structured correctly
-        if (!Array.isArray(responseData.candidate_resume)) {
-          throw new Error('Unexpected data format: candidate_resume is not an array');
+        if (!Array.isArray(responseData.resume_details)) {
+          throw new Error('Unexpected data format: resume_details is not an array');
         }
 
         // Extract the array from the object
-        const data = responseData.candidate_resume;
+        const data = responseData.resume_details;
 
         const categorizedResumeList = [];
         const categorizedWorkHistoryList = [];
 
         data.forEach(item => {
-          if (item.cru_resume_type === 'normal_resume') {
+          if (item.resume_type === 'normal_resume') {
             categorizedResumeList.push(item);
-          } else if (item.cru_resume_type === 'experience_resume') {
+          } else if (item.resume_type === 'experience_resume') {
             categorizedWorkHistoryList.push(item);
           }
         });
@@ -459,8 +459,8 @@ export default function NormalApplication() {
                   style={{gap: '10px'}}
                 >
                   {resumeList.map((resume, index) => (
-                    <ToggleButton key={index} value={resume.cru_file_name} aria-label={resume.cru_file_name}>
-                      <ApplicationRequirement style={{paddingRight: '5px'}} /> {resume.cru_file_name}
+                    <ToggleButton key={index} value={resume.file_name} aria-label={resume.file_name}>
+                      <ApplicationRequirement style={{paddingRight: '5px'}} /> {resume.file_name}
                     </ToggleButton>
                   ))}
                   {errors.resumeupload && <Typography color="error" sx={{fontSize: '12px', marginTop: '10px'}}>{errors.resumeupload}</Typography>}
@@ -480,8 +480,8 @@ export default function NormalApplication() {
                   style={{gap: '10px'}}
                 >
                   {workHistoryList.map((workHistory, index) => (
-                    <ToggleButton key={index} value={workHistory.cru_file_name} aria-label={workHistory.cru_file_name}>
-                      <ApplicationRequirement style={{paddingRight: '5px'}} /> {workHistory.cru_file_name}
+                    <ToggleButton key={index} value={workHistory.file_name} aria-label={workHistory.file_name}>
+                      <ApplicationRequirement style={{paddingRight: '5px'}} /> {workHistory.file_name}
                     </ToggleButton>
                   ))}
                    {errors.workhistoryupload && <Typography color="error" sx={{fontSize: '12px'}}>{errors.workhistoryupload}</Typography>}
@@ -514,8 +514,8 @@ export default function NormalApplication() {
                     <MenuItem value="新しく作る">新しく作る</MenuItem>
                       {templates ? (
                         templates.map((template, index) => (
-                          <MenuItem key={index} value={template.message_template_name}>
-                            {template.message_template_name}
+                          <MenuItem key={index} value={template.template_name}>
+                            {template.template_name}
                           </MenuItem>
                         ))
                       ) : null}

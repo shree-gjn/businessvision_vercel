@@ -166,20 +166,20 @@ export default function NormalApplicationConfirm() {
 
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/list_candidate_resume?auth_key=${authKey}`);
+        const response = await fetch(`https://bvhr-api.azurewebsites.net/candidates/list_all_resumes?auth_key=${authKey}`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const responseData = await response.json();
         
-        if (!Array.isArray(responseData.candidate_resume)) {
-          throw new Error('Unexpected data format: candidate_resume is not an array');
+        if (!Array.isArray(responseData.resume_details)) {
+          throw new Error('Unexpected data format: resume_details is not an array');
         }
 
-        const data = responseData.candidate_resume;
+        const data = responseData.resume_details;
 
-        const categorizedResumeList = data.filter(item => item.cru_resume_type === 'normal_resume');
-        const categorizedWorkHistoryList = data.filter(item => item.cru_resume_type === 'experience_resume');
+        const categorizedResumeList = data.filter(item => item.resume_type === 'normal_resume');
+        const categorizedWorkHistoryList = data.filter(item => item.resume_type === 'experience_resume');
 
         setResumeList(categorizedResumeList);
         setWorkHistoryList(categorizedWorkHistoryList);
@@ -196,25 +196,25 @@ export default function NormalApplicationConfirm() {
   }, []);
 
   const getResumeNameById = (id) => {
-    const resume = resumeList.find(item => item.cru_id === id);
+    const resume = resumeList.find(item => item.resume_id === id);
     // console.log('Getting resume name for ID:', id, 'Result:', resume);
-    return resume ? resume.cru_file_name : 'Resume not found';
+    return resume ? resume.file_name : 'Resume not found';
   };
 
   const getWorkHistoryNameById = (id) => {
-    const workHistory = workHistoryList.find(item => item.cru_id === id);
+    const workHistory = workHistoryList.find(item => item.resume_id === id);
     // console.log('Getting work history name for ID:', id, 'Result:', workHistory);
-    return workHistory ? workHistory.cru_file_name : 'Work History not found';
+    return workHistory ? workHistory.file_name : 'Work History not found';
   };
 
   const getResumeUrlById = (id) => {
-    const resume = resumeList.find(item => item.cru_id === id);
-    return resume ? resume.cru_resume_url : 'Resume URL not found';
+    const resume = resumeList.find(item => item.resume_id === id);
+    return resume ? resume.resume_path : 'Resume URL not found';
   };
 
   const getWorkHistoryUrlById = (id) => {
-    const workHistory = workHistoryList.find(item => item.cru_id === id);
-    return workHistory ? workHistory.cru_resume_url : 'Work History URL not found';
+    const workHistory = workHistoryList.find(item => item.resume_id === id);
+    return workHistory ? workHistory.resume_path : 'Work History URL not found';
   };
 
 

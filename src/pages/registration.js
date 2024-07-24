@@ -15,7 +15,7 @@ const RegistrationStepper = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState({});
 
-  const steps = ['基本情報', '現職（直近）情報', '希望条件', '完了'];
+  const steps = ['基本情報', '現職(直近)情報', '希望条件', '完了'];
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);

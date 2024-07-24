@@ -157,7 +157,7 @@ const SkillComparison = () => {
               <Table>
                 <TableBody>
                   <TableRow sx={{width: '100%'}}>
-                  <TableCell align="center" sx={{width: '48%'}}>
+                  <TableCell align="center" sx={{width: '55%'}}>
                     <Typography variant="h6" sx={{fontSize: '12px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '5px'}}>日次取引仕訳 
                      <ClickAwayListener onClickAway={() => handleTooltipClose('tooltip1')} sx={{lineHeight: 'initial'}}>
                         <div>
@@ -178,18 +178,20 @@ const SkillComparison = () => {
                       </ClickAwayListener>
                     </Typography>
                   </TableCell>
-                  <TableCell sx={{width: '52%', padding: '0'}}>
+                  <TableCell sx={{width: '45%', padding: '0'}}>
                     <Grid container>
-                      <Grid item xs={2.4}><div style={{background: '#FFFFB7', height: '56px'}}></div></Grid>
-                      <Grid item xs={2.4}><div style={{background: '#FFFFB7', height: '56px'}}></div></Grid>
-                      <Grid item xs={2.4}><div style={{background: '#FFFFB7', height: '56px'}}></div></Grid>
-                      <Grid item xs={2.4}><div style={{background: '#FFFFB7', height: '56px'}}></div></Grid>
-                      <Grid item xs={2.4}><div style={{background: '#FFFFB7', height: '56px'}}></div></Grid>
+                      <Grid item xs={12} sx={{display: 'flex', alignItems: 'center'}}>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                      </Grid>
                     </Grid>
                   </TableCell>
                 </TableRow>
                 <TableRow sx={{width: '100%'}}>
-                  <TableCell align="center" sx={{width: '48%'}}>
+                  <TableCell align="center" sx={{width: '55%'}}>
                     <Typography variant="h6" sx={{fontSize: '12px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '5px'}}>月次決算 
                     <ClickAwayListener onClickAway={() => handleTooltipClose('tooltip2')} sx={{lineHeight: 'initial'}}>
                         <div>
@@ -210,25 +212,20 @@ const SkillComparison = () => {
                       </ClickAwayListener>
                     </Typography>
                   </TableCell>
-                  <TableCell sx={{width: '52%', padding: '0'}}>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-radio-buttons-group-label"
-                    name="radio-buttons-group"
-                    value={selectedValues.group2} // Add this line to set the value of the RadioGroup
-                    onChange={(event) => handleChange(event, 'group2')}
-                    sx={{display: 'block', textAlign: 'right'}}
-                  >
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L0" control={<Radio {...controlProps('L0', selectedValues.group2, (event) => handleChange(event, 'group2'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L1" control={<Radio {...controlProps('L1', selectedValues.group2, (event) => handleChange(event, 'group2'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L2" control={<Radio {...controlProps('L2', selectedValues.group2, (event) => handleChange(event, 'group2'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L3" control={<Radio {...controlProps('L3', selectedValues.group2, (event) => handleChange(event, 'group2'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L4" control={<Radio {...controlProps('L4', selectedValues.group2, (event) => handleChange(event, 'group2'))} size="small" />} />
-                  </RadioGroup>
+                  <TableCell sx={{width: '45%', padding: '0'}}>
+                   <Grid container>
+                      <Grid item xs={12} sx={{display: 'flex', alignItems: 'center'}}>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                      </Grid>
+                    </Grid>
                   </TableCell>
                 </TableRow>
                 <TableRow sx={{width: '100%'}}>
-                  <TableCell align="center" sx={{width: '48%'}}>
+                  <TableCell align="center" sx={{width: '55%'}}>
                     <Typography variant="h6" sx={{fontSize: '12px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '5px'}}>本決算 
                     <ClickAwayListener onClickAway={() => handleTooltipClose('tooltip3')} sx={{lineHeight: 'initial'}}>
                         <div>
@@ -249,25 +246,20 @@ const SkillComparison = () => {
                       </ClickAwayListener>
                     </Typography>
                   </TableCell>
-                  <TableCell sx={{width: '52%', padding: '0'}}>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-radio-buttons-group-label"
-                    name="radio-buttons-group"
-                    value={selectedValues.group3} // Add this line to set the value of the RadioGroup
-                    onChange={(event) => handleChange(event, 'group3')}
-                    sx={{display: 'block', textAlign: 'right'}}
-                  >
-                    <FormControlLabel sx={{ marginRight: '10px' }} value="L0" control={<Radio {...controlProps('L0', selectedValues.group3, (event) => handleChange(event, 'group3'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L1" control={<Radio {...controlProps('L1', selectedValues.group3, (event) => handleChange(event, 'group3'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L2" control={<Radio {...controlProps('L2', selectedValues.group3, (event) => handleChange(event, 'group3'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L3" control={<Radio {...controlProps('L3', selectedValues.group3, (event) => handleChange(event, 'group3'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L4" control={<Radio {...controlProps('L4', selectedValues.group3, (event) => handleChange(event, 'group3'))} size="small" />} />
-                  </RadioGroup>
+                  <TableCell sx={{width: '45%', padding: '0'}}>
+                    <Grid container>
+                      <Grid item xs={12} sx={{display: 'flex', alignItems: 'center'}}>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                      </Grid>
+                    </Grid>
                   </TableCell>
                 </TableRow>
                 <TableRow sx={{width: '100%'}}>
-                  <TableCell align="center" sx={{width: '48%'}}>
+                  <TableCell align="center" sx={{width: '55%'}}>
                     <Typography variant="h6" sx={{fontSize: '12px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '5px'}}>予算 
                     <ClickAwayListener onClickAway={() => handleTooltipClose('tooltip4')} sx={{lineHeight: 'initial'}}>
                         <div>
@@ -288,25 +280,20 @@ const SkillComparison = () => {
                       </ClickAwayListener>
                     </Typography>
                   </TableCell>
-                  <TableCell sx={{width: '52%', padding: '0'}}>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-radio-buttons-group-label"
-                    name="radio-buttons-group"
-                    value={selectedValues.group4} // Add this line to set the value of the RadioGroup
-                    onChange={(event) => handleChange(event, 'group4')}
-                    sx={{display: 'block', textAlign: 'right'}}
-                  >
-                    <FormControlLabel sx={{ marginRight: '10px' }} value="L0" control={<Radio {...controlProps('L0', selectedValues.group4, (event) => handleChange(event, 'group4'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L1" control={<Radio {...controlProps('L1', selectedValues.group4, (event) => handleChange(event, 'group4'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L2" control={<Radio {...controlProps('L2', selectedValues.group4, (event) => handleChange(event, 'group4'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L3" control={<Radio {...controlProps('L3', selectedValues.group4, (event) => handleChange(event, 'group4'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L4" control={<Radio {...controlProps('L4', selectedValues.group4, (event) => handleChange(event, 'group4'))} size="small" />} />
-                  </RadioGroup>
+                  <TableCell sx={{width: '45%', padding: '0'}}>
+                    <Grid container>
+                      <Grid item xs={12} sx={{display: 'flex', alignItems: 'center'}}>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                      </Grid>
+                    </Grid>
                   </TableCell>
                 </TableRow>
                 <TableRow sx={{width: '100%'}}>
-                  <TableCell align="center" sx={{width: '48%'}}>
+                  <TableCell align="center" sx={{width: '55%'}}>
                     <Typography variant="h6" sx={{fontSize: '12px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '5px'}}>給与計算 
                     <ClickAwayListener onClickAway={() => handleTooltipClose('tooltip5')} sx={{lineHeight: 'initial'}}>
                         <div>
@@ -327,25 +314,20 @@ const SkillComparison = () => {
                       </ClickAwayListener>
                     </Typography>
                   </TableCell>
-                  <TableCell sx={{width: '52%', padding: '0'}}>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-radio-buttons-group-label"
-                    name="radio-buttons-group"
-                    value={selectedValues.group5} // Add this line to set the value of the RadioGroup
-                    onChange={(event) => handleChange(event, 'group5')}
-                    sx={{display: 'block', textAlign: 'right'}}
-                  >
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L0" control={<Radio {...controlProps('L0', selectedValues.group5, (event) => handleChange(event, 'group5'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L1" control={<Radio {...controlProps('L1', selectedValues.group5, (event) => handleChange(event, 'group5'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L2" control={<Radio {...controlProps('L2', selectedValues.group5, (event) => handleChange(event, 'group5'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L3" control={<Radio {...controlProps('L3', selectedValues.group5, (event) => handleChange(event, 'group5'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L4" control={<Radio {...controlProps('L4', selectedValues.group5, (event) => handleChange(event, 'group5'))} size="small" />} />
-                  </RadioGroup>
+                  <TableCell sx={{width: '45%', padding: '0'}}>
+                    <Grid container>
+                      <Grid item xs={12} sx={{display: 'flex', alignItems: 'center'}}>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                      </Grid>
+                    </Grid>
                   </TableCell>
                 </TableRow>
                 <TableRow sx={{width: '100%'}}>
-                  <TableCell align="center" sx={{width: '48%'}}>
+                  <TableCell align="center" sx={{width: '55%'}}>
                     <Typography variant="h6" sx={{fontSize: '12px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '5px'}}>社会保険 
                     <ClickAwayListener onClickAway={() => handleTooltipClose('tooltip6')} sx={{lineHeight: 'initial'}}>
                         <div>
@@ -366,25 +348,20 @@ const SkillComparison = () => {
                       </ClickAwayListener>
                     </Typography>
                   </TableCell>
-                  <TableCell sx={{width: '52%', padding: '0'}}>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-radio-buttons-group-label"
-                    name="radio-buttons-group"
-                    value={selectedValues.group6} // Add this line to set the value of the RadioGroup
-                    onChange={(event) => handleChange(event, 'group6')}
-                    sx={{display: 'block', textAlign: 'right'}}
-                  >
-                    <FormControlLabel sx={{ marginRight: '10px' }} value="L0" control={<Radio {...controlProps('L0', selectedValues.group6, (event) => handleChange(event, 'group6'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L1" control={<Radio {...controlProps('L1', selectedValues.group6, (event) => handleChange(event, 'group6'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L2" control={<Radio {...controlProps('L2', selectedValues.group6, (event) => handleChange(event, 'group6'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L3" control={<Radio {...controlProps('L3', selectedValues.group6, (event) => handleChange(event, 'group6'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L4" control={<Radio {...controlProps('L4', selectedValues.group6, (event) => handleChange(event, 'group6'))} size="small" />} />
-                  </RadioGroup>
+                  <TableCell sx={{width: '45%', padding: '0'}}>
+                    <Grid container>
+                      <Grid item xs={12} sx={{display: 'flex', alignItems: 'center'}}>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                      </Grid>
+                    </Grid>
                   </TableCell>
                 </TableRow>
                 <TableRow sx={{width: '100%'}}>
-                  <TableCell align="center" sx={{width: '48%'}}>
+                  <TableCell align="center" sx={{width: '55%'}}>
                     <Typography variant="h6" sx={{fontSize: '12px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '5px'}}>消費税 
                       <ClickAwayListener onClickAway={() => handleTooltipClose('tooltip7')} sx={{lineHeight: 'initial'}}>
                         <div>
@@ -405,25 +382,20 @@ const SkillComparison = () => {
                       </ClickAwayListener>
                     </Typography>
                   </TableCell>
-                  <TableCell sx={{width: '52%', padding: '0'}}>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-radio-buttons-group-label"
-                    name="radio-buttons-group"
-                    value={selectedValues.group7} // Add this line to set the value of the RadioGroup
-                    onChange={(event) => handleChange(event, 'group7')}
-                    sx={{display: 'block', textAlign: 'right'}}
-                  >
-                    <FormControlLabel sx={{ marginRight: '10px' }} value="L0" control={<Radio {...controlProps('L0', selectedValues.group7, (event) => handleChange(event, 'group7'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L1" control={<Radio {...controlProps('L1', selectedValues.group7, (event) => handleChange(event, 'group7'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L2" control={<Radio {...controlProps('L2', selectedValues.group7, (event) => handleChange(event, 'group7'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L3" control={<Radio {...controlProps('L3', selectedValues.group7, (event) => handleChange(event, 'group7'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L4" control={<Radio {...controlProps('L4', selectedValues.group7, (event) => handleChange(event, 'group7'))} size="small" />} />
-                  </RadioGroup>
+                  <TableCell sx={{width: '45%', padding: '0'}}>
+                    <Grid container>
+                      <Grid item xs={12} sx={{display: 'flex', alignItems: 'center'}}>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                      </Grid>
+                    </Grid>
                   </TableCell>
                 </TableRow>
                 <TableRow sx={{width: '100%'}}>
-                  <TableCell align="center" sx={{width: '48%'}}>
+                  <TableCell align="center" sx={{width: '55%'}}>
                     <Typography variant="h6" sx={{fontSize: '12px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '5px'}}>法人税ほか 
                     <ClickAwayListener onClickAway={() => handleTooltipClose('tooltip8')} sx={{lineHeight: 'initial'}}>
                       <div>
@@ -444,25 +416,20 @@ const SkillComparison = () => {
                     </ClickAwayListener>
                     </Typography>
                   </TableCell>
-                  <TableCell sx={{width: '52%', padding: '0'}}>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-radio-buttons-group-label"
-                    name="radio-buttons-group"
-                    value={selectedValues.group8} // Add this line to set the value of the RadioGroup
-                    onChange={(event) => handleChange(event, 'group8')}
-                    sx={{display: 'block', textAlign: 'right'}}
-                  >
-                    <FormControlLabel sx={{ marginRight: '10px' }} value="L0" control={<Radio {...controlProps('L0', selectedValues.group8, (event) => handleChange(event, 'group8'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L1" control={<Radio {...controlProps('L1', selectedValues.group8, (event) => handleChange(event, 'group8'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L2" control={<Radio {...controlProps('L2', selectedValues.group8, (event) => handleChange(event, 'group8'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L3" control={<Radio {...controlProps('L3', selectedValues.group8, (event) => handleChange(event, 'group8'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L4" control={<Radio {...controlProps('L4', selectedValues.group8, (event) => handleChange(event, 'group8'))} size="small" />} />
-                  </RadioGroup>
+                  <TableCell sx={{width: '45%', padding: '0'}}>
+                    <Grid container>
+                        <Grid item xs={12} sx={{display: 'flex', alignItems: 'center'}}>
+                          <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                          <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                          <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                          <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                          <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        </Grid>
+                      </Grid>
                   </TableCell>
                 </TableRow>
                 <TableRow sx={{width: '100%'}}>
-                  <TableCell align="center" sx={{width: '48%'}}>
+                  <TableCell align="center" sx={{width: '55%'}}>
                     <Typography variant="h6" sx={{fontSize: '12px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '5px'}}>監査対象決算 子会社 
                     <ClickAwayListener onClickAway={() => handleTooltipClose('tooltip9')} sx={{lineHeight: 'initial'}}>
                       <div>
@@ -483,25 +450,20 @@ const SkillComparison = () => {
                     </ClickAwayListener>
                     </Typography>
                   </TableCell>
-                  <TableCell sx={{width: '52%', padding: '0'}}>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-radio-buttons-group-label"
-                    name="radio-buttons-group"
-                    value={selectedValues.group9} // Add this line to set the value of the RadioGroup
-                    onChange={(event) => handleChange(event, 'group9')}
-                    sx={{display: 'block', textAlign: 'right'}}
-                  >
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L0" control={<Radio {...controlProps('L0', selectedValues.group9, (event) => handleChange(event, 'group9'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L1" control={<Radio {...controlProps('L1', selectedValues.group9, (event) => handleChange(event, 'group9'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L2" control={<Radio {...controlProps('L2', selectedValues.group9, (event) => handleChange(event, 'group9'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L3" control={<Radio {...controlProps('L3', selectedValues.group9, (event) => handleChange(event, 'group9'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L4" control={<Radio {...controlProps('L4', selectedValues.group9, (event) => handleChange(event, 'group9'))} size="small" />} />
-                  </RadioGroup>
+                  <TableCell sx={{width: '45%', padding: '0'}}>
+                    <Grid container>
+                      <Grid item xs={12} sx={{display: 'flex', alignItems: 'center'}}>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                      </Grid>
+                    </Grid>
                   </TableCell>
                 </TableRow>
                 <TableRow sx={{width: '100%'}}>
-                  <TableCell align="center" sx={{width: '48%'}}>
+                  <TableCell align="center" sx={{width: '55%'}}>
                     <Typography variant="h6" sx={{fontSize: '12px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '5px'}}>監査対象決算 親会社
                     <ClickAwayListener onClickAway={() => handleTooltipClose('tooltip10')} sx={{lineHeight: 'initial'}}>
                       <div>
@@ -522,25 +484,20 @@ const SkillComparison = () => {
                     </ClickAwayListener>
                     </Typography>
                   </TableCell>
-                  <TableCell sx={{width: '52%', padding: '0'}}>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-radio-buttons-group-label"
-                    name="radio-buttons-group"
-                    value={selectedValues.group10} // Add this line to set the value of the RadioGroup
-                    onChange={(event) => handleChange(event, 'group10')}
-                    sx={{display: 'block', textAlign: 'right'}}
-                  >
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L0" control={<Radio {...controlProps('L0', selectedValues.group10, (event) => handleChange(event, 'group10'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L1" control={<Radio {...controlProps('L1', selectedValues.group10, (event) => handleChange(event, 'group10'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L2" control={<Radio {...controlProps('L2', selectedValues.group10, (event) => handleChange(event, 'group10'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L3" control={<Radio {...controlProps('L3', selectedValues.group10, (event) => handleChange(event, 'group10'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L4" control={<Radio {...controlProps('L4', selectedValues.group10, (event) => handleChange(event, 'group10'))} size="small" />} />
-                  </RadioGroup>
+                  <TableCell sx={{width: '45%', padding: '0'}}>
+                    <Grid container>
+                      <Grid item xs={12} sx={{display: 'flex', alignItems: 'center'}}>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                      </Grid>
+                    </Grid>
                   </TableCell>
                 </TableRow>
                 <TableRow sx={{width: '100%'}}>
-                  <TableCell align="center" sx={{width: '48%'}}>
+                  <TableCell align="center" sx={{width: '55%'}}>
                     <Typography variant="h6" sx={{fontSize: '12px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '5px'}}>連結決算
                     <ClickAwayListener onClickAway={() => handleTooltipClose('tooltip11')} sx={{lineHeight: 'initial'}}>
                       <div>
@@ -561,25 +518,20 @@ const SkillComparison = () => {
                     </ClickAwayListener>
                     </Typography>
                   </TableCell>
-                  <TableCell sx={{width: '52%', padding: '0'}}>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-radio-buttons-group-label"
-                    name="radio-buttons-group"
-                    value={selectedValues.group11} // Add this line to set the value of the RadioGroup
-                    onChange={(event) => handleChange(event, 'group11')}
-                    sx={{display: 'block', textAlign: 'right'}}
-                  >
-                    <FormControlLabel sx={{ marginRight: '10px' }} value="L0" control={<Radio {...controlProps('L0', selectedValues.group11, (event) => handleChange(event, 'group11'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L1" control={<Radio {...controlProps('L1', selectedValues.group11, (event) => handleChange(event, 'group11'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L2" control={<Radio {...controlProps('L2', selectedValues.group11, (event) => handleChange(event, 'group11'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L3" control={<Radio {...controlProps('L3', selectedValues.group11, (event) => handleChange(event, 'group11'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L4" control={<Radio {...controlProps('L4', selectedValues.group11, (event) => handleChange(event, 'group11'))} size="small" />} />
-                  </RadioGroup>
+                  <TableCell sx={{width: '45%', padding: '0'}}>
+                    <Grid container>
+                      <Grid item xs={12} sx={{display: 'flex', alignItems: 'center'}}>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                      </Grid>
+                    </Grid>
                   </TableCell>
                 </TableRow>
                 <TableRow sx={{width: '100%'}}>
-                  <TableCell align="center" sx={{width: '48%'}}>
+                  <TableCell align="center" sx={{width: '55%'}}>
                     <Typography variant="h6" sx={{fontSize: '12px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '5px'}}>開示書類
                     <ClickAwayListener onClickAway={() => handleTooltipClose('tooltip12')} sx={{lineHeight: 'initial'}}>
                       <div>
@@ -600,21 +552,16 @@ const SkillComparison = () => {
                     </ClickAwayListener>
                     </Typography>
                   </TableCell>
-                  <TableCell sx={{width: '52%', padding: '0'}}>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-radio-buttons-group-label"
-                    name="radio-buttons-group"
-                    value={selectedValues.group12} // Add this line to set the value of the RadioGroup
-                    onChange={(event) => handleChange(event, 'group12')}
-                    sx={{display: 'block', textAlign: 'right'}}
-                  >
-                    <FormControlLabel sx={{ marginRight: '10px' }} value="L0" control={<Radio {...controlProps('L0', selectedValues.group12, (event) => handleChange(event, 'group12'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L1" control={<Radio {...controlProps('L1', selectedValues.group12, (event) => handleChange(event, 'group12'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L2" control={<Radio {...controlProps('L2', selectedValues.group12, (event) => handleChange(event, 'group12'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L3" control={<Radio {...controlProps('L3', selectedValues.group12, (event) => handleChange(event, 'group12'))} size="small" />} />
-                  <FormControlLabel sx={{ marginRight: '10px' }} value="L4" control={<Radio {...controlProps('L4', selectedValues.group12, (event) => handleChange(event, 'group12'))} size="small" />} />
-                  </RadioGroup>
+                  <TableCell sx={{width: '45%', padding: '0'}}>
+                    <Grid container>
+                      <Grid item xs={12} sx={{display: 'flex', alignItems: 'center'}}>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                        <Item style={{background: '#FFFFB7', height: '40px', width: '20%'}}></Item>
+                      </Grid>
+                    </Grid>
                   </TableCell>
                 </TableRow>
                

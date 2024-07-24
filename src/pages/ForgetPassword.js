@@ -26,7 +26,7 @@ const BackLink = styled(Link)(({ theme }) => ({
 }));
 
 const ForgetPassword = () => {
-  const [email_address, setemail_address] = useState('');
+  const [email, setemail_address] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState('');
@@ -40,14 +40,14 @@ const ForgetPassword = () => {
 
   const validateEmail = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const isValid = emailRegex.test(email_address);
+    const isValid = emailRegex.test(email);
     setIsValidEmail(isValid);
     return isValid;
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (email_address.trim() === '') {
+    if (email.trim() === '') {
       setError('この項目は必須です');
       return;
     }
@@ -58,7 +58,7 @@ const ForgetPassword = () => {
     }
 
     try {
-      const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/forgot_password?email_address=${email_address}`, {
+      const response = await fetch(`https://bvhr-api.azurewebsites.net/candidates/forgot_password?email=${email}`, {
         method: 'GET',
       });
 
@@ -103,7 +103,7 @@ const ForgetPassword = () => {
                 placeholder="登録したメールIDを入力してください"
                 variant="outlined"
                 fullWidth
-                value={email_address}
+                value={email}
                 onChange={handleEmailChange}
                 onBlur={validateEmail}
                 error={!isValidEmail || error !== ''}

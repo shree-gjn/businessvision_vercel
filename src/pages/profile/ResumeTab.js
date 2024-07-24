@@ -653,7 +653,7 @@ export default function ResumeTab() {
     console.log(`Uploading file: ${file.name}, type: ${type}`); // Debugging log
 
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://bvhr-api.azurewebsites.net/candidate/candidate_resume_upload', true);
+    xhr.open('POST', 'https://bvhr-api.azurewebsites.net/candidates/upload_resume', true);
 
     xhr.upload.onprogress = (event) => {
       if (event.lengthComputable) {
@@ -665,7 +665,7 @@ export default function ResumeTab() {
     xhr.onload = () => {
       if (xhr.status === 200) {
         const response = JSON.parse(xhr.responseText);
-        setState((prev) => [...prev, { cru_file_name: file.name, ...response }]);
+        setState((prev) => [...prev, { file_name: file.name, ...response }]);
       } else {
         console.error('Upload failed:', xhr.responseText);
       }
@@ -763,14 +763,14 @@ export default function ResumeTab() {
 
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/list_candidate_resume?auth_key=${authKey}`); // Replace with your actual API endpoint
+        const response = await fetch(`https://bvhr-api.azurewebsites.net/candidates/list_all_resumes?auth_key=${authKey}`); // Replace with your actual API endpoint
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
         console.log('Fetched data:', data); // Log fetched data to debug
-        setResume(data.candidate_resume.filter(item => item.cru_resume_type === 'normal_resume') || []);
-        setCvs(data.candidate_resume.filter(item => item.cru_resume_type === 'experience_resume') || []);
+        setResume(data.resume_details.filter(item => item.resume_type === 'normal_resume') || []);
+        setCvs(data.resume_details.filter(item => item.resume_type === 'experience_resume') || []);
       } catch (error) {
         console.error('Error fetching resume list:', error);
       }
@@ -780,12 +780,12 @@ export default function ResumeTab() {
   }, [selectedResume, selectedCv]);
 
   // Filter resumes to only include those with resume_type 'normal_resume'
-  const normalResumes = resume.filter(resumeItem => resumeItem.cru_resume_type === 'normal_resume');
+  const normalResumes = resume.filter(resumeItem => resumeItem.resume_type === 'normal_resume');
 
   // Filter resumes to only include those with resume_type 'experience_resume'
-  // const experienceResume = resume.filter(resumeItem => resumeItem.cru_resume_type === 'experience_resume');
+  // const experienceResume = resume.filter(resumeItem => resumeItem.resume_type === 'experience_resume');
 
-  const experienceResume = cvs.filter(cvItem => cvItem.cru_resume_type === 'experience_resume');
+  const experienceResume = cvs.filter(cvItem => cvItem.resume_type === 'experience_resume');
 
   const handleConfirmDelete = async (index) => {
     const authKey = sessionStorage.getItem('authKey');
@@ -799,10 +799,10 @@ export default function ResumeTab() {
   
     const formData = new FormData();
     formData.append('auth_key', authKey);
-    formData.append('cru_id', item.cru_id);
+    formData.append('resume_id', item.cru_id);
   
     try {
-      const response = await fetch(`https://bvhr-api.azurewebsites.net/candidate/delete_candidate_resume`, {
+      const response = await fetch(`https://bvhr-api.azurewebsites.net/candidates/delete_resume`, {
         method: 'POST',
         body: formData,
       });
@@ -878,7 +878,7 @@ export default function ResumeTab() {
                 }}
               >
                 <Typography sx={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#16375A' }}>
-                  <ApplicationReqOutline />{resumeItem.cru_file_name}
+                  <ApplicationReqOutline />{resumeItem.file_name}
                 </Typography>
                 {/* <DeleteIcon onClick={() => handleDeleteFile(index, setResume)} /> */}
                 <DeleteIcon onClick={() => handleDeleteFile(index, true)} />
@@ -965,7 +965,7 @@ export default function ResumeTab() {
                 }}
               >
                 <Typography sx={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#16375A' }}>
-                  <ApplicationReqOutline />{cvItem.cru_file_name}
+                  <ApplicationReqOutline />{cvItem.file_name}
                 </Typography>
                 {/* <DeleteIcon onClick={() => handleDeleteFile(index, setResume)} /> */}
                 <DeleteIcon onClick={() => handleDeleteFile(index, true)} />

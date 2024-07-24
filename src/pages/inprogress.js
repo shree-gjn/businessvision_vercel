@@ -69,8 +69,8 @@ const InProgressComponent = () => {
           width: 25,
           height: 25,
           borderRadius: '50%',
-          backgroundColor: active ? theme.palette.primary.main : completed ? theme.palette.primary.main : theme.palette.grey.main,
-          color: 'white',
+          backgroundColor: active ? theme.palette.primary.main : completed ? theme.palette.primary.main : theme.palette.primary.contrastText,
+          color: active ?  theme.palette.primary.contrastText : completed ? theme.palette.primary.main : "#000000",
           fontSize: '12px'
         }}
       >
