@@ -24,21 +24,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
-
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#16375A',
-    },
-    grey: {
-      main: '#949494', // Change to your desired color
-    },
-    text: {
-      grey: '#ffffff', // Change to your desired text color
-    },
-  },
-});
+import theme from './theme';
 
 const List = styled('ul')({
   listStyle: 'none',
@@ -305,7 +291,7 @@ export default function RecruitmentInfo() {
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={8} sx={{margin:'10px 0px 10px 0px', display: 'flex', gap: '20px'}}>
             <FilterGrid />
-            <Button component={Link} to="/recommendedjob" variant="contained" style={{background: '#d5dbe1', boxShadow: 'none', color: '#16375A', fontSize: '12px'}}>
+            <Button component={Link} to="/recommendedjob" variant="contained" style={{background: '#d5dbe1', boxShadow: 'none', backgroundColor: '#CCAA65', color: '#fff', fontSize: '12px'}}>
               おすすめ設定
             </Button>
           </Grid>

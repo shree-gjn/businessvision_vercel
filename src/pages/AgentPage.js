@@ -21,23 +21,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#16375A',
-    },
-    secondary: {
-      main: '#877151',
-    },
-    grey: {
-      main: '#949494', // Change to your desired color
-    },
-    text: {
-      grey: '#ffffff', // Change to your desired text color
-    },
-  },
-});
+import theme from './theme';
 
 const AgentPage = () => {
   const [selectedChips, setSelectedChips] = React.useState({

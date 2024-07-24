@@ -28,23 +28,7 @@ import Skillentrynine from './skill/skillentrynine';
 import Skillentryten from './skill/skillentryten';
 import Skillentryeleven from './skill/skillentryeleven';
 import Skillentrytwelve from './skill/skillentrytwelve';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#16375A',
-    },
-    secondary: {
-      main: '#877151',
-    },
-    grey: {
-      main: '#949494', // Change to your desired color
-    },
-    text: {
-      grey: '#ffffff', // Change to your desired text color
-    },
-  },
-});
+import theme from './theme';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',

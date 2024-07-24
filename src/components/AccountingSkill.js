@@ -21,23 +21,7 @@ import {ReactComponent as BackArrowIcon} from '../assets/BackArrowIcon.svg';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#16375A',
-    },
-    secondary: {
-      main: '#877151',
-    },
-    grey: {
-      main: '#949494', // Change to your desired color
-    },
-    text: {
-      grey: '#ffffff', // Change to your desired text color
-    },
-  },
-});
+import theme from '../pages/theme';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -88,7 +72,7 @@ const AccountingSkill = ({ handleNext }) => {
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ width: '100%', typography: 'body1' }}>
-    <div className="PageHeader">
+    <div className="PageHeader" sx={{backgroundColor: '#CCAA65'}}>
       <p>求人情報</p>
     </div>
     <TabContext value={value}>

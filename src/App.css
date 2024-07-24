@@ -31,12 +31,13 @@
 /* Headers */
 
 .PageHeader {
-  border-bottom: 1px solid #ccc; /* Adjust the color and style as needed */
+  /* border-bottom: 1px solid #ccc;  */
   padding: 15px 0;
+  background: #16375A;
 }
 
 .PageHeader p{
-  color:#16375A;
+  color:#fff;
   font-size: 14px;
   margin: 0;
 }
@@ -45,6 +46,9 @@
   position: relative;
 }
 
+.PageHeader a{
+  color: #fff;
+}
 
 /* Footer Profile Size */
 
@@ -78,8 +82,8 @@
 }
 
 .required_label{
-  color: red;
-  border: 1px solid red;
+  color: #7E223D;
+  border: 1px solid #7E223D;
   padding: 0 10px;
   border-radius: 5px;
   font-size: 12px;

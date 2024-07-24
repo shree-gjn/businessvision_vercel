@@ -34,23 +34,7 @@ import UploadFileIcon from '@mui/icons-material/UploadFile';
 import MenuItem from '@mui/material/MenuItem';
 import {ReactComponent as Cancel} from '../assets/Cancel.svg';
 import {ReactComponent as WarningIcon} from '../assets/WarningIcon.svg';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#16375A',
-    },
-    secondary: {
-      main: '#877151',
-    },
-    grey: {
-      main: '#949494', // Change to your desired color
-    },
-    text: {
-      grey: '#ffffff', // Change to your desired text color
-    },
-  },
-});
+import theme from './theme';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',

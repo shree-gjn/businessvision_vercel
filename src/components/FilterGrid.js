@@ -128,6 +128,7 @@ import { Typography, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import { width } from '@mui/system';
+import {ReactComponent as Filter} from '../assets/Filter.svg';
 
 const theme = createTheme({
   palette: {
@@ -196,8 +197,8 @@ const FilterGrid = () => {
   return (
     <ThemeProvider theme={theme}>
       <>
-        <Button onClick={handleClick} style={{ borderRadius: '5px', border: '1px solid #EEE', background: '#FFF', gap: '5px'}}>
-          <FilterListIcon /> 絞り込む
+        <Button onClick={handleClick} style={{ borderRadius: '5px', border: '1px solid #EEE', background: '#FFF', gap: '10px', color: '#CCAA65'}}>
+          <Filter /> 絞り込む
         </Button>
         <Popover
           open={Boolean(anchorEl)}
@@ -254,7 +255,7 @@ const FilterGrid = () => {
                 </StyledToggleButtonGroup>
               </div>
               <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-                <Button fullWidth variant="outlined" color="primary">
+                <Button fullWidth variant="outlined">
                   この条件で絞り込む
                 </Button>
               </div>

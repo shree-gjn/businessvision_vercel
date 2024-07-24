@@ -111,6 +111,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Typography, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import {ReactComponent as Filter} from '../assets/Filter.svg';
 import { width } from '@mui/system';
 
 const theme = createTheme({
@@ -179,8 +180,8 @@ const SecretFilterGrid = () => {
   return (
     <ThemeProvider theme={theme}>
       <>
-        <Button onClick={handleClick} style={{ borderRadius: '5px', border: '1px solid #EEE', background: '#FFF', gap: '5px'}}>
-          <FilterListIcon /> 絞り込む
+        <Button onClick={handleClick} style={{ borderRadius: '5px', border: '1px solid #EEE', background: '#FFF', gap: '10px', color: '#CCAA65'}}>
+          <Filter /> 絞り込む
         </Button>
         <Popover
           open={Boolean(anchorEl)}

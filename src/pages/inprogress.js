@@ -6,23 +6,9 @@ import ProgressStepTwo from './ProgressStepTwo';
 import ProgressStepThree from './ProgressStepThree';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#16375A',
-    },
-    secondary: {
-      main: '#877151',
-    },
-    grey: {
-      main: '#949494', // Change to your desired color
-    },
-    text: {
-      grey: '#ffffff', // Change to your desired text color
-    },
-  },
-});
+import Grid from '@mui/material/Grid';
+import theme from './theme';
+import { borderBottom } from '@mui/system';
 
 const InProgressComponent = () => {
   const [completedSteps, setCompletedSteps] = useState([]);
@@ -96,9 +82,22 @@ const InProgressComponent = () => {
   return (
     <ThemeProvider theme={theme}>
       <>
-        <div className="PageHeader">
+        <div className="PageHeader" sx={{borderBottom: 'none'}}>
           <p>進行中</p>
         </div>
+        <Grid container sx={{marginTop: '-2px'}}>
+          <Grid item xs={12}>
+            <Stepper activeStep={activeStep} alternativeLabel sx={{ padding: '20px 0',  background: '#0F2C4B'}}>
+              {steps.map((label, index) => (
+                <Step key={label} completed={completedSteps.includes(index)}>
+                  <StepLabel sx={{fontSize: '12px'}} StepIconComponent={CustomStepIcon} onClick={() => handleStepClick(index)}>
+                    {label}
+                  </StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+          </Grid>
+        </Grid>
         <Container style={{background: 'rgb(250, 250, 250)'}}>
           {/* <Stepper activeStep={activeStep} alternativeLabel sx={{margin: '20px 0'}}>
             {steps.map((label, index) => (
@@ -107,15 +106,6 @@ const InProgressComponent = () => {
               </Step>
             ))}
           </Stepper> */}
-          <Stepper activeStep={activeStep} alternativeLabel sx={{ margin: '20px 0' }}>
-            {steps.map((label, index) => (
-              <Step key={label} completed={completedSteps.includes(index)}>
-                <StepLabel StepIconComponent={CustomStepIcon} onClick={() => handleStepClick(index)}>
-                  {label}
-                </StepLabel>
-              </Step>
-            ))}
-          </Stepper>
           <div>
             {renderStepContent()}
           </div>

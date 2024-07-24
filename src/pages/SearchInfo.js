@@ -18,20 +18,7 @@ import {ReactComponent as BagIcon} from '../assets/BagIcon.svg';
 import {ReactComponent as BagBrownIcon} from '../assets/BagBrownIcon.svg';
 import {ReactComponent as TickBrown} from '../assets/TickBrown.svg';
 import {ReactComponent as BuildingBrownIcon} from '../assets/BuildingBrownIcon.svg'; 
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#16375A',
-    },
-    grey: {
-      main: '#949494', // Change to your desired color
-    },
-    text: {
-      grey: '#ffffff', // Change to your desired text color
-    },
-  },
-});
+import theme from './theme';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',

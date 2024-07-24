@@ -9,23 +9,7 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import {ReactComponent as CompanyProfile} from '../assets/CompanyProfile.svg';
 import { Send } from '@mui/icons-material';  // Import Send icon
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#16375A',
-    },
-    secondary: {
-      main: '#877151',
-    },
-    grey: {
-      main: '#949494', // Change to your desired color
-    },
-    text: {
-      grey: '#ffffff', // Change to your desired text color
-    },
-  },
-});
+import theme from './theme';
 
 const OnlineIndicator = ({ isOnline }) => (
   <FiberManualRecordIcon sx={{ color: isOnline ? 'green' : 'gray', fontSize: 12, position: 'absolute', top: 75, zIndex: 1, right: 320 }} />

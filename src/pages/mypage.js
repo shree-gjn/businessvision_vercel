@@ -11,26 +11,8 @@ import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import SearchInfo from './SearchInfo';
 import { Link, useNavigate } from 'react-router-dom';
 import {ReactComponent as BackButton} from '../assets/BackButton.svg';
+import theme from './theme';
 import { useSearchParams } from 'react-router-dom';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#16375A',
-    },
-    secondary: {
-      main: '#877151',
-    },
-    grey: {
-      main: '#949494', // Change to your desired color
-    },
-    text: {
-      grey: '#ffffff', // Change to your desired text color
-    },
-  },
-});
-
-
 
 const MyPage = ({ handleNext }) => {
   const [searchParams, setSearchParams] = useSearchParams();

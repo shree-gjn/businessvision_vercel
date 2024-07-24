@@ -7,23 +7,8 @@ import DesiredCondition from './registration/desiredcondition';
 import Completion from './registration/completion';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import EditMaskingResume from './EditMaskingResume';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#16375A',
-    },
-    secondary: {
-      main: '#877151',
-    },
-    grey: {
-      main: '#949494', // Change to your desired color
-    },
-    text: {
-      grey: '#ffffff', // Change to your desired text color
-    },
-  },
-});
+import Grid from '@mui/material/Grid';
+import theme from './theme';
 
 const RegistrationStepper = () => {
   const location = useLocation(); 
@@ -39,54 +24,6 @@ const RegistrationStepper = () => {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
-
-  // const handleSubmit = () => {
-  //   const authKey = sessionStorage.getItem('authKey'); // Retrieve the auth key from sessionStorage
-  //   console.log('Retrieved authKey:', authKey); // Debugging log
-  //   console.log('Form Data:', formData); // Debugging log
-
-  //   if (authKey) {
-  //       const formDataToSend = new FormData();
-        
-  //       // Append auth_key to the FormData object
-  //       formDataToSend.append('auth_key', authKey);
-
-  //       // Append all formData fields to the FormData object
-  //       Object.keys(formData).forEach(key => {
-  //           if (Array.isArray(formData[key])) {
-  //               formData[key].forEach((value, index) => {
-  //                   formDataToSend.append(`${key}[${index}]`, value);
-  //               });
-  //           } else {
-  //               formDataToSend.append(key, formData[key]);
-  //           }
-  //       });
-
-  //       console.log('Payload to be sent (FormData):', ...formDataToSend.entries()); // Debugging log
-
-  //       fetch('https://bvhr-api.azurewebsites.net/candidate/update_profile', {
-  //           method: 'POST',
-  //           body: formDataToSend,
-  //       })
-  //       .then((response) => {
-  //           if (!response.ok) {
-  //               throw new Error(`HTTP error! status: ${response.status}`);
-  //           }
-  //           return response.json();
-  //       })
-  //       .then((data) => {
-  //           // Handle success
-  //           console.log('Success:', data);
-  //           handleNext();
-  //       })
-  //       .catch((error) => {
-  //           // Handle error
-  //           console.error('Error:', error);
-  //       });
-  //   } else {
-  //       console.error('Authentication key is missing');
-  //   }
-  // };
 
   const handleSubmit = () => {
     const authKey = sessionStorage.getItem('authKey');
@@ -137,14 +74,18 @@ const RegistrationStepper = () => {
 
   return (
     <ThemeProvider theme={theme}>
+        <Grid Container>
+          <Grid item xs={12}>
+            <Stepper activeStep={activeStep} alternativeLabel sx={{padding: '20px 0', background: '#16375A'}}>
+              {steps.map((label) => (
+                <Step key={label} sx={{ color: '#ffffff'}}>
+                  <StepLabel sx={{ color: '#ffffff'}}>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+          </Grid>
+        </Grid>
       <Container>
-        <Stepper activeStep={activeStep} alternativeLabel sx={{ marginTop: '20px' }}>
-          {steps.map((label) => (
-            <Step key={label}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
         <div>
           {activeStep === 0 && (
             <BasicInfo formData={formData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} />

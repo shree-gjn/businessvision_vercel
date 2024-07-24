@@ -9,23 +9,7 @@ import CorporateScout from './CorporateScout';
 import SecretEntry from './SecretEntry';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import { useSearchParams } from 'react-router-dom';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#16375A',
-    },
-    secondary: {
-      main: '#877151',
-    },
-    grey: {
-      main: '#949494', // Change to your desired color
-    },
-    text: {
-      grey: '#ffffff', // Change to your desired text color
-    },
-  },
-});
+import theme from './theme';
 
 const MessageComponent = ({ handleNext }) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -46,8 +30,8 @@ const MessageComponent = ({ handleNext }) => {
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ width: '100%', typography: 'body1' }}>
-        <div className="PageHeader">
-          <p>メッセージ</p>
+        <div className="PageHeader" style={{backgroundColor: '#16375A'}}>
+          <p style={{color: '#fff'}}>メッセージ</p>
         </div>
         <TabContext value={value}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

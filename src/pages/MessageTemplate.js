@@ -22,23 +22,7 @@ import {ReactComponent as WarningIcon} from '../assets/WarningIcon.svg';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import { display } from '@mui/system';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#16375A',
-    },
-    secondary: {
-      main: '#877151',
-    },
-    grey: {
-      main: '#949494', // Change to your desired color
-    },
-    text: {
-      grey: '#ffffff', // Change to your desired text color
-    },
-  },
-});
+import theme from './theme';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {

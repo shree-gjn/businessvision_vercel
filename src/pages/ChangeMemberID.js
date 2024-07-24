@@ -7,24 +7,7 @@ import CloseIcon from '@mui/icons-material/Close'; // Import the close icon
 import { ReactComponent as BackButton } from '../assets/BackButton.svg';
 import {ReactComponent as SuccessMsg} from '../assets/SuccessMsg.svg';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#16375A',
-    },
-    secondary: {
-      main: '#877151',
-    },
-    grey: {
-      main: '#949494', // Change to your desired color
-    },
-    text: {
-      grey: '#ffffff', // Change to your desired text color
-    },
-  },
-});
-
+import theme from './theme';
 
 const BackLink = styled(Link)(({ theme }) => ({
   textDecoration: 'none',

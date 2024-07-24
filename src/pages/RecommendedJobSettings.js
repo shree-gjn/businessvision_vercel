@@ -32,23 +32,7 @@ import Chip from '@mui/material/Chip';
 import SkillSearch from '../components/skillsearch';
 import FormGroup from '@mui/material/FormGroup';
 import {FormControlLabel,RadioGroup, Radio, FormControl, TextField, Multiline} from '@mui/material';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#16375A',
-    },
-    secondary: {
-      main: '#877151',
-    },
-    grey: {
-      main: '#949494', // Change to your desired color
-    },
-    text: {
-      grey: '#ffffff', // Change to your desired text color
-    },
-  },
-});
+import theme from './theme';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -61,7 +45,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const BackLink = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
-  color: '#16375A',
+  color: '#CCAA65',
   fontSize: '12px',
   fontWeight: 'bold',
   display: 'flex',
@@ -85,7 +69,7 @@ const toggleItems = [
 const CustomToggleButton = styled(ToggleButton)(({ theme, selected }) => ({
   minWidth: '70px',
   padding: '5px',
-  backgroundColor: selected ? '#16375A !important' : '#fff !important' ,
+  backgroundColor: selected ? '#CCAA65 !important' : '#fff !important' ,
   color: selected ? '#fff !important' : theme.palette.primary.main,
   '&:hover': {
     backgroundColor: selected ? theme.palette.primary.dark : theme.palette.action.hover,

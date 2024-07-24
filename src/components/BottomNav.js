@@ -13,23 +13,7 @@ import { ReactComponent as Profile } from '../assets/Profile.svg';
 import { ReactComponent as ProfileBlue } from '../assets/ProfileBlue.svg';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import { Typography } from '@mui/material';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#16375A',
-    },
-    secondary: {
-      main: '#877151',
-    },
-    grey: {
-      main: '#949494', // Change to your desired color
-    },
-    text: {
-      grey: '#ffffff', // Change to your desired text color
-    },
-  },
-});
+import theme from '../pages/theme';
 
 export default function BottomNav() {
   const location = useLocation();

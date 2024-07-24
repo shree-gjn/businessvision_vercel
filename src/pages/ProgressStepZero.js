@@ -20,23 +20,7 @@ import {ReactComponent as ChatIcon} from '../assets/ChatIcon.svg';
 import BottomNav from '../components/BottomNav';
 import { useNavigate } from 'react-router-dom';
 import { CardActions } from '@mui/material';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#16375A',
-    },
-    secondary: {
-      main: '#877151',
-    },
-    grey: {
-      main: '#949494', // Change to your desired color
-    },
-    text: {
-      grey: '#ffffff', // Change to your desired text color
-    },
-  },
-});
+import theme from './theme';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',

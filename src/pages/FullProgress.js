@@ -31,23 +31,7 @@ import ChatComponent from '../components/ChatUI';
 import {styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import {Table, TableBody, TableCell, TableRow, TableContainer} from '@mui/material';
 import {ReactComponent as ChatIcon} from '../assets/ChatIcon.svg'; 
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#16375A',
-    },
-    secondary: {
-      main: '#877151',
-    },
-    grey: {
-      main: '#949494', // Change to your desired color
-    },
-    text: {
-      grey: '#ffffff', // Change to your desired text color
-    },
-  },
-});
+import theme from './theme';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
